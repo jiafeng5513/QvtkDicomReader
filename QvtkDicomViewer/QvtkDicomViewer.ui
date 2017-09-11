@@ -1,0 +1,752 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>QvtkDicomViewerClass</class>
+ <widget class="QMainWindow" name="QvtkDicomViewerClass">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>1179</width>
+    <height>738</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>QvtkDicomViewer</string>
+  </property>
+  <widget class="QWidget" name="centralWidget">
+   <layout class="QGridLayout" name="gridLayout">
+    <item row="0" column="0">
+     <widget class="QVTKWidget" name="qvtkWidget">
+      <property name="sizePolicy">
+       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+        <horstretch>0</horstretch>
+        <verstretch>0</verstretch>
+       </sizepolicy>
+      </property>
+      <property name="sizeIncrement">
+       <size>
+        <width>0</width>
+        <height>0</height>
+       </size>
+      </property>
+      <property name="baseSize">
+       <size>
+        <width>0</width>
+        <height>0</height>
+       </size>
+      </property>
+     </widget>
+    </item>
+   </layout>
+  </widget>
+  <widget class="QMenuBar" name="menuBar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>1179</width>
+     <height>23</height>
+    </rect>
+   </property>
+   <widget class="QMenu" name="menu">
+    <property name="title">
+     <string>文件</string>
+    </property>
+    <addaction name="action_Open"/>
+   </widget>
+   <widget class="QMenu" name="menu_2">
+    <property name="title">
+     <string>信息</string>
+    </property>
+    <addaction name="action_RenderText"/>
+    <addaction name="action_back"/>
+    <addaction name="action_next"/>
+   </widget>
+   <widget class="QMenu" name="menu_3">
+    <property name="title">
+     <string>工具</string>
+    </property>
+    <addaction name="action_Pointer"/>
+    <addaction name="action_Protractor"/>
+    <addaction name="action_Ruler"/>
+    <addaction name="action_Contour"/>
+    <addaction name="action_BiDimensional"/>
+    <addaction name="action_Negative"/>
+    <addaction name="action_Reset"/>
+    <addaction name="action_Zoom"/>
+    <addaction name="action_GrayLevel"/>
+    <addaction name="action_Move"/>
+    <addaction name="action_Play"/>
+    <addaction name="action_Stop"/>
+   </widget>
+   <widget class="QMenu" name="menu_4">
+    <property name="title">
+     <string>窗口</string>
+    </property>
+    <addaction name="action_SwitchOfProperty"/>
+   </widget>
+   <addaction name="menu"/>
+   <addaction name="menu_2"/>
+   <addaction name="menu_3"/>
+   <addaction name="menu_4"/>
+  </widget>
+  <widget class="QToolBar" name="mainToolBar">
+   <attribute name="toolBarArea">
+    <enum>TopToolBarArea</enum>
+   </attribute>
+   <attribute name="toolBarBreak">
+    <bool>false</bool>
+   </attribute>
+   <addaction name="action_Open"/>
+   <addaction name="action_RenderText"/>
+   <addaction name="separator"/>
+   <addaction name="action_back"/>
+   <addaction name="action_Play"/>
+   <addaction name="action_next"/>
+   <addaction name="action_Stop"/>
+   <addaction name="separator"/>
+   <addaction name="action_Pointer"/>
+   <addaction name="action_Zoom"/>
+   <addaction name="action_GrayLevel"/>
+   <addaction name="action_Move"/>
+   <addaction name="action_Protractor"/>
+   <addaction name="action_Ruler"/>
+   <addaction name="action_Contour"/>
+   <addaction name="action_BiDimensional"/>
+   <addaction name="separator"/>
+   <addaction name="action_Negative"/>
+   <addaction name="action_Reset"/>
+  </widget>
+  <widget class="QStatusBar" name="statusBar"/>
+  <widget class="QDockWidget" name="dockWidget_1">
+   <property name="windowTitle">
+    <string>属性</string>
+   </property>
+   <attribute name="dockWidgetArea">
+    <number>1</number>
+   </attribute>
+   <widget class="QWidget" name="dockWidgetContents_3">
+    <layout class="QGridLayout" name="gridLayout_2">
+     <item row="8" column="1" rowspan="2">
+      <widget class="QLineEdit" name="lineEdit_Modality"/>
+     </item>
+     <item row="6" column="0" rowspan="3">
+      <widget class="QLabel" name="label_3">
+       <property name="text">
+        <string>制造商:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="9" column="0">
+      <widget class="QLabel" name="label_4">
+       <property name="text">
+        <string>检测手段:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="10" column="0">
+      <widget class="QLabel" name="label_5">
+       <property name="text">
+        <string>医院:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="10" column="1">
+      <widget class="QLineEdit" name="lineEdit_Hospital"/>
+     </item>
+     <item row="11" column="0">
+      <widget class="QLabel" name="label_6">
+       <property name="text">
+        <string>尺寸:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="11" column="1" rowspan="2">
+      <widget class="QLineEdit" name="lineEdit_Dimensions"/>
+     </item>
+     <item row="12" column="0" rowspan="2">
+      <widget class="QLabel" name="label_7">
+       <property name="text">
+        <string>原点:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="14" column="0">
+      <widget class="QLabel" name="label_11">
+       <property name="text">
+        <string>像素间隔:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="13" column="1">
+      <widget class="QLineEdit" name="lineEdit_Origins"/>
+     </item>
+     <item row="14" column="1">
+      <widget class="QLineEdit" name="lineEdit_Spacing"/>
+     </item>
+     <item row="15" column="1">
+      <spacer name="verticalSpacer_3">
+       <property name="orientation">
+        <enum>Qt::Vertical</enum>
+       </property>
+       <property name="sizeHint" stdset="0">
+        <size>
+         <width>20</width>
+         <height>40</height>
+        </size>
+       </property>
+      </spacer>
+     </item>
+     <item row="2" column="0">
+      <widget class="QLabel" name="label_10">
+       <property name="text">
+        <string>年龄:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="0" column="1">
+      <widget class="QLineEdit" name="lineEdit_Name"/>
+     </item>
+     <item row="2" column="1">
+      <widget class="QLineEdit" name="lineEdit_Age"/>
+     </item>
+     <item row="3" column="1">
+      <widget class="QLineEdit" name="lineEdit_ID"/>
+     </item>
+     <item row="1" column="0">
+      <widget class="QLabel" name="label_9">
+       <property name="text">
+        <string>性别:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="1" column="1">
+      <widget class="QLineEdit" name="lineEdit_Sex"/>
+     </item>
+     <item row="0" column="0">
+      <widget class="QLabel" name="label_8">
+       <property name="text">
+        <string>姓名;</string>
+       </property>
+      </widget>
+     </item>
+     <item row="4" column="0" colspan="2">
+      <widget class="Line" name="line">
+       <property name="orientation">
+        <enum>Qt::Horizontal</enum>
+       </property>
+      </widget>
+     </item>
+     <item row="3" column="0">
+      <widget class="QLabel" name="label">
+       <property name="text">
+        <string>ID:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="0">
+      <widget class="QLabel" name="label_2">
+       <property name="text">
+        <string>拍摄时间:</string>
+       </property>
+      </widget>
+     </item>
+     <item row="5" column="1" rowspan="2">
+      <widget class="QLineEdit" name="lineEdit_Time"/>
+     </item>
+     <item row="7" column="1">
+      <widget class="QLineEdit" name="lineEdit_Manufacturer"/>
+     </item>
+    </layout>
+   </widget>
+  </widget>
+  <action name="action_Open">
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/open_128px_1187505_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/open_128px_1187505_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>打开</string>
+   </property>
+  </action>
+  <action name="action_RenderText">
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/text_128px_1188178_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/text_128px_1188178_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>输出信息</string>
+   </property>
+  </action>
+  <action name="action_back">
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/front_128px_1143868_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/front_128px_1143868_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>上一张</string>
+   </property>
+  </action>
+  <action name="action_next">
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/next_128px_1143867_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/next_128px_1143867_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>下一张</string>
+   </property>
+  </action>
+  <action name="action_Pointer">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/mouse_128px_1153948_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/mouse_128px_1153948_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>无</string>
+   </property>
+  </action>
+  <action name="action_Protractor">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/Angle_Thingy_128px_559411_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/Angle_Thingy_128px_559411_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>量角器</string>
+   </property>
+  </action>
+  <action name="action_Ruler">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/ruler_128px_1209146_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/ruler_128px_1209146_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>测距尺</string>
+   </property>
+  </action>
+  <action name="action_Contour">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/Bezier_Curve_128px_559452_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/Bezier_Curve_128px_559452_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>轮廓</string>
+   </property>
+   <property name="toolTip">
+    <string>轮廓</string>
+   </property>
+  </action>
+  <action name="action_BiDimensional">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/Arrow_Cross_128px_1177075_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/Arrow_Cross_128px_1177075_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>二维标尺</string>
+   </property>
+  </action>
+  <action name="action_Negative">
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/video_negative_128px_1138773_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/video_negative_128px_1138773_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>负片</string>
+   </property>
+  </action>
+  <action name="action_Reset">
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/cancel_128px_1209038_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/cancel_128px_1209038_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>复位</string>
+   </property>
+  </action>
+  <action name="action_Zoom">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/zoom_in_128px_1200197_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/zoom_in_128px_1200197_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>缩放</string>
+   </property>
+  </action>
+  <action name="action_GrayLevel">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/brightness_128px_1193620_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/brightness_128px_1193620_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>灰阶</string>
+   </property>
+   <property name="toolTip">
+    <string>灰阶</string>
+   </property>
+  </action>
+  <action name="action_Move">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/move_Hand_128px_1154031_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/move_Hand_128px_1154031_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>移动</string>
+   </property>
+  </action>
+  <action name="action_SwitchOfProperty">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>属性</string>
+   </property>
+  </action>
+  <action name="action_Play">
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/play_128px_1197036_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/play_128px_1197036_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>播放</string>
+   </property>
+  </action>
+  <action name="action_Stop">
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/stop_128px_1197040_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/stop_128px_1197040_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>停止</string>
+   </property>
+  </action>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>QVTKWidget</class>
+   <extends>QWidget</extends>
+   <header>QVTKWidget.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources>
+  <include location="QvtkDicomViewer.qrc"/>
+ </resources>
+ <connections>
+  <connection>
+   <sender>action_Open</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnOpenFile()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>408</x>
+     <y>278</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_RenderText</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnRenderText()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>408</x>
+     <y>278</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_back</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnBackward()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>408</x>
+     <y>278</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_next</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnForward()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>408</x>
+     <y>278</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_Pointer</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnSelectedPointer()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>408</x>
+     <y>278</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_Protractor</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnSelectedProtractor()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>408</x>
+     <y>278</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_Ruler</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnSelectedRuler()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>408</x>
+     <y>278</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_Contour</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnSelectedContour()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>589</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_BiDimensional</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnSelectedBiDimensional()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>589</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_Negative</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnNegative()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>589</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_Reset</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnReset()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>589</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_GrayLevel</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnSelectedGrayLevel()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>589</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_Zoom</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnSelectedZoom()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>589</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_Move</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnSelectedMove()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>589</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_SwitchOfProperty</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnSwitchProperty()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>589</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_Play</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnPlay()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>589</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_Stop</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnStop()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>589</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>OnOpenFile()</slot>
+  <slot>OnRenderText()</slot>
+  <slot>OnForward()</slot>
+  <slot>OnBackward()</slot>
+  <slot>OnSelectedPointer()</slot>
+  <slot>OnSelectedProtractor()</slot>
+  <slot>OnSelectedRuler()</slot>
+  <slot>OnTest()</slot>
+  <slot>OnSelectedContour()</slot>
+  <slot>OnSelectedBiDimensional()</slot>
+  <slot>OnNegative()</slot>
+  <slot>OnReset()</slot>
+  <slot>OnSlider()</slot>
+  <slot>OnSelectedGrayLevel()</slot>
+  <slot>OnSelectedMove()</slot>
+  <slot>OnSelectedZoom()</slot>
+  <slot>OnSwitchProperty()</slot>
+  <slot>OnPlay()</slot>
+  <slot>OnStop()</slot>
+ </slots>
+</ui>
