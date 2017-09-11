@@ -13,11 +13,16 @@
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
 #include <QtWidgets/QButtonGroup>
+#include <QtWidgets/QDockWidget>
+#include <QtWidgets/QFrame>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHeaderView>
+#include <QtWidgets/QLabel>
+#include <QtWidgets/QLineEdit>
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QWidget>
@@ -44,12 +49,39 @@ public:
     QMenu *menu_3;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
+    QDockWidget *dockWidget_1;
+    QWidget *dockWidgetContents_3;
+    QGridLayout *gridLayout_2;
+    QLineEdit *lineEdit_Modality;
+    QLabel *label_3;
+    QLabel *label_4;
+    QLabel *label_5;
+    QLineEdit *lineEdit_Hospital;
+    QLabel *label_6;
+    QLineEdit *lineEdit_Dimensions;
+    QLabel *label_7;
+    QLabel *label_11;
+    QLineEdit *lineEdit_Origins;
+    QLineEdit *lineEdit_Spacing;
+    QSpacerItem *verticalSpacer_3;
+    QLabel *label_10;
+    QLineEdit *lineEdit_Name;
+    QLineEdit *lineEdit_Age;
+    QLineEdit *lineEdit_ID;
+    QLabel *label_9;
+    QLineEdit *lineEdit_Sex;
+    QLabel *label_8;
+    QFrame *line;
+    QLabel *label;
+    QLabel *label_2;
+    QLineEdit *lineEdit_Time;
+    QLineEdit *lineEdit_Manufacturer;
 
     void setupUi(QMainWindow *QvtkDicomViewerClass)
     {
         if (QvtkDicomViewerClass->objectName().isEmpty())
             QvtkDicomViewerClass->setObjectName(QStringLiteral("QvtkDicomViewerClass"));
-        QvtkDicomViewerClass->resize(817, 557);
+        QvtkDicomViewerClass->resize(1179, 738);
         action_Open = new QAction(QvtkDicomViewerClass);
         action_Open->setObjectName(QStringLiteral("action_Open"));
         QIcon icon;
@@ -96,13 +128,20 @@ public:
         gridLayout->setObjectName(QStringLiteral("gridLayout"));
         qvtkWidget = new QVTKWidget(centralWidget);
         qvtkWidget->setObjectName(QStringLiteral("qvtkWidget"));
+        QSizePolicy sizePolicy(QSizePolicy::Preferred, QSizePolicy::Preferred);
+        sizePolicy.setHorizontalStretch(0);
+        sizePolicy.setVerticalStretch(0);
+        sizePolicy.setHeightForWidth(qvtkWidget->sizePolicy().hasHeightForWidth());
+        qvtkWidget->setSizePolicy(sizePolicy);
+        qvtkWidget->setSizeIncrement(QSize(0, 0));
+        qvtkWidget->setBaseSize(QSize(0, 0));
 
         gridLayout->addWidget(qvtkWidget, 0, 0, 1, 1);
 
         QvtkDicomViewerClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(QvtkDicomViewerClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 817, 26));
+        menuBar->setGeometry(QRect(0, 0, 1179, 26));
         menu = new QMenu(menuBar);
         menu->setObjectName(QStringLiteral("menu"));
         menu_2 = new QMenu(menuBar);
@@ -113,9 +152,141 @@ public:
         mainToolBar = new QToolBar(QvtkDicomViewerClass);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
         QvtkDicomViewerClass->addToolBar(Qt::TopToolBarArea, mainToolBar);
+        QvtkDicomViewerClass->insertToolBarBreak(mainToolBar);
         statusBar = new QStatusBar(QvtkDicomViewerClass);
         statusBar->setObjectName(QStringLiteral("statusBar"));
         QvtkDicomViewerClass->setStatusBar(statusBar);
+        dockWidget_1 = new QDockWidget(QvtkDicomViewerClass);
+        dockWidget_1->setObjectName(QStringLiteral("dockWidget_1"));
+        dockWidgetContents_3 = new QWidget();
+        dockWidgetContents_3->setObjectName(QStringLiteral("dockWidgetContents_3"));
+        gridLayout_2 = new QGridLayout(dockWidgetContents_3);
+        gridLayout_2->setSpacing(6);
+        gridLayout_2->setContentsMargins(11, 11, 11, 11);
+        gridLayout_2->setObjectName(QStringLiteral("gridLayout_2"));
+        lineEdit_Modality = new QLineEdit(dockWidgetContents_3);
+        lineEdit_Modality->setObjectName(QStringLiteral("lineEdit_Modality"));
+
+        gridLayout_2->addWidget(lineEdit_Modality, 8, 1, 2, 1);
+
+        label_3 = new QLabel(dockWidgetContents_3);
+        label_3->setObjectName(QStringLiteral("label_3"));
+
+        gridLayout_2->addWidget(label_3, 6, 0, 3, 1);
+
+        label_4 = new QLabel(dockWidgetContents_3);
+        label_4->setObjectName(QStringLiteral("label_4"));
+
+        gridLayout_2->addWidget(label_4, 9, 0, 1, 1);
+
+        label_5 = new QLabel(dockWidgetContents_3);
+        label_5->setObjectName(QStringLiteral("label_5"));
+
+        gridLayout_2->addWidget(label_5, 10, 0, 1, 1);
+
+        lineEdit_Hospital = new QLineEdit(dockWidgetContents_3);
+        lineEdit_Hospital->setObjectName(QStringLiteral("lineEdit_Hospital"));
+
+        gridLayout_2->addWidget(lineEdit_Hospital, 10, 1, 1, 1);
+
+        label_6 = new QLabel(dockWidgetContents_3);
+        label_6->setObjectName(QStringLiteral("label_6"));
+
+        gridLayout_2->addWidget(label_6, 11, 0, 1, 1);
+
+        lineEdit_Dimensions = new QLineEdit(dockWidgetContents_3);
+        lineEdit_Dimensions->setObjectName(QStringLiteral("lineEdit_Dimensions"));
+
+        gridLayout_2->addWidget(lineEdit_Dimensions, 11, 1, 2, 1);
+
+        label_7 = new QLabel(dockWidgetContents_3);
+        label_7->setObjectName(QStringLiteral("label_7"));
+
+        gridLayout_2->addWidget(label_7, 12, 0, 2, 1);
+
+        label_11 = new QLabel(dockWidgetContents_3);
+        label_11->setObjectName(QStringLiteral("label_11"));
+
+        gridLayout_2->addWidget(label_11, 14, 0, 1, 1);
+
+        lineEdit_Origins = new QLineEdit(dockWidgetContents_3);
+        lineEdit_Origins->setObjectName(QStringLiteral("lineEdit_Origins"));
+
+        gridLayout_2->addWidget(lineEdit_Origins, 13, 1, 1, 1);
+
+        lineEdit_Spacing = new QLineEdit(dockWidgetContents_3);
+        lineEdit_Spacing->setObjectName(QStringLiteral("lineEdit_Spacing"));
+
+        gridLayout_2->addWidget(lineEdit_Spacing, 14, 1, 1, 1);
+
+        verticalSpacer_3 = new QSpacerItem(20, 40, QSizePolicy::Minimum, QSizePolicy::Expanding);
+
+        gridLayout_2->addItem(verticalSpacer_3, 15, 1, 1, 1);
+
+        label_10 = new QLabel(dockWidgetContents_3);
+        label_10->setObjectName(QStringLiteral("label_10"));
+
+        gridLayout_2->addWidget(label_10, 2, 0, 1, 1);
+
+        lineEdit_Name = new QLineEdit(dockWidgetContents_3);
+        lineEdit_Name->setObjectName(QStringLiteral("lineEdit_Name"));
+
+        gridLayout_2->addWidget(lineEdit_Name, 0, 1, 1, 1);
+
+        lineEdit_Age = new QLineEdit(dockWidgetContents_3);
+        lineEdit_Age->setObjectName(QStringLiteral("lineEdit_Age"));
+
+        gridLayout_2->addWidget(lineEdit_Age, 2, 1, 1, 1);
+
+        lineEdit_ID = new QLineEdit(dockWidgetContents_3);
+        lineEdit_ID->setObjectName(QStringLiteral("lineEdit_ID"));
+
+        gridLayout_2->addWidget(lineEdit_ID, 3, 1, 1, 1);
+
+        label_9 = new QLabel(dockWidgetContents_3);
+        label_9->setObjectName(QStringLiteral("label_9"));
+
+        gridLayout_2->addWidget(label_9, 1, 0, 1, 1);
+
+        lineEdit_Sex = new QLineEdit(dockWidgetContents_3);
+        lineEdit_Sex->setObjectName(QStringLiteral("lineEdit_Sex"));
+
+        gridLayout_2->addWidget(lineEdit_Sex, 1, 1, 1, 1);
+
+        label_8 = new QLabel(dockWidgetContents_3);
+        label_8->setObjectName(QStringLiteral("label_8"));
+
+        gridLayout_2->addWidget(label_8, 0, 0, 1, 1);
+
+        line = new QFrame(dockWidgetContents_3);
+        line->setObjectName(QStringLiteral("line"));
+        line->setFrameShape(QFrame::HLine);
+        line->setFrameShadow(QFrame::Sunken);
+
+        gridLayout_2->addWidget(line, 4, 0, 1, 2);
+
+        label = new QLabel(dockWidgetContents_3);
+        label->setObjectName(QStringLiteral("label"));
+
+        gridLayout_2->addWidget(label, 3, 0, 1, 1);
+
+        label_2 = new QLabel(dockWidgetContents_3);
+        label_2->setObjectName(QStringLiteral("label_2"));
+
+        gridLayout_2->addWidget(label_2, 5, 0, 1, 1);
+
+        lineEdit_Time = new QLineEdit(dockWidgetContents_3);
+        lineEdit_Time->setObjectName(QStringLiteral("lineEdit_Time"));
+
+        gridLayout_2->addWidget(lineEdit_Time, 5, 1, 2, 1);
+
+        lineEdit_Manufacturer = new QLineEdit(dockWidgetContents_3);
+        lineEdit_Manufacturer->setObjectName(QStringLiteral("lineEdit_Manufacturer"));
+
+        gridLayout_2->addWidget(lineEdit_Manufacturer, 7, 1, 1, 1);
+
+        dockWidget_1->setWidget(dockWidgetContents_3);
+        QvtkDicomViewerClass->addDockWidget(static_cast<Qt::DockWidgetArea>(1), dockWidget_1);
 
         menuBar->addAction(menu->menuAction());
         menuBar->addAction(menu_2->menuAction());
@@ -163,6 +334,18 @@ public:
         menu->setTitle(QApplication::translate("QvtkDicomViewerClass", "\346\226\207\344\273\266", Q_NULLPTR));
         menu_2->setTitle(QApplication::translate("QvtkDicomViewerClass", "\344\277\241\346\201\257", Q_NULLPTR));
         menu_3->setTitle(QApplication::translate("QvtkDicomViewerClass", "\345\267\245\345\205\267", Q_NULLPTR));
+        dockWidget_1->setWindowTitle(QApplication::translate("QvtkDicomViewerClass", "\345\261\236\346\200\247", Q_NULLPTR));
+        label_3->setText(QApplication::translate("QvtkDicomViewerClass", "\345\210\266\351\200\240\345\225\206:", Q_NULLPTR));
+        label_4->setText(QApplication::translate("QvtkDicomViewerClass", "\346\243\200\346\265\213\346\211\213\346\256\265:", Q_NULLPTR));
+        label_5->setText(QApplication::translate("QvtkDicomViewerClass", "\345\214\273\351\231\242:", Q_NULLPTR));
+        label_6->setText(QApplication::translate("QvtkDicomViewerClass", "\345\260\272\345\257\270:", Q_NULLPTR));
+        label_7->setText(QApplication::translate("QvtkDicomViewerClass", "\345\216\237\347\202\271:", Q_NULLPTR));
+        label_11->setText(QApplication::translate("QvtkDicomViewerClass", "\345\203\217\347\264\240\351\227\264\351\232\224:", Q_NULLPTR));
+        label_10->setText(QApplication::translate("QvtkDicomViewerClass", "\345\271\264\351\276\204:", Q_NULLPTR));
+        label_9->setText(QApplication::translate("QvtkDicomViewerClass", "\346\200\247\345\210\253:", Q_NULLPTR));
+        label_8->setText(QApplication::translate("QvtkDicomViewerClass", "\345\247\223\345\220\215;", Q_NULLPTR));
+        label->setText(QApplication::translate("QvtkDicomViewerClass", "ID:", Q_NULLPTR));
+        label_2->setText(QApplication::translate("QvtkDicomViewerClass", "\346\213\215\346\221\204\346\227\266\351\227\264:", Q_NULLPTR));
     } // retranslateUi
 
 };

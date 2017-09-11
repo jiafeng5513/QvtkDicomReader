@@ -70,7 +70,7 @@ private:
 private:
 	///内部操作
 	void DoRender(std::string folder);//绑定数据源,显示Dicom数据
-	std::string DoGetMetaData(std::string folder);//获取Dicom元数据,返回获取到的信息
+	void GetMetaDataAndRender(std::string folder);//使用ITK获取元数据,并显示在Docking界面上
 public slots:
 	void OnOpenFile();
 	void OnRenderText();

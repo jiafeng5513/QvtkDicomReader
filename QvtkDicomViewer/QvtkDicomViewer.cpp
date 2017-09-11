@@ -7,6 +7,7 @@
 #include <vtkDistanceWidget.h>
 #include <vtkDistanceRepresentation.h>
 #include <vtkAngleWidget.h>
+#include <vtkImageChangeInformation.h>
 
 #include "itkImage.h"
 #include "itkImageSeriesReader.h"
@@ -44,14 +45,23 @@ void QvtkDicomViewer::OnOpenFile()
  * 显示给定路径中的Dicom数据
  */
 void QvtkDicomViewer::DoRender(std::string folder)
-{
+{//jiafeng
 	// Read all the DICOM files in the specified directory.
 	reader = vtkSmartPointer<vtkDICOMImageReader>::New();
 	reader->SetDirectoryName(folder.c_str());
+	//reader->SetDataSpacing(50, 50, 1.5);
 	reader->Update();
+	//=================================
+	//vtkSmartPointer<vtkImageChangeInformation> changer =vtkSmartPointer<vtkImageChangeInformation>::New();
+	//changer->SetInputData(reader->GetOutputDataObject(4));
+	////miao?ha?
+	//changer->SetOutputOrigin(100, 100, 0);
+	//changer->SetOutputSpacing(5, 5, 1);
+	//changer->SetCenterImage(1);
+	//changer->Update();
+	//===================================
 	// Visualize
 	m_pImageViewer->SetInputConnection(reader->GetOutputPort());
-
 	// 切片页码信息
 	sliceTextProp = vtkSmartPointer<vtkTextProperty>::New();
 	sliceTextProp->SetFontFamilyToCourier();
@@ -80,7 +90,13 @@ void QvtkDicomViewer::DoRender(std::string folder)
 	temp.append("DataByteOrder:"); temp.append(reader->GetDataByteOrderAsString()); temp.append("\n");
 	temp.append("Width:"); temp.append(std::to_string(reader->GetWidth())); temp.append("\n");
 	temp.append("Height:"); temp.append(std::to_string(reader->GetHeight())); temp.append("\n");
+	temp.append("Data Spacing:"); 
+	temp.append("("); temp.append(std::to_string(*reader->GetDataSpacing()));
+	temp.append(","); temp.append(std::to_string(*(reader->GetDataSpacing() + 1)));
+	temp.append(","); temp.append(std::to_string(*(reader->GetDataSpacing() + 2)));
+	temp.append(")");temp.append("\n");
 	const char* message = temp.c_str();
+	//measurement
 #pragma endregion 
 	usageTextProp = vtkSmartPointer<vtkTextProperty>::New();
 	usageTextProp->SetFontFamilyToCourier();
@@ -129,23 +145,28 @@ void QvtkDicomViewer::DoRender(std::string folder)
 	distanceWidget->SetInteractor(renderWindowInteractor);
 	distanceWidget->CreateDefaultRepresentation();
 	static_cast<vtkDistanceRepresentation *>(distanceWidget->GetRepresentation())->SetLabelFormat("%-#6.3g mm");
-
+	static_cast<vtkDistanceRepresentation *>(distanceWidget->GetRepresentation())->SetScale(1.42f);//?
+	/*reader->GetPixelSpacing();
+	 *
+	m_pImageViewer->GetInteractorStyle();*/
+	//reader->SetDataSpacing(3.2,3.2,1.5);
+	//VTK世界坐标系的单位÷所需的单位=SetScale()
 	// 实例化并设置量角器组件
 	angleWidget = vtkSmartPointer<vtkAngleWidget>::New();
 	angleWidget->SetInteractor(renderWindowInteractor);
 	angleWidget->CreateDefaultRepresentation();
 	renderWindowInteractor->Start();
-
 	// 启动渲染
-	m_pImageViewer->GetRenderer()->ResetCamera();
-	// m_pImageViewer->Render();
-	ui.qvtkWidget->GetRenderWindow()->Render();
-	renderWindowInteractor->Start();
+	//m_pImageViewer->GetRenderer()->ResetCamera();
+	//// m_pImageViewer->Render();
+	//ui.qvtkWidget->GetRenderWindow()->Render();
+	//renderWindowInteractor->Start();
+	//qDebug() << reader->GetDirectoryName();
 }
 /*
- *获取Dicom元数据,返回获取到的信息
+ *使用ITK获取元数据,并显示在Docking界面上
  */
-std::string QvtkDicomViewer::DoGetMetaData(std::string folder)
+void QvtkDicomViewer::GetMetaDataAndRender(std::string folder)
 {
 	typedef signed short InputPixelType;//dicom 对应数据类型
 
@@ -156,7 +177,7 @@ std::string QvtkDicomViewer::DoGetMetaData(std::string folder)
 
 	ReaderType::Pointer _reader = ReaderType::New();
 	_reader->SetFileName(folder);
-	
+
 	ImageIOType::Pointer gdcmImageIO = ImageIOType::New();
 	//关联GDCMImageIO类后，DICOM数据信息就读入内存，ITK能获取更加全面的信息（比起VTK）
 	_reader->SetImageIO(gdcmImageIO);
@@ -164,17 +185,20 @@ std::string QvtkDicomViewer::DoGetMetaData(std::string folder)
 	_reader->GetMetaDataDictionary();//获取DIOCM头文件中信息
 	gdcmImageIO->GetMetaDataDictionary();//获取DIOCM头文件中信息
 
-	//举例获取头文件中部分信息
+										 //举例获取头文件中部分信息
 	char* name = new char[50];			//病人姓名
 	char* patientID = new char[50];		//病人ID
 	char* time = new char[50];			//时间
 	char* manufacture = new char[50];	//制造商
 	char* modility = new char[50];		//检测手段
 	char* hospital = new char[50];		//医院
+	char* sex = new char[50];			//性别
+	char* age = new char[50];			//年龄
+
 	unsigned int dim = 0;				//尺寸
 	int ori = 0;						//朝向
 	int spa = 0;						//空间
-	//还能获取很多文件头信息
+										//还能获取很多文件头信息
 
 	int pixelType = gdcmImageIO->GetPixelType();
 	int componetType = gdcmImageIO->GetComponentType();
@@ -185,32 +209,42 @@ std::string QvtkDicomViewer::DoGetMetaData(std::string folder)
 	ImageIOType::ByteOrder byteOrder = gdcmImageIO->GetByteOrder();
 	ImageIOType::SizeType imgSize = gdcmImageIO->GetImageSizeInPixels();
 
-	gdcmImageIO->GetDimensions(dim);
-	gdcmImageIO->GetOrigin(ori);
-	gdcmImageIO->GetSpacing(spa);
 	gdcmImageIO->GetPatientName(name);
-	gdcmImageIO->GetModality(modility);
 	gdcmImageIO->GetPatientID(patientID);
-	gdcmImageIO->GetManufacturer(manufacture);
 	gdcmImageIO->GetStudyDate(time);
+	gdcmImageIO->GetManufacturer(manufacture);
+	gdcmImageIO->GetModality(modility);
 	gdcmImageIO->GetInstitution(hospital);
-
-	std::string temp = "";
-	temp.append("Patient Name:"); temp.append(name);						 temp.append("\n");
-	temp.append("Patient ID:");	  temp.append(patientID);					 temp.append("\n");
-	temp.append("Time:");		  temp.append(time);						 temp.append("\n");
-	temp.append("Manufacture:");  temp.append(manufacture);					 temp.append("\n");
-	temp.append("Modility:");	  temp.append(modility);					 temp.append("\n");
-	temp.append("hospital:");	  temp.append(hospital);					 temp.append("\n");
-	temp.append("dim:");		  temp.append(std::to_string(dim));			 temp.append("\n");
-	temp.append("ori:");		  temp.append(std::to_string(ori));			 temp.append("\n");
-	temp.append("spa:");		  temp.append(std::to_string(spa));			 temp.append("\n");
-	temp.append("pixelType:");	  temp.append(std::to_string(pixelType));    temp.append("\n");
-	temp.append("componetType:"); temp.append(std::to_string(componetType)); temp.append("\n");
-	temp.append("fileType:");	  temp.append(std::to_string(fileType));	 temp.append("\n");
-	temp.append("componetSize:"); temp.append(std::to_string(componetSize)); temp.append("\n");
-	temp.append("dimension:");	  temp.append(std::to_string(dimension));	 temp.append("\n");
-	return temp;
+	gdcmImageIO->GetPatientSex(sex);
+	gdcmImageIO->GetPatientAge(age);
+	QString temp = "(";
+	temp.append(QString::fromStdString(std::to_string(gdcmImageIO->GetDimensions(0)))); temp.append(",");
+	temp.append(QString::fromStdString(std::to_string(gdcmImageIO->GetDimensions(1))));temp.append(",");
+	temp.append(QString::fromStdString(std::to_string(gdcmImageIO->GetDimensions(2))));temp.append(")");
+	ui.lineEdit_Dimensions->setText(temp);
+	temp = "(";
+	temp.append(QString::fromStdString(std::to_string(gdcmImageIO->GetOrigin(0)))); temp.append(",");
+	temp.append(QString::fromStdString(std::to_string(gdcmImageIO->GetOrigin(1)))); temp.append(",");
+	temp.append(QString::fromStdString(std::to_string(gdcmImageIO->GetOrigin(2)))); temp.append(")");
+	ui.lineEdit_Origins->setText(temp);
+	temp = "(";
+	temp.append(QString::fromStdString(std::to_string(gdcmImageIO->GetSpacing(0)))); temp.append(",");
+	temp.append(QString::fromStdString(std::to_string(gdcmImageIO->GetSpacing(1)))); temp.append(",");
+	temp.append(QString::fromStdString(std::to_string(gdcmImageIO->GetSpacing(2)))); temp.append(")");
+	ui.lineEdit_Spacing->setText(temp);
+	
+	ui.lineEdit_Name->setText(name);
+	ui.lineEdit_ID->setText(patientID);
+	ui.lineEdit_Time->setText(time);
+	ui.lineEdit_Manufacturer->setText(manufacture);
+	ui.lineEdit_Modality->setText(modility);
+	ui.lineEdit_Hospital->setText(hospital);
+	ui.lineEdit_Sex->setText(sex);
+	ui.lineEdit_Age->setText(age);
+	
+	//ui.lineEdit_Spacing->setText(std::to_string(sp);
+	/*return temp;*/
+	//ui.lineEdit_Age->setText(QStringLiteral("大哥"));
 }
 /*
  * 工具条->显示文件头信息
@@ -222,10 +256,7 @@ void QvtkDicomViewer::OnRenderText()
 	if (path.isEmpty() == true)
 		return;
 	std::string folder = path.toStdString();
-	DoGetMetaData(folder);
-	std::string temp = DoGetMetaData(folder);
-	//qDebug() << DoGetMetaData(folder);
-	QMessageBox::information(NULL, QStringLiteral("文件头信息"), temp.c_str());
+	GetMetaDataAndRender(folder);
 }
 /*
  * 工具条->前一张
