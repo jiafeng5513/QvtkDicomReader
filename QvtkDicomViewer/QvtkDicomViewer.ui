@@ -43,8 +43,17 @@
     <addaction name="action_back"/>
     <addaction name="action_next"/>
    </widget>
+   <widget class="QMenu" name="menu_3">
+    <property name="title">
+     <string>工具</string>
+    </property>
+    <addaction name="action_Pointer"/>
+    <addaction name="action_Protractor"/>
+    <addaction name="action_Ruler"/>
+   </widget>
    <addaction name="menu"/>
    <addaction name="menu_2"/>
+   <addaction name="menu_3"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -58,6 +67,11 @@
    <addaction name="separator"/>
    <addaction name="action_back"/>
    <addaction name="action_next"/>
+   <addaction name="separator"/>
+   <addaction name="action_Pointer"/>
+   <addaction name="action_Protractor"/>
+   <addaction name="action_Ruler"/>
+   <addaction name="separator"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <action name="action_Open">
@@ -94,6 +108,42 @@
    </property>
    <property name="text">
     <string>下一张</string>
+   </property>
+  </action>
+  <action name="action_Pointer">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/mouse_128px_1153948_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/mouse_128px_1153948_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>无</string>
+   </property>
+  </action>
+  <action name="action_Protractor">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/Angle_Thingy_128px_559411_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/Angle_Thingy_128px_559411_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>量角器</string>
+   </property>
+  </action>
+  <action name="action_Ruler">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/ruler_128px_1209146_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/ruler_128px_1209146_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>测距尺</string>
    </property>
   </action>
  </widget>
@@ -173,11 +223,62 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>action_Pointer</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnSelectedPointer()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>408</x>
+     <y>278</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_Protractor</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnSelectedProtractor()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>408</x>
+     <y>278</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_Ruler</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnSelectedRuler()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>408</x>
+     <y>278</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>OnOpenFile()</slot>
   <slot>OnRenderText()</slot>
   <slot>OnForward()</slot>
   <slot>OnBackward()</slot>
+  <slot>OnSelectedPointer()</slot>
+  <slot>OnSelectedProtractor()</slot>
+  <slot>OnSelectedRuler()</slot>
  </slots>
 </ui>

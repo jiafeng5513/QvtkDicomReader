@@ -46,11 +46,11 @@ protected:
 public:
 	void SetImageViewer(vtkImageViewer2* imageViewer);
 	void SetStatusMapper(vtkTextMapper* statusMapper);
-
-
-protected:
 	void MoveSliceForward();
 	void MoveSliceBackward();
+
+protected:
+	
 
 	virtual void OnKeyDown()override;
 	virtual void OnMouseWheelForward()override;
