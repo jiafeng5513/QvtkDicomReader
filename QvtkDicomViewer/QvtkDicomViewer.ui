@@ -69,6 +69,8 @@
     <addaction name="action_Pointer"/>
     <addaction name="action_Protractor"/>
     <addaction name="action_Ruler"/>
+    <addaction name="action_Contour"/>
+    <addaction name="action_BiDimensional"/>
    </widget>
    <addaction name="menu"/>
    <addaction name="menu_2"/>
@@ -79,7 +81,7 @@
     <enum>TopToolBarArea</enum>
    </attribute>
    <attribute name="toolBarBreak">
-    <bool>true</bool>
+    <bool>false</bool>
    </attribute>
    <addaction name="action_Open"/>
    <addaction name="action_RenderText"/>
@@ -90,6 +92,8 @@
    <addaction name="action_Pointer"/>
    <addaction name="action_Protractor"/>
    <addaction name="action_Ruler"/>
+   <addaction name="action_Contour"/>
+   <addaction name="action_BiDimensional"/>
    <addaction name="separator"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
@@ -307,6 +311,33 @@
     <string>测距尺</string>
    </property>
   </action>
+  <action name="action_Contour">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/Bezier_Curve_128px_559452_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/Bezier_Curve_128px_559452_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>轮廓</string>
+   </property>
+   <property name="toolTip">
+    <string>轮廓</string>
+   </property>
+  </action>
+  <action name="action_BiDimensional">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/Arrow_Cross_128px_1177075_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/Arrow_Cross_128px_1177075_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>二维标尺</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
@@ -432,6 +463,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>action_Contour</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnSelectedContour()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>589</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_BiDimensional</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnSelectedBiDimensional()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>589</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>OnOpenFile()</slot>
@@ -442,5 +505,7 @@
   <slot>OnSelectedProtractor()</slot>
   <slot>OnSelectedRuler()</slot>
   <slot>OnTest()</slot>
+  <slot>OnSelectedContour()</slot>
+  <slot>OnSelectedBiDimensional()</slot>
  </slots>
 </ui>

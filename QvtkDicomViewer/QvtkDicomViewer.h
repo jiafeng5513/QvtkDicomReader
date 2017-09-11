@@ -25,6 +25,12 @@
 #include <myVtkInteractorStyleImage.h>
 #include <vtkDistanceWidget.h>
 #include <vtkAngleWidget.h>
+#include <vtkContourWidget.h>
+#include <vtkOrientedGlyphContourRepresentation.h>
+#include <vtkAxesActor.h>
+#include <vtkOrientationMarkerWidget.h>
+#include <vtkBiDimensionalWidget.h>
+#include "vtkBiDimensionalCallback.h"
 //itk
 
 /*
@@ -67,10 +73,23 @@ private:
 	vtkSmartPointer<myVtkInteractorStyleImage> myInteractorStyle;
 	vtkSmartPointer<vtkDistanceWidget> distanceWidget;//测距
 	vtkSmartPointer<vtkAngleWidget> angleWidget;//测量角度
+	vtkSmartPointer<vtkContourWidget> contourWidget;//轮廓选框
+	vtkSmartPointer<vtkAxesActor> axes;
+	vtkSmartPointer<vtkOrientedGlyphContourRepresentation> contourRepresentation;
+	vtkSmartPointer<vtkOrientationMarkerWidget> widget;
+	vtkSmartPointer<vtkBiDimensionalWidget> biDimensionalWidget;
+	vtkSmartPointer<vtkBiDimensionalCallback> biDimensionalCallback;
 private:
 	///内部操作
 	void DoRender(std::string folder);//绑定数据源,显示Dicom数据
 	void GetMetaDataAndRender(std::string folder);//使用ITK获取元数据,并显示在Docking界面上
+	void addDistanceWidget();
+	void addAngleWidget();
+	void addContourWidget();
+	void SetSliceText();
+	void SetUsageText();
+	void addOrientationMarker();
+	void addBiDimensionalWidget();
 public slots:
 	void OnOpenFile();
 	void OnRenderText();
@@ -79,4 +98,6 @@ public slots:
 	void OnSelectedPointer();//选中默认鼠标指针工具
 	void OnSelectedProtractor();//选中量角器工具
 	void OnSelectedRuler();//选中测距尺工具
+	void OnSelectedContour();//选中轮廓工具
+	void OnSelectedBiDimensional();//选中二维标尺工具
 };

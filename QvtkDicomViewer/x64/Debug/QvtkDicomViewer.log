@@ -1,6 +1,4 @@
-﻿  Moc'ing QvtkDicomViewer.h...
-  moc_QvtkDicomViewer.cpp
-  QvtkDicomViewer.cpp
+﻿  QvtkDicomViewer.cpp
 C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Tools\MSVC\14.10.25017\include\xutility(2350): warning C4996: 'std::copy::_Unchecked_iterators::_Deprecate': Call to 'std::copy' with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators'
   C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Tools\MSVC\14.10.25017\include\xutility(2350): note: 参见“std::copy::_Unchecked_iterators::_Deprecate”的声明
   d:\libraries\itk\itk_4.12.0\itk_install\include\itk-4.12\itkImportImageContainer.hxx(72): note: 参见对正在编译的函数 模板 实例化“_OutIt std::copy<TElement*,TElement*>(_InIt,_InIt,_OutIt)”的引用
@@ -19,8 +17,6 @@ C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Tools\MSVC\1
           [
               TOutputImage=InputImageType
           ]
-  QvtkDicomViewer.cpp(178): note: 参见对正在编译的 类 模板 实例化 "itk::ImageSeriesReader<InputImageType>" 的引用
-  main.cpp
-  正在生成代码...
+  QvtkDicomViewer.cpp(274): note: 参见对正在编译的 类 模板 实例化 "itk::ImageSeriesReader<InputImageType>" 的引用
   QvtkDicomViewer.vcxproj -> E:\VisualStudio\QvtkDicomViewer\x64\Debug\QvtkDicomViewer.exe
   QvtkDicomViewer.vcxproj -> E:\VisualStudio\QvtkDicomViewer\x64\Debug\QvtkDicomViewer.pdb (Full PDB)

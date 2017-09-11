@@ -92,6 +92,7 @@
     <ClCompile Include="main.cpp" />
     <ClCompile Include="myVtkInteractorStyleImage.cpp" />
     <ClCompile Include="QvtkDicomViewer.cpp" />
+    <ClCompile Include="vtkBiDimensionalCallback.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="QvtkDicomViewer.h">
@@ -120,6 +121,7 @@
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_QvtkDicomViewer.h" />
     <ClInclude Include="myVtkInteractorStyleImage.h" />
+    <ClInclude Include="vtkBiDimensionalCallback.h" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="QvtkDicomViewer.qrc">

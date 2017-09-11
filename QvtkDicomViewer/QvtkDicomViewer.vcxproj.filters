@@ -48,6 +48,9 @@
     <ClCompile Include="myVtkInteractorStyleImage.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="vtkBiDimensionalCallback.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="QvtkDicomViewer.h">
@@ -65,6 +68,9 @@
       <Filter>Generated Files</Filter>
     </ClInclude>
     <ClInclude Include="myVtkInteractorStyleImage.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vtkBiDimensionalCallback.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

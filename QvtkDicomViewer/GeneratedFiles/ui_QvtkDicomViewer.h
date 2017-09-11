@@ -40,6 +40,8 @@ public:
     QAction *action_Pointer;
     QAction *action_Protractor;
     QAction *action_Ruler;
+    QAction *action_Contour;
+    QAction *action_BiDimensional;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QVTKWidget *qvtkWidget;
@@ -120,6 +122,18 @@ public:
         QIcon icon6;
         icon6.addFile(QStringLiteral(":/QvtkDicomViewer/Resources/ruler_128px_1209146_easyicon.net.ico"), QSize(), QIcon::Normal, QIcon::Off);
         action_Ruler->setIcon(icon6);
+        action_Contour = new QAction(QvtkDicomViewerClass);
+        action_Contour->setObjectName(QStringLiteral("action_Contour"));
+        action_Contour->setCheckable(true);
+        QIcon icon7;
+        icon7.addFile(QStringLiteral(":/QvtkDicomViewer/Resources/Bezier_Curve_128px_559452_easyicon.net.ico"), QSize(), QIcon::Normal, QIcon::Off);
+        action_Contour->setIcon(icon7);
+        action_BiDimensional = new QAction(QvtkDicomViewerClass);
+        action_BiDimensional->setObjectName(QStringLiteral("action_BiDimensional"));
+        action_BiDimensional->setCheckable(true);
+        QIcon icon8;
+        icon8.addFile(QStringLiteral(":/QvtkDicomViewer/Resources/Arrow_Cross_128px_1177075_easyicon.net.ico"), QSize(), QIcon::Normal, QIcon::Off);
+        action_BiDimensional->setIcon(icon8);
         centralWidget = new QWidget(QvtkDicomViewerClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
@@ -152,7 +166,6 @@ public:
         mainToolBar = new QToolBar(QvtkDicomViewerClass);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
         QvtkDicomViewerClass->addToolBar(Qt::TopToolBarArea, mainToolBar);
-        QvtkDicomViewerClass->insertToolBarBreak(mainToolBar);
         statusBar = new QStatusBar(QvtkDicomViewerClass);
         statusBar->setObjectName(QStringLiteral("statusBar"));
         QvtkDicomViewerClass->setStatusBar(statusBar);
@@ -298,6 +311,8 @@ public:
         menu_3->addAction(action_Pointer);
         menu_3->addAction(action_Protractor);
         menu_3->addAction(action_Ruler);
+        menu_3->addAction(action_Contour);
+        menu_3->addAction(action_BiDimensional);
         mainToolBar->addAction(action_Open);
         mainToolBar->addAction(action_RenderText);
         mainToolBar->addSeparator();
@@ -307,6 +322,8 @@ public:
         mainToolBar->addAction(action_Pointer);
         mainToolBar->addAction(action_Protractor);
         mainToolBar->addAction(action_Ruler);
+        mainToolBar->addAction(action_Contour);
+        mainToolBar->addAction(action_BiDimensional);
         mainToolBar->addSeparator();
 
         retranslateUi(QvtkDicomViewerClass);
@@ -317,6 +334,8 @@ public:
         QObject::connect(action_Pointer, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnSelectedPointer()));
         QObject::connect(action_Protractor, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnSelectedProtractor()));
         QObject::connect(action_Ruler, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnSelectedRuler()));
+        QObject::connect(action_Contour, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnSelectedContour()));
+        QObject::connect(action_BiDimensional, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnSelectedBiDimensional()));
 
         QMetaObject::connectSlotsByName(QvtkDicomViewerClass);
     } // setupUi
@@ -331,6 +350,11 @@ public:
         action_Pointer->setText(QApplication::translate("QvtkDicomViewerClass", "\346\227\240", Q_NULLPTR));
         action_Protractor->setText(QApplication::translate("QvtkDicomViewerClass", "\351\207\217\350\247\222\345\231\250", Q_NULLPTR));
         action_Ruler->setText(QApplication::translate("QvtkDicomViewerClass", "\346\265\213\350\267\235\345\260\272", Q_NULLPTR));
+        action_Contour->setText(QApplication::translate("QvtkDicomViewerClass", "\350\275\256\345\273\223", Q_NULLPTR));
+#ifndef QT_NO_TOOLTIP
+        action_Contour->setToolTip(QApplication::translate("QvtkDicomViewerClass", "\350\275\256\345\273\223", Q_NULLPTR));
+#endif // QT_NO_TOOLTIP
+        action_BiDimensional->setText(QApplication::translate("QvtkDicomViewerClass", "\344\272\214\347\273\264\346\240\207\345\260\272", Q_NULLPTR));
         menu->setTitle(QApplication::translate("QvtkDicomViewerClass", "\346\226\207\344\273\266", Q_NULLPTR));
         menu_2->setTitle(QApplication::translate("QvtkDicomViewerClass", "\344\277\241\346\201\257", Q_NULLPTR));
         menu_3->setTitle(QApplication::translate("QvtkDicomViewerClass", "\345\267\245\345\205\267", Q_NULLPTR));

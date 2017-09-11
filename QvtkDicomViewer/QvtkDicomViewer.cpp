@@ -1,5 +1,9 @@
 #include "myVtkInteractorStyleImage.h"
+#include "vtkBiDimensionalCallback.h"
+
 #include "QvtkDicomViewer.h"
+#include <QMessageBox>
+#include <qDebug>
 
 #include <vtkActor2D.h>
 #include <vtkTextMapper.h>
@@ -8,6 +12,14 @@
 #include <vtkDistanceRepresentation.h>
 #include <vtkAngleWidget.h>
 #include <vtkImageChangeInformation.h>
+#include <vtkProperty.h>
+#include <vtkPolyData.h>
+#include <vtkPoints.h>
+#include "vtkImageData.h"
+#include <vtkAxesActor.h>
+#include <vtkOrientationMarkerWidget.h>
+#include <vtkMath.h>
+#include <vtkCellArray.h>
 
 #include "itkImage.h"
 #include "itkImageSeriesReader.h"
@@ -15,8 +27,6 @@
 #include "itkImageFileReader.h"
 #include "itkImageFileWriter.h"
 
-#include <QMessageBox>
-#include <qDebug>
 /*
  * 构造方法
  */
@@ -24,10 +34,7 @@ QvtkDicomViewer::QvtkDicomViewer(QWidget *parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
-	m_pImageViewer = vtkSmartPointer< vtkImageViewer2 >::New();
-	m_pRenderder = vtkSmartPointer< vtkRenderer >::New();
-	// 设置m_QVTKWidget的渲染器
-	ui.qvtkWidget->GetRenderWindow()->AddRenderer(m_pRenderder);
+	ui.action_Pointer->setChecked(true);
 }
 /*
  * 打开文件
@@ -42,27 +49,70 @@ void QvtkDicomViewer::OnOpenFile()
 	DoRender(folder);
 }
 /*
- * 显示给定路径中的Dicom数据
+ * 添加测距尺
  */
-void QvtkDicomViewer::DoRender(std::string folder)
-{//jiafeng
-	// Read all the DICOM files in the specified directory.
-	reader = vtkSmartPointer<vtkDICOMImageReader>::New();
-	reader->SetDirectoryName(folder.c_str());
+void QvtkDicomViewer::addDistanceWidget()
+{
+	distanceWidget = vtkSmartPointer<vtkDistanceWidget>::New();
+	distanceWidget->SetInteractor(renderWindowInteractor);
+	distanceWidget->CreateDefaultRepresentation();
 	//reader->SetDataSpacing(50, 50, 1.5);
-	reader->Update();
-	//=================================
-	//vtkSmartPointer<vtkImageChangeInformation> changer =vtkSmartPointer<vtkImageChangeInformation>::New();
-	//changer->SetInputData(reader->GetOutputDataObject(4));
-	////miao?ha?
-	//changer->SetOutputOrigin(100, 100, 0);
-	//changer->SetOutputSpacing(5, 5, 1);
-	//changer->SetCenterImage(1);
-	//changer->Update();
-	//===================================
-	// Visualize
-	m_pImageViewer->SetInputConnection(reader->GetOutputPort());
-	// 切片页码信息
+	//static_cast<vtkDistanceRepresentation *>(distanceWidget->GetRepresentation())->SetScale(1.42f);//?
+	//VTK世界坐标系的单位÷所需的单位=SetScale()
+	static_cast<vtkDistanceRepresentation *>(distanceWidget->GetRepresentation())->SetLabelFormat("%-#6.3g mm");
+}
+/*
+ * 添加量角器
+ */
+void QvtkDicomViewer::addAngleWidget()
+{
+	angleWidget = vtkSmartPointer<vtkAngleWidget>::New();
+	angleWidget->SetInteractor(renderWindowInteractor);
+	angleWidget->CreateDefaultRepresentation();
+}
+/*
+ * 添加轮廓工具
+ */
+void QvtkDicomViewer::addContourWidget()
+{
+	contourWidget =vtkSmartPointer<vtkContourWidget>::New();
+
+	///调整线的颜色
+	//contourRepresentation = vtkSmartPointer<vtkOrientedGlyphContourRepresentation>::New();
+	//contourRepresentation->GetLinesProperty()->SetColor(1, 0, 0); // Set color to red
+	//contourWidget->SetRepresentation(contourRepresentation);
+	// Generate a set of points arranged in a circle
+	int numPts = 10;
+	vtkSmartPointer<vtkPoints> points = vtkSmartPointer<vtkPoints>::New();
+	for (int i = 0; i < numPts; i++)
+	{
+		// Create numPts points evenly spread around a circumference of radius 0.1
+		const double angle = 2.0*vtkMath::Pi()*i / numPts;
+		points->InsertPoint(static_cast<vtkIdType>(i), 10*cos(angle), 10*sin(angle), 0.0);
+	}
+
+	// Create a cell array to connect the points into meaningful geometry
+	vtkIdType* vertexIndices = new vtkIdType[numPts + 1];
+	for (int i = 0; i < numPts; i++) { vertexIndices[i] = static_cast<vtkIdType>(i); }
+	// Set the last vertex to 0; this means the last line segment will join the 19th point (vertices[19])
+	// with the first one (vertices[0]), thus closing the circle.
+	vertexIndices[numPts] = 0;
+	vtkSmartPointer<vtkCellArray> lines = vtkSmartPointer<vtkCellArray>::New();
+	lines->InsertNextCell(numPts + 1, vertexIndices);
+
+	// Create polydata to hold the geometry just created, and populate it
+	vtkSmartPointer<vtkPolyData> polydata = vtkSmartPointer<vtkPolyData>::New();
+	polydata->SetPoints(points);
+	polydata->SetLines(lines);
+
+	contourWidget->SetInteractor(renderWindowInteractor);
+
+}
+/*
+ * 添加切片页码
+ */
+void QvtkDicomViewer::SetSliceText()
+{
 	sliceTextProp = vtkSmartPointer<vtkTextProperty>::New();
 	sliceTextProp->SetFontFamilyToCourier();
 	sliceTextProp->SetFontSize(20);
@@ -77,9 +127,12 @@ void QvtkDicomViewer::DoRender(std::string folder)
 	sliceTextActor = vtkSmartPointer<vtkActor2D>::New();
 	sliceTextActor->SetMapper(sliceTextMapper);
 	sliceTextActor->SetPosition(15, 10);
-
-	// DICOM文件头信息
-#pragma region 获取DICOM文件头信息
+}
+/*
+ * 添加Dicom文件头信息
+ */
+void QvtkDicomViewer::SetUsageText()
+{
 	std::string temp = "";
 	temp.append("PatientName:"); temp.append(reader->GetPatientName()); temp.append("\n");
 	temp.append("DescriptiveName:"); temp.append(reader->GetDescriptiveName());	temp.append("\n");
@@ -97,7 +150,8 @@ void QvtkDicomViewer::DoRender(std::string folder)
 	temp.append(")");temp.append("\n");
 	const char* message = temp.c_str();
 	//measurement
-#pragma endregion 
+
+	// DICOM文件头信息
 	usageTextProp = vtkSmartPointer<vtkTextProperty>::New();
 	usageTextProp->SetFontFamilyToCourier();
 	usageTextProp->SetFontSize(14);
@@ -112,6 +166,59 @@ void QvtkDicomViewer::DoRender(std::string folder)
 	usageTextActor->SetMapper(usageTextMapper);
 	usageTextActor->GetPositionCoordinate()->SetCoordinateSystemToNormalizedDisplay();
 	usageTextActor->GetPositionCoordinate()->SetValue(0.05, 0.95);//坐标
+}
+/*
+ * 添加坐标轴指示
+ */
+void QvtkDicomViewer::addOrientationMarker()
+{
+	axes =vtkSmartPointer<vtkAxesActor>::New();
+	widget =vtkSmartPointer<vtkOrientationMarkerWidget>::New();
+	widget->SetOutlineColor(0.9300, 0.5700, 0.1300);
+	widget->SetOrientationMarker(axes);
+	widget->SetInteractor(renderWindowInteractor);
+	widget->SetViewport(0.0, 0.0, 0.4, 0.4);
+	widget->SetEnabled(1);
+	widget->InteractiveOn();
+}
+/*
+ * 添加二维尺度标尺
+ */
+void QvtkDicomViewer::addBiDimensionalWidget()
+{
+	biDimensionalWidget =vtkSmartPointer<vtkBiDimensionalWidget>::New();
+	biDimensionalWidget->SetInteractor(renderWindowInteractor);
+	biDimensionalWidget->CreateDefaultRepresentation();
+	biDimensionalCallback =vtkSmartPointer<vtkBiDimensionalCallback>::New();
+	biDimensionalWidget->AddObserver(vtkCommand::InteractionEvent, biDimensionalCallback);
+}
+/*
+ * 显示给定路径中的Dicom数据
+ */
+void QvtkDicomViewer::DoRender(std::string folder)
+{
+	// reader输出化并绑定文件
+	reader = vtkSmartPointer<vtkDICOMImageReader>::New();
+	reader->SetDirectoryName(folder.c_str());
+	//尝试修改一些参数
+	vtkSmartPointer<vtkImageChangeInformation> changer =vtkSmartPointer<vtkImageChangeInformation>::New();
+	changer->SetInputData(reader->GetOutput());
+	changer->SetOutputOrigin(0, 0, 0);
+	changer->SetOutputSpacing(10, 10, 1);
+	changer->SetCenterImage(1);
+	changer->Update();
+
+	reader->Update();//这个究竟应该放在那里合适呢?
+	// Renderer初始化
+	m_pRenderder = vtkSmartPointer< vtkRenderer >::New();
+	// Renderer绑定输出窗口到Qvtkwidget
+	ui.qvtkWidget->GetRenderWindow()->AddRenderer(m_pRenderder);
+	//Viewer初始化并绑定reader
+	m_pImageViewer = vtkSmartPointer< vtkImageViewer2 >::New();
+	m_pImageViewer->SetInputConnection(reader->GetOutputPort());
+	
+	SetSliceText();// 切片页码信息
+	SetUsageText();// 显示一些Dicom文件头信息
 
 	// 创建交互器实例
 	renderWindowInteractor = vtkSmartPointer<vtkRenderWindowInteractor>::New();
@@ -140,28 +247,17 @@ void QvtkDicomViewer::DoRender(std::string folder)
 	//imageViewer->GetRenderer()->SetBackground(0.2, 0.3, 0.4);
 	// m_pImageViewer->Render();
 
-	// 实例化并设置测距组件
-	distanceWidget = vtkSmartPointer<vtkDistanceWidget>::New();
-	distanceWidget->SetInteractor(renderWindowInteractor);
-	distanceWidget->CreateDefaultRepresentation();
-	static_cast<vtkDistanceRepresentation *>(distanceWidget->GetRepresentation())->SetLabelFormat("%-#6.3g mm");
-	static_cast<vtkDistanceRepresentation *>(distanceWidget->GetRepresentation())->SetScale(1.42f);//?
-	/*reader->GetPixelSpacing();
-	 *
-	m_pImageViewer->GetInteractorStyle();*/
-	//reader->SetDataSpacing(3.2,3.2,1.5);
-	//VTK世界坐标系的单位÷所需的单位=SetScale()
-	// 实例化并设置量角器组件
-	angleWidget = vtkSmartPointer<vtkAngleWidget>::New();
-	angleWidget->SetInteractor(renderWindowInteractor);
-	angleWidget->CreateDefaultRepresentation();
-	renderWindowInteractor->Start();
+	//挂载一些窗口组件
+	addDistanceWidget();// 实例化并设置测距组件
+	addAngleWidget();	// 实例化并设置量角器组件
+	addContourWidget();	// 实例化并设置轮廓组件
+	addOrientationMarker();//添加坐标轴指示(没有开关)
+	addBiDimensionalWidget();
 	// 启动渲染
-	//m_pImageViewer->GetRenderer()->ResetCamera();
-	//// m_pImageViewer->Render();
-	//ui.qvtkWidget->GetRenderWindow()->Render();
-	//renderWindowInteractor->Start();
-	//qDebug() << reader->GetDirectoryName();
+	// m_pImageViewer->Render();//貌似不需要?
+	m_pImageViewer->GetRenderer()->ResetCamera();
+	ui.qvtkWidget->GetRenderWindow()->Render();
+	renderWindowInteractor->Start();
 }
 /*
  *使用ITK获取元数据,并显示在Docking界面上
@@ -279,9 +375,13 @@ void QvtkDicomViewer::OnSelectedPointer()
 {
 	angleWidget->EnabledOff();
 	distanceWidget->EnabledOff();
+	contourWidget->EnabledOff();
+	biDimensionalWidget->EnabledOff();
 	ui.action_Pointer->setChecked(true);
 	ui.action_Protractor->setChecked(false);
 	ui.action_Ruler->setChecked(false);
+	ui.action_Contour->setChecked(false);
+	ui.action_BiDimensional->setChecked(false);
 }
 /*
  * 选中量角器工具
@@ -289,10 +389,15 @@ void QvtkDicomViewer::OnSelectedPointer()
 void QvtkDicomViewer::OnSelectedProtractor()
 {
 	angleWidget->EnabledOn();
+	angleWidget->SetWidgetStateToStart();
 	distanceWidget->EnabledOff();
+	contourWidget->EnabledOff();
+	biDimensionalWidget->EnabledOff();
 	ui.action_Protractor->setChecked(true);
 	ui.action_Pointer->setChecked(false);
 	ui.action_Ruler->setChecked(false);
+	ui.action_Contour->setChecked(false);
+	ui.action_BiDimensional->setChecked(false);
 }
 /*
  * 选中测距尺工具
@@ -300,8 +405,46 @@ void QvtkDicomViewer::OnSelectedProtractor()
 void QvtkDicomViewer::OnSelectedRuler()
 {
 	distanceWidget->EnabledOn();
+	distanceWidget->SetWidgetStateToStart();
 	angleWidget->EnabledOff();
+	contourWidget->EnabledOff();
+	biDimensionalWidget->EnabledOff();
 	ui.action_Ruler->setChecked(true);
 	ui.action_Protractor->setChecked(false);
 	ui.action_Pointer->setChecked(false);
+	ui.action_Contour->setChecked(false);
+	ui.action_BiDimensional->setChecked(false);
+}
+/*
+ * 选中轮廓工具
+ */
+void QvtkDicomViewer::OnSelectedContour()
+{
+	contourWidget->EnabledOn();
+	distanceWidget->EnabledOff();
+	angleWidget->EnabledOff();
+	biDimensionalWidget->EnabledOff();
+	//contourWidget->Initialize(polydata);
+	ui.action_Contour->setChecked(true);
+	ui.action_Ruler->setChecked(false);
+	ui.action_Protractor->setChecked(false);
+	ui.action_Pointer->setChecked(false);
+	ui.action_BiDimensional->setChecked(false);
+}
+/*
+ * 选中二维标尺工具
+ */
+void QvtkDicomViewer::OnSelectedBiDimensional()
+{
+	biDimensionalWidget->EnabledOn();
+	biDimensionalWidget->SetWidgetStateToStart();
+	contourWidget->EnabledOff();
+	distanceWidget->EnabledOff();
+	angleWidget->EnabledOff();
+	ui.action_BiDimensional->setChecked(true);
+	ui.action_Contour->setChecked(false);
+	ui.action_Ruler->setChecked(false);
+	ui.action_Protractor->setChecked(false);
+	ui.action_Pointer->setChecked(false);
+
 }
