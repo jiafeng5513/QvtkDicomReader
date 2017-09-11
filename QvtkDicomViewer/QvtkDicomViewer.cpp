@@ -28,6 +28,8 @@
 #include "itkGDCMImageIO.h"
 #include "itkImageFileReader.h"
 #include "itkImageFileWriter.h"
+
+#include "SlicePlayer.h"
 void functest()
 {
 	qDebug()<< QStringLiteral("调用成功!");
@@ -52,6 +54,16 @@ QvtkDicomViewer::QvtkDicomViewer(QWidget *parent)
 	ui.mainToolBar->addSeparator();
 	ui.mainToolBar->addWidget(_Combobox);
 	ui.mainToolBar->addSeparator();
+	//自定义初始化
+	ui.action_SwitchOfProperty->setChecked(true);
+	ui.dockWidget_1->setHidden(false);
+	icon_Play.addFile(QStringLiteral(":/QvtkDicomViewer/Resources/play_128px_1197036_easyicon.net.ico"), QSize(), QIcon::Normal, QIcon::Off);
+	icon_Pause.addFile(QStringLiteral(":/QvtkDicomViewer/Resources/pause_128px_1197034_easyicon.net.ico"), QSize(), QIcon::Normal, QIcon::Off);
+	PlayFlag = false;
+	ui.action_Stop->setEnabled(false);
+	//实现自动播放功能
+	/*connect(m_slice_player, SIGNAL(SlicePlayer::isTimeToTurnNextSlice()), this, SLOT(OnBackward()));
+	connect(m_slice_player, SIGNAL(SlicePlayer::m_slice_player->isTimeToReset()),this, SLOT(OnResetToFirst()));*/
 }
 /*
  * 响应光标值的修改,执行一些刷新和禁用操作
@@ -311,7 +323,6 @@ void QvtkDicomViewer::DoRender(std::string folder)
 	myInteractorStyle = vtkSmartPointer<myVtkInteractorStyleImage>::New();
 	myInteractorStyle->MouseFunction = myVtkInteractorStyleImage::POINTER;
 	//向自定义的交互风格中传递必要的参数,以便于从鼠标滚轮事件中实现切片页码的更新
-	myInteractorStyle->AddUpdate(functest);
 	myInteractorStyle->SetImageViewer(m_pImageViewer);
 	myInteractorStyle->SetStatusMapper(sliceTextMapper);
 
@@ -339,11 +350,21 @@ void QvtkDicomViewer::DoRender(std::string folder)
 	addContourWidget();	// 实例化并设置轮廓组件
 	addOrientationMarker();//添加坐标轴指示(没有开关)
 	addBiDimensionalWidget();
+
+	// 给播放器进行初始化
+	m_slice_player = new SlicePlayer(myInteractorStyle->getMinSlice(),
+									 myInteractorStyle->getMaxSlice(),
+									 myInteractorStyle->getSlice(),
+									 50);
+	connect(m_slice_player, SIGNAL(isTimeToTurnNextSlice()), this, SLOT(OnForward()));
+	connect(m_slice_player, SIGNAL(isTimeToReset()), this, SLOT(OnResetToFirst()));
 	// 启动渲染
+#pragma region 启动渲染
 	// m_pImageViewer->Render();//貌似不需要?
 	m_pImageViewer->GetRenderer()->ResetCamera();
 	ui.qvtkWidget->GetRenderWindow()->Render();
 	renderWindowInteractor->Start();
+#pragma endregion 
 }
 /*
  *使用ITK获取元数据,并显示在Docking界面上
@@ -455,6 +476,13 @@ void QvtkDicomViewer::OnBackward()
 	myInteractorStyle->MoveSliceBackward();
 }
 /*
+ * 回到第一张
+ */
+void QvtkDicomViewer::OnResetToFirst()
+{
+	myInteractorStyle->ResetSliceToMin();
+}
+/*
  * 选中默认鼠标指针工具
  */
 void QvtkDicomViewer::OnSelectedPointer()
@@ -537,7 +565,7 @@ void QvtkDicomViewer::OnNegative()
 	reader->Update();//刷新
 }
 /*
- *复位按钮
+ * 复位按钮
  */
 void QvtkDicomViewer::OnReset()
 {
@@ -545,3 +573,61 @@ void QvtkDicomViewer::OnReset()
 	myInteractorStyle->MouseFunction = myVtkInteractorStyleImage::POINTER;
 	DoRender(folder);
 }
+/*
+ * 播放
+ */
+void QvtkDicomViewer::OnPlay()
+{
+	//myInteractorStyle->MoveSliceBackward();
+	//
+	if (PlayFlag==true)//此时正在播放,按键之后应该进行暂停,并将图标切换为播放
+	{
+		ui.action_Play->setIcon(icon_Play);
+		ui.action_Play->setText(QStringLiteral("播放"));
+		m_slice_player->pause.lock();//锁定线程
+		ui.action_Stop->setEnabled(false);
+		
+
+	}else//此时为停止状态,案件之后应该进行播放,并将图标切换为暂停
+	{
+		ui.action_Play->setIcon(icon_Pause);
+		ui.action_Play->setText(QStringLiteral("暂停"));
+		m_slice_player->setCurrentSlice(myInteractorStyle->getSlice());//先同步页码
+		if (m_slice_player->isRunning()==true)//线程被加锁了
+		{
+			m_slice_player->pause.unlock();
+		}else//线程没有启动(第一次运行)
+		{
+			m_slice_player->start();
+		}
+		ui.action_Stop->setEnabled(true);
+	}
+	PlayFlag = !PlayFlag;
+}
+/*
+ * 停止
+ */
+void QvtkDicomViewer::OnStop()
+{
+	ui.action_Play->setIcon(icon_Play);
+	ui.action_Play->setText(QStringLiteral("播放"));
+	PlayFlag = false;
+	m_slice_player->pause.lock();
+	myInteractorStyle->ResetSliceToMin();
+	ui.action_Stop->setEnabled(false);
+}
+/*
+ * 属性docking窗口的开关
+ */
+ void QvtkDicomViewer::OnSwitchProperty()
+ {
+	 //ui.action_SwitchOfProperty->isChecked();
+	 if (ui.action_SwitchOfProperty->isChecked()==true)
+	 {
+		 ui.dockWidget_1->setHidden(false);
+	 }
+	 else
+	 {
+		 ui.dockWidget_1->setHidden(true);
+	 }
+ }

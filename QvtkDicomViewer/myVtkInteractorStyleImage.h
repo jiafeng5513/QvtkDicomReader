@@ -12,7 +12,7 @@
 #include <vtkRenderWindowInteractor.h>
 #include <vtkRenderer.h>
 #include <vtkActor.h>
-// headers needed for this example
+
 #include <vtkImageViewer2.h>
 #include <vtkDICOMImageReader.h>
 #include <vtkInteractorStyleImage.h>
@@ -54,11 +54,12 @@ public:
 	void SetStatusMapper(vtkTextMapper* statusMapper);
 	void MoveSliceForward();
 	void MoveSliceBackward();
-	void AddUpdate(void(*pfun)(void));//
-	
+	void PlaySlice();//自动播放
+	int getSlice();//返回当前的页数
+	int getMinSlice();//返回最小页码
+	int getMaxSlice();//返回最大页码
+	void ResetSliceToMin();//重置到最小页码并重绘
 protected:
-	void OnUpdate();//每次需要更新的时候,调用这个函数
-	void(*funcinupdate)(void);
 	virtual void OnKeyDown()override;
 	virtual void OnMouseWheelForward()override;
 	virtual void OnMouseWheelBackward()override;

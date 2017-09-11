@@ -6,7 +6,7 @@
 #include <vtkRenderWindowInteractor.h>
 #include <vtkImageViewer2.h>
 #include <vtkTextMapper.h>
-
+#include <windows.h>//这是个隐患
 
 void myVtkInteractorStyleImage::SetImageViewer(vtkImageViewer2* imageViewer)
 {
@@ -31,7 +31,6 @@ void myVtkInteractorStyleImage::MoveSliceForward()
 		_ImageViewer->SetSlice(_Slice);
 		std::string msg = StatusMessage::Format(_Slice, _MaxSlice);
 		_StatusMapper->SetInput(msg.c_str());
-		OnUpdate();
 		_ImageViewer->Render();
 	}
 }
@@ -45,26 +44,47 @@ void myVtkInteractorStyleImage::MoveSliceBackward()
 		_ImageViewer->SetSlice(_Slice);
 		std::string msg = StatusMessage::Format(_Slice, _MaxSlice);
 		_StatusMapper->SetInput(msg.c_str());
-		OnUpdate();
 		_ImageViewer->Render();
 	}
 }
 /*
- * 每次需要更新的时候,调用这个函数
+ * 自动播放
  */
-void myVtkInteractorStyleImage::OnUpdate()
+void myVtkInteractorStyleImage::PlaySlice()
 {
-	///TODO:添加更新操作
-	if(funcinupdate!=NULL)
-	{
-		funcinupdate();
-	}
+	//
 }
-//添加函数指针
-void myVtkInteractorStyleImage::AddUpdate(void(*pfun)(void))
+/*
+ * 返回当前的页数
+ */
+int myVtkInteractorStyleImage::getSlice()
 {
-	//TODO:添加函数指针
-	funcinupdate = pfun;
+	return _Slice;
+}
+/*
+ * 返回最小页码
+ */
+int myVtkInteractorStyleImage::getMinSlice()
+{
+	return _MinSlice;
+}
+/*
+ * 返回最大页码
+ */
+int myVtkInteractorStyleImage::getMaxSlice()
+{
+	return _MaxSlice;
+}
+/*
+ * 重置到最小页码并重绘
+ */
+void myVtkInteractorStyleImage::ResetSliceToMin()
+{
+	_Slice =_MinSlice;
+	_ImageViewer->SetSlice(_Slice);
+	std::string msg = StatusMessage::Format(_Slice, _MaxSlice);
+	_StatusMapper->SetInput(msg.c_str());
+	_ImageViewer->Render();
 }
 
 void myVtkInteractorStyleImage::OnKeyDown()

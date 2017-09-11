@@ -45,7 +45,7 @@
      <x>0</x>
      <y>0</y>
      <width>1179</width>
-     <height>26</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu">
@@ -76,10 +76,19 @@
     <addaction name="action_Zoom"/>
     <addaction name="action_GrayLevel"/>
     <addaction name="action_Move"/>
+    <addaction name="action_Play"/>
+    <addaction name="action_Stop"/>
+   </widget>
+   <widget class="QMenu" name="menu_4">
+    <property name="title">
+     <string>窗口</string>
+    </property>
+    <addaction name="action_SwitchOfProperty"/>
    </widget>
    <addaction name="menu"/>
    <addaction name="menu_2"/>
    <addaction name="menu_3"/>
+   <addaction name="menu_4"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -92,7 +101,9 @@
    <addaction name="action_RenderText"/>
    <addaction name="separator"/>
    <addaction name="action_back"/>
+   <addaction name="action_Play"/>
    <addaction name="action_next"/>
+   <addaction name="action_Stop"/>
    <addaction name="separator"/>
    <addaction name="action_Pointer"/>
    <addaction name="action_Zoom"/>
@@ -405,6 +416,32 @@
     <string>移动</string>
    </property>
   </action>
+  <action name="action_SwitchOfProperty">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>属性</string>
+   </property>
+  </action>
+  <action name="action_Play">
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/play_128px_1197036_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/play_128px_1197036_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>播放</string>
+   </property>
+  </action>
+  <action name="action_Stop">
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/stop_128px_1197040_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/stop_128px_1197040_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>停止</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
@@ -642,6 +679,54 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>action_SwitchOfProperty</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnSwitchProperty()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>589</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_Play</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnPlay()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>589</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_Stop</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnStop()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>589</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>OnOpenFile()</slot>
@@ -660,5 +745,8 @@
   <slot>OnSelectedGrayLevel()</slot>
   <slot>OnSelectedMove()</slot>
   <slot>OnSelectedZoom()</slot>
+  <slot>OnSwitchProperty()</slot>
+  <slot>OnPlay()</slot>
+  <slot>OnStop()</slot>
  </slots>
 </ui>

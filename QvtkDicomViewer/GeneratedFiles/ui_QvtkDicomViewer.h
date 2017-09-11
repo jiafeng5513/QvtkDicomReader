@@ -47,6 +47,9 @@ public:
     QAction *action_Zoom;
     QAction *action_GrayLevel;
     QAction *action_Move;
+    QAction *action_SwitchOfProperty;
+    QAction *action_Play;
+    QAction *action_Stop;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QVTKWidget *qvtkWidget;
@@ -54,6 +57,7 @@ public:
     QMenu *menu;
     QMenu *menu_2;
     QMenu *menu_3;
+    QMenu *menu_4;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
     QDockWidget *dockWidget_1;
@@ -167,6 +171,19 @@ public:
         QIcon icon13;
         icon13.addFile(QStringLiteral(":/QvtkDicomViewer/Resources/move_Hand_128px_1154031_easyicon.net.ico"), QSize(), QIcon::Normal, QIcon::Off);
         action_Move->setIcon(icon13);
+        action_SwitchOfProperty = new QAction(QvtkDicomViewerClass);
+        action_SwitchOfProperty->setObjectName(QStringLiteral("action_SwitchOfProperty"));
+        action_SwitchOfProperty->setCheckable(true);
+        action_Play = new QAction(QvtkDicomViewerClass);
+        action_Play->setObjectName(QStringLiteral("action_Play"));
+        QIcon icon14;
+        icon14.addFile(QStringLiteral(":/QvtkDicomViewer/Resources/play_128px_1197036_easyicon.net.ico"), QSize(), QIcon::Normal, QIcon::Off);
+        action_Play->setIcon(icon14);
+        action_Stop = new QAction(QvtkDicomViewerClass);
+        action_Stop->setObjectName(QStringLiteral("action_Stop"));
+        QIcon icon15;
+        icon15.addFile(QStringLiteral(":/QvtkDicomViewer/Resources/stop_128px_1197040_easyicon.net.ico"), QSize(), QIcon::Normal, QIcon::Off);
+        action_Stop->setIcon(icon15);
         centralWidget = new QWidget(QvtkDicomViewerClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
@@ -188,13 +205,15 @@ public:
         QvtkDicomViewerClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(QvtkDicomViewerClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1179, 26));
+        menuBar->setGeometry(QRect(0, 0, 1179, 23));
         menu = new QMenu(menuBar);
         menu->setObjectName(QStringLiteral("menu"));
         menu_2 = new QMenu(menuBar);
         menu_2->setObjectName(QStringLiteral("menu_2"));
         menu_3 = new QMenu(menuBar);
         menu_3->setObjectName(QStringLiteral("menu_3"));
+        menu_4 = new QMenu(menuBar);
+        menu_4->setObjectName(QStringLiteral("menu_4"));
         QvtkDicomViewerClass->setMenuBar(menuBar);
         mainToolBar = new QToolBar(QvtkDicomViewerClass);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -337,6 +356,7 @@ public:
         menuBar->addAction(menu->menuAction());
         menuBar->addAction(menu_2->menuAction());
         menuBar->addAction(menu_3->menuAction());
+        menuBar->addAction(menu_4->menuAction());
         menu->addAction(action_Open);
         menu_2->addAction(action_RenderText);
         menu_2->addAction(action_back);
@@ -351,11 +371,16 @@ public:
         menu_3->addAction(action_Zoom);
         menu_3->addAction(action_GrayLevel);
         menu_3->addAction(action_Move);
+        menu_3->addAction(action_Play);
+        menu_3->addAction(action_Stop);
+        menu_4->addAction(action_SwitchOfProperty);
         mainToolBar->addAction(action_Open);
         mainToolBar->addAction(action_RenderText);
         mainToolBar->addSeparator();
         mainToolBar->addAction(action_back);
+        mainToolBar->addAction(action_Play);
         mainToolBar->addAction(action_next);
+        mainToolBar->addAction(action_Stop);
         mainToolBar->addSeparator();
         mainToolBar->addAction(action_Pointer);
         mainToolBar->addAction(action_Zoom);
@@ -384,6 +409,9 @@ public:
         QObject::connect(action_GrayLevel, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnSelectedGrayLevel()));
         QObject::connect(action_Zoom, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnSelectedZoom()));
         QObject::connect(action_Move, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnSelectedMove()));
+        QObject::connect(action_SwitchOfProperty, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnSwitchProperty()));
+        QObject::connect(action_Play, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnPlay()));
+        QObject::connect(action_Stop, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnStop()));
 
         QMetaObject::connectSlotsByName(QvtkDicomViewerClass);
     } // setupUi
@@ -411,9 +439,13 @@ public:
         action_GrayLevel->setToolTip(QApplication::translate("QvtkDicomViewerClass", "\347\201\260\351\230\266", Q_NULLPTR));
 #endif // QT_NO_TOOLTIP
         action_Move->setText(QApplication::translate("QvtkDicomViewerClass", "\347\247\273\345\212\250", Q_NULLPTR));
+        action_SwitchOfProperty->setText(QApplication::translate("QvtkDicomViewerClass", "\345\261\236\346\200\247", Q_NULLPTR));
+        action_Play->setText(QApplication::translate("QvtkDicomViewerClass", "\346\222\255\346\224\276", Q_NULLPTR));
+        action_Stop->setText(QApplication::translate("QvtkDicomViewerClass", "\345\201\234\346\255\242", Q_NULLPTR));
         menu->setTitle(QApplication::translate("QvtkDicomViewerClass", "\346\226\207\344\273\266", Q_NULLPTR));
         menu_2->setTitle(QApplication::translate("QvtkDicomViewerClass", "\344\277\241\346\201\257", Q_NULLPTR));
         menu_3->setTitle(QApplication::translate("QvtkDicomViewerClass", "\345\267\245\345\205\267", Q_NULLPTR));
+        menu_4->setTitle(QApplication::translate("QvtkDicomViewerClass", "\347\252\227\345\217\243", Q_NULLPTR));
         dockWidget_1->setWindowTitle(QApplication::translate("QvtkDicomViewerClass", "\345\261\236\346\200\247", Q_NULLPTR));
         label_3->setText(QApplication::translate("QvtkDicomViewerClass", "\345\210\266\351\200\240\345\225\206:", Q_NULLPTR));
         label_4->setText(QApplication::translate("QvtkDicomViewerClass", "\346\243\200\346\265\213\346\211\213\346\256\265:", Q_NULLPTR));

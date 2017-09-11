@@ -16,5 +16,8 @@
         <file>Resources/zoom_in_128px_1200197_easyicon.net.ico</file>
         <file>Resources/move_Hand_128px_1154031_easyicon.net.ico</file>
         <file>Resources/cancel_128px_1209038_easyicon.net.ico</file>
+        <file>Resources/play_128px_1197036_easyicon.net.ico</file>
+        <file>Resources/pause_128px_1197034_easyicon.net.ico</file>
+        <file>Resources/stop_128px_1197040_easyicon.net.ico</file>
     </qresource>
 </RCC>

@@ -31,6 +31,7 @@
 #include <vtkOrientationMarkerWidget.h>
 #include <vtkBiDimensionalWidget.h>
 #include "vtkBiDimensionalCallback.h"
+#include "SlicePlayer.h"
 //itk
 
 /*
@@ -86,6 +87,10 @@ private:
 	vtkSmartPointer<vtkBiDimensionalWidget> biDimensionalWidget;
 	vtkSmartPointer<vtkBiDimensionalCallback> biDimensionalCallback;
 	std::string folder;//存储当前读取的Dicom的目录,是否有必要作为全局变量现在尚无定论
+	QIcon icon_Play;//播放图标
+	QIcon icon_Pause;//暂停图标
+	bool PlayFlag;//false:图标应为播放,处于准备播放状态,true:图标应为暂停,处于播放状态并准备暂停
+	SlicePlayer *m_slice_player;//这是一个线程类
 private:
 	///内部操作
 	void setCursor(CURSOR newValue);
@@ -107,6 +112,7 @@ public slots:
 	void OnRenderText();
 	void OnForward();//前一张
 	void OnBackward();//后一张
+	void OnResetToFirst();//回到第一张
 	void OnSelectedPointer();//选中默认鼠标指针工具
 	void OnSelectedProtractor();//选中量角器工具
 	void OnSelectedRuler();//选中测距尺工具
@@ -117,4 +123,7 @@ public slots:
 	void OnSelectedMove();//选中移动工具
 	void OnNegative();//使用负片效果
 	void OnReset();//复位
+	void OnPlay();//播放/暂停
+	void OnStop();//停止
+	void OnSwitchProperty();//属性docking窗口的开关
 };
