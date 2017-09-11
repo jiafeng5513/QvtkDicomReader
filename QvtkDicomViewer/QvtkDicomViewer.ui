@@ -71,6 +71,11 @@
     <addaction name="action_Ruler"/>
     <addaction name="action_Contour"/>
     <addaction name="action_BiDimensional"/>
+    <addaction name="action_Negative"/>
+    <addaction name="action_Reset"/>
+    <addaction name="action_Zoom"/>
+    <addaction name="action_GrayLevel"/>
+    <addaction name="action_Move"/>
    </widget>
    <addaction name="menu"/>
    <addaction name="menu_2"/>
@@ -90,11 +95,16 @@
    <addaction name="action_next"/>
    <addaction name="separator"/>
    <addaction name="action_Pointer"/>
+   <addaction name="action_Zoom"/>
+   <addaction name="action_GrayLevel"/>
+   <addaction name="action_Move"/>
    <addaction name="action_Protractor"/>
    <addaction name="action_Ruler"/>
    <addaction name="action_Contour"/>
    <addaction name="action_BiDimensional"/>
    <addaction name="separator"/>
+   <addaction name="action_Negative"/>
+   <addaction name="action_Reset"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QDockWidget" name="dockWidget_1">
@@ -338,6 +348,63 @@
     <string>二维标尺</string>
    </property>
   </action>
+  <action name="action_Negative">
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/video_negative_128px_1138773_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/video_negative_128px_1138773_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>负片</string>
+   </property>
+  </action>
+  <action name="action_Reset">
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/cancel_128px_1209038_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/cancel_128px_1209038_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>复位</string>
+   </property>
+  </action>
+  <action name="action_Zoom">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/zoom_in_128px_1200197_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/zoom_in_128px_1200197_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>缩放</string>
+   </property>
+  </action>
+  <action name="action_GrayLevel">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/brightness_128px_1193620_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/brightness_128px_1193620_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>灰阶</string>
+   </property>
+   <property name="toolTip">
+    <string>灰阶</string>
+   </property>
+  </action>
+  <action name="action_Move">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/move_Hand_128px_1154031_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/move_Hand_128px_1154031_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>移动</string>
+   </property>
+  </action>
  </widget>
  <layoutdefault spacing="6" margin="11"/>
  <customwidgets>
@@ -495,6 +562,86 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>action_Negative</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnNegative()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>589</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_Reset</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnReset()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>589</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_GrayLevel</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnSelectedGrayLevel()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>589</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_Zoom</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnSelectedZoom()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>589</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_Move</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnSelectedMove()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>589</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>OnOpenFile()</slot>
@@ -507,5 +654,11 @@
   <slot>OnTest()</slot>
   <slot>OnSelectedContour()</slot>
   <slot>OnSelectedBiDimensional()</slot>
+  <slot>OnNegative()</slot>
+  <slot>OnReset()</slot>
+  <slot>OnSlider()</slot>
+  <slot>OnSelectedGrayLevel()</slot>
+  <slot>OnSelectedMove()</slot>
+  <slot>OnSelectedZoom()</slot>
  </slots>
 </ui>

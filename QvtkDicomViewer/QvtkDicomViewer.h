@@ -53,12 +53,18 @@ class QvtkDicomViewer : public QMainWindow
 
 public:
 	QvtkDicomViewer(QWidget *parent = Q_NULLPTR);
-	enum CURSOR		//光标类型 
-	{POINTRE,		//默认指针
-		PROTRACTOR,	//量角器
-		RULER			//测距尺
-	};
+	enum CURSOR		
+	{	POINTRE,		//默认指针
+		ZOOM,			//缩放
+		GRAYLEVEL,		//灰阶
+		PROTRACTOR,		//量角器
+		RULER,			//测距尺
+		CONTOUR,		//轮廓
+		BIDI,			//二维尺
+		MOVE			//移动
+	}CursorType;
 private:
+	//CURSOR CursorType;//光标类型
 	Ui::QvtkDicomViewerClass ui;
 	vtkSmartPointer< vtkImageViewer2 > m_pImageViewer;
 	vtkSmartPointer< vtkRenderer > m_pRenderder;
@@ -79,8 +85,10 @@ private:
 	vtkSmartPointer<vtkOrientationMarkerWidget> widget;
 	vtkSmartPointer<vtkBiDimensionalWidget> biDimensionalWidget;
 	vtkSmartPointer<vtkBiDimensionalCallback> biDimensionalCallback;
+	std::string folder;//存储当前读取的Dicom的目录,是否有必要作为全局变量现在尚无定论
 private:
 	///内部操作
+	void setCursor(CURSOR newValue);
 	void DoRender(std::string folder);//绑定数据源,显示Dicom数据
 	void GetMetaDataAndRender(std::string folder);//使用ITK获取元数据,并显示在Docking界面上
 	void addDistanceWidget();
@@ -90,7 +98,11 @@ private:
 	void SetUsageText();
 	void addOrientationMarker();
 	void addBiDimensionalWidget();
+signals :
+	void CursorValueChanged();        //自定义值更改信号,用于监控当前光标的变化
 public slots:
+
+	void OnChangeCursorValue();//响应光标值的修改,执行一些刷新和禁用操作
 	void OnOpenFile();
 	void OnRenderText();
 	void OnForward();//前一张
@@ -100,4 +112,9 @@ public slots:
 	void OnSelectedRuler();//选中测距尺工具
 	void OnSelectedContour();//选中轮廓工具
 	void OnSelectedBiDimensional();//选中二维标尺工具
+	void OnSelectedGrayLevel();//选中灰阶工具
+	void OnSelectedZoom();//选中缩放工具
+	void OnSelectedMove();//选中移动工具
+	void OnNegative();//使用负片效果
+	void OnReset();//复位
 };

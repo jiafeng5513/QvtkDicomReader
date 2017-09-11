@@ -4,6 +4,7 @@
 #include "QvtkDicomViewer.h"
 #include <QMessageBox>
 #include <qDebug>
+#include <QComboBox>
 
 #include <vtkActor2D.h>
 #include <vtkTextMapper.h>
@@ -20,13 +21,17 @@
 #include <vtkOrientationMarkerWidget.h>
 #include <vtkMath.h>
 #include <vtkCellArray.h>
+#include <vtkImageIterator.h>
 
 #include "itkImage.h"
 #include "itkImageSeriesReader.h"
 #include "itkGDCMImageIO.h"
 #include "itkImageFileReader.h"
 #include "itkImageFileWriter.h"
-
+void functest()
+{
+	qDebug()<< QStringLiteral("调用成功!");
+}
 /*
  * 构造方法
  */
@@ -35,6 +40,74 @@ QvtkDicomViewer::QvtkDicomViewer(QWidget *parent)
 {
 	ui.setupUi(this);
 	ui.action_Pointer->setChecked(true);
+	CursorType = CURSOR::POINTRE;
+	//监控光标类型的修改
+	connect(this, SIGNAL(CursorValueChanged()), this, SLOT(OnChangeCursorValue()));
+	//创建并构造一个下拉列表
+	QComboBox* _Combobox = new QComboBox();
+	_Combobox->addItem(QStringLiteral("骨骼"));
+	_Combobox->addItem(QStringLiteral("肌肉"));
+	_Combobox->addItem(QStringLiteral("查克拉"));
+	//添加到菜单栏
+	ui.mainToolBar->addSeparator();
+	ui.mainToolBar->addWidget(_Combobox);
+	ui.mainToolBar->addSeparator();
+}
+/*
+ * 响应光标值的修改,执行一些刷新和禁用操作
+ */
+void QvtkDicomViewer::OnChangeCursorValue()
+{
+	biDimensionalWidget->EnabledOff();
+	contourWidget->EnabledOff();
+	distanceWidget->EnabledOff();
+	angleWidget->EnabledOff();
+
+	ui.action_BiDimensional->setChecked(false);
+	ui.action_Contour->setChecked(false);
+	ui.action_Ruler->setChecked(false);
+	ui.action_Protractor->setChecked(false);
+	ui.action_Pointer->setChecked(false);
+
+	ui.action_GrayLevel->setChecked(false);
+	ui.action_Zoom->setChecked(false);
+	ui.action_Move->setChecked(false);
+	switch (CursorType)
+	{
+	case POINTRE://默认指针
+		ui.action_Pointer->setChecked(true);
+		break;
+	case ZOOM://缩放
+		ui.action_Zoom->setChecked(true);
+		break;
+	case GRAYLEVEL://灰阶
+		ui.action_GrayLevel->setChecked(true);
+		break;//量角器
+	case PROTRACTOR:
+		angleWidget->EnabledOn();
+		angleWidget->SetWidgetStateToStart();
+		ui.action_Protractor->setChecked(true);
+		break;
+	case RULER://测距尺
+		distanceWidget->EnabledOn();
+		distanceWidget->SetWidgetStateToStart();
+		ui.action_Ruler->setChecked(true);
+		break;
+	case CONTOUR://轮廓
+		contourWidget->EnabledOff();
+		ui.action_Contour->setChecked(true);
+		break;
+	case BIDI://二维尺
+		biDimensionalWidget->EnabledOn();
+		biDimensionalWidget->SetWidgetStateToStart();
+		ui.action_BiDimensional->setChecked(true);
+		break;
+	case MOVE:
+		ui.action_Move->setChecked(true);
+		break;
+	default:
+		break;
+	}
 }
 /*
  * 打开文件
@@ -45,7 +118,7 @@ void QvtkDicomViewer::OnOpenFile()
 	QString dir = QFileDialog::getExistingDirectory(this, QStringLiteral("打开目录"), "F:/", QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
 	if (dir.isEmpty() == true)
 		return;
-	std::string folder = dir.toStdString();
+	folder = dir.toStdString();
 	DoRender(folder);
 }
 /*
@@ -106,7 +179,6 @@ void QvtkDicomViewer::addContourWidget()
 	polydata->SetLines(lines);
 
 	contourWidget->SetInteractor(renderWindowInteractor);
-
 }
 /*
  * 添加切片页码
@@ -155,6 +227,7 @@ void QvtkDicomViewer::SetUsageText()
 	usageTextProp = vtkSmartPointer<vtkTextProperty>::New();
 	usageTextProp->SetFontFamilyToCourier();
 	usageTextProp->SetFontSize(14);
+	usageTextProp->SetColor(1.0, 1.0, 0.0);
 	usageTextProp->SetVerticalJustificationToTop();
 	usageTextProp->SetJustificationToLeft();
 
@@ -177,9 +250,10 @@ void QvtkDicomViewer::addOrientationMarker()
 	widget->SetOutlineColor(0.9300, 0.5700, 0.1300);
 	widget->SetOrientationMarker(axes);
 	widget->SetInteractor(renderWindowInteractor);
-	widget->SetViewport(0.0, 0.0, 0.4, 0.4);
+	widget->SetViewport(0.0, 0.0, 0.2, 0.2);
 	widget->SetEnabled(1);
-	widget->InteractiveOn();
+	widget->InteractiveOff();//禁用交互
+	//widget->InteractiveOn();
 }
 /*
  * 添加二维尺度标尺
@@ -191,6 +265,14 @@ void QvtkDicomViewer::addBiDimensionalWidget()
 	biDimensionalWidget->CreateDefaultRepresentation();
 	biDimensionalCallback =vtkSmartPointer<vtkBiDimensionalCallback>::New();
 	biDimensionalWidget->AddObserver(vtkCommand::InteractionEvent, biDimensionalCallback);
+}
+/*
+ *修改当前光标类型
+ */
+void QvtkDicomViewer::setCursor(CURSOR newValue)
+{
+	CursorType = newValue;
+	emit CursorValueChanged();//值更改,发出信号
 }
 /*
  * 显示给定路径中的Dicom数据
@@ -216,16 +298,20 @@ void QvtkDicomViewer::DoRender(std::string folder)
 	//Viewer初始化并绑定reader
 	m_pImageViewer = vtkSmartPointer< vtkImageViewer2 >::New();
 	m_pImageViewer->SetInputConnection(reader->GetOutputPort());
-	
 	SetSliceText();// 切片页码信息
 	SetUsageText();// 显示一些Dicom文件头信息
 
+	//================================================================================
+	//图像变换新功能实验区域
+	//================================================================================
 	// 创建交互器实例
 	renderWindowInteractor = vtkSmartPointer<vtkRenderWindowInteractor>::New();
 	// 交互风格(InteractorStyle)是通过继承vtkInteractorStyleImage实现的
 	// 其中重新实现了鼠标滚轮的交互事件
 	myInteractorStyle = vtkSmartPointer<myVtkInteractorStyleImage>::New();
+	myInteractorStyle->MouseFunction = myVtkInteractorStyleImage::POINTER;
 	//向自定义的交互风格中传递必要的参数,以便于从鼠标滚轮事件中实现切片页码的更新
+	myInteractorStyle->AddUpdate(functest);
 	myInteractorStyle->SetImageViewer(m_pImageViewer);
 	myInteractorStyle->SetStatusMapper(sliceTextMapper);
 
@@ -373,78 +459,89 @@ void QvtkDicomViewer::OnBackward()
  */
 void QvtkDicomViewer::OnSelectedPointer()
 {
-	angleWidget->EnabledOff();
-	distanceWidget->EnabledOff();
-	contourWidget->EnabledOff();
-	biDimensionalWidget->EnabledOff();
-	ui.action_Pointer->setChecked(true);
-	ui.action_Protractor->setChecked(false);
-	ui.action_Ruler->setChecked(false);
-	ui.action_Contour->setChecked(false);
-	ui.action_BiDimensional->setChecked(false);
+	setCursor(CURSOR::POINTRE);
+	myInteractorStyle->MouseFunction = myVtkInteractorStyleImage::POINTER;
 }
 /*
  * 选中量角器工具
  */
 void QvtkDicomViewer::OnSelectedProtractor()
 {
-	angleWidget->EnabledOn();
-	angleWidget->SetWidgetStateToStart();
-	distanceWidget->EnabledOff();
-	contourWidget->EnabledOff();
-	biDimensionalWidget->EnabledOff();
-	ui.action_Protractor->setChecked(true);
-	ui.action_Pointer->setChecked(false);
-	ui.action_Ruler->setChecked(false);
-	ui.action_Contour->setChecked(false);
-	ui.action_BiDimensional->setChecked(false);
+	setCursor(CURSOR::PROTRACTOR);
 }
 /*
  * 选中测距尺工具
  */
 void QvtkDicomViewer::OnSelectedRuler()
 {
-	distanceWidget->EnabledOn();
-	distanceWidget->SetWidgetStateToStart();
-	angleWidget->EnabledOff();
-	contourWidget->EnabledOff();
-	biDimensionalWidget->EnabledOff();
-	ui.action_Ruler->setChecked(true);
-	ui.action_Protractor->setChecked(false);
-	ui.action_Pointer->setChecked(false);
-	ui.action_Contour->setChecked(false);
-	ui.action_BiDimensional->setChecked(false);
+	setCursor(CURSOR::RULER);
 }
 /*
  * 选中轮廓工具
  */
 void QvtkDicomViewer::OnSelectedContour()
 {
-	contourWidget->EnabledOn();
-	distanceWidget->EnabledOff();
-	angleWidget->EnabledOff();
-	biDimensionalWidget->EnabledOff();
-	//contourWidget->Initialize(polydata);
-	ui.action_Contour->setChecked(true);
-	ui.action_Ruler->setChecked(false);
-	ui.action_Protractor->setChecked(false);
-	ui.action_Pointer->setChecked(false);
-	ui.action_BiDimensional->setChecked(false);
+	setCursor(CURSOR::CONTOUR);
 }
 /*
  * 选中二维标尺工具
  */
 void QvtkDicomViewer::OnSelectedBiDimensional()
 {
-	biDimensionalWidget->EnabledOn();
-	biDimensionalWidget->SetWidgetStateToStart();
-	contourWidget->EnabledOff();
-	distanceWidget->EnabledOff();
-	angleWidget->EnabledOff();
-	ui.action_BiDimensional->setChecked(true);
-	ui.action_Contour->setChecked(false);
-	ui.action_Ruler->setChecked(false);
-	ui.action_Protractor->setChecked(false);
-	ui.action_Pointer->setChecked(false);
-
+	setCursor(CURSOR::BIDI);
+}
+/*
+ * 选中灰阶工具
+ */
+void QvtkDicomViewer::OnSelectedGrayLevel()
+{
+	setCursor(CURSOR::GRAYLEVEL);
+	myInteractorStyle->MouseFunction = myVtkInteractorStyleImage::GRAYLEVEL;
+}
+/*
+ * 选中缩放工具
+ */
+void QvtkDicomViewer::OnSelectedZoom()
+{
+	setCursor(CURSOR::ZOOM);
+	myInteractorStyle->MouseFunction = myVtkInteractorStyleImage::ZOOM;
+}
+/*
+ * 选中移动工具
+ */
+void QvtkDicomViewer::OnSelectedMove()
+{
+	setCursor(CURSOR::MOVE);
+	myInteractorStyle->MouseFunction = myVtkInteractorStyleImage::MOVE;
+}
+/*
+ * 使用负片效果
+ */
+void QvtkDicomViewer::OnNegative()
+{
+	int subRegion[6] = { 0, 511, 0, 511, 0, 61 };//64, 448, 64, 448, 0, 0
+												
+	vtkImageIterator<unsigned char> iter(reader->GetOutput(), subRegion);
+												
+	while (!iter.IsAtEnd())//注意这个迭代有自带的互斥效果					 
+	{								 	
+		unsigned char *inSI = iter.BeginSpan();									 	
+		unsigned char *inSIEnd = iter.EndSpan();					 	
+		while (inSI != inSIEnd)								 	
+		{								 		
+			*inSI = 255 - *inSI;								 		
+			++inSI;									 	
+		}									 	
+		iter.NextSpan();								
+	}
+	reader->Update();//刷新
+}
+/*
+ *复位按钮
+ */
+void QvtkDicomViewer::OnReset()
+{
+	setCursor(CURSOR::POINTRE);
+	myInteractorStyle->MouseFunction = myVtkInteractorStyleImage::POINTER;
+	DoRender(folder);
 }

@@ -35,7 +35,13 @@ class myVtkInteractorStyleImage :public vtkInteractorStyleImage
 public:
 	static myVtkInteractorStyleImage* New();
 	vtkTypeMacro(myVtkInteractorStyleImage, vtkInteractorStyleImage);
-
+	enum MOUSEFUNC
+	{
+		POINTER,
+		ZOOM,
+		GRAYLEVEL,
+		MOVE
+	}MouseFunction;
 protected:
 	vtkImageViewer2* _ImageViewer;
 	vtkTextMapper* _StatusMapper;
@@ -48,12 +54,22 @@ public:
 	void SetStatusMapper(vtkTextMapper* statusMapper);
 	void MoveSliceForward();
 	void MoveSliceBackward();
-
-protected:
+	void AddUpdate(void(*pfun)(void));//
 	
-
+protected:
+	void OnUpdate();//每次需要更新的时候,调用这个函数
+	void(*funcinupdate)(void);
 	virtual void OnKeyDown()override;
 	virtual void OnMouseWheelForward()override;
 	virtual void OnMouseWheelBackward()override;
+
+	//重载左键的按下和抬起
+	virtual void OnLeftButtonDown() override;
+	virtual void OnLeftButtonUp() override;
+	virtual void OnMiddleButtonDown() override;
+	virtual void OnMiddleButtonUp() override;
+	virtual void OnRightButtonDown() override;
+	virtual void OnRightButtonUp() override;
+
 };
 
