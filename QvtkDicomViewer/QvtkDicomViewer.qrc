@@ -7,17 +7,5 @@
         <file>Resources/Angle_Thingy_128px_559411_easyicon.net.ico</file>
         <file>Resources/mouse_128px_1153948_easyicon.net.ico</file>
         <file>Resources/ruler_128px_1209146_easyicon.net.ico</file>
-        <file>Resources/Bezier_Curve_128px_559452_easyicon.net.ico</file>
-        <file>Resources/Arrow_Cross_128px_1177075_easyicon.net.ico</file>
-        <file>Resources/video_negative_128px_1138773_easyicon.net.ico</file>
-        <file>Resources/Reset_128px_1178509_easyicon.net.ico</file>
-        <file>Resources/progress_128px_1158127_easyicon.net.ico</file>
-        <file>Resources/brightness_128px_1193620_easyicon.net.ico</file>
-        <file>Resources/zoom_in_128px_1200197_easyicon.net.ico</file>
-        <file>Resources/move_Hand_128px_1154031_easyicon.net.ico</file>
-        <file>Resources/cancel_128px_1209038_easyicon.net.ico</file>
-        <file>Resources/play_128px_1197036_easyicon.net.ico</file>
-        <file>Resources/pause_128px_1197034_easyicon.net.ico</file>
-        <file>Resources/stop_128px_1197040_easyicon.net.ico</file>
     </qresource>
 </RCC>
