@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_QvtkDicomViewer_t {
-    QByteArrayData data[22];
-    char stringdata0[313];
+    QByteArrayData data[26];
+    char stringdata0[365];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -52,7 +52,11 @@ QT_MOC_LITERAL(17, 263, 10), // "OnNegative"
 QT_MOC_LITERAL(18, 274, 7), // "OnReset"
 QT_MOC_LITERAL(19, 282, 6), // "OnPlay"
 QT_MOC_LITERAL(20, 289, 6), // "OnStop"
-QT_MOC_LITERAL(21, 296, 16) // "OnSwitchProperty"
+QT_MOC_LITERAL(21, 296, 16), // "OnSwitchProperty"
+QT_MOC_LITERAL(22, 313, 15), // "OnTestDCMTK_x64"
+QT_MOC_LITERAL(23, 329, 18), // "OnTestReadDICOMDIR"
+QT_MOC_LITERAL(24, 348, 11), // "receiveData"
+QT_MOC_LITERAL(25, 360, 4) // "data"
 
     },
     "QvtkDicomViewer\0CursorValueChanged\0\0"
@@ -63,7 +67,9 @@ QT_MOC_LITERAL(21, 296, 16) // "OnSwitchProperty"
     "OnSelectedContour\0OnSelectedBiDimensional\0"
     "OnSelectedGrayLevel\0OnSelectedZoom\0"
     "OnSelectedMove\0OnNegative\0OnReset\0"
-    "OnPlay\0OnStop\0OnSwitchProperty"
+    "OnPlay\0OnStop\0OnSwitchProperty\0"
+    "OnTestDCMTK_x64\0OnTestReadDICOMDIR\0"
+    "receiveData\0data"
 };
 #undef QT_MOC_LITERAL
 
@@ -73,7 +79,7 @@ static const uint qt_meta_data_QvtkDicomViewer[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      20,   14, // methods
+      23,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -81,28 +87,31 @@ static const uint qt_meta_data_QvtkDicomViewer[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,  114,    2, 0x06 /* Public */,
+       1,    0,  129,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       3,    0,  115,    2, 0x0a /* Public */,
-       4,    0,  116,    2, 0x0a /* Public */,
-       5,    0,  117,    2, 0x0a /* Public */,
-       6,    0,  118,    2, 0x0a /* Public */,
-       7,    0,  119,    2, 0x0a /* Public */,
-       8,    0,  120,    2, 0x0a /* Public */,
-       9,    0,  121,    2, 0x0a /* Public */,
-      10,    0,  122,    2, 0x0a /* Public */,
-      11,    0,  123,    2, 0x0a /* Public */,
-      12,    0,  124,    2, 0x0a /* Public */,
-      13,    0,  125,    2, 0x0a /* Public */,
-      14,    0,  126,    2, 0x0a /* Public */,
-      15,    0,  127,    2, 0x0a /* Public */,
-      16,    0,  128,    2, 0x0a /* Public */,
-      17,    0,  129,    2, 0x0a /* Public */,
-      18,    0,  130,    2, 0x0a /* Public */,
-      19,    0,  131,    2, 0x0a /* Public */,
-      20,    0,  132,    2, 0x0a /* Public */,
-      21,    0,  133,    2, 0x0a /* Public */,
+       3,    0,  130,    2, 0x0a /* Public */,
+       4,    0,  131,    2, 0x0a /* Public */,
+       5,    0,  132,    2, 0x0a /* Public */,
+       6,    0,  133,    2, 0x0a /* Public */,
+       7,    0,  134,    2, 0x0a /* Public */,
+       8,    0,  135,    2, 0x0a /* Public */,
+       9,    0,  136,    2, 0x0a /* Public */,
+      10,    0,  137,    2, 0x0a /* Public */,
+      11,    0,  138,    2, 0x0a /* Public */,
+      12,    0,  139,    2, 0x0a /* Public */,
+      13,    0,  140,    2, 0x0a /* Public */,
+      14,    0,  141,    2, 0x0a /* Public */,
+      15,    0,  142,    2, 0x0a /* Public */,
+      16,    0,  143,    2, 0x0a /* Public */,
+      17,    0,  144,    2, 0x0a /* Public */,
+      18,    0,  145,    2, 0x0a /* Public */,
+      19,    0,  146,    2, 0x0a /* Public */,
+      20,    0,  147,    2, 0x0a /* Public */,
+      21,    0,  148,    2, 0x0a /* Public */,
+      22,    0,  149,    2, 0x0a /* Public */,
+      23,    0,  150,    2, 0x0a /* Public */,
+      24,    1,  151,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -127,6 +136,9 @@ static const uint qt_meta_data_QvtkDicomViewer[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::QString,   25,
 
        0        // eod
 };
@@ -157,6 +169,9 @@ void QvtkDicomViewer::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         case 17: _t->OnPlay(); break;
         case 18: _t->OnStop(); break;
         case 19: _t->OnSwitchProperty(); break;
+        case 20: _t->OnTestDCMTK_x64(); break;
+        case 21: _t->OnTestReadDICOMDIR(); break;
+        case 22: _t->receiveData((*reinterpret_cast< QString(*)>(_a[1]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -170,7 +185,6 @@ void QvtkDicomViewer::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
             }
         }
     }
-    Q_UNUSED(_a);
 }
 
 const QMetaObject QvtkDicomViewer::staticMetaObject = {
@@ -198,13 +212,13 @@ int QvtkDicomViewer::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 20)
+        if (_id < 23)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 20;
+        _id -= 23;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 20)
+        if (_id < 23)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 20;
+        _id -= 23;
     }
     return _id;
 }

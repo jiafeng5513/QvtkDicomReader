@@ -60,6 +60,15 @@
     <ClCompile Include="GeneratedFiles\Release\moc_SlicePlayer.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_DicomDir.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_DicomDir.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DicomDir.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="QvtkDicomViewer.h">
@@ -74,6 +83,12 @@
     <CustomBuild Include="SlicePlayer.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="DicomDir.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="DicomDir.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_QvtkDicomViewer.h">
@@ -84,6 +99,9 @@
     </ClInclude>
     <ClInclude Include="vtkBiDimensionalCallback.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_DicomDir.h">
+      <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

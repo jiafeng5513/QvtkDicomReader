@@ -1,5 +1,6 @@
 #include "myVtkInteractorStyleImage.h"
 #include "vtkBiDimensionalCallback.h"
+#include "DicomDir.h"
 
 #include "QvtkDicomViewer.h"
 #include <QMessageBox>
@@ -28,6 +29,9 @@
 #include "itkGDCMImageIO.h"
 #include "itkImageFileReader.h"
 #include "itkImageFileWriter.h"
+
+#include <dcmtk\config\osconfig.h>
+#include <dcmtk\dcmdata\dctk.h>
 
 #include "SlicePlayer.h"
 void functest()
@@ -61,9 +65,6 @@ QvtkDicomViewer::QvtkDicomViewer(QWidget *parent)
 	icon_Pause.addFile(QStringLiteral(":/QvtkDicomViewer/Resources/pause_128px_1197034_easyicon.net.ico"), QSize(), QIcon::Normal, QIcon::Off);
 	PlayFlag = false;
 	ui.action_Stop->setEnabled(false);
-	//实现自动播放功能
-	/*connect(m_slice_player, SIGNAL(SlicePlayer::isTimeToTurnNextSlice()), this, SLOT(OnBackward()));
-	connect(m_slice_player, SIGNAL(SlicePlayer::m_slice_player->isTimeToReset()),this, SLOT(OnResetToFirst()));*/
 }
 /*
  * 响应光标值的修改,执行一些刷新和禁用操作
@@ -132,6 +133,12 @@ void QvtkDicomViewer::OnOpenFile()
 		return;
 	folder = dir.toStdString();
 	DoRender(folder);
+	//0.判断所选文件是DIR文件,DICOM文件夹,还是单幅DICOM图片
+		//0.1对于DIR文件,使用DCMTK-64打开,加载目录信息,弹出文件列表,供用户选择DICOM文件夹
+		//0.2对于DICOM文件夹,直接视为连续图片加载,并激活连续播放等功能
+		//0.3对于单幅DICOM图片,直接显示,并激活除去连续播放的其他功能
+	//1.
+
 }
 /*
  * 添加测距尺
@@ -630,4 +637,89 @@ void QvtkDicomViewer::OnStop()
 	 {
 		 ui.dockWidget_1->setHidden(true);
 	 }
+ }
+ /*
+  *	测试调用DCMTK-x64读取元数据
+  */
+ void QvtkDicomViewer::OnTestDCMTK_x64()
+ {
+	 DcmFileFormat fileformat;
+	 OFCondition oc = fileformat.loadFile("E:/源码和示例程序/DICOM/S427870/S10/I10");
+	 if (oc.good()) {
+		 OFString patientName;
+		 QString temp = "";
+		 if (fileformat.getDataset()->findAndGetOFString(DCM_PatientName, patientName).good())
+		 {
+			 temp.append("Patient Name:");
+			 temp.append(patientName.c_str());
+			 temp.append("\n");
+		 }
+		 if (fileformat.getDataset()->findAndGetOFString(DCM_PatientID, patientName).good())
+		 {
+			 temp.append("Patient ID:");
+			 temp.append(patientName.c_str());
+			 temp.append("\n");
+		 }
+		 ///DCM_PatientBirthDate DCM_PatientSex
+		 if (fileformat.getDataset()->findAndGetOFString(DCM_PatientBirthDate, patientName).good())
+		 {
+			 temp.append("Patient Birth Date:");
+			 temp.append(patientName.c_str());
+			 temp.append("\n");
+		 }
+
+		 if (fileformat.getDataset()->findAndGetOFString(DCM_PatientSex, patientName).good())
+		 {
+			 temp.append("Patient Sex:");
+			 temp.append(patientName.c_str());
+			 temp.append("\n");
+		 }
+
+		 QMessageBox::information(this, "Information", temp);
+	 }
+ }
+ /*
+  *	测试调用DCMTK-x64读取DIR文件
+  */
+ void QvtkDicomViewer::OnTestReadDICOMDIR()
+ {
+	/*===================该函数的全局变量区===================*/
+	 QString path;
+	 DcmDirectoryRecord * root, *root1;//文件的绝对路径
+	/*=======================================================*/
+	 //打开文件选择页面
+	 path = QFileDialog::getOpenFileName(this, QStringLiteral("打开文件"), ".", QStringLiteral("全部类型(*.*)"));
+	 if (path.isEmpty() == true)
+		 return;
+	 DicomDir *m_dicomdir = new DicomDir(path);
+	 connect(m_dicomdir, SIGNAL(sendData(QString)), this, SLOT(receiveData(QString)));
+	 m_dicomdir->show();
+ }
+ /*
+  *	响应DicomDir类传送过来的信号,其中包含了一个病人的ID
+  */
+ void QvtkDicomViewer::receiveData(QString data)
+ {
+	//这段代码效率特别低而且有全局变量引用不明的问题
+	 /*DcmDirectoryRecord *   PatientRecord = NULL;
+	 OFString tmpString;
+	 std::string m_FilePath = path.toStdString();
+	 DcmDicomDir dicomdir(m_FilePath.c_str());
+	 root1 = &(dicomdir.getRootRecord());
+	 while (((PatientRecord = root1->nextSub(PatientRecord)) != NULL))
+	 {
+		 if (PatientRecord->findAndGetOFString(DCM_PatientID, tmpString).good())
+		 {
+			 if (data == tmpString.c_str()) {
+				 ui.lineEdit_Number->setText(tmpString.c_str());
+				 if (PatientRecord->findAndGetOFString(DCM_PatientName, tmpString).good()) {
+					 ui.lineEdit_Name->setText(tmpString.c_str());
+				 }
+				 if (PatientRecord->findAndGetOFString(DCM_PatientBirthDate, tmpString).good()) {
+					 ui.lineEdit_Birth->setText(tmpString.c_str());
+				 }
+
+			 }
+		 }
+	 }*/
  }

@@ -42,6 +42,7 @@
  * 3.依赖版本:Qt5.9.1
  *			  vtk8.0.0
  *			  itk4.12.0
+ *			  dcmtk3.6.2(64位msvc15-2017)
  * 4.Qt目录:
  *			在解决方案目录->QvtkDicomViewer->QvtkDicomViewer.vcxproj.user文件中
  *			含有Qt的目录
@@ -126,4 +127,8 @@ public slots:
 	void OnPlay();//播放/暂停
 	void OnStop();//停止
 	void OnSwitchProperty();//属性docking窗口的开关
+	///正在测试的功能
+	void OnTestDCMTK_x64();//测试调用DCMTK-x64读取元数据
+	void OnTestReadDICOMDIR();//测试调用DCMTK-x64读取DIR文件
+	void receiveData(QString data);//响应DicomDir类传送过来的信号,其中包含了一个病人的ID
 };
