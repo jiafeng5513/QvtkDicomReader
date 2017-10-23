@@ -3,20 +3,19 @@
 
 # Dicom-Meta-Information-Header
 # Used TransferSyntax: Little Endian Explicit
-(0002,0000) UL 206                                      #   4, 1 FileMetaInformationGroupLength
+(0002,0000) UL 184                                      #   4, 1 FileMetaInformationGroupLength
 (0002,0001) OB 00\01                                    #   2, 1 FileMetaInformationVersion
 (0002,0002) UI =MediaStorageDirectoryStorage            #  20, 1 MediaStorageSOPClassUID
-(0002,0003) UI [1.3.46.670589.50.2.20093729262791868999.31665784862171960646] #  60, 1 MediaStorageSOPInstanceUID
+(0002,0003) UI [1.2.276.0.7230010.3.1.4.548199856.1752.1491421184.1] #  52, 1 MediaStorageSOPInstanceUID
 (0002,0010) UI =LittleEndianExplicit                    #  20, 1 TransferSyntaxUID
-(0002,0012) UI [1.3.46.670589.33.1.1]                   #  20, 1 ImplementationClassUID
-(0002,0013) SH [BRCONN_4.0]                             #  10, 1 ImplementationVersionName
-(0002,0016) AE [Philips Portal]                         #  14, 1 SourceApplicationEntityTitle
+(0002,0012) UI [1.3.6.1.4.1.20468.0.1.1.6.0.1]          #  30, 1 ImplementationClassUID
+(0002,0013) SH [TMDTK160]                               #   8, 1 ImplementationVersionName
 
 # Dicom-Data-Set
 # Used TransferSyntax: Little Endian Explicit
-(0004,1130) CS (no value available)                     #   0, 0 FileSetID
-(0004,1200) up 404                                      #   4, 1 OffsetOfTheFirstDirectoryRecordOfTheRootDirectoryEntity
-(0004,1202) up 358962                                   #   4, 1 OffsetOfTheLastDirectoryRecordOfTheRootDirectoryEntity
+(0004,1130) CS [TMDTK_MEDIA]                            #  12, 1 FileSetID
+(0004,1200) up 394                                      #   4, 1 OffsetOfTheFirstDirectoryRecordOfTheRootDirectoryEntity
+(0004,1202) up 1051394                                  #   4, 1 OffsetOfTheLastDirectoryRecordOfTheRootDirectoryEntity
 (0004,1212) US 0                                        #   2, 1 FileSetConsistencyFlag
-(0004,1220) SQ (Sequence with explicit length #=0)      # 1754630, 1 DirectoryRecordSequence
+(0004,1220) SQ (Sequence with explicit length #=0)      # 1117392, 1 DirectoryRecordSequence
 (fffe,e0dd) na (SequenceDelimitationItem for re-encod.) #   0, 0 SequenceDelimitationItem
