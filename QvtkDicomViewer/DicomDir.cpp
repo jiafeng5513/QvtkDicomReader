@@ -82,8 +82,9 @@ DicomDir::DicomDir(QString DicomDirFilePath, QWidget* parent)
 		}
 		row = row + 1;
 		data->push_back(temp_patient_msg);//压一个病人的数据
-		delete(temp_patient_msg);
+		//delete(temp_patient_msg);
 	}
+
 	for(int i=0;i<data->size();i++)
 	{
 		qDebug() << QStringLiteral("第") << i << QStringLiteral("条数据:");
@@ -104,27 +105,33 @@ DicomDir::DicomDir(QString DicomDirFilePath, QWidget* parent)
 		ui.tableWidget->setHorizontalHeaderLabels(
 			QStringList() << "File ID" << "Patient ID" << "Patient Name" << "Birth Date" << "Gender");
 		ui.tableWidget->verticalHeader()->setVisible(false); // 隐藏水平header
-		ui.tableWidget->setSelectionBehavior(QAbstractItemView::SelectItems);   // 单个选中
-		ui.tableWidget->setSelectionMode(QAbstractItemView::ExtendedSelection);  // 可以选中多个 
-
+		//ui.tableWidget->setSelectionBehavior(QAbstractItemView::SelectItems);   // 单个选中
+		ui.tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
+		//ui.tableWidget->setSelectionMode(QAbstractItemView::ExtendedSelection);  // 可以选中多个 
+		ui.tableWidget->setSelectionMode(QAbstractItemView::SingleSelection);
 		/* 设置 Id Name 字段的值不能修改 */
 		/* 设置不可修改的Id Name两列的背景颜色为灰色 */
-		//for (int i = 0; i < 5; i++) {
-		//	QTableWidgetItem *item = new QTableWidgetItem();
-		//	item->setBackground(QBrush(QColor(Qt::lightGray)));
-		//	item->setFlags(item->flags() & (~Qt::ItemIsEditable));
-		//	ui.tableWidget->setItem(i, 0, item);
-		//}
-		//for (int i = 0; i < 5; i++) {
-		//	QTableWidgetItem *item = new QTableWidgetItem();
-		//	item->setBackground(QBrush(QColor(Qt::lightGray)));
-		//	item->setFlags(item->flags() & (~Qt::ItemIsEditable));
-		//	ui.tableWidget->setItem(i, 1, item);
-		//}
+		for (int i = 0; i < 5; i++) {
+			QTableWidgetItem *item = new QTableWidgetItem();
+			item->setBackground(QBrush(QColor(Qt::lightGray)));
+			item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+			ui.tableWidget->setItem(i, 0, item);
+		}
+		for (int i = 0; i < 5; i++) {
+			QTableWidgetItem *item = new QTableWidgetItem();
+			item->setBackground(QBrush(QColor(Qt::lightGray)));
+			item->setFlags(item->flags() & (~Qt::ItemIsEditable));
+			ui.tableWidget->setItem(i, 1, item);
+		}
 		//填充数据开始
 		for (int i = 0; i < ui.tableWidget->rowCount(); i++) {
-			ui.tableWidget->item(i, 0)->setText((*data)[i]->FileID);
-			ui.tableWidget->item(i, 1)->setText((*data)[i]->PatientID);
+			QTableWidgetItem *item_1 = new QTableWidgetItem();
+			item_1->setText((*data)[i]->FileID);
+			ui.tableWidget->setItem(i, 0, item_1);
+
+			QTableWidgetItem *item_2 = new QTableWidgetItem();
+			item_2->setText((*data)[i]->PatientID);
+			ui.tableWidget->setItem(i, 1, item_2);
 		}
 
 		for (int i = 0; i < ui.tableWidget->rowCount(); i++) {
