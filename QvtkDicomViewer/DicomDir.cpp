@@ -4,6 +4,10 @@
 #include <dcmdata/dcdeftag.h>
 #include <QTableWidget>
 #include <QDebug>
+#include<QFileSystemModel>
+
+#include<iomanip>
+#include<fstream>
 /*
  *默认构造方法
  */
@@ -21,40 +25,116 @@ DicomDir::DicomDir(QString DicomDirFilePath, QWidget* parent)
 	ui.setupUi(this);
 
 	//TODO:用户初始化代码区域
-
+	/*
+	 * 获取该文件所在目录往下层的所有文件夹的绝对路径树
+	 */
+	QFileSystemModel * qsm = new QFileSystemModel();
 	/*=============方法全局变量区===============*/
 	DcmDirectoryRecord * DicomDirRootRecord;//用于提取该文件的根目录
 	/*==========================================*/
 
 	DcmDicomDir dicomdir(DicomDirFilePath.toStdString().c_str());
 	
-	//std::filebuf fb;
-	//fb.open("DicomDir.log", std::ios::out);//输出日志文件
-	//std::ostream out(&fb);
-	//dicomdir.print(out);
-	//fb.close();
- // 
-	//DcmFileFormat DCMFF = dicomdir.getDirFileFormat();
-	//std::filebuf lb;
-	//lb.open("DcmFileFormat.log", std::ios::out);//输出日志文件2
-	//std::ostream out2(&lb);
-	//DCMFF.print(out2);
-	//lb.close();
+	std::filebuf fb;
+	fb.open("F:\\Dicom\\DicomDir.log", std::ios::out);//输出日志文件
+	std::ostream out(&fb);
+	dicomdir.print(out);
+	fb.close();
+	
+	
+
+
+	DcmFileFormat DCMFF = dicomdir.getDirFileFormat();
+	std::filebuf lb;
+	lb.open("F:\\Dicom\\DcmFileFormat.log", std::ios::out);//输出日志文件2
+	std::ostream out2(&lb);
+	DCMFF.print(out2);
+	lb.close();
 
 	DicomDirRootRecord = &(dicomdir.getRootRecord());
 	
 	bool flag = DicomDirRootRecord->isEmpty();
-	DcmDirectoryRecord *   PatientRecord = NULL;
+	DcmDirectoryRecord *   PatientRecord = NULL;//第一层,patient(N)
+	DcmDirectoryRecord *   StudyRecord = NULL;	//第二层,study	(N)
+	DcmDirectoryRecord *   SeriesRecord = NULL;	//第三层,series	(N)
+	DcmDirectoryRecord *   ImageRecord = NULL;	//第四层,Image	(N)
 	OFString tmpString;
 	
 	std::vector<PatientMsg*>*data=new std::vector<PatientMsg*>();//
 	PatientMsg * temp_patient_msg;
 	int row = 0;//行数
 
+#if _DEBUG
+	/*
+	 * 抽取一部分dicomdir的关键信息用于调试
+	 */
+	//文件
+	std::ofstream log("d:\\DcmtkLog.txt");
+	if (!log)return;
+	int i = 0, j = 0, k = 0, l = 0;//四层循环变量
+	while (((PatientRecord = DicomDirRootRecord->getSub(i)) != NULL))
+	{
+		if (PatientRecord->findAndGetOFString(DCM_PatientID, tmpString).good())
+		{
+			log << "PatientID:" << tmpString.c_str()<<std::endl;
+		}
+		if (PatientRecord->findAndGetOFString(DCM_PatientName, tmpString).good())
+		{
+			log << "DCM_PatientName:" << tmpString.c_str() << std::endl;
+		}
+		while (((StudyRecord = PatientRecord->getSub(j)) != NULL))
+		{
+			if (StudyRecord->findAndGetOFString(DCM_PatientSex, tmpString).good())
+			{
+				log << "    DCM_PatientSex:" << tmpString.c_str() << std::endl;
+			}
+			if (StudyRecord->findAndGetOFString(DCM_PatientAge, tmpString).good())
+			{
+				log << "    DCM_PatientAge:" << tmpString.c_str() << std::endl;
+			}
+			if (StudyRecord->findAndGetOFString(DCM_StudyID, tmpString).good())
+			{
+				log << "    DCM_StudyID:" << tmpString.c_str() << std::endl;
+			}
+			while (((SeriesRecord = StudyRecord->getSub(k)) != NULL))
+			{
+				if (SeriesRecord->findAndGetOFString(DCM_SeriesNumber, tmpString).good())
+				{
+					log << "        DCM_SeriesNumber:" << tmpString.c_str() << std::endl;
+				}
+				while (((ImageRecord = SeriesRecord->getSub(l)) != NULL))
+				{
+					if (ImageRecord->findAndGetOFString(DCM_ReferencedFileID, tmpString).good())
+					{
+						log << "            DCM_ReferencedFileID:" << tmpString<< std::endl;
+					}
+					if (ImageRecord->findAndGetOFString(DCM_FileSetID, tmpString).good())
+					{
+						log << "            DCM_ReferencedFileID:" << tmpString << std::endl;
+					}
+					if (ImageRecord->findAndGetOFString(DCM_FileSetDescriptorFileID, tmpString).good())
+					{
+						log << "            DCM_FileSetDescriptorFileID:" << tmpString << std::endl;
+					}
+					l++;
+				}
+				l = 0;
+				k++;
+			}
+			k = 0;
+			j++;
+		}
+		j = 0;
+		i++;
+	}
+	log.close();
+#endif
+	/*
+	 *构造
+	 */
 	while (((PatientRecord = DicomDirRootRecord->getSub(row)) != NULL))
 	{
 		temp_patient_msg=new PatientMsg();
-
 		if (PatientRecord->findAndGetOFString(DCM_ReferencedFileID, tmpString).good())//DCM_PatientName
 		{
 			temp_patient_msg->FileID = (tmpString.empty() == true ? "空" : tmpString.c_str());
