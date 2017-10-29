@@ -12,7 +12,7 @@ class DicomImage
 public:
 	DicomImage();
 	~DicomImage();
-private:
+public:
 	std::string ReferencedFileID;    //Dicom图像的绝对路径
 	std::string InstanceCreationDate;//图片建立时间
 	std::string kpv;				 //看起来可能有点用

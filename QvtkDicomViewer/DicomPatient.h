@@ -23,6 +23,6 @@ public:
 public:
 	std::string PatientName;
 	std::string PatientID;
-	std::vector<DicomStudy> StudyList; //这个病人的Study列表
+	std::vector<DicomStudy*> StudyList; //这个病人的Study列表
 };
 

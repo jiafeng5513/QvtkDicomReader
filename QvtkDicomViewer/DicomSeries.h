@@ -15,10 +15,10 @@ public:
 	DicomSeries();
 	~DicomSeries();
 public:
-	std::string Manufactuer;					//制造商
+	std::string Manufacturer;					//制造商
 	std::string StationName;					//仪器名称
 	std::string SeriseNumber;					//
-	std::string NumberOfSeriesRelatedInstance;	//
-	std::vector<DicomImage> ImageList;			//该Series中的图片存储在这个表里
+	std::string NumberOfSeriesRelatedInstances;	//
+	std::vector<DicomImage*> ImageList;			//该Series中的图片存储在这个表里
 };
 

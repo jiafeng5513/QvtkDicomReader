@@ -301,7 +301,10 @@ void QvtkDicomViewer::DoRender(std::string folder)
 	// reader输出化并绑定文件
 	reader = vtkSmartPointer<vtkDICOMImageReader>::New();
 	reader->SetDirectoryName(folder.c_str());
-	
+	/*
+	 *vtkDICOMImagereader.cxx这个文件是SetDirectoryName这个函数的实现点
+	 *重写之后需要重新编译vtk8.0.0
+	 */
 	//尝试修改一些参数
 	vtkSmartPointer<vtkImageChangeInformation> changer =vtkSmartPointer<vtkImageChangeInformation>::New();
 	changer->SetInputData(reader->GetOutput());

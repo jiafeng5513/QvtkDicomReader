@@ -1,5 +1,7 @@
 #pragma once
 #include <string>
+#include <vector>
+#include "DicomPatient.h"
 
 /*
  *实体类,用于Dicom数据文件的读取和内存存储
@@ -16,7 +18,16 @@
 class DicomDataBase
 {
 public:
-	DicomDataBase(std::string dir);
+	static DicomDataBase* getInstance();
+	void Init(std::string dir);
+private:
+	//static DicomDataBase* m_pSingleton;
+	DicomDataBase();
 	~DicomDataBase();
+public:
+	std::vector<DicomPatient*> PatientList;//数据库中保存的所有的病人
+	std::string DicomDirFilePath;//DicomDir文件的绝对路径
+	std::string DicomForderPath;//DicomDIR文件所在的文件夹,在后面接上RefFileID就得到图片的绝对路径
 };
-
+///单例模式
+//DicomDataBase* DicomDataBase::m_pSingleton = new DicomDataBase();

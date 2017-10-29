@@ -22,6 +22,6 @@ public:
 	std::string PatientSex;
 	std::string PatientAge;
 	std::string StudyId;
-	std::vector<DicomSeries> SeriesList;//该Study中的Series列表
+	std::vector<DicomSeries*> SeriesList;//该Study中的Series列表
 };
 
