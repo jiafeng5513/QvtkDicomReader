@@ -82,6 +82,14 @@ DicomDir::DicomDir(QString DicomDirFilePath, QWidget* parent)
 		{
 			log << "DCM_PatientName:" << tmpString.c_str() << std::endl;
 		}
+		if (PatientRecord->findAndGetOFString(DCM_PatientBirthDate, tmpString).good())
+		{
+			log << "DCM_PatientBirthDate:" << tmpString.c_str() << std::endl;//ц╩сп
+		}
+		if (PatientRecord->findAndGetOFString(DCM_PatientSex, tmpString).good())
+		{
+			log << "DCM_PatientBirthDate:" << tmpString.c_str() << std::endl;
+		}
 		while (((StudyRecord = PatientRecord->getSub(j)) != NULL))
 		{
 			if (StudyRecord->findAndGetOFString(DCM_PatientSex, tmpString).good())
@@ -104,17 +112,17 @@ DicomDir::DicomDir(QString DicomDirFilePath, QWidget* parent)
 				}
 				while (((ImageRecord = SeriesRecord->getSub(l)) != NULL))
 				{
-					if (ImageRecord->findAndGetOFString(DCM_ReferencedFileID, tmpString).good())
+					if (ImageRecord->findAndGetOFStringArray(DCM_ReferencedFileID, tmpString,true).good())
 					{
-						log << "            DCM_ReferencedFileID:" << tmpString<< std::endl;
+						log << "            DCM_ReferencedFileID:" << tmpString<< "  length:"<<tmpString.length()<<std::endl;
 					}
 					if (ImageRecord->findAndGetOFString(DCM_FileSetID, tmpString).good())
 					{
-						log << "            DCM_ReferencedFileID:" << tmpString << std::endl;
+						log << "            DCM_FileSetID:" << tmpString << std::endl;
 					}
-					if (ImageRecord->findAndGetOFString(DCM_FileSetDescriptorFileID, tmpString).good())
+					if (ImageRecord->findAndGetOFString(DCM_RETIRED_MRDRDirectoryRecordOffset, tmpString).good())
 					{
-						log << "            DCM_FileSetDescriptorFileID:" << tmpString << std::endl;
+						log << "            DCM_RETIRED_MRDRDirectoryRecordOffset:" << tmpString << std::endl;
 					}
 					l++;
 				}
