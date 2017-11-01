@@ -16,6 +16,7 @@
 #include <QtWidgets/QDockWidget>
 #include <QtWidgets/QFrame>
 #include <QtWidgets/QGridLayout>
+#include <QtWidgets/QHBoxLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
@@ -25,6 +26,7 @@
 #include <QtWidgets/QSpacerItem>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QToolBar>
+#include <QtWidgets/QTreeView>
 #include <QtWidgets/QWidget>
 #include "QVTKWidget.h"
 
@@ -52,6 +54,7 @@ public:
     QAction *action_Stop;
     QAction *action_DCMTK_x64;
     QAction *action_DCMTK_64_DiconDir;
+    QAction *action_OpenDICOMDIR;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QVTKWidget *qvtkWidget;
@@ -63,7 +66,7 @@ public:
     QMenu *menu_5;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
-    QDockWidget *dockWidget_1;
+    QDockWidget *dockWidget_Msg;
     QWidget *dockWidgetContents_3;
     QGridLayout *gridLayout_2;
     QLineEdit *lineEdit_Modality;
@@ -90,6 +93,10 @@ public:
     QLabel *label_2;
     QLineEdit *lineEdit_Time;
     QLineEdit *lineEdit_Manufacturer;
+    QDockWidget *dockWidget_Dir;
+    QWidget *dockWidgetContents;
+    QHBoxLayout *horizontalLayout;
+    QTreeView *treeView;
 
     void setupUi(QMainWindow *QvtkDicomViewerClass)
     {
@@ -191,6 +198,8 @@ public:
         action_DCMTK_x64->setObjectName(QStringLiteral("action_DCMTK_x64"));
         action_DCMTK_64_DiconDir = new QAction(QvtkDicomViewerClass);
         action_DCMTK_64_DiconDir->setObjectName(QStringLiteral("action_DCMTK_64_DiconDir"));
+        action_OpenDICOMDIR = new QAction(QvtkDicomViewerClass);
+        action_OpenDICOMDIR->setObjectName(QStringLiteral("action_OpenDICOMDIR"));
         centralWidget = new QWidget(QvtkDicomViewerClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
@@ -212,7 +221,7 @@ public:
         QvtkDicomViewerClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(QvtkDicomViewerClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1179, 23));
+        menuBar->setGeometry(QRect(0, 0, 1179, 26));
         menu = new QMenu(menuBar);
         menu->setObjectName(QStringLiteral("menu"));
         menu_2 = new QMenu(menuBar);
@@ -230,8 +239,8 @@ public:
         statusBar = new QStatusBar(QvtkDicomViewerClass);
         statusBar->setObjectName(QStringLiteral("statusBar"));
         QvtkDicomViewerClass->setStatusBar(statusBar);
-        dockWidget_1 = new QDockWidget(QvtkDicomViewerClass);
-        dockWidget_1->setObjectName(QStringLiteral("dockWidget_1"));
+        dockWidget_Msg = new QDockWidget(QvtkDicomViewerClass);
+        dockWidget_Msg->setObjectName(QStringLiteral("dockWidget_Msg"));
         dockWidgetContents_3 = new QWidget();
         dockWidgetContents_3->setObjectName(QStringLiteral("dockWidgetContents_3"));
         gridLayout_2 = new QGridLayout(dockWidgetContents_3);
@@ -359,8 +368,23 @@ public:
 
         gridLayout_2->addWidget(lineEdit_Manufacturer, 7, 1, 1, 1);
 
-        dockWidget_1->setWidget(dockWidgetContents_3);
-        QvtkDicomViewerClass->addDockWidget(static_cast<Qt::DockWidgetArea>(1), dockWidget_1);
+        dockWidget_Msg->setWidget(dockWidgetContents_3);
+        QvtkDicomViewerClass->addDockWidget(static_cast<Qt::DockWidgetArea>(2), dockWidget_Msg);
+        dockWidget_Dir = new QDockWidget(QvtkDicomViewerClass);
+        dockWidget_Dir->setObjectName(QStringLiteral("dockWidget_Dir"));
+        dockWidgetContents = new QWidget();
+        dockWidgetContents->setObjectName(QStringLiteral("dockWidgetContents"));
+        horizontalLayout = new QHBoxLayout(dockWidgetContents);
+        horizontalLayout->setSpacing(6);
+        horizontalLayout->setContentsMargins(11, 11, 11, 11);
+        horizontalLayout->setObjectName(QStringLiteral("horizontalLayout"));
+        treeView = new QTreeView(dockWidgetContents);
+        treeView->setObjectName(QStringLiteral("treeView"));
+
+        horizontalLayout->addWidget(treeView);
+
+        dockWidget_Dir->setWidget(dockWidgetContents);
+        QvtkDicomViewerClass->addDockWidget(static_cast<Qt::DockWidgetArea>(1), dockWidget_Dir);
 
         menuBar->addAction(menu->menuAction());
         menuBar->addAction(menu_2->menuAction());
@@ -368,6 +392,7 @@ public:
         menuBar->addAction(menu_4->menuAction());
         menuBar->addAction(menu_5->menuAction());
         menu->addAction(action_Open);
+        menu->addAction(action_OpenDICOMDIR);
         menu_2->addAction(action_RenderText);
         menu_2->addAction(action_back);
         menu_2->addAction(action_next);
@@ -433,7 +458,7 @@ public:
     void retranslateUi(QMainWindow *QvtkDicomViewerClass)
     {
         QvtkDicomViewerClass->setWindowTitle(QApplication::translate("QvtkDicomViewerClass", "QvtkDicomViewer", Q_NULLPTR));
-        action_Open->setText(QApplication::translate("QvtkDicomViewerClass", "\346\211\223\345\274\200", Q_NULLPTR));
+        action_Open->setText(QApplication::translate("QvtkDicomViewerClass", "\346\211\223\345\274\200Series\347\233\256\345\275\225", Q_NULLPTR));
         action_RenderText->setText(QApplication::translate("QvtkDicomViewerClass", "\350\276\223\345\207\272\344\277\241\346\201\257", Q_NULLPTR));
         action_back->setText(QApplication::translate("QvtkDicomViewerClass", "\344\270\212\344\270\200\345\274\240", Q_NULLPTR));
         action_next->setText(QApplication::translate("QvtkDicomViewerClass", "\344\270\213\344\270\200\345\274\240", Q_NULLPTR));
@@ -458,12 +483,13 @@ public:
         action_Stop->setText(QApplication::translate("QvtkDicomViewerClass", "\345\201\234\346\255\242", Q_NULLPTR));
         action_DCMTK_x64->setText(QApplication::translate("QvtkDicomViewerClass", "\350\260\203\347\224\250DCMTK-x64", Q_NULLPTR));
         action_DCMTK_64_DiconDir->setText(QApplication::translate("QvtkDicomViewerClass", "\350\260\203\347\224\250DCMTK-64\350\257\273\345\217\226DiconDir", Q_NULLPTR));
+        action_OpenDICOMDIR->setText(QApplication::translate("QvtkDicomViewerClass", "\346\211\223\345\274\200DICOMDIR\346\226\207\344\273\266", Q_NULLPTR));
         menu->setTitle(QApplication::translate("QvtkDicomViewerClass", "\346\226\207\344\273\266", Q_NULLPTR));
         menu_2->setTitle(QApplication::translate("QvtkDicomViewerClass", "\344\277\241\346\201\257", Q_NULLPTR));
         menu_3->setTitle(QApplication::translate("QvtkDicomViewerClass", "\345\267\245\345\205\267", Q_NULLPTR));
         menu_4->setTitle(QApplication::translate("QvtkDicomViewerClass", "\347\252\227\345\217\243", Q_NULLPTR));
         menu_5->setTitle(QApplication::translate("QvtkDicomViewerClass", "\346\265\213\350\257\225", Q_NULLPTR));
-        dockWidget_1->setWindowTitle(QApplication::translate("QvtkDicomViewerClass", "\345\261\236\346\200\247", Q_NULLPTR));
+        dockWidget_Msg->setWindowTitle(QApplication::translate("QvtkDicomViewerClass", "\345\261\236\346\200\247", Q_NULLPTR));
         label_3->setText(QApplication::translate("QvtkDicomViewerClass", "\345\210\266\351\200\240\345\225\206:", Q_NULLPTR));
         label_4->setText(QApplication::translate("QvtkDicomViewerClass", "\346\243\200\346\265\213\346\211\213\346\256\265:", Q_NULLPTR));
         label_5->setText(QApplication::translate("QvtkDicomViewerClass", "\345\214\273\351\231\242:", Q_NULLPTR));
@@ -475,6 +501,10 @@ public:
         label_8->setText(QApplication::translate("QvtkDicomViewerClass", "\345\247\223\345\220\215;", Q_NULLPTR));
         label->setText(QApplication::translate("QvtkDicomViewerClass", "ID:", Q_NULLPTR));
         label_2->setText(QApplication::translate("QvtkDicomViewerClass", "\346\213\215\346\221\204\346\227\266\351\227\264:", Q_NULLPTR));
+#ifndef QT_NO_TOOLTIP
+        dockWidget_Dir->setToolTip(QString());
+#endif // QT_NO_TOOLTIP
+        dockWidget_Dir->setWindowTitle(QApplication::translate("QvtkDicomViewerClass", "DICOMDIR", Q_NULLPTR));
     } // retranslateUi
 
 };

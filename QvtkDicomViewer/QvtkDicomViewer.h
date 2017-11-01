@@ -34,6 +34,7 @@
 #include "SlicePlayer.h"
 //itk
 
+class DicomDataBase;
 /*
  * 依赖说明:
  * 1.附加依赖项:与Qt相关的依赖项在解决方案->属性中设置
@@ -92,10 +93,13 @@ private:
 	QIcon icon_Pause;//暂停图标
 	bool PlayFlag;//false:图标应为播放,处于准备播放状态,true:图标应为暂停,处于播放状态并准备暂停
 	SlicePlayer *m_slice_player;//这是一个线程类
+	std::string Current_patientId;//当前的病人ID
 private:
 	///内部操作
 	void setCursor(CURSOR newValue);
 	void DoRender(std::string folder);//绑定数据源,显示Dicom数据
+	void SeriesRender(std::string first);//手动加载一个series
+	void DirTreeRefresh(DicomDataBase * database);
 	void GetMetaDataAndRender(std::string folder);//使用ITK获取元数据,并显示在Docking界面上
 	void addDistanceWidget();
 	void addAngleWidget();

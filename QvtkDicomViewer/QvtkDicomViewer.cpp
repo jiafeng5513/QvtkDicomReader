@@ -6,6 +6,8 @@
 #include <QMessageBox>
 #include <qDebug>
 #include <QComboBox>
+#include <QStandardItem>
+#include <QTableView>
 
 #include <vtkActor2D.h>
 #include <vtkTextMapper.h>
@@ -23,17 +25,27 @@
 #include <vtkMath.h>
 #include <vtkCellArray.h>
 #include <vtkImageIterator.h>
+#include <vtkStringArray.h>
+#include "vtkVolumeRayCastCompositeFunction.h"
+#include "vtkVolumeProperty.h"
+#include "vtkVolume.h"
+#include "vtkVolumeRayCastMapper.h"
 
 #include "itkImage.h"
 #include "itkImageSeriesReader.h"
 #include "itkGDCMImageIO.h"
 #include "itkImageFileReader.h"
 #include "itkImageFileWriter.h"
+#include "itkImageToVTKImageFilter.h"
+#include "vtkPiecewiseFunction.h"
+#include "itkNumericSeriesFileNames.h"
 
 #include <dcmtk\config\osconfig.h>
 #include <dcmtk\dcmdata\dctk.h>
 
 #include "SlicePlayer.h"
+#include "DicomDataBase.h"
+
 void functest()
 {
 	qDebug()<< QStringLiteral("调用成功!");
@@ -60,11 +72,14 @@ QvtkDicomViewer::QvtkDicomViewer(QWidget *parent)
 	ui.mainToolBar->addSeparator();
 	//自定义初始化
 	ui.action_SwitchOfProperty->setChecked(true);
-	ui.dockWidget_1->setHidden(false);
+	ui.dockWidget_Msg->setHidden(false);
 	icon_Play.addFile(QStringLiteral(":/QvtkDicomViewer/Resources/play_128px_1197036_easyicon.net.ico"), QSize(), QIcon::Normal, QIcon::Off);
 	icon_Pause.addFile(QStringLiteral(":/QvtkDicomViewer/Resources/pause_128px_1197034_easyicon.net.ico"), QSize(), QIcon::Normal, QIcon::Off);
 	PlayFlag = false;
 	ui.action_Stop->setEnabled(false);
+
+
+	//DirTreeRefresh(NULL);
 }
 /*
  * 响应光标值的修改,执行一些刷新和禁用操作
@@ -301,6 +316,7 @@ void QvtkDicomViewer::DoRender(std::string folder)
 	// reader输出化并绑定文件
 	reader = vtkSmartPointer<vtkDICOMImageReader>::New();
 	reader->SetDirectoryName(folder.c_str());
+	//reader->SetFileNames();
 	/*
 	 *vtkDICOMImagereader.cxx这个文件是SetDirectoryName这个函数的实现点
 	 *重写之后需要重新编译vtk8.0.0
@@ -376,6 +392,125 @@ void QvtkDicomViewer::DoRender(std::string folder)
 	ui.qvtkWidget->GetRenderWindow()->Render();
 	renderWindowInteractor->Start();
 #pragma endregion 
+}
+/*
+ * 使用VTK单张图片读取方法加载一个series
+ * 测试时:自动连续播放
+ */
+void QvtkDicomViewer::SeriesRender(std::string first)
+{
+	// reader输出化并绑定文件
+	reader = vtkSmartPointer<vtkDICOMImageReader>::New();
+	reader->SetFileName(first.c_str());
+	reader->Update();
+	m_pRenderder = vtkSmartPointer< vtkRenderer >::New();
+	// Renderer绑定输出窗口到Qvtkwidget
+	ui.qvtkWidget->GetRenderWindow()->AddRenderer(m_pRenderder);
+	//Viewer初始化并绑定reader
+	m_pImageViewer = vtkSmartPointer< vtkImageViewer2 >::New();
+	m_pImageViewer->SetInputConnection(reader->GetOutputPort());
+	m_pImageViewer->SetRenderWindow(ui.qvtkWidget->GetRenderWindow());
+	m_pImageViewer->GetRenderer()->ResetCamera();
+	ui.qvtkWidget->GetRenderWindow()->Render();
+}
+/*
+ * 刷新DIR树
+ */
+void QvtkDicomViewer::DirTreeRefresh(DicomDataBase * database)
+{
+	QStandardItem* pItem0 = new QStandardItem(QStringLiteral("Patient"));
+	pItem0->setToolTip(QStringLiteral("病人姓名"));
+
+	QStandardItem* pItem1 = new QStandardItem(QStringLiteral("StudyID"));
+	pItem1->setToolTip(QStringLiteral("病历"));
+
+	QStandardItem* pItem2 = new QStandardItem(QStringLiteral("Series"));
+	pItem2->setToolTip(QStringLiteral("扫描序列"));
+
+	QStandardItem* pItem3 = new QStandardItem(QStringLiteral("Image"));
+	pItem3->setToolTip(QStringLiteral("Dicom图片"));
+	QStandardItemModel *model = new QStandardItemModel();
+
+	model->setHorizontalHeaderItem(0, pItem0);
+	model->setHorizontalHeaderItem(1, pItem1);
+	model->setHorizontalHeaderItem(2, pItem2);
+	model->setHorizontalHeaderItem(3, pItem3);
+
+	ui.treeView->setModel(model);
+
+
+
+	//QMap<QString, QString> m_IconMap;//存放公共图标   
+	//QMap<QString, QString> m_CarportIconMap;  //车库公共图标  
+
+	//										//初始化图标库  
+	//m_CarportIconMap[QStringLiteral("Port1")] = QStringLiteral("3942000.ico");
+	//m_CarportIconMap[QStringLiteral("Port2")] = QStringLiteral("3942001.ico");
+	//m_CarportIconMap[QStringLiteral("Port3")] = QStringLiteral("3942002.ico");
+	//m_CarportIconMap[QStringLiteral("Port4")] = QStringLiteral("3942003.ico");
+	//m_CarportIconMap[QStringLiteral("Port5")] = QStringLiteral("3942004.ico");
+
+	//m_IconMap[QStringLiteral("Audi")] = QStringLiteral("audi.ico");
+	//m_IconMap[QStringLiteral("Bmw")] = QStringLiteral("bmw.ico");
+	//m_IconMap[QStringLiteral("Buick")] = QStringLiteral("Buick.ico");
+	//m_IconMap[QStringLiteral("Cadillac")] = QStringLiteral("cadillac.ico");
+	//m_IconMap[QStringLiteral("Ferrari")] = QStringLiteral("ferrari.ico");
+	//m_IconMap[QStringLiteral("Ford")] =QStringLiteral("ford.ico");
+	//m_IconMap[QStringLiteral("Hyundai")] = QStringLiteral("hyundai.ico");
+	//m_IconMap[QStringLiteral("Lexus")] = QStringLiteral("lexus.ico");
+	//m_IconMap[QStringLiteral("Mazda")] = QStringLiteral("mazda.ico");
+	//m_IconMap[QStringLiteral("Mercedesbenz")] = QStringLiteral("mercedesbenz.ico");
+	//m_IconMap[QStringLiteral("Nissan")] = QStringLiteral("nissan.ico");
+	//m_IconMap[QStringLiteral("Toyota")] = QStringLiteral("toyota.ico");
+	//m_IconMap[QStringLiteral("Volkswagen")] = QStringLiteral("Volkswagen.ico");
+
+	//QStandardItem* pStandardItem = NULL;
+	//QStandardItem* pStandardChildItem = NULL;
+
+	QStandardItem* PatientItem = NULL;
+	QStandardItem* StudyItem = NULL;
+	QStandardItem* SeriesItem = NULL;
+	QStandardItem* ImageItem = NULL;
+
+	for(int i=0;i<database->PatientList.size();i++)
+	{
+		PatientItem= new QStandardItem(database->PatientList[i]->PatientName.c_str());
+		model->appendRow(PatientItem);
+		for(int j=0;j<database->PatientList[i]->StudyList.size();j++)
+		{
+			StudyItem = new QStandardItem(database->PatientList[i]->StudyList[j]->StudyId.c_str());
+			PatientItem->appendRow(StudyItem);
+			PatientItem->setChild(PatientItem->row(), 1, StudyItem);
+			for(int k=0;k<database->PatientList[i]->StudyList[j]->SeriesList.size();k++)
+			{
+				SeriesItem = new QStandardItem(database->PatientList[i]->StudyList[j]->SeriesList[k]->SeriseNumber.c_str());
+				StudyItem->appendRow(SeriesItem);
+				StudyItem->setChild(StudyItem->row(), 2, SeriesItem);
+				for (int l = 0; l<database->PatientList[i]->StudyList[j]->SeriesList[k]->ImageList.size(); l++)
+				{
+					ImageItem = new QStandardItem(database->PatientList[i]->StudyList[j]->SeriesList[k]->ImageList[l]->ReferencedFileID.c_str());
+					SeriesItem->appendRow(ImageItem);
+					SeriesItem->setChild(SeriesItem->row(), 3, ImageItem);
+				}
+			}
+		}
+	}
+
+	//int i = 0;
+	//QMap<QString, QString>::const_iterator it1 = m_CarportIconMap.constBegin();
+	//for (QMap<QString, QString>::const_iterator it = m_IconMap.constBegin(); it != m_IconMap.constEnd(); ++it)
+	//{
+	//	if (i % 3 == 0)
+	//	{
+	//		pStandardItem = new QStandardItem((it1 + (i / 3)).value());
+	//		model->appendRow(pStandardItem);
+	//	}
+	//	pStandardChildItem = new QStandardItem(it.value());
+	//	pStandardItem->appendRow(pStandardChildItem);
+	//	pStandardItem->setChild(pStandardChildItem->row(), 1, new QStandardItem(QString("this is %1").arg(it.key())));
+	//	++i;
+	//}
+
 }
 /*
  *使用ITK获取元数据,并显示在Docking界面上
@@ -635,11 +770,11 @@ void QvtkDicomViewer::OnStop()
 	 //ui.action_SwitchOfProperty->isChecked();
 	 if (ui.action_SwitchOfProperty->isChecked()==true)
 	 {
-		 ui.dockWidget_1->setHidden(false);
+		 ui.dockWidget_Msg->setHidden(false);
 	 }
 	 else
 	 {
-		 ui.dockWidget_1->setHidden(true);
+		 ui.dockWidget_Msg->setHidden(true);
 	 }
  }
  /*
@@ -704,26 +839,70 @@ void QvtkDicomViewer::OnStop()
   */
  void QvtkDicomViewer::receiveData(QString data)
  {
-	//这段代码效率特别低而且有全局变量引用不明的问题
-	 /*DcmDirectoryRecord *   PatientRecord = NULL;
-	 OFString tmpString;
-	 std::string m_FilePath = path.toStdString();
-	 DcmDicomDir dicomdir(m_FilePath.c_str());
-	 root1 = &(dicomdir.getRootRecord());
-	 while (((PatientRecord = root1->nextSub(PatientRecord)) != NULL))
-	 {
-		 if (PatientRecord->findAndGetOFString(DCM_PatientID, tmpString).good())
-		 {
-			 if (data == tmpString.c_str()) {
-				 ui.lineEdit_Number->setText(tmpString.c_str());
-				 if (PatientRecord->findAndGetOFString(DCM_PatientName, tmpString).good()) {
-					 ui.lineEdit_Name->setText(tmpString.c_str());
-				 }
-				 if (PatientRecord->findAndGetOFString(DCM_PatientBirthDate, tmpString).good()) {
-					 ui.lineEdit_Birth->setText(tmpString.c_str());
-				 }
+	/*
+	 * 在此处,应该能使用PatientID从数据库中查询出来这个病人的
+	 * 信息,
+	 * 包括study,series,image
+	 * 实际上此处只需要保存好这个ID,使用的时候现场查询即可
+	 * 实现查询需要消耗很多空间保存这棵子树的信息
+	 */
 
-			 }
-		 }
-	 }*/
+	/*
+	 * 输出调试信息
+	 */
+#if _DEBUG
+	QString temp;
+	DicomDataBase * tempDaatabase = DicomDataBase::getInstance();
+	Current_patientId = data.toStdString();
+	for (int i=0;i<tempDaatabase->PatientList.size();i++)
+	{
+		if (tempDaatabase->PatientList[i]->PatientID == data.toStdString())
+		{
+			temp.append(QStringLiteral("PatientID:"));temp.append(data); temp.append("\n");
+			temp.append(QStringLiteral("PatientName:")); temp.append(QString::fromStdString(tempDaatabase->PatientList[i]->PatientName)); temp.append("\n");
+			temp.append(QStringLiteral("Study.SIZE:"));
+			temp.append(QString::fromStdString(std::to_string(tempDaatabase->PatientList[i]->StudyList.size()))); temp.append("\n");
+			temp.append(QStringLiteral("Series.SIZE:"));
+			temp.append(QString::fromStdString(std::to_string(tempDaatabase->PatientList[i]->StudyList[0]->SeriesList.size()))); temp.append("\n");
+			break;
+		}
+	}
+	QMessageBox::information(this, QStringLiteral("Debug"), temp);
+	DirTreeRefresh(tempDaatabase);
+#endif
+	//RenderTest();
+	//itkRenderTest();
+
+	DicomDataBase * temp_database = DicomDataBase::getInstance();
+	std::vector<DicomImage*> temp_dicom_images_v;//要打开的series中的图片序列
+												 //找到目标series
+												 /*
+												 * 目前没有选择series的功能,测试时找到选定的病人,默认加载他的第一个study的第一个series
+												 */
+	for (int i = 0; i<temp_database->PatientList.size(); i++)
+	{
+		if (temp_database->PatientList[i]->PatientID == Current_patientId)
+		{
+			temp_dicom_images_v = temp_database->PatientList[i]->StudyList[0]->SeriesList[0]->ImageList;
+			break;
+		}
+	}
+	/*
+	 * 集合该series中的全部image文件路径
+	 */
+	std::vector<std::string> imageAbsFilePath;
+	for (int i = 0; i<temp_dicom_images_v.size(); i++)
+	{
+		QString temp = QString::fromStdString("F:\\Dicom\\Test2\\" + temp_dicom_images_v[i]->ReferencedFileID);
+		temp.replace(QChar('\\'), QChar('/'));
+		imageAbsFilePath.push_back(temp.toStdString());
+		qDebug() << temp << "  i:  " << i << "  " << temp_dicom_images_v[i]->InstanceNumber.c_str() << endl;
+	}
+	SeriesRender(imageAbsFilePath[0]);
+	for (int i = 0; i<temp_dicom_images_v.size(); i++)
+	{
+		reader->SetFileName(imageAbsFilePath[i].c_str());
+		reader->Update();
+		ui.qvtkWidget->GetRenderWindow()->Render();
+	}
  }

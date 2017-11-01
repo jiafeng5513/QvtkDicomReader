@@ -139,6 +139,10 @@ DicomDataBase * DicomDataBase::getInstance()
 					 {
 						 m_image->col = atoi(tmpString.c_str());
 					 }
+					 if (ImageRecord->findAndGetOFString(DCM_InstanceNumber, tmpString).good())
+					 {
+						 m_image->InstanceNumber = tmpString.c_str();
+					 }
 					 l++;
 					 m_series->ImageList.push_back(m_image);
 				 }

@@ -101,49 +101,10 @@ DicomDir::~DicomDir()
  */
 void DicomDir::OnPushOk()
 {
-	int row1 = ui.tableWidget->currentItem()->row();//当前选中行
-	emit sendData(ui.tableWidget->item(row1, 1)->text());//将病人的ID返回一界面在一界面进行病人的查询
-	//下面的这段代码意义不明
-	/*===================这里用到的变量===================*/
-	QString data1, data2, data3, data4, data5;//意义不明的五个变量
-	int row;//这个函数默认row中保存的是表格的行数
-
-	/*if (ui.tableWidget1->item(0, 0) != 0) {
-		data1 = ui.tableWidget1->item(0, 0)->text();
-		for (int j = 1; j < row; j++) {
-			data2 = ui.tableWidget->item(j, 0)->text();
-			if (data1 == data2) {
-				emit sendData(ui.tableWidget->item(j, 1)->text());
-			}
-		}
-	}
-	if (ui.tableWidget1->item(0, 1) != 0) {
-		data1 = ui.tableWidget1->item(0, 1)->text();
-		for (int j = 1; j < row; j++) {
-			data2 = ui.tableWidget->item(j, 1)->text();
-			if (data1 == data2) {
-				emit sendData(ui.tableWidget->item(j, 1)->text());
-			}
-		}
-	}
-	if (ui.tableWidget1->item(0, 2) != 0) {
-		data1 = ui.tableWidget1->item(0, 2)->text();
-		for (int j = 1; j < row; j++) {
-			data2 = ui.tableWidget->item(j, 2)->text();
-			if (data1 == data2) {
-				emit sendData(ui.tableWidget->item(j, 1)->text());
-			}
-		}
-	}
-	if (ui.tableWidget1->item(0, 3) != 0) {
-		data1 = ui.tableWidget1->item(0, 3)->text();
-		for (int j = 1; j < row; j++) {
-			data2 = ui.tableWidget->item(j, 3)->text();
-			if (data1 == data2) {
-				emit sendData(ui.tableWidget->item(j, 1)->text());
-			}
-		}
-	}*/
+	/*
+	 * 将当前选中行对应的病人的PatientID以字符串返回到接收点
+	 */
+	emit sendData(ui.tableWidget->item(ui.tableWidget->currentItem()->row(), 0)->text());
 	this->close();
 }
 /*

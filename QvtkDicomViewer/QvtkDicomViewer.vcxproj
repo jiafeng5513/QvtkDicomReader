@@ -35,7 +35,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
-    <IncludePath>D:\Libraries\DCMTK\dcmtk-3.6.2-install\include\dcmtk;D:\Libraries\DCMTK\dcmtk-3.6.2-install\include;D:\Libraries\ITK\ITK_4.12.0\ITK_Install\include\ITK-4.12;D:\Libraries\vtk\vtk8.0.0\VTK_install\include\vtk-8.0;$(IncludePath)</IncludePath>
+    <IncludePath>D:\Libraries\DCMTK\dcmtk-3.6.2-install\include\dcmtk;D:\Libraries\DCMTK\dcmtk-3.6.2-install\include;D:\Libraries\ITK\ITK_4.12.0\ITK_Install\include\ITK-4.12;D:\Libraries\ITK\ITK_4.12.0\ITK_src\Modules\Bridge\VtkGlue\include;D:\Libraries\vtk\vtk8.0.0\VTK_install\include\vtk-8.0;$(IncludePath)</IncludePath>
     <LibraryPath>D:\Libraries\DCMTK\dcmtk-3.6.2-install\lib;D:\Libraries\ITK\ITK_4.12.0\ITK_Install\lib;D:\Libraries\vtk\vtk8.0.0\VTK_install\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">

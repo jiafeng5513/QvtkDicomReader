@@ -17,6 +17,7 @@ public:
 	std::string InstanceCreationDate;//图片建立时间
 	std::string kpv;				 //看起来可能有点用
 	std::string SliceLocation;		 //emmm
+	std::string InstanceNumber;       //组内编号
 	int row;
 	int col;//图片尺寸
 	std::string PixelSpacing;        //像素空间
