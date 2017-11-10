@@ -171,3 +171,17 @@ DicomDataBase::DicomDataBase()
 DicomDataBase::~DicomDataBase()
 {
 }
+/*
+ * 使用patient id查询一个patient对象
+ */
+DicomPatient * DicomDataBase::getPatientById(std::string &patientid)
+{
+	for (int i=0;i<PatientList.size();i++)
+	{
+		if (PatientList[i]->PatientID == patientid)
+		{
+			return PatientList[i];
+		}
+	}
+	return nullptr;
+}

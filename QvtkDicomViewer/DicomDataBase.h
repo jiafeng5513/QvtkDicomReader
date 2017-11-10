@@ -28,6 +28,7 @@ public:
 	std::vector<DicomPatient*> PatientList;//数据库中保存的所有的病人
 	std::string DicomDirFilePath;//DicomDir文件的绝对路径
 	std::string DicomForderPath;//DicomDIR文件所在的文件夹,在后面接上RefFileID就得到图片的绝对路径
+	DicomPatient*getPatientById(std::string &patientid);//使用patient id查询一个patient对象
 };
 ///单例模式
 //DicomDataBase* DicomDataBase::m_pSingleton = new DicomDataBase();

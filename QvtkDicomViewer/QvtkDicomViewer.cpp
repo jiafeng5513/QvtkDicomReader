@@ -448,7 +448,7 @@ void QvtkDicomViewer::RenderRefresh(std::string imagefilename,int currentPagenum
 /*
  * 刷新DIR树
  */
-void QvtkDicomViewer::DirTreeRefresh(DicomDataBase * database)
+void QvtkDicomViewer::DirTreeRefresh(DicomPatient * patient)
 {
 	QStandardItem* pItem0 = new QStandardItem(QStringLiteral("病历"));
 	pItem0->setToolTip(QStringLiteral("病人姓名"));
@@ -477,29 +477,27 @@ void QvtkDicomViewer::DirTreeRefresh(DicomDataBase * database)
 	//DicomTreeItem*test = NULL;
 
 	//model->appendRow(test);
-	for(int i=0;i<database->PatientList.size();i++)
+	PatientItem = new QStandardItem(("Patient:" + patient->PatientName).c_str());
+	model->appendRow(PatientItem);
+	for (int j = 0; j < patient->StudyList.size(); j++)
 	{
-		PatientItem= new QStandardItem(("Patient:"+database->PatientList[i]->PatientName).c_str());
-		model->appendRow(PatientItem);
-		for(int j=0;j<database->PatientList[i]->StudyList.size();j++)
+		StudyItem = new QStandardItem(("Study:" + patient->StudyList[j]->StudyId).c_str());
+		PatientItem->appendRow(StudyItem);
+		//PatientItem->setChild(PatientItem->row(), 1, StudyItem);
+		for (int k = 0; k < patient->StudyList[j]->SeriesList.size(); k++)
 		{
-			StudyItem = new QStandardItem(("Study:"+database->PatientList[i]->StudyList[j]->StudyId).c_str());
-			PatientItem->appendRow(StudyItem);
-			//PatientItem->setChild(PatientItem->row(), 1, StudyItem);
-			for(int k=0;k<database->PatientList[i]->StudyList[j]->SeriesList.size();k++)
+			SeriesItem = new QStandardItem(("Series:" + patient->StudyList[j]->SeriesList[k]->SeriseNumber).c_str());
+			StudyItem->appendRow(SeriesItem);
+			//StudyItem->setChild(StudyItem->row(), 2, SeriesItem);
+			for (int l = 0; l < patient->StudyList[j]->SeriesList[k]->ImageList.size(); l++)
 			{
-				SeriesItem = new QStandardItem(("Series:"+database->PatientList[i]->StudyList[j]->SeriesList[k]->SeriseNumber).c_str());
-				StudyItem->appendRow(SeriesItem);
-				//StudyItem->setChild(StudyItem->row(), 2, SeriesItem);
-				for (int l = 0; l<database->PatientList[i]->StudyList[j]->SeriesList[k]->ImageList.size(); l++)
-				{
-					ImageItem = new QStandardItem(("Image:"+database->PatientList[i]->StudyList[j]->SeriesList[k]->ImageList[l]->ReferencedFileID).c_str());
-					SeriesItem->appendRow(ImageItem);
-					//SeriesItem->setChild(SeriesItem->row(), 3, ImageItem);
-				}
+				ImageItem = new QStandardItem(("Image:" + patient->StudyList[j]->SeriesList[k]->ImageList[l]->ReferencedFileID).c_str());
+				SeriesItem->appendRow(ImageItem);
+				//SeriesItem->setChild(SeriesItem->row(), 3, ImageItem);
 			}
 		}
 	}
+	
 }
 /*
  * 工具条->前一张
@@ -791,8 +789,10 @@ void QvtkDicomViewer::OnStop()
  {
 	DicomDataBase * tempDaatabase = DicomDataBase::getInstance();
 	Current_patientId = data.toStdString();//当前的病人ID
-
-	DirTreeRefresh(tempDaatabase);
+	//当前病人对象绑定,注意这应该是全局唯一的绑定点
+	CurrentPatient = new DicomPatient(tempDaatabase->getPatientById(Current_patientId));
+	
+	DirTreeRefresh(CurrentPatient);//改成以Patient对象为参数
 
 	DicomDataBase * temp_database = DicomDataBase::getInstance();
 	std::vector<DicomImage*> temp_dicom_images_v;//要打开的series中的图片序列
@@ -808,6 +808,7 @@ void QvtkDicomViewer::OnStop()
 			break;
 		}
 	}	
+	temp_dicom_images_v = CurrentPatient->getCurrentDicomSeries()->ImageList;
 	//获取dir文件的前缀
 	QFile *dirfile = new QFile(dir);
 	auto dirfile_info= QFileInfo(*dirfile);

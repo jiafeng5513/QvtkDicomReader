@@ -32,6 +32,7 @@
 #include <vtkBiDimensionalWidget.h>
 #include "vtkBiDimensionalCallback.h"
 #include "SlicePlayer.h"
+#include "DicomPatient.h"
 
 class DicomDataBase;
 /*
@@ -98,12 +99,13 @@ private:
 	QMenu * TreeViewMenu_OnImage;		//树右键菜单->Image节点
 
 	std::vector<std::string> imageAbsFilePath;
+	DicomPatient * CurrentPatient;		//当前病人
 private:
 	///内部操作
 	void setCursor(CURSOR newValue);
 	void RenderInitializer(std::string folder, int NumOfImage = 1);//渲染器初始化
 	void RenderRefresh(std::string imagefilename, int currentPagenumber, int maxPageNumber);//更新渲染
-	void DirTreeRefresh(DicomDataBase * database);
+	void DirTreeRefresh(DicomPatient * patient);
 	void addDistanceWidget();
 	void addAngleWidget();
 	void addContourWidget();
