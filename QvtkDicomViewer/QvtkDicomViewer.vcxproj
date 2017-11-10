@@ -35,13 +35,13 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
-    <IncludePath>D:\Libraries\DCMTK\dcmtk-3.6.2-install\include\dcmtk;D:\Libraries\DCMTK\dcmtk-3.6.2-install\include;D:\Libraries\ITK\ITK_4.12.0\ITK_Install\include\ITK-4.12;D:\Libraries\ITK\ITK_4.12.0\ITK_src\Modules\Bridge\VtkGlue\include;D:\Libraries\vtk\vtk8.0.0\VTK_install\include\vtk-8.0;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\Libraries\DCMTK\dcmtk-3.6.2-install\lib;D:\Libraries\ITK\ITK_4.12.0\ITK_Install\lib;D:\Libraries\vtk\vtk8.0.0\VTK_install\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <OutDir>$(SolutionDir)$(Platform)\$(Configuration)\</OutDir>
-    <IncludePath>D:\Libraries\vtk\vtk8.0.0\VTK_install\include\vtk-8.0;D:\Libraries\ITK\ITK_4.12.0\ITK_Install\include\ITK-4.12;$(IncludePath)</IncludePath>
-    <LibraryPath>D:\Libraries\ITK\ITK_4.12.0\ITK_Install\lib;D:\Libraries\vtk\vtk8.0.0\VTK_install\lib;$(LibraryPath)</LibraryPath>
+    <IncludePath>$(IncludePath)</IncludePath>
+    <LibraryPath>$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <ClCompile>
@@ -57,7 +57,7 @@
       <OutputFile>$(OutDir)\$(ProjectName).exe</OutputFile>
       <AdditionalLibraryDirectories>$(QTDIR)\lib;%(AdditionalLibraryDirectories)</AdditionalLibraryDirectories>
       <GenerateDebugInformation>true</GenerateDebugInformation>
-      <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Widgetsd.lib;ofstd.lib;oflog.lib;dcmdata.lib;%(AdditionalDependencies)</AdditionalDependencies>
+      <AdditionalDependencies>qtmaind.lib;Qt5Cored.lib;Qt5Guid.lib;Qt5Widgetsd.lib;%(AdditionalDependencies)</AdditionalDependencies>
     </Link>
   </ItemDefinitionGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
@@ -79,6 +79,7 @@
   <ItemGroup>
     <ClCompile Include="DicomDataBase.cpp" />
     <ClCompile Include="DicomDir.cpp" />
+    <ClCompile Include="DicomDirTreeModel.cpp" />
     <ClCompile Include="DicomImage.cpp" />
     <ClCompile Include="DicomPatient.cpp" />
     <ClCompile Include="DicomSeries.cpp" />
@@ -111,6 +112,7 @@
     <ClCompile Include="myVtkInteractorStyleImage.cpp" />
     <ClCompile Include="QvtkDicomViewer.cpp" />
     <ClCompile Include="SlicePlayer.cpp" />
+    <ClCompile Include="TreeItem.cpp" />
     <ClCompile Include="vtkBiDimensionalCallback.cpp" />
   </ItemGroup>
   <ItemGroup>
@@ -149,6 +151,7 @@
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets"</Command>
     </CustomBuild>
     <ClInclude Include="DicomDataBase.h" />
+    <ClInclude Include="DicomDirTreeModel.h" />
     <ClInclude Include="DicomImage.h" />
     <ClInclude Include="DicomPatient.h" />
     <ClInclude Include="DicomSeries.h" />
@@ -166,6 +169,7 @@
       <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
       <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets"</Command>
     </CustomBuild>
+    <ClInclude Include="TreeItem.h" />
     <ClInclude Include="vtkBiDimensionalCallback.h" />
   </ItemGroup>
   <ItemGroup>

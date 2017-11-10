@@ -37,8 +37,9 @@ public:
 	~DicomDir();
 private:
 	Ui::DicomDir ui;
+	QString dir;//DICOMDIR
 signals:
-	void sendData(QString);//信号,通过该信号发出病人的ID
+	void sendData(QString Id,QString dir);//信号,通过该信号发出病人的ID和DicomDIR的绝对路径
 public slots:
 	void OnPushOk();
 	void OnPushCancel();

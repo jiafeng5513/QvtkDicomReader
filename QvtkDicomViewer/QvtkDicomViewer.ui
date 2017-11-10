@@ -52,14 +52,14 @@
     <property name="title">
      <string>文件</string>
     </property>
-    <addaction name="action_Open"/>
-    <addaction name="action_OpenDICOMDIR"/>
+    <addaction name="action_OpenSeriesFolder"/>
+    <addaction name="action_OpenDicomDirFile"/>
+    <addaction name="action_OpenDicomFile"/>
    </widget>
    <widget class="QMenu" name="menu_2">
     <property name="title">
      <string>信息</string>
     </property>
-    <addaction name="action_RenderText"/>
     <addaction name="action_back"/>
     <addaction name="action_next"/>
    </widget>
@@ -106,8 +106,9 @@
    <attribute name="toolBarBreak">
     <bool>false</bool>
    </attribute>
-   <addaction name="action_Open"/>
-   <addaction name="action_RenderText"/>
+   <addaction name="action_OpenDicomDirFile"/>
+   <addaction name="action_OpenDicomFile"/>
+   <addaction name="action_OpenSeriesFolder"/>
    <addaction name="separator"/>
    <addaction name="action_back"/>
    <addaction name="action_Play"/>
@@ -127,148 +128,6 @@
    <addaction name="action_Reset"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
-  <widget class="QDockWidget" name="dockWidget_Msg">
-   <property name="windowTitle">
-    <string>属性</string>
-   </property>
-   <attribute name="dockWidgetArea">
-    <number>2</number>
-   </attribute>
-   <widget class="QWidget" name="dockWidgetContents_3">
-    <layout class="QGridLayout" name="gridLayout_2">
-     <item row="8" column="1" rowspan="2">
-      <widget class="QLineEdit" name="lineEdit_Modality"/>
-     </item>
-     <item row="6" column="0" rowspan="3">
-      <widget class="QLabel" name="label_3">
-       <property name="text">
-        <string>制造商:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="9" column="0">
-      <widget class="QLabel" name="label_4">
-       <property name="text">
-        <string>检测手段:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="10" column="0">
-      <widget class="QLabel" name="label_5">
-       <property name="text">
-        <string>医院:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="10" column="1">
-      <widget class="QLineEdit" name="lineEdit_Hospital"/>
-     </item>
-     <item row="11" column="0">
-      <widget class="QLabel" name="label_6">
-       <property name="text">
-        <string>尺寸:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="11" column="1" rowspan="2">
-      <widget class="QLineEdit" name="lineEdit_Dimensions"/>
-     </item>
-     <item row="12" column="0" rowspan="2">
-      <widget class="QLabel" name="label_7">
-       <property name="text">
-        <string>原点:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="14" column="0">
-      <widget class="QLabel" name="label_11">
-       <property name="text">
-        <string>像素间隔:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="13" column="1">
-      <widget class="QLineEdit" name="lineEdit_Origins"/>
-     </item>
-     <item row="14" column="1">
-      <widget class="QLineEdit" name="lineEdit_Spacing"/>
-     </item>
-     <item row="15" column="1">
-      <spacer name="verticalSpacer_3">
-       <property name="orientation">
-        <enum>Qt::Vertical</enum>
-       </property>
-       <property name="sizeHint" stdset="0">
-        <size>
-         <width>20</width>
-         <height>40</height>
-        </size>
-       </property>
-      </spacer>
-     </item>
-     <item row="2" column="0">
-      <widget class="QLabel" name="label_10">
-       <property name="text">
-        <string>年龄:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="0" column="1">
-      <widget class="QLineEdit" name="lineEdit_Name"/>
-     </item>
-     <item row="2" column="1">
-      <widget class="QLineEdit" name="lineEdit_Age"/>
-     </item>
-     <item row="3" column="1">
-      <widget class="QLineEdit" name="lineEdit_ID"/>
-     </item>
-     <item row="1" column="0">
-      <widget class="QLabel" name="label_9">
-       <property name="text">
-        <string>性别:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="1" column="1">
-      <widget class="QLineEdit" name="lineEdit_Sex"/>
-     </item>
-     <item row="0" column="0">
-      <widget class="QLabel" name="label_8">
-       <property name="text">
-        <string>姓名;</string>
-       </property>
-      </widget>
-     </item>
-     <item row="4" column="0" colspan="2">
-      <widget class="Line" name="line">
-       <property name="orientation">
-        <enum>Qt::Horizontal</enum>
-       </property>
-      </widget>
-     </item>
-     <item row="3" column="0">
-      <widget class="QLabel" name="label">
-       <property name="text">
-        <string>ID:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="0">
-      <widget class="QLabel" name="label_2">
-       <property name="text">
-        <string>拍摄时间:</string>
-       </property>
-      </widget>
-     </item>
-     <item row="5" column="1" rowspan="2">
-      <widget class="QLineEdit" name="lineEdit_Time"/>
-     </item>
-     <item row="7" column="1">
-      <widget class="QLineEdit" name="lineEdit_Manufacturer"/>
-     </item>
-    </layout>
-   </widget>
-  </widget>
   <widget class="QDockWidget" name="dockWidget_Dir">
    <property name="toolTip">
     <string/>
@@ -282,27 +141,22 @@
    <widget class="QWidget" name="dockWidgetContents">
     <layout class="QHBoxLayout" name="horizontalLayout">
      <item>
-      <widget class="QTreeView" name="treeView"/>
+      <widget class="QTreeView" name="treeView">
+       <property name="contextMenuPolicy">
+        <enum>Qt::CustomContextMenu</enum>
+       </property>
+      </widget>
      </item>
     </layout>
    </widget>
   </widget>
-  <action name="action_Open">
+  <action name="action_OpenSeriesFolder">
    <property name="icon">
     <iconset resource="QvtkDicomViewer.qrc">
-     <normaloff>:/QvtkDicomViewer/Resources/open_128px_1187505_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/open_128px_1187505_easyicon.net.ico</iconset>
+     <normaloff>:/QvtkDicomViewer/Resources/folder_128px_1207828_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/folder_128px_1207828_easyicon.net.ico</iconset>
    </property>
    <property name="text">
     <string>打开Series目录</string>
-   </property>
-  </action>
-  <action name="action_RenderText">
-   <property name="icon">
-    <iconset resource="QvtkDicomViewer.qrc">
-     <normaloff>:/QvtkDicomViewer/Resources/text_128px_1188178_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/text_128px_1188178_easyicon.net.ico</iconset>
-   </property>
-   <property name="text">
-    <string>输出信息</string>
    </property>
   </action>
   <action name="action_back">
@@ -471,7 +325,7 @@
   </action>
   <action name="action_DCMTK_x64">
    <property name="text">
-    <string>调用DCMTK-x64</string>
+    <string>读取缩略图</string>
    </property>
   </action>
   <action name="action_DCMTK_64_DiconDir">
@@ -479,9 +333,22 @@
     <string>调用DCMTK-64读取DiconDir</string>
    </property>
   </action>
-  <action name="action_OpenDICOMDIR">
+  <action name="action_OpenDicomDirFile">
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/file_128px_1197084_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/file_128px_1197084_easyicon.net.ico</iconset>
+   </property>
    <property name="text">
     <string>打开DICOMDIR文件</string>
+   </property>
+  </action>
+  <action name="action_OpenDicomFile">
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/X_Ray_Hand_128px_1124752_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/X_Ray_Hand_128px_1124752_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>打开Dicom文件</string>
    </property>
   </action>
  </widget>
@@ -497,38 +364,6 @@
   <include location="QvtkDicomViewer.qrc"/>
  </resources>
  <connections>
-  <connection>
-   <sender>action_Open</sender>
-   <signal>triggered()</signal>
-   <receiver>QvtkDicomViewerClass</receiver>
-   <slot>OnOpenFile()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>408</x>
-     <y>278</y>
-    </hint>
-   </hints>
-  </connection>
-  <connection>
-   <sender>action_RenderText</sender>
-   <signal>triggered()</signal>
-   <receiver>QvtkDicomViewerClass</receiver>
-   <slot>OnRenderText()</slot>
-   <hints>
-    <hint type="sourcelabel">
-     <x>-1</x>
-     <y>-1</y>
-    </hint>
-    <hint type="destinationlabel">
-     <x>408</x>
-     <y>278</y>
-    </hint>
-   </hints>
-  </connection>
   <connection>
    <sender>action_back</sender>
    <signal>triggered()</signal>
@@ -801,6 +636,70 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>action_OpenDicomDirFile</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnOpenDicomDirFile()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>589</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_OpenSeriesFolder</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnOpenSeriesFolder()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>589</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_OpenDicomFile</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnOpenDicomFile()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>589</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>treeView</sender>
+   <signal>customContextMenuRequested(QPoint)</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>on_treeView_customContextMenuRequested(QPoint)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>138</x>
+     <y>401</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>589</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>OnOpenFile()</slot>
@@ -824,5 +723,9 @@
   <slot>OnStop()</slot>
   <slot>OnTestDCMTK_x64()</slot>
   <slot>OnTestReadDICOMDIR()</slot>
+  <slot>OnOpenSeriesFolder()</slot>
+  <slot>OnOpenDicomFile()</slot>
+  <slot>OnOpenDicomDirFile()</slot>
+  <slot>on_treeView_customContextMenuRequested(QPoint)</slot>
  </slots>
 </ui>

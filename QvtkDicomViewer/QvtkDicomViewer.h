@@ -88,19 +88,22 @@ private:
 	vtkSmartPointer<vtkOrientationMarkerWidget> widget;
 	vtkSmartPointer<vtkBiDimensionalWidget> biDimensionalWidget;
 	vtkSmartPointer<vtkBiDimensionalCallback> biDimensionalCallback;
-	std::string folder;//存储当前读取的Dicom的目录,是否有必要作为全局变量现在尚无定论
 	QIcon icon_Play;//播放图标
 	QIcon icon_Pause;//暂停图标
 	bool PlayFlag;//false:图标应为播放,处于准备播放状态,true:图标应为暂停,处于播放状态并准备暂停
 	SlicePlayer *m_slice_player;//这是一个线程类
 	std::string Current_patientId;//当前的病人ID
+	QPoint PrePosition;					//前一次的右键点击位置
+	QMenu * TreeViewMenu_OnEmpty;		//树右键菜单->树为空
+	QMenu * TreeViewMenu_OnPatient;		//树右键菜单->病人节点
+	QMenu * TreeViewMenu_OnSeries;		//树右键菜单->Series节点
+	QMenu * TreeViewMenu_OnImage;		//树右键菜单->Image节点
 private:
 	///内部操作
 	void setCursor(CURSOR newValue);
-	void DoRender(std::string folder);//绑定数据源,显示Dicom数据
-	void SeriesRender(std::string first);//手动加载一个series
+	void RenderInitializer(std::string folder, int NumOfImage = 1);//渲染器初始化
+	void SeriesRender(std::string first,int NumOfString=1);//手动加载
 	void DirTreeRefresh(DicomDataBase * database);
-	void GetMetaDataAndRender(std::string folder);//使用ITK获取元数据,并显示在Docking界面上
 	void addDistanceWidget();
 	void addAngleWidget();
 	void addContourWidget();
@@ -108,13 +111,15 @@ private:
 	void SetUsageText();
 	void addOrientationMarker();
 	void addBiDimensionalWidget();
+	void CreateContextMenu();//树视图上下文菜单
 signals :
 	void CursorValueChanged();        //自定义值更改信号,用于监控当前光标的变化
 public slots:
 
 	void OnChangeCursorValue();//响应光标值的修改,执行一些刷新和禁用操作
-	void OnOpenFile();
-	void OnRenderText();
+	void OnOpenSeriesFolder();//改成OnOpenSeriesFolder
+	void OnOpenDicomFile();//打开单张Dicom文件
+	void OnOpenDicomDirFile();//打开DICOMDIR文件
 	void OnForward();//前一张
 	void OnBackward();//后一张
 	void OnResetToFirst();//回到第一张
@@ -131,8 +136,9 @@ public slots:
 	void OnPlay();//播放/暂停
 	void OnStop();//停止
 	void OnSwitchProperty();//属性docking窗口的开关
+	void on_treeView_customContextMenuRequested(QPoint pos);//树视图上下文菜单分发
 	///正在测试的功能
 	void OnTestDCMTK_x64();//测试调用DCMTK-x64读取元数据
 	void OnTestReadDICOMDIR();//测试调用DCMTK-x64读取DIR文件
-	void receiveData(QString data);//响应DicomDir类传送过来的信号,其中包含了一个病人的ID
+	void receiveData(QString data,QString dir);//响应DicomDir类传送过来的信号,其中包含了一个病人的ID
 };

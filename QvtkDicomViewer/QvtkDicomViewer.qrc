@@ -1,7 +1,6 @@
 <RCC>
     <qresource prefix="/QvtkDicomViewer">
         <file>Resources/open_128px_1187505_easyicon.net.ico</file>
-        <file>Resources/text_128px_1188178_easyicon.net.ico</file>
         <file>Resources/front_128px_1143868_easyicon.net.ico</file>
         <file>Resources/next_128px_1143867_easyicon.net.ico</file>
         <file>Resources/Angle_Thingy_128px_559411_easyicon.net.ico</file>
@@ -19,5 +18,8 @@
         <file>Resources/play_128px_1197036_easyicon.net.ico</file>
         <file>Resources/pause_128px_1197034_easyicon.net.ico</file>
         <file>Resources/stop_128px_1197040_easyicon.net.ico</file>
+        <file>Resources/folder_128px_1207828_easyicon.net.ico</file>
+        <file>Resources/X_Ray_Hand_128px_1124752_easyicon.net.ico</file>
+        <file>Resources/file_128px_1197084_easyicon.net.ico</file>
     </qresource>
 </RCC>

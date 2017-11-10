@@ -25,7 +25,7 @@ DicomDir::DicomDir(QWidget *parent)
 DicomDir::DicomDir(QString DicomDirFilePath, QWidget* parent)
 {
 	ui.setupUi(this);
-
+	dir = DicomDirFilePath;
 	//TODO:用户初始化代码区域 
 	DicomDataBase* m_database =DicomDataBase::getInstance();
 	m_database->Init(DicomDirFilePath.toStdString());
@@ -102,9 +102,9 @@ DicomDir::~DicomDir()
 void DicomDir::OnPushOk()
 {
 	/*
-	 * 将当前选中行对应的病人的PatientID以字符串返回到接收点
+	 * 将当前选中行对应的病人的PatientID和DICOMDIR的绝对路径以字符串返回到接收点
 	 */
-	emit sendData(ui.tableWidget->item(ui.tableWidget->currentItem()->row(), 0)->text());
+	emit sendData(ui.tableWidget->item(ui.tableWidget->currentItem()->row(), 0)->text(), dir);
 	this->close();
 }
 /*
