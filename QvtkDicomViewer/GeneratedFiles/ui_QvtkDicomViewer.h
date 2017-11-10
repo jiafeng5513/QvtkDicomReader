@@ -20,6 +20,7 @@
 #include <QtWidgets/QMainWindow>
 #include <QtWidgets/QMenu>
 #include <QtWidgets/QMenuBar>
+#include <QtWidgets/QScrollBar>
 #include <QtWidgets/QStatusBar>
 #include <QtWidgets/QToolBar>
 #include <QtWidgets/QTreeView>
@@ -54,6 +55,7 @@ public:
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QVTKWidget *qvtkWidget;
+    QScrollBar *SliceScrollBar;
     QMenuBar *menuBar;
     QMenu *menu;
     QMenu *menu_2;
@@ -190,6 +192,12 @@ public:
 
         gridLayout->addWidget(qvtkWidget, 0, 0, 1, 1);
 
+        SliceScrollBar = new QScrollBar(centralWidget);
+        SliceScrollBar->setObjectName(QStringLiteral("SliceScrollBar"));
+        SliceScrollBar->setOrientation(Qt::Vertical);
+
+        gridLayout->addWidget(SliceScrollBar, 0, 1, 1, 1);
+
         QvtkDicomViewerClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(QvtkDicomViewerClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
@@ -296,6 +304,7 @@ public:
         QObject::connect(action_OpenSeriesFolder, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnOpenSeriesFolder()));
         QObject::connect(action_OpenDicomFile, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnOpenDicomFile()));
         QObject::connect(treeView, SIGNAL(customContextMenuRequested(QPoint)), QvtkDicomViewerClass, SLOT(on_treeView_customContextMenuRequested(QPoint)));
+        QObject::connect(SliceScrollBar, SIGNAL(valueChanged(int)), QvtkDicomViewerClass, SLOT(OnSliceScrollBarValueChange(int)));
 
         QMetaObject::connectSlotsByName(QvtkDicomViewerClass);
     } // setupUi

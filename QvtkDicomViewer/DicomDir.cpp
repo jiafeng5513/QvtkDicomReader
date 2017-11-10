@@ -104,8 +104,9 @@ void DicomDir::OnPushOk()
 	/*
 	 * 将当前选中行对应的病人的PatientID和DICOMDIR的绝对路径以字符串返回到接收点
 	 */
-	emit sendData(ui.tableWidget->item(ui.tableWidget->currentItem()->row(), 0)->text(), dir);
 	this->close();
+	emit sendData(ui.tableWidget->item(ui.tableWidget->currentItem()->row(), 0)->text(), dir);
+	
 }
 /*
  * 点击取消按键

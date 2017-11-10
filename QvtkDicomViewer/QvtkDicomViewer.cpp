@@ -228,22 +228,25 @@ void QvtkDicomViewer::addContourWidget()
 /*
  * 添加切片页码
  */
-void QvtkDicomViewer::SetSliceText()
+void QvtkDicomViewer::SetSliceText(int current,int max)
 {
-	sliceTextProp = vtkSmartPointer<vtkTextProperty>::New();
+	m_pImageViewer->GetRenderer()->RemoveActor(sliceTextActor);
+	vtkSmartPointer<vtkTextProperty> sliceTextProp = vtkSmartPointer<vtkTextProperty>::New();
 	sliceTextProp->SetFontFamilyToCourier();
 	sliceTextProp->SetFontSize(20);
 	sliceTextProp->SetVerticalJustificationToBottom();
 	sliceTextProp->SetJustificationToLeft();
 
-	sliceTextMapper = vtkSmartPointer<vtkTextMapper>::New();
-	std::string msg = StatusMessage::Format(m_pImageViewer->GetSliceMin(), m_pImageViewer->GetSliceMax());
+	vtkSmartPointer<vtkTextMapper> sliceTextMapper = vtkSmartPointer<vtkTextMapper>::New();
+	std::string msg = StatusMessage::Format(current-1, max-1);//显示6/21
 	sliceTextMapper->SetInput(msg.c_str());
 	sliceTextMapper->SetTextProperty(sliceTextProp);
 
-	sliceTextActor = vtkSmartPointer<vtkActor2D>::New();
+	/*vtkSmartPointer<vtkActor2D>*/ sliceTextActor = vtkSmartPointer<vtkActor2D>::New();
 	sliceTextActor->SetMapper(sliceTextMapper);
 	sliceTextActor->SetPosition(15, 10);
+	m_pImageViewer->GetRenderer()->AddActor2D(sliceTextActor);
+	
 }
 /*
  * 添加Dicom文件头信息
@@ -343,6 +346,13 @@ void QvtkDicomViewer::CreateContextMenu()
 	TreeViewMenu_OnImage->addAction(action_New_Render_Image);
 }
 /*
+ * 显示当前series中的第Index张图,Index从0开始,与滚动条配合
+ */
+void QvtkDicomViewer::ShowImageByIndex(int Index)
+{
+	RenderRefresh(imageAbsFilePath[Index], Index + 1, imageAbsFilePath.size());
+}
+/*
  *修改当前光标类型
  */
 void QvtkDicomViewer::setCursor(CURSOR newValue)
@@ -358,110 +368,81 @@ void QvtkDicomViewer::setCursor(CURSOR newValue)
  */
 void QvtkDicomViewer::RenderInitializer(std::string folder,int NumOfImage )
 {
-	// reader输出化并绑定文件
+	/*
+	 * reader初始化
+	 */
 	reader = vtkSmartPointer<vtkDICOMImageReader>::New();
 	reader->SetFileName(folder.c_str());
-	//尝试修改一些参数
+	/*
+	 * reader参数调整
+	 */
 	vtkSmartPointer<vtkImageChangeInformation> changer =vtkSmartPointer<vtkImageChangeInformation>::New();
 	changer->SetInputData(reader->GetOutput());
 	changer->SetOutputOrigin(0, 0, 0);
 	changer->SetOutputSpacing(10, 10, 1);
 	changer->SetCenterImage(1);
 	changer->Update();
-
-	reader->Update();//这个究竟应该放在那里合适呢?
-	// Renderer初始化
+	reader->Update();
+	/*
+	 * renderer初始化
+	 */
 	m_pRenderder = vtkSmartPointer< vtkRenderer >::New();
-	// Renderer绑定输出窗口到Qvtkwidget
 	ui.qvtkWidget->GetRenderWindow()->AddRenderer(m_pRenderder);
-	//Viewer初始化并绑定reader
+	/*
+	 * Viewer初始化
+	 */
 	m_pImageViewer = vtkSmartPointer< vtkImageViewer2 >::New();
 	m_pImageViewer->SetInputConnection(reader->GetOutputPort());
-	SetSliceText();// 切片页码信息
-	SetUsageText();// 显示一些Dicom文件头信息
+	/*
+	 * 叠加文字
+	 */
+	SetSliceText(1, NumOfImage);// 切片页码信息
 
-	//================================================================================
-	//图像变换新功能实验区域
-	//================================================================================
-	// 创建交互器实例
+	SetUsageText();// 显示一些Dicom文件头信息
+	m_pImageViewer->GetRenderer()->AddActor2D(usageTextActor);
+	/*
+	 * 交互器和交互风格初始化
+	 */
 	renderWindowInteractor = vtkSmartPointer<vtkRenderWindowInteractor>::New();
-	// 交互风格(InteractorStyle)是通过继承vtkInteractorStyleImage实现的
-	// 其中重新实现了鼠标滚轮的交互事件
 	myInteractorStyle = vtkSmartPointer<myVtkInteractorStyleImage>::New();
 	myInteractorStyle->MouseFunction = myVtkInteractorStyleImage::POINTER;
-	//向自定义的交互风格中传递必要的参数,以便于从鼠标滚轮事件中实现切片页码的更新
-	myInteractorStyle->SetImageViewer(m_pImageViewer);
-	myInteractorStyle->SetStatusMapper(sliceTextMapper);
-
-	//为ImageViewer设置交互器和输出界面,这里的输出界面是QvtkWidget
 	m_pImageViewer->SetupInteractor(renderWindowInteractor);
 	m_pImageViewer->SetRenderWindow(ui.qvtkWidget->GetRenderWindow());
-
-	// 把交互器中的交互风格改成自定义的交互风格
-	// 由于m_pImageViewer->SetupInteractor(renderWindowInteractor)方法调用会自动的
-	// 为交互器绑定默认交互风格,所以必须要在那之后再绑定自定义的交互风格
 	renderWindowInteractor->SetInteractorStyle(myInteractorStyle);
-
-	// 把准备好的文字添加到ImageViewer上
-	m_pImageViewer->GetRenderer()->AddActor2D(sliceTextActor);
-	m_pImageViewer->GetRenderer()->AddActor2D(usageTextActor);
-
-	// 设置窗口的大小和背景色
-	//imageViewer->GetRenderWindow()->SetSize(400, 300);
-	//imageViewer->GetRenderer()->SetBackground(0.2, 0.3, 0.4);
-	// m_pImageViewer->Render();
-
-	//挂载一些窗口组件
+	/*
+	 * 挂载一些VTK控件
+	 */
 	addDistanceWidget();// 实例化并设置测距组件
 	addAngleWidget();	// 实例化并设置量角器组件
 	addContourWidget();	// 实例化并设置轮廓组件
 	addOrientationMarker();//添加坐标轴指示(没有开关)
 	addBiDimensionalWidget();
-
-	// 给播放器进行初始化
-	m_slice_player = new SlicePlayer(myInteractorStyle->getMinSlice(),
-									 myInteractorStyle->getMaxSlice(),
-									 myInteractorStyle->getSlice(),
-									 50);
+	/*
+	 * 自动连续播放功能初始化
+	 */
+	m_slice_player = new SlicePlayer(0,NumOfImage-1,ui.SliceScrollBar->sliderPosition(),50);
 	connect(m_slice_player, SIGNAL(isTimeToTurnNextSlice()), this, SLOT(OnForward()));
 	connect(m_slice_player, SIGNAL(isTimeToReset()), this, SLOT(OnResetToFirst()));
-	// 启动渲染
-#pragma region 启动渲染
-	// m_pImageViewer->Render();//貌似不需要?
+	/*
+	 * 渲染
+	 */
 	m_pImageViewer->GetRenderer()->ResetCamera();
 	ui.qvtkWidget->GetRenderWindow()->Render();
-	renderWindowInteractor->Start();
-#pragma endregion 
 }
 /*
- * 使用VTK单张图片读取方法加载一个series
- * 测试时:自动连续播放
- * 参数:单张DICOM图像的绝对文件名
- * 连续播放在调用点用循环实现
+ * 更新渲染/渲染下一帧
+ * 调用这个函数之前必须先调用渲染器初始化函数,否则将会发生运行时错误
  */
-void QvtkDicomViewer::SeriesRender(std::string first, int NumOfString)
+void QvtkDicomViewer::RenderRefresh(std::string imagefilename,int currentPagenumber,int maxPageNumber)
 {
-	// reader输出化并绑定文件
-	reader = vtkSmartPointer<vtkDICOMImageReader>::New();
-	reader->SetFileName(first.c_str());
-	reader->Update();
-	m_pRenderder = vtkSmartPointer< vtkRenderer >::New();
-	// Renderer绑定输出窗口到Qvtkwidget
-	ui.qvtkWidget->GetRenderWindow()->AddRenderer(m_pRenderder);
-	//Viewer初始化并绑定reader
-	m_pImageViewer = vtkSmartPointer< vtkImageViewer2 >::New();
-	m_pImageViewer->SetInputConnection(reader->GetOutputPort());//实例化之后必须接端口,否则后面第一次使用的时候会报运行时错误
-	/*
-	 * 交互器必须在这里绑定,但是绑定的代码很慢
-	 */
+	//切换文件
+	reader->SetFileName(imagefilename.c_str());
+	//切换页码信息
+	SetSliceText(currentPagenumber, maxPageNumber);
+	//切换其他信息
 
-	addDistanceWidget();// 实例化并设置测距组件
-	addAngleWidget();	// 实例化并设置量角器组件
-	addContourWidget();	// 实例化并设置轮廓组件
-	addOrientationMarker();//添加坐标轴指示(没有开关)
-	addBiDimensionalWidget();
-	m_pImageViewer->SetRenderWindow(ui.qvtkWidget->GetRenderWindow());//每次都执行这个,不符合逻辑
-	m_pImageViewer->GetRenderer()->ResetCamera();//同理
+	//更新渲染
+	reader->Update();
 	ui.qvtkWidget->GetRenderWindow()->Render();
 }
 /*
@@ -493,9 +474,9 @@ void QvtkDicomViewer::DirTreeRefresh(DicomDataBase * database)
 	QStandardItem* StudyItem = NULL;
 	QStandardItem* SeriesItem = NULL;
 	QStandardItem* ImageItem = NULL;
-	DicomTreeItem*test = NULL;
+	//DicomTreeItem*test = NULL;
 
-	model->appendRow(test);
+	//model->appendRow(test);
 	for(int i=0;i<database->PatientList.size();i++)
 	{
 		PatientItem= new QStandardItem(("Patient:"+database->PatientList[i]->PatientName).c_str());
@@ -525,21 +506,22 @@ void QvtkDicomViewer::DirTreeRefresh(DicomDataBase * database)
  */
 void QvtkDicomViewer::OnForward()
 {
-	myInteractorStyle->MoveSliceForward();
+	ui.SliceScrollBar->setSliderPosition(ui.SliceScrollBar->sliderPosition() + 1);
 }
 /*
  * 工具条->后一张
  */
 void QvtkDicomViewer::OnBackward()
 {
-	myInteractorStyle->MoveSliceBackward();
+	ui.SliceScrollBar->setSliderPosition(ui.SliceScrollBar->sliderPosition() - 1);
 }
+
 /*
  * 回到第一张
  */
 void QvtkDicomViewer::OnResetToFirst()
 {
-	myInteractorStyle->ResetSliceToMin();
+	ui.SliceScrollBar->setSliderPosition(0);
 }
 /*
  * 选中默认鼠标指针工具
@@ -654,7 +636,7 @@ void QvtkDicomViewer::OnPlay()
 	{
 		ui.action_Play->setIcon(icon_Pause);
 		ui.action_Play->setText(QStringLiteral("暂停"));
-		m_slice_player->setCurrentSlice(myInteractorStyle->getSlice());//先同步页码
+		//m_slice_player->setCurrentSlice(myInteractorStyle->getSlice());//先同步页码
 		if (m_slice_player->isRunning()==true)//线程被加锁了
 		{
 			m_slice_player->pause.unlock();
@@ -675,7 +657,7 @@ void QvtkDicomViewer::OnStop()
 	ui.action_Play->setText(QStringLiteral("播放"));
 	PlayFlag = false;
 	m_slice_player->pause.lock();
-	myInteractorStyle->ResetSliceToMin();
+	//myInteractorStyle->ResetSliceToMin();
 	ui.action_Stop->setEnabled(false);
 }
 /*
@@ -737,6 +719,13 @@ void QvtkDicomViewer::OnStop()
 		 PrePosition.setX(-1);
 		 PrePosition.setY(-1);
 	 }
+ }
+/*
+ * Slice滚动条值更改事件
+ */
+ void QvtkDicomViewer::OnSliceScrollBarValueChange(int a)
+ {
+	 ShowImageByIndex(a);
  }
  /*
   *	测试读取缩略图
@@ -827,7 +816,7 @@ void QvtkDicomViewer::OnStop()
 	/*
 	 * 集合该series中的全部image文件路径
 	 */
-	std::vector<std::string> imageAbsFilePath;
+	//std::vector<std::string> imageAbsFilePath;
 
 
 	for (int i = 0; i<temp_dicom_images_v.size(); i++)
@@ -838,11 +827,6 @@ void QvtkDicomViewer::OnStop()
 		imageAbsFilePath.push_back(temp.toStdString());
 		qDebug() << temp << "  i:  " << i << "  " << temp_dicom_images_v[i]->InstanceNumber.c_str() << endl;
 	}
-	RenderInitializer(imageAbsFilePath[0]);
-	for (int i = 0; i<temp_dicom_images_v.size(); i++)
-	{
-		reader->SetFileName(imageAbsFilePath[i].c_str());
-		reader->Update();
-		ui.qvtkWidget->GetRenderWindow()->Render();
-	}
+	RenderInitializer(imageAbsFilePath[0], imageAbsFilePath.size());
+	ui.SliceScrollBar->setRange(0, imageAbsFilePath.size()-1);
  }

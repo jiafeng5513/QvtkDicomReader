@@ -32,7 +32,6 @@
 #include <vtkBiDimensionalWidget.h>
 #include "vtkBiDimensionalCallback.h"
 #include "SlicePlayer.h"
-//itk
 
 class DicomDataBase;
 /*
@@ -42,7 +41,6 @@ class DicomDataBase;
  * 2.库目录和包含目录:在解决方案->属性中设置
  * 3.依赖版本:Qt5.9.1
  *			  vtk8.0.0
- *			  itk4.12.0
  *			  dcmtk3.6.2(64位msvc15-2017)
  * 4.Qt目录:
  *			在解决方案目录->QvtkDicomViewer->QvtkDicomViewer.vcxproj.user文件中
@@ -73,9 +71,9 @@ private:
 	vtkSmartPointer< vtkRenderer > m_pRenderder;
 	vtkSmartPointer<vtkRenderWindowInteractor> renderWindowInteractor;
 	vtkSmartPointer<vtkDICOMImageReader> reader;
-	vtkSmartPointer<vtkTextProperty> sliceTextProp;
-	vtkSmartPointer<vtkTextMapper> sliceTextMapper;
-	vtkSmartPointer<vtkActor2D> sliceTextActor;
+	//vtkSmartPointer<vtkTextProperty> sliceTextProp;
+	//vtkSmartPointer<vtkTextMapper> sliceTextMapper;
+	vtkSmartPointer<vtkActor2D> sliceTextActor;//必须是全局的.否则无法擦除上一次得到痕迹
 	vtkSmartPointer<vtkTextProperty> usageTextProp;
 	vtkSmartPointer<vtkTextMapper> usageTextMapper;
 	vtkSmartPointer<vtkActor2D> usageTextActor;
@@ -98,45 +96,48 @@ private:
 	QMenu * TreeViewMenu_OnPatient;		//树右键菜单->病人节点
 	QMenu * TreeViewMenu_OnSeries;		//树右键菜单->Series节点
 	QMenu * TreeViewMenu_OnImage;		//树右键菜单->Image节点
+
+	std::vector<std::string> imageAbsFilePath;
 private:
 	///内部操作
 	void setCursor(CURSOR newValue);
 	void RenderInitializer(std::string folder, int NumOfImage = 1);//渲染器初始化
-	void SeriesRender(std::string first,int NumOfString=1);//手动加载
+	void RenderRefresh(std::string imagefilename, int currentPagenumber, int maxPageNumber);//更新渲染
 	void DirTreeRefresh(DicomDataBase * database);
 	void addDistanceWidget();
 	void addAngleWidget();
 	void addContourWidget();
-	void SetSliceText();
+	void SetSliceText(int current, int max);			//叠加显示页码信息
 	void SetUsageText();
 	void addOrientationMarker();
 	void addBiDimensionalWidget();
 	void CreateContextMenu();//树视图上下文菜单
+	void ShowImageByIndex(int Index);//显示当前series中的第Index张图,Index从0开始,与滚动条配合
 signals :
-	void CursorValueChanged();        //自定义值更改信号,用于监控当前光标的变化
+	void CursorValueChanged();      //自定义值更改信号,用于监控当前光标的变化
 public slots:
-
-	void OnChangeCursorValue();//响应光标值的修改,执行一些刷新和禁用操作
-	void OnOpenSeriesFolder();//改成OnOpenSeriesFolder
-	void OnOpenDicomFile();//打开单张Dicom文件
-	void OnOpenDicomDirFile();//打开DICOMDIR文件
-	void OnForward();//前一张
-	void OnBackward();//后一张
-	void OnResetToFirst();//回到第一张
-	void OnSelectedPointer();//选中默认鼠标指针工具
-	void OnSelectedProtractor();//选中量角器工具
-	void OnSelectedRuler();//选中测距尺工具
-	void OnSelectedContour();//选中轮廓工具
-	void OnSelectedBiDimensional();//选中二维标尺工具
-	void OnSelectedGrayLevel();//选中灰阶工具
-	void OnSelectedZoom();//选中缩放工具
-	void OnSelectedMove();//选中移动工具
-	void OnNegative();//使用负片效果
-	void OnReset();//复位
-	void OnPlay();//播放/暂停
-	void OnStop();//停止
-	void OnSwitchProperty();//属性docking窗口的开关
+	void OnChangeCursorValue();		//响应光标值的修改,执行一些刷新和禁用操作
+	void OnOpenSeriesFolder();		//改成OnOpenSeriesFolder
+	void OnOpenDicomFile();			//打开单张Dicom文件
+	void OnOpenDicomDirFile();		//打开DICOMDIR文件
+	void OnForward();				//前一张按键
+	void OnBackward();				//后一张按键
+	void OnResetToFirst();			//回到第一张
+	void OnSelectedPointer();		//选中默认鼠标指针工具
+	void OnSelectedProtractor();	//选中量角器工具
+	void OnSelectedRuler();			//选中测距尺工具
+	void OnSelectedContour();		//选中轮廓工具
+	void OnSelectedBiDimensional();	//选中二维标尺工具
+	void OnSelectedGrayLevel();		//选中灰阶工具
+	void OnSelectedZoom();			//选中缩放工具
+	void OnSelectedMove();			//选中移动工具
+	void OnNegative();				//使用负片效果
+	void OnReset();					//复位
+	void OnPlay();					//播放/暂停
+	void OnStop();					//停止
+	void OnSwitchProperty();		//属性docking窗口的开关
 	void on_treeView_customContextMenuRequested(QPoint pos);//树视图上下文菜单分发
+	void OnSliceScrollBarValueChange(int a);//Slice滚动条值更改事件
 	///正在测试的功能
 	void OnTestDCMTK_x64();//测试调用DCMTK-x64读取元数据
 	void OnTestReadDICOMDIR();//测试调用DCMTK-x64读取DIR文件

@@ -42,23 +42,7 @@ public:
 		GRAYLEVEL,
 		MOVE
 	}MouseFunction;
-protected:
-	vtkImageViewer2* _ImageViewer;
-	vtkTextMapper* _StatusMapper;
-	int _Slice;
-	int _MinSlice;
-	int _MaxSlice;
 
-public:
-	void SetImageViewer(vtkImageViewer2* imageViewer);
-	void SetStatusMapper(vtkTextMapper* statusMapper);
-	void MoveSliceForward();
-	void MoveSliceBackward();
-	void PlaySlice();//自动播放
-	int getSlice();//返回当前的页数
-	int getMinSlice();//返回最小页码
-	int getMaxSlice();//返回最大页码
-	void ResetSliceToMin();//重置到最小页码并重绘
 protected:
 	virtual void OnKeyDown()override;
 	virtual void OnMouseWheelForward()override;

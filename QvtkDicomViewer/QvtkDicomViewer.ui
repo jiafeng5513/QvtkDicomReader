@@ -37,6 +37,13 @@
       </property>
      </widget>
     </item>
+    <item row="0" column="1">
+     <widget class="QScrollBar" name="SliceScrollBar">
+      <property name="orientation">
+       <enum>Qt::Vertical</enum>
+      </property>
+     </widget>
+    </item>
    </layout>
   </widget>
   <widget class="QMenuBar" name="menuBar">
@@ -700,6 +707,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>SliceScrollBar</sender>
+   <signal>valueChanged(int)</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnSliceScrollBarValueChange(int)</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>1160</x>
+     <y>386</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>282</x>
+     <y>448</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>OnOpenFile()</slot>
@@ -727,5 +750,6 @@
   <slot>OnOpenDicomFile()</slot>
   <slot>OnOpenDicomDirFile()</slot>
   <slot>on_treeView_customContextMenuRequested(QPoint)</slot>
+  <slot>OnSliceScrollBarValueChange(int)</slot>
  </slots>
 </ui>

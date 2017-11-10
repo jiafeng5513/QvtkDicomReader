@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_QvtkDicomViewer_t {
-    QByteArrayData data[30];
-    char stringdata0[442];
+    QByteArrayData data[32];
+    char stringdata0[472];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -56,11 +56,13 @@ QT_MOC_LITERAL(21, 319, 6), // "OnStop"
 QT_MOC_LITERAL(22, 326, 16), // "OnSwitchProperty"
 QT_MOC_LITERAL(23, 343, 38), // "on_treeView_customContextMenu..."
 QT_MOC_LITERAL(24, 382, 3), // "pos"
-QT_MOC_LITERAL(25, 386, 15), // "OnTestDCMTK_x64"
-QT_MOC_LITERAL(26, 402, 18), // "OnTestReadDICOMDIR"
-QT_MOC_LITERAL(27, 421, 11), // "receiveData"
-QT_MOC_LITERAL(28, 433, 4), // "data"
-QT_MOC_LITERAL(29, 438, 3) // "dir"
+QT_MOC_LITERAL(25, 386, 27), // "OnSliceScrollBarValueChange"
+QT_MOC_LITERAL(26, 414, 1), // "a"
+QT_MOC_LITERAL(27, 416, 15), // "OnTestDCMTK_x64"
+QT_MOC_LITERAL(28, 432, 18), // "OnTestReadDICOMDIR"
+QT_MOC_LITERAL(29, 451, 11), // "receiveData"
+QT_MOC_LITERAL(30, 463, 4), // "data"
+QT_MOC_LITERAL(31, 468, 3) // "dir"
 
     },
     "QvtkDicomViewer\0CursorValueChanged\0\0"
@@ -73,7 +75,8 @@ QT_MOC_LITERAL(29, 438, 3) // "dir"
     "OnSelectedZoom\0OnSelectedMove\0OnNegative\0"
     "OnReset\0OnPlay\0OnStop\0OnSwitchProperty\0"
     "on_treeView_customContextMenuRequested\0"
-    "pos\0OnTestDCMTK_x64\0OnTestReadDICOMDIR\0"
+    "pos\0OnSliceScrollBarValueChange\0a\0"
+    "OnTestDCMTK_x64\0OnTestReadDICOMDIR\0"
     "receiveData\0data\0dir"
 };
 #undef QT_MOC_LITERAL
@@ -84,7 +87,7 @@ static const uint qt_meta_data_QvtkDicomViewer[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      25,   14, // methods
+      26,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -92,33 +95,34 @@ static const uint qt_meta_data_QvtkDicomViewer[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,  139,    2, 0x06 /* Public */,
+       1,    0,  144,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       3,    0,  140,    2, 0x0a /* Public */,
-       4,    0,  141,    2, 0x0a /* Public */,
-       5,    0,  142,    2, 0x0a /* Public */,
-       6,    0,  143,    2, 0x0a /* Public */,
-       7,    0,  144,    2, 0x0a /* Public */,
-       8,    0,  145,    2, 0x0a /* Public */,
-       9,    0,  146,    2, 0x0a /* Public */,
-      10,    0,  147,    2, 0x0a /* Public */,
-      11,    0,  148,    2, 0x0a /* Public */,
-      12,    0,  149,    2, 0x0a /* Public */,
-      13,    0,  150,    2, 0x0a /* Public */,
-      14,    0,  151,    2, 0x0a /* Public */,
-      15,    0,  152,    2, 0x0a /* Public */,
-      16,    0,  153,    2, 0x0a /* Public */,
-      17,    0,  154,    2, 0x0a /* Public */,
-      18,    0,  155,    2, 0x0a /* Public */,
-      19,    0,  156,    2, 0x0a /* Public */,
-      20,    0,  157,    2, 0x0a /* Public */,
-      21,    0,  158,    2, 0x0a /* Public */,
-      22,    0,  159,    2, 0x0a /* Public */,
-      23,    1,  160,    2, 0x0a /* Public */,
-      25,    0,  163,    2, 0x0a /* Public */,
-      26,    0,  164,    2, 0x0a /* Public */,
-      27,    2,  165,    2, 0x0a /* Public */,
+       3,    0,  145,    2, 0x0a /* Public */,
+       4,    0,  146,    2, 0x0a /* Public */,
+       5,    0,  147,    2, 0x0a /* Public */,
+       6,    0,  148,    2, 0x0a /* Public */,
+       7,    0,  149,    2, 0x0a /* Public */,
+       8,    0,  150,    2, 0x0a /* Public */,
+       9,    0,  151,    2, 0x0a /* Public */,
+      10,    0,  152,    2, 0x0a /* Public */,
+      11,    0,  153,    2, 0x0a /* Public */,
+      12,    0,  154,    2, 0x0a /* Public */,
+      13,    0,  155,    2, 0x0a /* Public */,
+      14,    0,  156,    2, 0x0a /* Public */,
+      15,    0,  157,    2, 0x0a /* Public */,
+      16,    0,  158,    2, 0x0a /* Public */,
+      17,    0,  159,    2, 0x0a /* Public */,
+      18,    0,  160,    2, 0x0a /* Public */,
+      19,    0,  161,    2, 0x0a /* Public */,
+      20,    0,  162,    2, 0x0a /* Public */,
+      21,    0,  163,    2, 0x0a /* Public */,
+      22,    0,  164,    2, 0x0a /* Public */,
+      23,    1,  165,    2, 0x0a /* Public */,
+      25,    1,  168,    2, 0x0a /* Public */,
+      27,    0,  171,    2, 0x0a /* Public */,
+      28,    0,  172,    2, 0x0a /* Public */,
+      29,    2,  173,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -145,9 +149,10 @@ static const uint qt_meta_data_QvtkDicomViewer[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void, QMetaType::QPoint,   24,
+    QMetaType::Void, QMetaType::Int,   26,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString,   28,   29,
+    QMetaType::Void, QMetaType::QString, QMetaType::QString,   30,   31,
 
        0        // eod
 };
@@ -180,9 +185,10 @@ void QvtkDicomViewer::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         case 19: _t->OnStop(); break;
         case 20: _t->OnSwitchProperty(); break;
         case 21: _t->on_treeView_customContextMenuRequested((*reinterpret_cast< QPoint(*)>(_a[1]))); break;
-        case 22: _t->OnTestDCMTK_x64(); break;
-        case 23: _t->OnTestReadDICOMDIR(); break;
-        case 24: _t->receiveData((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
+        case 22: _t->OnSliceScrollBarValueChange((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 23: _t->OnTestDCMTK_x64(); break;
+        case 24: _t->OnTestReadDICOMDIR(); break;
+        case 25: _t->receiveData((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -223,13 +229,13 @@ int QvtkDicomViewer::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 25)
+        if (_id < 26)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 25;
+        _id -= 26;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 25)
+        if (_id < 26)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 25;
+        _id -= 26;
     }
     return _id;
 }
