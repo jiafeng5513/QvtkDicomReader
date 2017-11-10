@@ -3,7 +3,7 @@
 使用Qt和VTK编写的Dicom阅读器
 ===========================
 
-#Coming Soon
+# Coming Soon
 <br>1.显示VTK缩略图
 <br>2.利用QT的布局管理器将左右设置为2:8
 <br>3.在renderwindow中显示4份图像
@@ -18,7 +18,7 @@
 <br>12.实现快放慢放功能
 <br>13.窗宽窗位，利用render/renderwindow重新绘制
 
-#Features:
+# Features:
 <br>1.DCMTK-64读取DICOMDIR数据库并构造四层类结构存储结构
 <br>2.用树视图显示数据库的结构
 <br>3.移除了ITK的全部依赖
@@ -26,7 +26,7 @@
 <br>5.控件的添加方式已经明确
 <br>6.更新部分界面
 
-#Build:
+# Build:
 <br>1.依赖:DCMTK3.6.2,64位;vtk8.0.0,64位;Qt5.9.1,64位
 <br>2.依赖包放在解决方案文件夹的Libraries中
 <br>3.依赖下载地址:链接：http://pan.baidu.com/s/1nuDGbKP 密码：nwzp
