@@ -40,5 +40,6 @@ public:
 	DicomImage* getCurrentDicomImage();//获取当前Image
 	DicomImage* getNextDicomImage();//获取下一张Image,并移动指针,越界自动回到第一张
 	DicomImage* getDicomImageByRfid(std::string &rfid);//通过RFID在当前病人的信息中检索出一张图片
+	DicomImage* getDicomImageByIndex(int index);//取当前study,当前series的第index张图片,如果越界,返回原来索引所指向的那一张图片
 };
 

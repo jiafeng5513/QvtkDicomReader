@@ -1,2 +1,14 @@
-﻿  QvtkDicomViewer.cpp
+﻿  Moc'ing QvtkDicomViewer.h...
+  DicomDataBase.cpp
+  DicomDir.cpp
+  DicomImage.cpp
+  DicomPatient.cpp
+  DicomSeries.cpp
+  DicomStudy.cpp
+  moc_QvtkDicomViewer.cpp
+  QvtkDicomViewer.cpp
+  main.cpp
+  myVtkInteractorStyleImage.cpp
+  正在生成代码...
+e:\visualstudio\qvtkdicomreader\qvtkdicomviewer\dicompatient.cpp(139): warning C4715: “DicomPatient::getDicomImageByRfid”: 不是所有的控件路径都返回值
   QvtkDicomViewer.vcxproj -> E:\VisualStudio\QvtkDicomReader\x64\Debug\QvtkDicomViewer.exe

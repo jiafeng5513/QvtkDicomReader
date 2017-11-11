@@ -39,10 +39,6 @@
 #include <QFileSystemModel>
 #include "TreeItem.h"
 
-void functest()
-{
-	qDebug()<< QStringLiteral("调用成功!");
-}
 /*
  * 构造方法
  */
@@ -350,7 +346,9 @@ void QvtkDicomViewer::CreateContextMenu()
  */
 void QvtkDicomViewer::ShowImageByIndex(int Index)
 {
-	RenderRefresh(imageAbsFilePath[Index], Index + 1, imageAbsFilePath.size());
+	RenderRefresh(CurrentPatient->getDicomImageByIndex(Index)->AbsFilePath, 
+				  Index + 1, 
+				  CurrentPatient->getCurrentDicomSeries()->ImageList.size());
 }
 /*
  *修改当前光标类型
@@ -787,47 +785,16 @@ void QvtkDicomViewer::OnStop()
   */
  void QvtkDicomViewer::receiveData(QString data,QString dir)
  {
-	DicomDataBase * tempDaatabase = DicomDataBase::getInstance();
+	DicomDataBase * temp_database = DicomDataBase::getInstance();
 	Current_patientId = data.toStdString();//当前的病人ID
 	//当前病人对象绑定,注意这应该是全局唯一的绑定点
-	CurrentPatient = new DicomPatient(tempDaatabase->getPatientById(Current_patientId));
-	
-	DirTreeRefresh(CurrentPatient);//改成以Patient对象为参数
-
-	DicomDataBase * temp_database = DicomDataBase::getInstance();
-	std::vector<DicomImage*> temp_dicom_images_v;//要打开的series中的图片序列
-												 //找到目标series
+	CurrentPatient = new DicomPatient(temp_database->getPatientById(Current_patientId));
+	DirTreeRefresh(CurrentPatient);//刷新树视图
 	/*
-	 * 目前没有选择series的功能,测试时找到选定的病人,默认加载他的第一个study的第一个series
-	 */
-	for (int i = 0; i<temp_database->PatientList.size(); i++)
-	{
-		if (temp_database->PatientList[i]->PatientID == Current_patientId)
-		{
-			temp_dicom_images_v = temp_database->PatientList[i]->StudyList[0]->SeriesList[0]->ImageList;//注意这两个0
-			break;
-		}
-	}	
-	temp_dicom_images_v = CurrentPatient->getCurrentDicomSeries()->ImageList;
-	//获取dir文件的前缀
-	QFile *dirfile = new QFile(dir);
-	auto dirfile_info= QFileInfo(*dirfile);
-	QString FolderPrefix =dirfile_info.absolutePath();
-	dirfile->close();
-	/*
-	 * 集合该series中的全部image文件路径
-	 */
-	//std::vector<std::string> imageAbsFilePath;
-
-
-	for (int i = 0; i<temp_dicom_images_v.size(); i++)
-	{
-		QString temp = QString::fromStdString(FolderPrefix.toStdString() +"\\" + temp_dicom_images_v[i]->ReferencedFileID);
-
-		temp.replace(QChar('\\'), QChar('/'));
-		imageAbsFilePath.push_back(temp.toStdString());
-		qDebug() << temp << "  i:  " << i << "  " << temp_dicom_images_v[i]->InstanceNumber.c_str() << endl;
-	}
-	RenderInitializer(imageAbsFilePath[0], imageAbsFilePath.size());
-	ui.SliceScrollBar->setRange(0, imageAbsFilePath.size()-1);
+	 * 目前没有选择series的功能,测试时找到选定的病人,加载默认的study和默认的series
+	 * DicomPatient类提供了相关的方法允许更改游标
+	 * 可以通过对CurrentPatient对象设置当前study和当前series
+	 */	
+	RenderInitializer(CurrentPatient->getCurrentDicomImage()->AbsFilePath, CurrentPatient->getCurrentDicomSeries()->ImageList.size());
+	ui.SliceScrollBar->setRange(0, CurrentPatient->getCurrentDicomSeries()->ImageList.size()-1);
  }

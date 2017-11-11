@@ -23,6 +23,13 @@ DicomDataBase * DicomDataBase::getInstance()
  */
  void DicomDataBase::Init(std::string dir)
  {
+	//获取DICOMDIR文件所在的文件夹
+
+	 QFile *dirfile = new QFile(QString::fromStdString(dir));
+	 auto dirfile_info = QFileInfo(*dirfile);
+	 QString FolderPrefix = dirfile_info.absolutePath();//取到前缀
+	 dirfile->close();//释放文件
+
 	 DcmDicomDir dicomdir(dir.c_str());
 #if _DEBUG
 	 std::filebuf fb;
@@ -118,6 +125,9 @@ DicomDataBase * DicomDataBase::getInstance()
 					 if (ImageRecord->findAndGetOFStringArray(DCM_ReferencedFileID, tmpString, true).good())
 					 {
 						 m_image->ReferencedFileID = tmpString.c_str();
+						 QString temp = QString::fromStdString(FolderPrefix.toStdString() + "\\" + m_image->ReferencedFileID);
+						 temp.replace(QChar('\\'), QChar('/'));
+						 m_image->AbsFilePath = temp.toStdString();
 					 }
 					 if (ImageRecord->findAndGetOFString(DCM_InstanceCreationDate, tmpString).good())
 					 {

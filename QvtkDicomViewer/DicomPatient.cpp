@@ -15,7 +15,7 @@ DicomPatient::DicomPatient()
  * 对于Patient对象进行深拷贝,但是对于Studylist中索引的和间接索引的对象是地址拷贝
  * 也就是浅拷贝,由于数据类这边不需要进行写操纵,所以这是无所谓的,只要读出的值是对的
  * 就可以了
- * 未来应该进行属性封装阻止一切来自外部的对指针的修改
+ * 为了防止不必要的麻烦,未来应该进行属性封装阻止一切来自外部的对指针的修改
  */
 DicomPatient::DicomPatient(DicomPatient * old)
 {
@@ -137,3 +137,19 @@ DicomImage * DicomPatient::getDicomImageByRfid(std::string & rfid)
 		}
 	}
 }
+/*
+ * 取当前study,当前series的第index张图片,如果越界,返回原来索引所指向的那一张图片
+ * index从0开始
+ */
+ DicomImage * DicomPatient::getDicomImageByIndex(int index)
+ {
+	 if (index>this->StudyList[indexOfCurrentStudy]->SeriesList[indexOfCurrentSeries]->ImageList.size())
+	 {
+		 //越界,返回当前图片
+		 return getCurrentDicomImage();
+	 }else
+	 {
+		 indexOfCurrentImage = index;
+		 return this->StudyList[indexOfCurrentStudy]->SeriesList[indexOfCurrentSeries]->ImageList[indexOfCurrentImage];
+	 }
+ }

@@ -87,18 +87,19 @@ private:
 	vtkSmartPointer<vtkOrientationMarkerWidget> widget;
 	vtkSmartPointer<vtkBiDimensionalWidget> biDimensionalWidget;
 	vtkSmartPointer<vtkBiDimensionalCallback> biDimensionalCallback;
+
 	QIcon icon_Play;//播放图标
 	QIcon icon_Pause;//暂停图标
 	bool PlayFlag;//false:图标应为播放,处于准备播放状态,true:图标应为暂停,处于播放状态并准备暂停
 	SlicePlayer *m_slice_player;//这是一个线程类
-	std::string Current_patientId;//当前的病人ID
+
 	QPoint PrePosition;					//前一次的右键点击位置
 	QMenu * TreeViewMenu_OnEmpty;		//树右键菜单->树为空
 	QMenu * TreeViewMenu_OnPatient;		//树右键菜单->病人节点
 	QMenu * TreeViewMenu_OnSeries;		//树右键菜单->Series节点
 	QMenu * TreeViewMenu_OnImage;		//树右键菜单->Image节点
 
-	std::vector<std::string> imageAbsFilePath;
+	std::string Current_patientId;//当前的病人ID
 	DicomPatient * CurrentPatient;		//当前病人
 private:
 	///内部操作
