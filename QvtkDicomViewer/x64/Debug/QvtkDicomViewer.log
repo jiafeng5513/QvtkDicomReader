@@ -1,7 +1,4 @@
-﻿  Moc'ing DicomDirTreeModel.h...
-  DicomDirTreeModel.cpp
-  DicomTreeItem.cpp
-  moc_DicomDirTreeModel.cpp
+﻿  Moc'ing QvtkDicomViewer.h...
   moc_QvtkDicomViewer.cpp
   QvtkDicomViewer.cpp
   main.cpp

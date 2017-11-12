@@ -34,8 +34,9 @@ public:
 
 private:
 	QList<DicomTreeItem*> childItems;
-	QVector<QVariant> itemData;
 	DicomTreeItem *parentItem;
+public:
+	QVector<QVariant> itemData;
 };
 
 

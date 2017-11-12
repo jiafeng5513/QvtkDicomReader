@@ -89,6 +89,7 @@ void DicomPatient::setCurrentDicomSeriesById(std::string & seriesnum)
 			{
 				indexOfCurrentSeries = j;
 				indexOfCurrentStudy = i;
+				indexOfCurrentImage = 0;
 				return;
 			}
 		}

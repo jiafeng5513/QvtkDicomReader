@@ -33,8 +33,8 @@ public:
 	bool insertRows(int position, int rows,const QModelIndex &parent = QModelIndex()) override;
 	bool removeRows(int position, int rows,const QModelIndex &parent = QModelIndex()) override;
 	int getLevel(const QModelIndex &index)const;
-private:
 	DicomTreeItem *getItem(const QModelIndex &index) const;
+private:
 	void setupModelData(const QStringList &lines, DicomTreeItem *parent);
 	void setupModelData(const DicomPatient &patient, DicomTreeItem *parent);
 	

@@ -468,13 +468,13 @@ void QvtkDicomViewer::CreateContextMenu()
 	connect(action_New_Open_DICOMDIR_File, SIGNAL(triggered()), this, SLOT(OnOpenDicomDirFile()));
 
 	QAction* action_New_Query_Patient_Msg = new QAction(QStringLiteral("&显示这个病人的全部信息"), ui.treeView);
-	connect(action_New_Query_Patient_Msg, SIGNAL(triggered()), this, SLOT(FolderCreater()));
+	connect(action_New_Query_Patient_Msg, SIGNAL(triggered()), this, SLOT(OnShowDicomCurrentTags()));
 
 	QAction* action_New_Render_Series = new QAction(QStringLiteral("&显示这个Series"), ui.treeView);
-	connect(action_New_Render_Series, SIGNAL(triggered()), this, SLOT(FolderCreater()));
+	connect(action_New_Render_Series, SIGNAL(triggered()), this, SLOT(OnShowSelectedSeries()));
 
 	QAction* action_New_Render_Image = new QAction(QStringLiteral("&显示这个Image"), ui.treeView);
-	connect(action_New_Render_Image, SIGNAL(triggered()), this, SLOT(FolderCreater()));
+	connect(action_New_Render_Image, SIGNAL(triggered()), this, SLOT(OnShowSelectedImage()));
 	
 	//树右键菜单->空树
 	TreeViewMenu_OnEmpty = new QMenu(ui.treeView);
@@ -572,6 +572,10 @@ void QvtkDicomViewer::RenderInitializer(std::string folder,int NumOfImage )
 	 */
 	m_pImageViewer->GetRenderer()->ResetCamera();
 	ui.qvtkWidget->GetRenderWindow()->Render();
+	/*
+	 * 配合进度条
+	 */
+	ui.SliceScrollBar->setRange(0, NumOfImage - 1);
 }
 /*
  * 更新渲染/渲染下一帧
@@ -790,7 +794,7 @@ void QvtkDicomViewer::OnStop()
 		 }
 		 else//树非空的时候才能启动这个
 		 {
-			 QModelIndex indexSelect = ui.treeView->indexAt(pos);  //当前节点索引
+			 indexSelect = ui.treeView->indexAt(pos);  //当前节点索引
 			 switch (m_dicomdirtreemodel->getLevel(indexSelect))
 			 {
 			 case 1://level==1:Patient
@@ -801,9 +805,11 @@ void QvtkDicomViewer::OnStop()
 				 break;
 			 case 3://level==3:Series
 				 TreeViewMenu_OnSeries->exec(QCursor::pos());
+				
 				 break;
 			 case 4://level==4:image
 				 TreeViewMenu_OnImage->exec(QCursor::pos());
+
 				 break;
 			 default://其他情况处理不了,报错
 				 QMessageBox::information(this,QStringLiteral("错误!"), QStringLiteral("错误!"));
@@ -817,6 +823,33 @@ void QvtkDicomViewer::OnStop()
 		 PrePosition.setX(-1);
 		 PrePosition.setY(-1);
 	 }
+ }
+/*
+ *树视图右键菜单->显示当前病人的所有信息
+ */
+ void QvtkDicomViewer::OnShowDicomCurrentTags()
+ {
+	 QMessageBox::information(this, QStringLiteral("嘿嘿!"), QStringLiteral("这个人很懒,什么都没留下!"));
+ }
+/*
+ * 显示选中的Series
+ */
+ void QvtkDicomViewer::OnShowSelectedSeries()
+ {
+	 CurrentPatient->setCurrentDicomSeriesById(m_dicomdirtreemodel->getItem(indexSelect)->itemData[0].toString().toStdString());
+	 RenderInitializer(CurrentPatient->getCurrentDicomImage()->AbsFilePath, CurrentPatient->getCurrentDicomSeries()->ImageList.size());
+ }
+/*
+ * 显示当前选中的Image
+ */
+ void QvtkDicomViewer::OnShowSelectedImage()
+ {
+	 /*
+	  *	打开这张图所在的series并调整到这张图
+	  */
+	 CurrentPatient->getDicomImageByRfid(m_dicomdirtreemodel->getItem(indexSelect)->itemData[1].toString().toStdString());
+	 RenderInitializer(CurrentPatient->getCurrentDicomImage()->AbsFilePath, CurrentPatient->getCurrentDicomSeries()->ImageList.size());
+	 ui.SliceScrollBar->setValue(CurrentPatient->indexOfCurrentImage);
  }
 /*
  * Slice滚动条值更改事件
@@ -873,11 +906,5 @@ void QvtkDicomViewer::OnStop()
 	//当前病人对象绑定,注意这应该是全局唯一的绑定点
 	CurrentPatient = new DicomPatient(temp_database->getPatientById(Current_patientId));
 	DirTreeRefresh(CurrentPatient);//刷新树视图
-	/*
-	 * 目前没有选择series的功能,测试时找到选定的病人,加载默认的study和默认的series
-	 * DicomPatient类提供了相关的方法允许更改游标
-	 * 可以通过对CurrentPatient对象设置当前study和当前series
-	 */	
 	RenderInitializer(CurrentPatient->getCurrentDicomImage()->AbsFilePath, CurrentPatient->getCurrentDicomSeries()->ImageList.size());
-	ui.SliceScrollBar->setRange(0, CurrentPatient->getCurrentDicomSeries()->ImageList.size()-1);
  }

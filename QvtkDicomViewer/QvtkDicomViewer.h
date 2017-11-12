@@ -104,7 +104,7 @@ private:
 
 	std::string Current_patientId;//当前的病人ID
 	DicomPatient * CurrentPatient;		//当前病人
-
+	QModelIndex indexSelect;//树视图中
 	DicomDirTreeModel *m_dicomdirtreemodel;
 private:
 	///内部操作
@@ -145,6 +145,9 @@ public slots:
 	void OnStop();					//停止
 	void OnSwitchProperty();		//属性docking窗口的开关
 	void on_treeView_customContextMenuRequested(QPoint pos);//树视图上下文菜单分发
+	void OnShowDicomCurrentTags();	//显示当前病人的所有信息
+	void OnShowSelectedSeries();	//显示选中的Series
+	void OnShowSelectedImage();		//显示当前选中的Image
 	void OnSliceScrollBarValueChange(int a);//Slice滚动条值更改事件
 	void receiveData(QString data,QString dir);//响应DicomDir类传送过来的信号,其中包含了一个病人的ID
 	///测试入口
