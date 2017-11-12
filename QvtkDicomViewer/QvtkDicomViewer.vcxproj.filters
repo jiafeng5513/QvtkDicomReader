@@ -84,11 +84,17 @@
     <ClCompile Include="DicomPatient.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
-    <ClCompile Include="TreeItem.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="DicomDirTreeModel.cpp">
       <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="DicomTreeItem.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_DicomDirTreeModel.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_DicomDirTreeModel.cpp">
+      <Filter>Generated Files</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
@@ -109,6 +115,9 @@
     </CustomBuild>
     <CustomBuild Include="DicomDir.ui">
       <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="DicomDirTreeModel.h">
+      <Filter>Header Files</Filter>
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
@@ -139,10 +148,7 @@
     <ClInclude Include="DicomPatient.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="TreeItem.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DicomDirTreeModel.h">
+    <ClInclude Include="DicomTreeItem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>

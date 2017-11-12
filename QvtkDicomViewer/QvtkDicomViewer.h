@@ -33,6 +33,7 @@
 #include "vtkBiDimensionalCallback.h"
 #include "SlicePlayer.h"
 #include "DicomPatient.h"
+#include "DicomDirTreeModel.h"
 
 class DicomDataBase;
 /*
@@ -75,9 +76,11 @@ private:
 	//vtkSmartPointer<vtkTextProperty> sliceTextProp;
 	//vtkSmartPointer<vtkTextMapper> sliceTextMapper;
 	vtkSmartPointer<vtkActor2D> sliceTextActor;//必须是全局的.否则无法擦除上一次得到痕迹
-	vtkSmartPointer<vtkTextProperty> usageTextProp;
-	vtkSmartPointer<vtkTextMapper> usageTextMapper;
-	vtkSmartPointer<vtkActor2D> usageTextActor;
+	//vtkSmartPointer<vtkTextProperty> usageTextProp;
+	//vtkSmartPointer<vtkTextMapper> usageTextMapper;
+	vtkSmartPointer<vtkActor2D> usageTextActor1;
+	vtkSmartPointer<vtkActor2D> usageTextActor2;
+	vtkSmartPointer<vtkActor2D> usageTextActor3;
 	vtkSmartPointer<myVtkInteractorStyleImage> myInteractorStyle;
 	vtkSmartPointer<vtkDistanceWidget> distanceWidget;//测距
 	vtkSmartPointer<vtkAngleWidget> angleWidget;//测量角度
@@ -101,6 +104,8 @@ private:
 
 	std::string Current_patientId;//当前的病人ID
 	DicomPatient * CurrentPatient;		//当前病人
+
+	DicomDirTreeModel *m_dicomdirtreemodel;
 private:
 	///内部操作
 	void setCursor(CURSOR newValue);
@@ -111,7 +116,7 @@ private:
 	void addAngleWidget();
 	void addContourWidget();
 	void SetSliceText(int current, int max);			//叠加显示页码信息
-	void SetUsageText();
+	void SetUsageText(std::string imagefilename);
 	void addOrientationMarker();
 	void addBiDimensionalWidget();
 	void CreateContextMenu();//树视图上下文菜单
@@ -141,8 +146,8 @@ public slots:
 	void OnSwitchProperty();		//属性docking窗口的开关
 	void on_treeView_customContextMenuRequested(QPoint pos);//树视图上下文菜单分发
 	void OnSliceScrollBarValueChange(int a);//Slice滚动条值更改事件
-	///正在测试的功能
-	void OnTestDCMTK_x64();//测试调用DCMTK-x64读取元数据
-	void OnTestReadDICOMDIR();//测试调用DCMTK-x64读取DIR文件
 	void receiveData(QString data,QString dir);//响应DicomDir类传送过来的信号,其中包含了一个病人的ID
+	///测试入口
+	void OnTestEntrance_01();//测试入口1
+	void OnTestEntrance_02();//测试入口2
 };

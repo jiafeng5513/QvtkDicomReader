@@ -33,14 +33,14 @@ DicomDataBase * DicomDataBase::getInstance()
 	 DcmDicomDir dicomdir(dir.c_str());
 #if _DEBUG
 	 std::filebuf fb;
-	 fb.open("F:\\Dicom\\DicomDir.log", std::ios::out);//输出日志文件
+	 fb.open("DicomDir.log", std::ios::out);//输出日志文件
 	 std::ostream out(&fb);
 	 dicomdir.print(out);
 	 fb.close();
 
 	 DcmFileFormat DCMFF = dicomdir.getDirFileFormat();
 	 std::filebuf lb;
-	 lb.open("F:\\Dicom\\DcmFileFormat.log", std::ios::out);//输出日志文件2
+	 lb.open("DcmFileFormat.log", std::ios::out);//输出日志文件2
 	 std::ostream out2(&lb);
 	 DCMFF.print(out2);
 	 lb.close();

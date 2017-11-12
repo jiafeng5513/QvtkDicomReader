@@ -22,7 +22,7 @@ QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_QvtkDicomViewer_t {
     QByteArrayData data[32];
-    char stringdata0[472];
+    char stringdata0[473];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -58,11 +58,11 @@ QT_MOC_LITERAL(23, 343, 38), // "on_treeView_customContextMenu..."
 QT_MOC_LITERAL(24, 382, 3), // "pos"
 QT_MOC_LITERAL(25, 386, 27), // "OnSliceScrollBarValueChange"
 QT_MOC_LITERAL(26, 414, 1), // "a"
-QT_MOC_LITERAL(27, 416, 15), // "OnTestDCMTK_x64"
-QT_MOC_LITERAL(28, 432, 18), // "OnTestReadDICOMDIR"
-QT_MOC_LITERAL(29, 451, 11), // "receiveData"
-QT_MOC_LITERAL(30, 463, 4), // "data"
-QT_MOC_LITERAL(31, 468, 3) // "dir"
+QT_MOC_LITERAL(27, 416, 11), // "receiveData"
+QT_MOC_LITERAL(28, 428, 4), // "data"
+QT_MOC_LITERAL(29, 433, 3), // "dir"
+QT_MOC_LITERAL(30, 437, 17), // "OnTestEntrance_01"
+QT_MOC_LITERAL(31, 455, 17) // "OnTestEntrance_02"
 
     },
     "QvtkDicomViewer\0CursorValueChanged\0\0"
@@ -76,8 +76,8 @@ QT_MOC_LITERAL(31, 468, 3) // "dir"
     "OnReset\0OnPlay\0OnStop\0OnSwitchProperty\0"
     "on_treeView_customContextMenuRequested\0"
     "pos\0OnSliceScrollBarValueChange\0a\0"
-    "OnTestDCMTK_x64\0OnTestReadDICOMDIR\0"
-    "receiveData\0data\0dir"
+    "receiveData\0data\0dir\0OnTestEntrance_01\0"
+    "OnTestEntrance_02"
 };
 #undef QT_MOC_LITERAL
 
@@ -120,9 +120,9 @@ static const uint qt_meta_data_QvtkDicomViewer[] = {
       22,    0,  164,    2, 0x0a /* Public */,
       23,    1,  165,    2, 0x0a /* Public */,
       25,    1,  168,    2, 0x0a /* Public */,
-      27,    0,  171,    2, 0x0a /* Public */,
-      28,    0,  172,    2, 0x0a /* Public */,
-      29,    2,  173,    2, 0x0a /* Public */,
+      27,    2,  171,    2, 0x0a /* Public */,
+      30,    0,  176,    2, 0x0a /* Public */,
+      31,    0,  177,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -150,9 +150,9 @@ static const uint qt_meta_data_QvtkDicomViewer[] = {
     QMetaType::Void,
     QMetaType::Void, QMetaType::QPoint,   24,
     QMetaType::Void, QMetaType::Int,   26,
+    QMetaType::Void, QMetaType::QString, QMetaType::QString,   28,   29,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString,   30,   31,
 
        0        // eod
 };
@@ -186,9 +186,9 @@ void QvtkDicomViewer::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         case 20: _t->OnSwitchProperty(); break;
         case 21: _t->on_treeView_customContextMenuRequested((*reinterpret_cast< QPoint(*)>(_a[1]))); break;
         case 22: _t->OnSliceScrollBarValueChange((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 23: _t->OnTestDCMTK_x64(); break;
-        case 24: _t->OnTestReadDICOMDIR(); break;
-        case 25: _t->receiveData((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
+        case 23: _t->receiveData((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
+        case 24: _t->OnTestEntrance_01(); break;
+        case 25: _t->OnTestEntrance_02(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {

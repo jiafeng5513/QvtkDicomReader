@@ -33,11 +33,11 @@
 
 #include <dcmtk\config\osconfig.h>
 #include <dcmtk\dcmdata\dctk.h>
-
+#include "dcmtk\dcmdata\dcistrmf.h"
 #include "SlicePlayer.h"
 #include "DicomDataBase.h"
 #include <QFileSystemModel>
-#include "TreeItem.h"
+#include "DicomDirTreeModel.h"
 
 /*
  * 构造方法
@@ -247,42 +247,190 @@ void QvtkDicomViewer::SetSliceText(int current,int max)
 /*
  * 添加Dicom文件头信息
  */
-void QvtkDicomViewer::SetUsageText()
+void QvtkDicomViewer::SetUsageText(std::string imagefilename)
 {
-	std::string temp = "";
-	temp.append("PatientName:"); temp.append(reader->GetPatientName()); temp.append("\n");
-	temp.append("DescriptiveName:"); temp.append(reader->GetDescriptiveName());	temp.append("\n");
-	temp.append("BitsAllocated:"); temp.append(std::to_string(reader->GetBitsAllocated())); temp.append("\n");
-	temp.append("GantryAngle:"); temp.append(std::to_string(reader->GetGantryAngle())); temp.append("\n");
-	temp.append("StudyID:"); temp.append(reader->GetStudyID()); temp.append("\n");
-	temp.append("StudyUID:"); temp.append(reader->GetStudyUID()); temp.append("\n");
-	temp.append("DataByteOrder:"); temp.append(reader->GetDataByteOrderAsString()); temp.append("\n");
-	temp.append("Width:"); temp.append(std::to_string(reader->GetWidth())); temp.append("\n");
-	temp.append("Height:"); temp.append(std::to_string(reader->GetHeight())); temp.append("\n");
-	temp.append("Data Spacing:"); 
-	temp.append("("); temp.append(std::to_string(*reader->GetDataSpacing()));
-	temp.append(","); temp.append(std::to_string(*(reader->GetDataSpacing() + 1)));
-	temp.append(","); temp.append(std::to_string(*(reader->GetDataSpacing() + 2)));
-	temp.append(")");temp.append("\n");
-	const char* message = temp.c_str();
-	//measurement
+	DcmFileFormat fileformat;
+	OFCondition status = fileformat.loadFile(imagefilename.c_str());
+	if(status.bad())
+	{
+		//异常
+		return;	
+	}
+	m_pImageViewer->GetRenderer()->RemoveActor(usageTextActor1);//清除
+	m_pImageViewer->GetRenderer()->RemoveActor(usageTextActor2);//清除
+	m_pImageViewer->GetRenderer()->RemoveActor(usageTextActor3);//清除
+#if _DEBUG
+	//std::filebuf lb;
+	//lb.open("metainfo.log", std::ios::out);
+	//std::ostream out2(&lb);
+	//fileformat.print(out2);
+	//lb.close();
+#endif
 
-	// DICOM文件头信息
-	usageTextProp = vtkSmartPointer<vtkTextProperty>::New();
-	usageTextProp->SetFontFamilyToCourier();
-	usageTextProp->SetFontSize(14);
-	usageTextProp->SetColor(1.0, 1.0, 0.0);
+	OFString temp_OFString;
+	std::string TopLeftCorner = "";
+	std::string TopRightCorner = "";
+	std::string LowerRightCorner = "";
+
+#pragma region 右上角信息
+	if (fileformat.getDataset()->findAndGetOFStringArray(DCM_PatientName, temp_OFString, OFTrue).good())
+	{
+		//TopRightCorner.append("Patient Name:");
+		TopRightCorner.append(temp_OFString.c_str());
+		TopRightCorner.append("\n");
+	}
+	if (fileformat.getDataset()->findAndGetOFStringArray(DCM_PatientID, temp_OFString, OFTrue).good())
+	{
+		//TopRightCorner.append("Patient ID:");
+		TopRightCorner.append(temp_OFString.c_str());
+		TopRightCorner.append("\n");
+	}
+	if (fileformat.getDataset()->findAndGetOFStringArray(DCM_PatientSex, temp_OFString, OFTrue).good())
+	{
+		//TopRightCorner.append("Patient Sex:");
+		TopRightCorner.append(temp_OFString.c_str());
+		TopRightCorner.append("\n");
+	}
+	if (fileformat.getDataset()->findAndGetOFStringArray(DCM_InstitutionName, temp_OFString, OFTrue).good())
+	{
+		//TopRightCorner.append("InstitutionName:");
+		TopRightCorner.append(temp_OFString.c_str());
+		TopRightCorner.append("\n");
+	}
+	if (fileformat.getDataset()->findAndGetOFStringArray(DCM_StudyID, temp_OFString, OFTrue).good())
+	{
+		//TopRightCorner.append("Study ID:");
+		TopRightCorner.append(temp_OFString.c_str());
+		TopRightCorner.append("\n");
+	}
+	if (fileformat.getDataset()->findAndGetOFStringArray(DCM_StudyDescription, temp_OFString, OFTrue).good())
+	{
+		//TopRightCorner.append("Study Description:");
+		TopRightCorner.append(temp_OFString.c_str());
+		TopRightCorner.append("\n");
+	}
+	if (fileformat.getDataset()->findAndGetOFStringArray(DCM_SeriesDescription, temp_OFString, OFTrue).good())
+	{
+		//TopRightCorner.append("Series Description:");
+		TopRightCorner.append(temp_OFString.c_str());
+		TopRightCorner.append("\n");
+	}
+#pragma endregion
+
+#pragma region 左上角信息
+	if (fileformat.getDataset()->findAndGetOFStringArray(DCM_SeriesNumber, temp_OFString, OFTrue).good())
+	{
+		TopLeftCorner.append("Series Number:");
+		TopLeftCorner.append(temp_OFString.c_str());
+		TopLeftCorner.append("\n");
+	}
+	if (fileformat.getDataset()->findAndGetOFStringArray(DCM_WindowCenter, temp_OFString, OFTrue).good())
+	{//窗位
+		TopLeftCorner.append("Window Center:");
+		TopLeftCorner.append(temp_OFString.c_str());
+		TopLeftCorner.append("\n");
+	}
+	if (fileformat.getDataset()->findAndGetOFStringArray(DCM_WindowWidth, temp_OFString, OFTrue).good())
+	{//窗宽
+		TopLeftCorner.append("Window Width:");
+		TopLeftCorner.append(temp_OFString.c_str());
+		TopLeftCorner.append("\n");
+	}
+	if (fileformat.getDataset()->findAndGetOFStringArray(DCM_SpacingBetweenSlices, temp_OFString, OFTrue).good())
+	{//层厚,mm
+		TopLeftCorner.append("Spacing Between Slices:");
+		TopLeftCorner.append(temp_OFString.c_str());
+		TopLeftCorner.append("\n");
+	}
+	if (fileformat.getDataset()->findAndGetOFStringArray(DCM_SliceLocation, temp_OFString, OFTrue).good())
+	{//层间距mm
+		TopLeftCorner.append("Slice Location:");
+		TopLeftCorner.append(temp_OFString.c_str());
+		TopLeftCorner.append("\n");
+	}
+#pragma endregion 
+
+#pragma region 右下角信息
+	if (fileformat.getDataset()->findAndGetOFStringArray(DCM_MagneticFieldStrength, temp_OFString, OFTrue).good())
+	{//磁场强度
+		LowerRightCorner.append("Magnetic Field Strength:");
+		LowerRightCorner.append(temp_OFString.c_str());
+		LowerRightCorner.append("\n");
+	}
+	if (fileformat.getDataset()->findAndGetOFStringArray(DCM_RepetitionTime, temp_OFString, OFTrue).good())
+	{//重复时间
+		LowerRightCorner.append("Repetition Time:");
+		LowerRightCorner.append(temp_OFString.c_str());
+		LowerRightCorner.append("\n");
+	}
+	if (fileformat.getDataset()->findAndGetOFStringArray(DCM_EchoTime, temp_OFString, OFTrue).good())
+	{//回波时间
+		LowerRightCorner.append("Echo Time:");
+		LowerRightCorner.append(temp_OFString.c_str());
+		LowerRightCorner.append("\n");
+	}
+	if (fileformat.getDataset()->findAndGetOFStringArray(DCM_ContentDate, temp_OFString, OFTrue).good())
+	{//日期
+		LowerRightCorner.append("Content Date:");
+		LowerRightCorner.append(temp_OFString.c_str());
+		LowerRightCorner.append("\n");
+	}
+	if (fileformat.getDataset()->findAndGetOFStringArray(DCM_ContentTime, temp_OFString, OFTrue).good())
+	{//时间
+		LowerRightCorner.append("Content Time:");
+		LowerRightCorner.append(temp_OFString.c_str());
+		LowerRightCorner.append("\n");
+	}
+#pragma endregion 
+
+	const char* message_TopLeftCorner = TopLeftCorner.c_str();
+	const char* message_TopRightCorner = TopRightCorner.c_str();
+	const char* message_LowerRightCorner = LowerRightCorner.c_str();
+	//文字样式:左上角
+	vtkSmartPointer<vtkTextProperty> usageTextProp = vtkSmartPointer<vtkTextProperty>::New();
+	usageTextProp->SetFontFamilyToCourier();   
+	usageTextProp->SetFontSize(20);				
+	usageTextProp->SetColor(1.0, 1.0, 0.0);			
 	usageTextProp->SetVerticalJustificationToTop();
-	usageTextProp->SetJustificationToLeft();
-
-	usageTextMapper = vtkSmartPointer<vtkTextMapper>::New();
-	usageTextMapper->SetInput(message);//////////////////////////////////////////////////////
+	usageTextProp->SetJustificationToLeft();		
+	vtkSmartPointer<vtkTextMapper> usageTextMapper = vtkSmartPointer<vtkTextMapper>::New();
+	usageTextMapper->SetInput(message_TopLeftCorner);
 	usageTextMapper->SetTextProperty(usageTextProp);
-
-	usageTextActor = vtkSmartPointer<vtkActor2D>::New();
-	usageTextActor->SetMapper(usageTextMapper);
-	usageTextActor->GetPositionCoordinate()->SetCoordinateSystemToNormalizedDisplay();
-	usageTextActor->GetPositionCoordinate()->SetValue(0.05, 0.95);//坐标
+	usageTextActor1 = vtkSmartPointer<vtkActor2D>::New();
+	usageTextActor1->SetMapper(usageTextMapper);
+	usageTextActor1->GetPositionCoordinate()->SetCoordinateSystemToNormalizedDisplay();
+	usageTextActor1->GetPositionCoordinate()->SetValue(0.05, 0.95);//坐标
+	m_pImageViewer->GetRenderer()->AddActor2D(usageTextActor1);
+	//右上角
+	vtkSmartPointer<vtkTextProperty> usageTextProp2 = vtkSmartPointer<vtkTextProperty>::New();
+	usageTextProp2->SetFontFamilyToCourier();
+	usageTextProp2->SetFontSize(20);				
+	usageTextProp2->SetColor(0.0, 1.0, 0.0);			
+	usageTextProp2->SetVerticalJustificationToTop();
+	usageTextProp2->SetJustificationToRight();		
+	vtkSmartPointer<vtkTextMapper> usageTextMapper2 = vtkSmartPointer<vtkTextMapper>::New();
+	usageTextMapper2->SetInput(message_TopRightCorner);
+	usageTextMapper2->SetTextProperty(usageTextProp2);
+	usageTextActor2 = vtkSmartPointer<vtkActor2D>::New();
+	usageTextActor2->SetMapper(usageTextMapper2);
+	usageTextActor2->GetPositionCoordinate()->SetCoordinateSystemToNormalizedDisplay();
+	usageTextActor2->GetPositionCoordinate()->SetValue(0.95, 0.95);//坐标
+	m_pImageViewer->GetRenderer()->AddActor2D(usageTextActor2);
+	//右下角
+	vtkSmartPointer<vtkTextProperty> usageTextProp3 = vtkSmartPointer<vtkTextProperty>::New();
+	usageTextProp3->SetFontFamilyToCourier();
+	usageTextProp3->SetFontSize(20);				
+	usageTextProp3->SetColor(1.0, 1.0, 0.0);			
+	usageTextProp3->SetVerticalJustificationToBottom();
+	usageTextProp3->SetJustificationToRight();		
+	vtkSmartPointer<vtkTextMapper> usageTextMapper3 = vtkSmartPointer<vtkTextMapper>::New();
+	usageTextMapper3->SetInput(message_LowerRightCorner);
+	usageTextMapper3->SetTextProperty(usageTextProp3);
+	usageTextActor3 = vtkSmartPointer<vtkActor2D>::New();
+	usageTextActor3->SetMapper(usageTextMapper3);
+	usageTextActor3->GetPositionCoordinate()->SetCoordinateSystemToNormalizedDisplay();
+	usageTextActor3->GetPositionCoordinate()->SetValue(0.95, 0.05);//坐标
+	m_pImageViewer->GetRenderer()->AddActor2D(usageTextActor3);
 }
 /*
  * 添加坐标轴指示
@@ -394,10 +542,8 @@ void QvtkDicomViewer::RenderInitializer(std::string folder,int NumOfImage )
 	/*
 	 * 叠加文字
 	 */
-	SetSliceText(1, NumOfImage);// 切片页码信息
-
-	SetUsageText();// 显示一些Dicom文件头信息
-	m_pImageViewer->GetRenderer()->AddActor2D(usageTextActor);
+	SetSliceText(1, NumOfImage);// 初始化切片页码信息
+	SetUsageText(folder.c_str());// 显示一些Dicom文件头信息
 	/*
 	 * 交互器和交互风格初始化
 	 */
@@ -448,54 +594,14 @@ void QvtkDicomViewer::RenderRefresh(std::string imagefilename,int currentPagenum
  */
 void QvtkDicomViewer::DirTreeRefresh(DicomPatient * patient)
 {
-	QStandardItem* pItem0 = new QStandardItem(QStringLiteral("病历"));
-	pItem0->setToolTip(QStringLiteral("病人姓名"));
-
-	//QStandardItem* pItem1 = new QStandardItem(QStringLiteral("StudyID"));
-	//pItem1->setToolTip(QStringLiteral("病历"));
-
-	//QStandardItem* pItem2 = new QStandardItem(QStringLiteral("Series"));
-	//pItem2->setToolTip(QStringLiteral("扫描序列"));
-
-	//QStandardItem* pItem3 = new QStandardItem(QStringLiteral("Image"));
-	//pItem3->setToolTip(QStringLiteral("Dicom图片"));
-	QStandardItemModel *model = new QStandardItemModel();
-
-	model->setHorizontalHeaderItem(0, pItem0);
-	//model->setHorizontalHeaderItem(1, pItem1);
-	//model->setHorizontalHeaderItem(2, pItem2);
-	//model->setHorizontalHeaderItem(3, pItem3);
-
-	ui.treeView->setModel(model);
-
-	QStandardItem* PatientItem = NULL;
-	QStandardItem* StudyItem = NULL;
-	QStandardItem* SeriesItem = NULL;
-	QStandardItem* ImageItem = NULL;
-	//DicomTreeItem*test = NULL;
-
-	//model->appendRow(test);
-	PatientItem = new QStandardItem(("Patient:" + patient->PatientName).c_str());
-	model->appendRow(PatientItem);
-	for (int j = 0; j < patient->StudyList.size(); j++)
-	{
-		StudyItem = new QStandardItem(("Study:" + patient->StudyList[j]->StudyId).c_str());
-		PatientItem->appendRow(StudyItem);
-		//PatientItem->setChild(PatientItem->row(), 1, StudyItem);
-		for (int k = 0; k < patient->StudyList[j]->SeriesList.size(); k++)
-		{
-			SeriesItem = new QStandardItem(("Series:" + patient->StudyList[j]->SeriesList[k]->SeriseNumber).c_str());
-			StudyItem->appendRow(SeriesItem);
-			//StudyItem->setChild(StudyItem->row(), 2, SeriesItem);
-			for (int l = 0; l < patient->StudyList[j]->SeriesList[k]->ImageList.size(); l++)
-			{
-				ImageItem = new QStandardItem(("Image:" + patient->StudyList[j]->SeriesList[k]->ImageList[l]->ReferencedFileID).c_str());
-				SeriesItem->appendRow(ImageItem);
-				//SeriesItem->setChild(SeriesItem->row(), 3, ImageItem);
-			}
-		}
-	}
-	
+	QStringList headers;
+	headers.append(QStringLiteral("ID"));
+	headers.append(QStringLiteral("详细信息"));
+	m_dicomdirtreemodel = new DicomDirTreeModel(headers, *patient);
+	ui.treeView->setModel(m_dicomdirtreemodel);
+	ui.treeView->expandAll();
+	for (int column = 0; column < m_dicomdirtreemodel->columnCount(); ++column)
+		ui.treeView->resizeColumnToContents(column);
 }
 /*
  * 工具条->前一张
@@ -676,37 +782,33 @@ void QvtkDicomViewer::OnStop()
  */
  void QvtkDicomViewer::on_treeView_customContextMenuRequested(QPoint pos)
  {
-	/*
-	 *为了从根本上解决这个问题,必须从QAbstractModel派生一个Model类,
-	 *如果需要,还要有对应的Item类
-	 *这个类能直接从数据库对象实例化并带有至少两组字段,
-	 *一组是用于显示输出的字段,另一组是用于内部查找索引的ID字段
-	 */
 	 if (PrePosition != pos) {//这次触发是正常触发
 		 PrePosition = pos;
 		 if (ui.treeView->model() == NULL) {
-			 //此时文件树是空的
+			 //此时树是空的
 			 TreeViewMenu_OnEmpty->exec(QCursor::pos());//显示右键菜单
 		 }
-		 else//文件树非空的时候才能启动这个
+		 else//树非空的时候才能启动这个
 		 {
 			 QModelIndex indexSelect = ui.treeView->indexAt(pos);  //当前节点索引
-			 QString IndexTxt = indexSelect.data().toString();       //当前节点数据
-			 if (IndexTxt.contains("Patient")==true)//如果当前右击发生在病人上
+			 switch (m_dicomdirtreemodel->getLevel(indexSelect))
 			 {
+			 case 1://level==1:Patient
 				 TreeViewMenu_OnPatient->exec(QCursor::pos());
-			 }else if(IndexTxt.contains("Series") == true)
-			 {
+				 break;
+			 case 2://level==2:Study
+				 //目前还没有对应的菜单
+				 break;
+			 case 3://level==3:Series
 				 TreeViewMenu_OnSeries->exec(QCursor::pos());
-			 }else if(IndexTxt.contains("Study") == true)
-			 {
-				 
-			 }else if(IndexTxt.contains("Image") == true)
-			 {
+				 break;
+			 case 4://level==4:image
 				 TreeViewMenu_OnImage->exec(QCursor::pos());
+				 break;
+			 default://其他情况处理不了,报错
+				 QMessageBox::information(this,QStringLiteral("错误!"), QStringLiteral("错误!"));
+				 break;
 			 }
-			 //qDebug() << indexSelect.column();
-			 //QMessageBox::warning(this, QStringLiteral("安娜学姐的问候"), _colum);
 		 }
 	 }
 	 else
@@ -724,61 +826,42 @@ void QvtkDicomViewer::OnStop()
 	 ShowImageByIndex(a);
  }
  /*
-  *	测试读取缩略图
+  *	测试入口1
   */
- void QvtkDicomViewer::OnTestDCMTK_x64()
+ void QvtkDicomViewer::OnTestEntrance_01()
  {
-	 DcmFileFormat fileformat;
-	 OFCondition oc = fileformat.loadFile("E:/源码和示例程序/DICOM/S427870/S10/I10");
-	 if (oc.good()) {
-		 OFString patientName;
-		 QString temp = "";
-		 if (fileformat.getDataset()->findAndGetOFString(DCM_PatientName, patientName).good())
-		 {
-			 temp.append("Patient Name:");
-			 temp.append(patientName.c_str());
-			 temp.append("\n");
-		 }
-		 if (fileformat.getDataset()->findAndGetOFString(DCM_PatientID, patientName).good())
-		 {
-			 temp.append("Patient ID:");
-			 temp.append(patientName.c_str());
-			 temp.append("\n");
-		 }
-		 ///DCM_PatientBirthDate DCM_PatientSex
-		 if (fileformat.getDataset()->findAndGetOFString(DCM_PatientBirthDate, patientName).good())
-		 {
-			 temp.append("Patient Birth Date:");
-			 temp.append(patientName.c_str());
-			 temp.append("\n");
-		 }
-
-		 if (fileformat.getDataset()->findAndGetOFString(DCM_PatientSex, patientName).good())
-		 {
-			 temp.append("Patient Sex:");
-			 temp.append(patientName.c_str());
-			 temp.append("\n");
-		 }
-
-		 QMessageBox::information(this, "Information", temp);
-	 }
+	/*
+	 * 现在测试的是显示一张图片并显示叠加文字
+	 */
+	 RenderInitializer("F:/100098.dcm");
  }
  /*
-  *	测试调用DCMTK-x64读取DIR文件
+  *	测试入口2
   */
- void QvtkDicomViewer::OnTestReadDICOMDIR()
+ void QvtkDicomViewer::OnTestEntrance_02()
  {
-	/*===================该函数的全局变量区===================*/
-	 QString path;
-	 DcmDirectoryRecord * root, *root1;//文件的绝对路径
-	/*=======================================================*/
-	 //打开文件选择页面
-	 path = QFileDialog::getOpenFileName(this, QStringLiteral("打开文件"), ".", QStringLiteral("全部类型(*.*)"));
-	 if (path.isEmpty() == true)
-		 return;
-	 DicomDir *m_dicomdir = new DicomDir(path);
-	 connect(m_dicomdir, SIGNAL(sendData(QString,QString)), this, SLOT(receiveData(QString,QString)));
-	 m_dicomdir->show();
+	 QStringList headers;
+	 headers.append(QStringLiteral("ID"));
+	 headers.append(QStringLiteral("详细信息"));
+
+	 //QFile file("defaultTreeContext.txt");
+	 //file.open(QIODevice::ReadOnly);
+	 //DicomDirTreeModel *model = new DicomDirTreeModel(headers, file.readAll());
+	 //file.close();
+	 //ui.treeView->setModel(model);
+	 //ui.treeView->expandAll();
+	 //for (int column = 0; column < model->columnCount(); ++column)
+		//ui.treeView->resizeColumnToContents(column);
+
+	 DicomDataBase::getInstance()->Init("F:/Dicom/Test2/DICOMDIR");
+	 Current_patientId = "335645";
+	 CurrentPatient = new DicomPatient(DicomDataBase::getInstance()->getPatientById(Current_patientId));
+	 m_dicomdirtreemodel = new DicomDirTreeModel(headers, CurrentPatient);
+
+	 ui.treeView->setModel(m_dicomdirtreemodel);
+	 ui.treeView->expandAll();
+	 for (int column = 0; column < m_dicomdirtreemodel->columnCount(); ++column)
+		 ui.treeView->resizeColumnToContents(column);
  }
  /*
   *	响应DicomDir类传送过来的信号,其中包含了一个病人的ID

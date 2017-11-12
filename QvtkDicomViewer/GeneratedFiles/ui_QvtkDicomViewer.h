@@ -48,8 +48,8 @@ public:
     QAction *action_SwitchOfProperty;
     QAction *action_Play;
     QAction *action_Stop;
-    QAction *action_DCMTK_x64;
-    QAction *action_DCMTK_64_DiconDir;
+    QAction *action_TestEntrance_01;
+    QAction *action_TestEntrance_02;
     QAction *action_OpenDicomDirFile;
     QAction *action_OpenDicomFile;
     QWidget *centralWidget;
@@ -73,7 +73,8 @@ public:
     {
         if (QvtkDicomViewerClass->objectName().isEmpty())
             QvtkDicomViewerClass->setObjectName(QStringLiteral("QvtkDicomViewerClass"));
-        QvtkDicomViewerClass->resize(1179, 738);
+        QvtkDicomViewerClass->resize(1200, 738);
+        QvtkDicomViewerClass->setMinimumSize(QSize(1200, 700));
         action_OpenSeriesFolder = new QAction(QvtkDicomViewerClass);
         action_OpenSeriesFolder->setObjectName(QStringLiteral("action_OpenSeriesFolder"));
         QIcon icon;
@@ -160,10 +161,10 @@ public:
         QIcon icon14;
         icon14.addFile(QStringLiteral(":/QvtkDicomViewer/Resources/stop_128px_1197040_easyicon.net.ico"), QSize(), QIcon::Normal, QIcon::Off);
         action_Stop->setIcon(icon14);
-        action_DCMTK_x64 = new QAction(QvtkDicomViewerClass);
-        action_DCMTK_x64->setObjectName(QStringLiteral("action_DCMTK_x64"));
-        action_DCMTK_64_DiconDir = new QAction(QvtkDicomViewerClass);
-        action_DCMTK_64_DiconDir->setObjectName(QStringLiteral("action_DCMTK_64_DiconDir"));
+        action_TestEntrance_01 = new QAction(QvtkDicomViewerClass);
+        action_TestEntrance_01->setObjectName(QStringLiteral("action_TestEntrance_01"));
+        action_TestEntrance_02 = new QAction(QvtkDicomViewerClass);
+        action_TestEntrance_02->setObjectName(QStringLiteral("action_TestEntrance_02"));
         action_OpenDicomDirFile = new QAction(QvtkDicomViewerClass);
         action_OpenDicomDirFile->setObjectName(QStringLiteral("action_OpenDicomDirFile"));
         QIcon icon15;
@@ -201,7 +202,7 @@ public:
         QvtkDicomViewerClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(QvtkDicomViewerClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1179, 26));
+        menuBar->setGeometry(QRect(0, 0, 1200, 26));
         menu = new QMenu(menuBar);
         menu->setObjectName(QStringLiteral("menu"));
         menu_2 = new QMenu(menuBar);
@@ -259,8 +260,8 @@ public:
         menu_3->addAction(action_Play);
         menu_3->addAction(action_Stop);
         menu_4->addAction(action_SwitchOfProperty);
-        menu_5->addAction(action_DCMTK_x64);
-        menu_5->addAction(action_DCMTK_64_DiconDir);
+        menu_5->addAction(action_TestEntrance_01);
+        menu_5->addAction(action_TestEntrance_02);
         mainToolBar->addAction(action_OpenDicomDirFile);
         mainToolBar->addAction(action_OpenDicomFile);
         mainToolBar->addAction(action_OpenSeriesFolder);
@@ -298,8 +299,8 @@ public:
         QObject::connect(action_SwitchOfProperty, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnSwitchProperty()));
         QObject::connect(action_Play, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnPlay()));
         QObject::connect(action_Stop, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnStop()));
-        QObject::connect(action_DCMTK_x64, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnTestDCMTK_x64()));
-        QObject::connect(action_DCMTK_64_DiconDir, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnTestReadDICOMDIR()));
+        QObject::connect(action_TestEntrance_01, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnTestEntrance_01()));
+        QObject::connect(action_TestEntrance_02, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnTestEntrance_02()));
         QObject::connect(action_OpenDicomDirFile, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnOpenDicomDirFile()));
         QObject::connect(action_OpenSeriesFolder, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnOpenSeriesFolder()));
         QObject::connect(action_OpenDicomFile, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnOpenDicomFile()));
@@ -334,8 +335,8 @@ public:
         action_SwitchOfProperty->setText(QApplication::translate("QvtkDicomViewerClass", "\345\261\236\346\200\247", Q_NULLPTR));
         action_Play->setText(QApplication::translate("QvtkDicomViewerClass", "\346\222\255\346\224\276", Q_NULLPTR));
         action_Stop->setText(QApplication::translate("QvtkDicomViewerClass", "\345\201\234\346\255\242", Q_NULLPTR));
-        action_DCMTK_x64->setText(QApplication::translate("QvtkDicomViewerClass", "\350\257\273\345\217\226\347\274\251\347\225\245\345\233\276", Q_NULLPTR));
-        action_DCMTK_64_DiconDir->setText(QApplication::translate("QvtkDicomViewerClass", "\350\260\203\347\224\250DCMTK-64\350\257\273\345\217\226DiconDir", Q_NULLPTR));
+        action_TestEntrance_01->setText(QApplication::translate("QvtkDicomViewerClass", "\346\265\213\350\257\225\345\205\245\345\217\2431", Q_NULLPTR));
+        action_TestEntrance_02->setText(QApplication::translate("QvtkDicomViewerClass", "\346\265\213\350\257\225\345\205\245\345\217\2432", Q_NULLPTR));
         action_OpenDicomDirFile->setText(QApplication::translate("QvtkDicomViewerClass", "\346\211\223\345\274\200DICOMDIR\346\226\207\344\273\266", Q_NULLPTR));
         action_OpenDicomFile->setText(QApplication::translate("QvtkDicomViewerClass", "\346\211\223\345\274\200Dicom\346\226\207\344\273\266", Q_NULLPTR));
         menu->setTitle(QApplication::translate("QvtkDicomViewerClass", "\346\226\207\344\273\266", Q_NULLPTR));
