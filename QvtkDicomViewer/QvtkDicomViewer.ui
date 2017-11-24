@@ -68,6 +68,9 @@
     <addaction name="action_OpenSeriesFolder"/>
     <addaction name="action_OpenDicomDirFile"/>
     <addaction name="action_OpenDicomFile"/>
+    <addaction name="separator"/>
+    <addaction name="action_PreviousPatient"/>
+    <addaction name="action_LatterPatient"/>
    </widget>
    <widget class="QMenu" name="menu_2">
     <property name="title">
@@ -123,6 +126,9 @@
    <addaction name="action_OpenDicomFile"/>
    <addaction name="action_OpenSeriesFolder"/>
    <addaction name="separator"/>
+   <addaction name="action_PreviousPatient"/>
+   <addaction name="action_LatterPatient"/>
+   <addaction name="separator"/>
    <addaction name="action_back"/>
    <addaction name="action_Play"/>
    <addaction name="action_next"/>
@@ -139,6 +145,7 @@
    <addaction name="separator"/>
    <addaction name="action_Negative"/>
    <addaction name="action_Reset"/>
+   <addaction name="separator"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QDockWidget" name="dockWidget_Dir">
@@ -362,6 +369,24 @@
    </property>
    <property name="text">
     <string>打开Dicom文件</string>
+   </property>
+  </action>
+  <action name="action_PreviousPatient">
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/hand_pointing_left_128px_1143134_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/hand_pointing_left_128px_1143134_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>上一个病人</string>
+   </property>
+  </action>
+  <action name="action_LatterPatient">
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/hand_pointing_right_128px_1143133_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/hand_pointing_right_128px_1143133_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>下一个病人</string>
    </property>
   </action>
  </widget>
@@ -729,6 +754,38 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>action_PreviousPatient</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnPreviousPatient()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>599</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_LatterPatient</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnLatterPatient()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>599</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>OnOpenFile()</slot>
@@ -758,5 +815,7 @@
   <slot>OnSliceScrollBarValueChange(int)</slot>
   <slot>OnTestEntrance_01()</slot>
   <slot>OnTestEntrance_02()</slot>
+  <slot>OnLatterPatient()</slot>
+  <slot>OnPreviousPatient()</slot>
  </slots>
 </ui>

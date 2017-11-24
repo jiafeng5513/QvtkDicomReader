@@ -908,3 +908,31 @@ void QvtkDicomViewer::OnStop()
 	DirTreeRefresh(CurrentPatient);//刷新树视图
 	RenderInitializer(CurrentPatient->getCurrentDicomImage()->AbsFilePath, CurrentPatient->getCurrentDicomSeries()->ImageList.size());
  }
+ /*
+  * 下一个病人
+  */
+ void QvtkDicomViewer::OnLatterPatient()
+ {
+	 if (CurrentPatient == NULL)
+		 return;
+	 //1.从数据库类接口上换下一个病人
+	 DicomPatient* temp=DicomDataBase::getInstance()->get_latter_patient(CurrentPatient);
+	 //2.重新绑定当前病人
+	 CurrentPatient = new DicomPatient(temp);;
+	 DirTreeRefresh(CurrentPatient);//刷新树视图
+	 RenderInitializer(CurrentPatient->getCurrentDicomImage()->AbsFilePath, CurrentPatient->getCurrentDicomSeries()->ImageList.size());
+ }
+ /*
+  * 上一个病人
+  */
+ void QvtkDicomViewer::OnPreviousPatient()
+ {
+	 if (CurrentPatient == NULL)
+		 return;
+	 //1.从数据库类接口上换下一个病人
+	 DicomPatient* temp = DicomDataBase::getInstance()->get_previous_patient(CurrentPatient);
+	 //2.重新绑定当前病人
+	 CurrentPatient = new DicomPatient(temp);;
+	 DirTreeRefresh(CurrentPatient);//刷新树视图
+	 RenderInitializer(CurrentPatient->getCurrentDicomImage()->AbsFilePath, CurrentPatient->getCurrentDicomSeries()->ImageList.size());
+ }

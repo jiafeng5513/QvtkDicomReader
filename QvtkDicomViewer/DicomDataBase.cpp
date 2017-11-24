@@ -195,3 +195,35 @@ DicomPatient * DicomDataBase::getPatientById(std::string &patientid)
 	}
 	return nullptr;
 }
+/*
+ * 获取前一个病人
+ * 参数:当前病人
+ * 特性:越界时返回原值
+ */
+ DicomPatient * DicomDataBase::get_previous_patient(DicomPatient * current_patient)
+ {
+	for(int i=0;i<PatientList.size();i++)
+	{
+		if (PatientList[i]->PatientID== current_patient->PatientID)//找到当前病人
+		{
+			return (i - 1 < 0 ? PatientList[i] : PatientList[i- 1]);
+		}
+	}
+	 return current_patient;
+ }
+ /*
+  *	获取后一个病人
+  *	参数:当前病人
+  *	特性:越界返回原值
+  */
+ DicomPatient * DicomDataBase::get_latter_patient(DicomPatient * current_patient)
+ {
+	 for (int i = 0; i<PatientList.size(); i++)
+	 {
+		 if (PatientList[i]->PatientID == current_patient->PatientID)//找到当前病人
+		 {
+			 return (i + 2 >PatientList.size() ? PatientList[i] : PatientList[i + 1]);
+		 }
+	 }
+	 return current_patient;
+ }

@@ -150,6 +150,8 @@ public slots:
 	void OnShowSelectedImage();		//显示当前选中的Image
 	void OnSliceScrollBarValueChange(int a);//Slice滚动条值更改事件
 	void receiveData(QString data,QString dir);//响应DicomDir类传送过来的信号,其中包含了一个病人的ID
+	void OnLatterPatient();//上一个病人
+	void OnPreviousPatient();//下一个病人
 	///测试入口
 	void OnTestEntrance_01();//测试入口1
 	void OnTestEntrance_02();//测试入口2

@@ -52,6 +52,8 @@ public:
     QAction *action_TestEntrance_02;
     QAction *action_OpenDicomDirFile;
     QAction *action_OpenDicomFile;
+    QAction *action_PreviousPatient;
+    QAction *action_LatterPatient;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QVTKWidget *qvtkWidget;
@@ -175,6 +177,16 @@ public:
         QIcon icon16;
         icon16.addFile(QStringLiteral(":/QvtkDicomViewer/Resources/X_Ray_Hand_128px_1124752_easyicon.net.ico"), QSize(), QIcon::Normal, QIcon::Off);
         action_OpenDicomFile->setIcon(icon16);
+        action_PreviousPatient = new QAction(QvtkDicomViewerClass);
+        action_PreviousPatient->setObjectName(QStringLiteral("action_PreviousPatient"));
+        QIcon icon17;
+        icon17.addFile(QStringLiteral(":/QvtkDicomViewer/Resources/hand_pointing_left_128px_1143134_easyicon.net.ico"), QSize(), QIcon::Normal, QIcon::Off);
+        action_PreviousPatient->setIcon(icon17);
+        action_LatterPatient = new QAction(QvtkDicomViewerClass);
+        action_LatterPatient->setObjectName(QStringLiteral("action_LatterPatient"));
+        QIcon icon18;
+        icon18.addFile(QStringLiteral(":/QvtkDicomViewer/Resources/hand_pointing_right_128px_1143133_easyicon.net.ico"), QSize(), QIcon::Normal, QIcon::Off);
+        action_LatterPatient->setIcon(icon18);
         centralWidget = new QWidget(QvtkDicomViewerClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
@@ -245,6 +257,9 @@ public:
         menu->addAction(action_OpenSeriesFolder);
         menu->addAction(action_OpenDicomDirFile);
         menu->addAction(action_OpenDicomFile);
+        menu->addSeparator();
+        menu->addAction(action_PreviousPatient);
+        menu->addAction(action_LatterPatient);
         menu_2->addAction(action_back);
         menu_2->addAction(action_next);
         menu_3->addAction(action_Pointer);
@@ -266,6 +281,9 @@ public:
         mainToolBar->addAction(action_OpenDicomFile);
         mainToolBar->addAction(action_OpenSeriesFolder);
         mainToolBar->addSeparator();
+        mainToolBar->addAction(action_PreviousPatient);
+        mainToolBar->addAction(action_LatterPatient);
+        mainToolBar->addSeparator();
         mainToolBar->addAction(action_back);
         mainToolBar->addAction(action_Play);
         mainToolBar->addAction(action_next);
@@ -282,6 +300,7 @@ public:
         mainToolBar->addSeparator();
         mainToolBar->addAction(action_Negative);
         mainToolBar->addAction(action_Reset);
+        mainToolBar->addSeparator();
 
         retranslateUi(QvtkDicomViewerClass);
         QObject::connect(action_back, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnBackward()));
@@ -306,6 +325,8 @@ public:
         QObject::connect(action_OpenDicomFile, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnOpenDicomFile()));
         QObject::connect(treeView, SIGNAL(customContextMenuRequested(QPoint)), QvtkDicomViewerClass, SLOT(on_treeView_customContextMenuRequested(QPoint)));
         QObject::connect(SliceScrollBar, SIGNAL(valueChanged(int)), QvtkDicomViewerClass, SLOT(OnSliceScrollBarValueChange(int)));
+        QObject::connect(action_PreviousPatient, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnPreviousPatient()));
+        QObject::connect(action_LatterPatient, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnLatterPatient()));
 
         QMetaObject::connectSlotsByName(QvtkDicomViewerClass);
     } // setupUi
@@ -339,6 +360,8 @@ public:
         action_TestEntrance_02->setText(QApplication::translate("QvtkDicomViewerClass", "\346\265\213\350\257\225\345\205\245\345\217\2432", Q_NULLPTR));
         action_OpenDicomDirFile->setText(QApplication::translate("QvtkDicomViewerClass", "\346\211\223\345\274\200DICOMDIR\346\226\207\344\273\266", Q_NULLPTR));
         action_OpenDicomFile->setText(QApplication::translate("QvtkDicomViewerClass", "\346\211\223\345\274\200Dicom\346\226\207\344\273\266", Q_NULLPTR));
+        action_PreviousPatient->setText(QApplication::translate("QvtkDicomViewerClass", "\344\270\212\344\270\200\344\270\252\347\227\205\344\272\272", Q_NULLPTR));
+        action_LatterPatient->setText(QApplication::translate("QvtkDicomViewerClass", "\344\270\213\344\270\200\344\270\252\347\227\205\344\272\272", Q_NULLPTR));
         menu->setTitle(QApplication::translate("QvtkDicomViewerClass", "\346\226\207\344\273\266", Q_NULLPTR));
         menu_2->setTitle(QApplication::translate("QvtkDicomViewerClass", "\344\277\241\346\201\257", Q_NULLPTR));
         menu_3->setTitle(QApplication::translate("QvtkDicomViewerClass", "\345\267\245\345\205\267", Q_NULLPTR));

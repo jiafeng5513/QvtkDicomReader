@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_QvtkDicomViewer_t {
-    QByteArrayData data[35];
-    char stringdata0[537];
+    QByteArrayData data[37];
+    char stringdata0[571];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -64,8 +64,10 @@ QT_MOC_LITERAL(29, 478, 1), // "a"
 QT_MOC_LITERAL(30, 480, 11), // "receiveData"
 QT_MOC_LITERAL(31, 492, 4), // "data"
 QT_MOC_LITERAL(32, 497, 3), // "dir"
-QT_MOC_LITERAL(33, 501, 17), // "OnTestEntrance_01"
-QT_MOC_LITERAL(34, 519, 17) // "OnTestEntrance_02"
+QT_MOC_LITERAL(33, 501, 15), // "OnLatterPatient"
+QT_MOC_LITERAL(34, 517, 17), // "OnPreviousPatient"
+QT_MOC_LITERAL(35, 535, 17), // "OnTestEntrance_01"
+QT_MOC_LITERAL(36, 553, 17) // "OnTestEntrance_02"
 
     },
     "QvtkDicomViewer\0CursorValueChanged\0\0"
@@ -81,7 +83,8 @@ QT_MOC_LITERAL(34, 519, 17) // "OnTestEntrance_02"
     "pos\0OnShowDicomCurrentTags\0"
     "OnShowSelectedSeries\0OnShowSelectedImage\0"
     "OnSliceScrollBarValueChange\0a\0receiveData\0"
-    "data\0dir\0OnTestEntrance_01\0OnTestEntrance_02"
+    "data\0dir\0OnLatterPatient\0OnPreviousPatient\0"
+    "OnTestEntrance_01\0OnTestEntrance_02"
 };
 #undef QT_MOC_LITERAL
 
@@ -91,7 +94,7 @@ static const uint qt_meta_data_QvtkDicomViewer[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      29,   14, // methods
+      31,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -99,37 +102,39 @@ static const uint qt_meta_data_QvtkDicomViewer[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,  159,    2, 0x06 /* Public */,
+       1,    0,  169,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       3,    0,  160,    2, 0x0a /* Public */,
-       4,    0,  161,    2, 0x0a /* Public */,
-       5,    0,  162,    2, 0x0a /* Public */,
-       6,    0,  163,    2, 0x0a /* Public */,
-       7,    0,  164,    2, 0x0a /* Public */,
-       8,    0,  165,    2, 0x0a /* Public */,
-       9,    0,  166,    2, 0x0a /* Public */,
-      10,    0,  167,    2, 0x0a /* Public */,
-      11,    0,  168,    2, 0x0a /* Public */,
-      12,    0,  169,    2, 0x0a /* Public */,
-      13,    0,  170,    2, 0x0a /* Public */,
-      14,    0,  171,    2, 0x0a /* Public */,
-      15,    0,  172,    2, 0x0a /* Public */,
-      16,    0,  173,    2, 0x0a /* Public */,
-      17,    0,  174,    2, 0x0a /* Public */,
-      18,    0,  175,    2, 0x0a /* Public */,
-      19,    0,  176,    2, 0x0a /* Public */,
-      20,    0,  177,    2, 0x0a /* Public */,
-      21,    0,  178,    2, 0x0a /* Public */,
-      22,    0,  179,    2, 0x0a /* Public */,
-      23,    1,  180,    2, 0x0a /* Public */,
-      25,    0,  183,    2, 0x0a /* Public */,
-      26,    0,  184,    2, 0x0a /* Public */,
-      27,    0,  185,    2, 0x0a /* Public */,
-      28,    1,  186,    2, 0x0a /* Public */,
-      30,    2,  189,    2, 0x0a /* Public */,
-      33,    0,  194,    2, 0x0a /* Public */,
-      34,    0,  195,    2, 0x0a /* Public */,
+       3,    0,  170,    2, 0x0a /* Public */,
+       4,    0,  171,    2, 0x0a /* Public */,
+       5,    0,  172,    2, 0x0a /* Public */,
+       6,    0,  173,    2, 0x0a /* Public */,
+       7,    0,  174,    2, 0x0a /* Public */,
+       8,    0,  175,    2, 0x0a /* Public */,
+       9,    0,  176,    2, 0x0a /* Public */,
+      10,    0,  177,    2, 0x0a /* Public */,
+      11,    0,  178,    2, 0x0a /* Public */,
+      12,    0,  179,    2, 0x0a /* Public */,
+      13,    0,  180,    2, 0x0a /* Public */,
+      14,    0,  181,    2, 0x0a /* Public */,
+      15,    0,  182,    2, 0x0a /* Public */,
+      16,    0,  183,    2, 0x0a /* Public */,
+      17,    0,  184,    2, 0x0a /* Public */,
+      18,    0,  185,    2, 0x0a /* Public */,
+      19,    0,  186,    2, 0x0a /* Public */,
+      20,    0,  187,    2, 0x0a /* Public */,
+      21,    0,  188,    2, 0x0a /* Public */,
+      22,    0,  189,    2, 0x0a /* Public */,
+      23,    1,  190,    2, 0x0a /* Public */,
+      25,    0,  193,    2, 0x0a /* Public */,
+      26,    0,  194,    2, 0x0a /* Public */,
+      27,    0,  195,    2, 0x0a /* Public */,
+      28,    1,  196,    2, 0x0a /* Public */,
+      30,    2,  199,    2, 0x0a /* Public */,
+      33,    0,  204,    2, 0x0a /* Public */,
+      34,    0,  205,    2, 0x0a /* Public */,
+      35,    0,  206,    2, 0x0a /* Public */,
+      36,    0,  207,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -161,6 +166,8 @@ static const uint qt_meta_data_QvtkDicomViewer[] = {
     QMetaType::Void,
     QMetaType::Void, QMetaType::Int,   29,
     QMetaType::Void, QMetaType::QString, QMetaType::QString,   31,   32,
+    QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
 
@@ -200,8 +207,10 @@ void QvtkDicomViewer::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         case 24: _t->OnShowSelectedImage(); break;
         case 25: _t->OnSliceScrollBarValueChange((*reinterpret_cast< int(*)>(_a[1]))); break;
         case 26: _t->receiveData((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
-        case 27: _t->OnTestEntrance_01(); break;
-        case 28: _t->OnTestEntrance_02(); break;
+        case 27: _t->OnLatterPatient(); break;
+        case 28: _t->OnPreviousPatient(); break;
+        case 29: _t->OnTestEntrance_01(); break;
+        case 30: _t->OnTestEntrance_02(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -242,13 +251,13 @@ int QvtkDicomViewer::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 29)
+        if (_id < 31)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 29;
+        _id -= 31;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 29)
+        if (_id < 31)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 29;
+        _id -= 31;
     }
     return _id;
 }
