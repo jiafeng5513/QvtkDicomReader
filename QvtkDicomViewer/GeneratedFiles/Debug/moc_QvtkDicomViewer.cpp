@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_QvtkDicomViewer_t {
-    QByteArrayData data[37];
-    char stringdata0[571];
+    QByteArrayData data[47];
+    char stringdata0[767];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -34,44 +34,55 @@ static const qt_meta_stringdata_QvtkDicomViewer_t qt_meta_stringdata_QvtkDicomVi
 QT_MOC_LITERAL(0, 0, 15), // "QvtkDicomViewer"
 QT_MOC_LITERAL(1, 16, 18), // "CursorValueChanged"
 QT_MOC_LITERAL(2, 35, 0), // ""
-QT_MOC_LITERAL(3, 36, 19), // "OnChangeCursorValue"
-QT_MOC_LITERAL(4, 56, 18), // "OnOpenSeriesFolder"
-QT_MOC_LITERAL(5, 75, 15), // "OnOpenDicomFile"
-QT_MOC_LITERAL(6, 91, 18), // "OnOpenDicomDirFile"
-QT_MOC_LITERAL(7, 110, 9), // "OnForward"
-QT_MOC_LITERAL(8, 120, 10), // "OnBackward"
-QT_MOC_LITERAL(9, 131, 14), // "OnResetToFirst"
-QT_MOC_LITERAL(10, 146, 17), // "OnSelectedPointer"
-QT_MOC_LITERAL(11, 164, 20), // "OnSelectedProtractor"
-QT_MOC_LITERAL(12, 185, 15), // "OnSelectedRuler"
-QT_MOC_LITERAL(13, 201, 17), // "OnSelectedContour"
-QT_MOC_LITERAL(14, 219, 23), // "OnSelectedBiDimensional"
-QT_MOC_LITERAL(15, 243, 19), // "OnSelectedGrayLevel"
-QT_MOC_LITERAL(16, 263, 14), // "OnSelectedZoom"
-QT_MOC_LITERAL(17, 278, 14), // "OnSelectedMove"
-QT_MOC_LITERAL(18, 293, 10), // "OnNegative"
-QT_MOC_LITERAL(19, 304, 7), // "OnReset"
-QT_MOC_LITERAL(20, 312, 6), // "OnPlay"
-QT_MOC_LITERAL(21, 319, 6), // "OnStop"
-QT_MOC_LITERAL(22, 326, 16), // "OnSwitchProperty"
-QT_MOC_LITERAL(23, 343, 38), // "on_treeView_customContextMenu..."
-QT_MOC_LITERAL(24, 382, 3), // "pos"
-QT_MOC_LITERAL(25, 386, 22), // "OnShowDicomCurrentTags"
-QT_MOC_LITERAL(26, 409, 20), // "OnShowSelectedSeries"
-QT_MOC_LITERAL(27, 430, 19), // "OnShowSelectedImage"
-QT_MOC_LITERAL(28, 450, 27), // "OnSliceScrollBarValueChange"
-QT_MOC_LITERAL(29, 478, 1), // "a"
-QT_MOC_LITERAL(30, 480, 11), // "receiveData"
-QT_MOC_LITERAL(31, 492, 4), // "data"
-QT_MOC_LITERAL(32, 497, 3), // "dir"
-QT_MOC_LITERAL(33, 501, 15), // "OnLatterPatient"
-QT_MOC_LITERAL(34, 517, 17), // "OnPreviousPatient"
-QT_MOC_LITERAL(35, 535, 17), // "OnTestEntrance_01"
-QT_MOC_LITERAL(36, 553, 17) // "OnTestEntrance_02"
+QT_MOC_LITERAL(3, 36, 15), // "WindowWLChanged"
+QT_MOC_LITERAL(4, 52, 19), // "OnChangeCursorValue"
+QT_MOC_LITERAL(5, 72, 17), // "OnChangeWindowsWL"
+QT_MOC_LITERAL(6, 90, 18), // "OnOpenSeriesFolder"
+QT_MOC_LITERAL(7, 109, 15), // "OnOpenDicomFile"
+QT_MOC_LITERAL(8, 125, 18), // "OnOpenDicomDirFile"
+QT_MOC_LITERAL(9, 144, 9), // "OnForward"
+QT_MOC_LITERAL(10, 154, 10), // "OnBackward"
+QT_MOC_LITERAL(11, 165, 14), // "OnResetToFirst"
+QT_MOC_LITERAL(12, 180, 17), // "OnSelectedPointer"
+QT_MOC_LITERAL(13, 198, 20), // "OnSelectedProtractor"
+QT_MOC_LITERAL(14, 219, 15), // "OnSelectedRuler"
+QT_MOC_LITERAL(15, 235, 17), // "OnSelectedContour"
+QT_MOC_LITERAL(16, 253, 23), // "OnSelectedBiDimensional"
+QT_MOC_LITERAL(17, 277, 19), // "OnSelectedGrayLevel"
+QT_MOC_LITERAL(18, 297, 14), // "OnSelectedZoom"
+QT_MOC_LITERAL(19, 312, 14), // "OnSelectedMove"
+QT_MOC_LITERAL(20, 327, 10), // "OnNegative"
+QT_MOC_LITERAL(21, 338, 7), // "OnReset"
+QT_MOC_LITERAL(22, 346, 6), // "OnPlay"
+QT_MOC_LITERAL(23, 353, 6), // "OnStop"
+QT_MOC_LITERAL(24, 360, 16), // "OnSwitchProperty"
+QT_MOC_LITERAL(25, 377, 38), // "on_treeView_customContextMenu..."
+QT_MOC_LITERAL(26, 416, 3), // "pos"
+QT_MOC_LITERAL(27, 420, 22), // "OnShowDicomCurrentTags"
+QT_MOC_LITERAL(28, 443, 20), // "OnShowSelectedSeries"
+QT_MOC_LITERAL(29, 464, 19), // "OnShowSelectedImage"
+QT_MOC_LITERAL(30, 484, 27), // "OnSliceScrollBarValueChange"
+QT_MOC_LITERAL(31, 512, 1), // "a"
+QT_MOC_LITERAL(32, 514, 11), // "receiveData"
+QT_MOC_LITERAL(33, 526, 4), // "data"
+QT_MOC_LITERAL(34, 531, 3), // "dir"
+QT_MOC_LITERAL(35, 535, 15), // "OnLatterPatient"
+QT_MOC_LITERAL(36, 551, 17), // "OnPreviousPatient"
+QT_MOC_LITERAL(37, 569, 17), // "OnWindowWL_Defaut"
+QT_MOC_LITERAL(38, 587, 14), // "OnWindowWL_All"
+QT_MOC_LITERAL(39, 602, 21), // "OnWindowWL_CT_Abdomen"
+QT_MOC_LITERAL(40, 624, 25), // "OnWindowWL_CT_BloodVessel"
+QT_MOC_LITERAL(41, 650, 19), // "OnWindowWL_CT_Bones"
+QT_MOC_LITERAL(42, 670, 19), // "OnWindowWL_CT_Brain"
+QT_MOC_LITERAL(43, 690, 20), // "OnWindowWL_CT_Medias"
+QT_MOC_LITERAL(44, 711, 19), // "OnWindowWL_CT_Lungs"
+QT_MOC_LITERAL(45, 731, 17), // "OnTestEntrance_01"
+QT_MOC_LITERAL(46, 749, 17) // "OnTestEntrance_02"
 
     },
     "QvtkDicomViewer\0CursorValueChanged\0\0"
-    "OnChangeCursorValue\0OnOpenSeriesFolder\0"
+    "WindowWLChanged\0OnChangeCursorValue\0"
+    "OnChangeWindowsWL\0OnOpenSeriesFolder\0"
     "OnOpenDicomFile\0OnOpenDicomDirFile\0"
     "OnForward\0OnBackward\0OnResetToFirst\0"
     "OnSelectedPointer\0OnSelectedProtractor\0"
@@ -84,6 +95,10 @@ QT_MOC_LITERAL(36, 553, 17) // "OnTestEntrance_02"
     "OnShowSelectedSeries\0OnShowSelectedImage\0"
     "OnSliceScrollBarValueChange\0a\0receiveData\0"
     "data\0dir\0OnLatterPatient\0OnPreviousPatient\0"
+    "OnWindowWL_Defaut\0OnWindowWL_All\0"
+    "OnWindowWL_CT_Abdomen\0OnWindowWL_CT_BloodVessel\0"
+    "OnWindowWL_CT_Bones\0OnWindowWL_CT_Brain\0"
+    "OnWindowWL_CT_Medias\0OnWindowWL_CT_Lungs\0"
     "OnTestEntrance_01\0OnTestEntrance_02"
 };
 #undef QT_MOC_LITERAL
@@ -94,49 +109,60 @@ static const uint qt_meta_data_QvtkDicomViewer[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      31,   14, // methods
+      41,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
        0,       // flags
-       1,       // signalCount
+       2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,  169,    2, 0x06 /* Public */,
+       1,    0,  219,    2, 0x06 /* Public */,
+       3,    0,  220,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       3,    0,  170,    2, 0x0a /* Public */,
-       4,    0,  171,    2, 0x0a /* Public */,
-       5,    0,  172,    2, 0x0a /* Public */,
-       6,    0,  173,    2, 0x0a /* Public */,
-       7,    0,  174,    2, 0x0a /* Public */,
-       8,    0,  175,    2, 0x0a /* Public */,
-       9,    0,  176,    2, 0x0a /* Public */,
-      10,    0,  177,    2, 0x0a /* Public */,
-      11,    0,  178,    2, 0x0a /* Public */,
-      12,    0,  179,    2, 0x0a /* Public */,
-      13,    0,  180,    2, 0x0a /* Public */,
-      14,    0,  181,    2, 0x0a /* Public */,
-      15,    0,  182,    2, 0x0a /* Public */,
-      16,    0,  183,    2, 0x0a /* Public */,
-      17,    0,  184,    2, 0x0a /* Public */,
-      18,    0,  185,    2, 0x0a /* Public */,
-      19,    0,  186,    2, 0x0a /* Public */,
-      20,    0,  187,    2, 0x0a /* Public */,
-      21,    0,  188,    2, 0x0a /* Public */,
-      22,    0,  189,    2, 0x0a /* Public */,
-      23,    1,  190,    2, 0x0a /* Public */,
-      25,    0,  193,    2, 0x0a /* Public */,
-      26,    0,  194,    2, 0x0a /* Public */,
-      27,    0,  195,    2, 0x0a /* Public */,
-      28,    1,  196,    2, 0x0a /* Public */,
-      30,    2,  199,    2, 0x0a /* Public */,
-      33,    0,  204,    2, 0x0a /* Public */,
-      34,    0,  205,    2, 0x0a /* Public */,
-      35,    0,  206,    2, 0x0a /* Public */,
-      36,    0,  207,    2, 0x0a /* Public */,
+       4,    0,  221,    2, 0x0a /* Public */,
+       5,    0,  222,    2, 0x0a /* Public */,
+       6,    0,  223,    2, 0x0a /* Public */,
+       7,    0,  224,    2, 0x0a /* Public */,
+       8,    0,  225,    2, 0x0a /* Public */,
+       9,    0,  226,    2, 0x0a /* Public */,
+      10,    0,  227,    2, 0x0a /* Public */,
+      11,    0,  228,    2, 0x0a /* Public */,
+      12,    0,  229,    2, 0x0a /* Public */,
+      13,    0,  230,    2, 0x0a /* Public */,
+      14,    0,  231,    2, 0x0a /* Public */,
+      15,    0,  232,    2, 0x0a /* Public */,
+      16,    0,  233,    2, 0x0a /* Public */,
+      17,    0,  234,    2, 0x0a /* Public */,
+      18,    0,  235,    2, 0x0a /* Public */,
+      19,    0,  236,    2, 0x0a /* Public */,
+      20,    0,  237,    2, 0x0a /* Public */,
+      21,    0,  238,    2, 0x0a /* Public */,
+      22,    0,  239,    2, 0x0a /* Public */,
+      23,    0,  240,    2, 0x0a /* Public */,
+      24,    0,  241,    2, 0x0a /* Public */,
+      25,    1,  242,    2, 0x0a /* Public */,
+      27,    0,  245,    2, 0x0a /* Public */,
+      28,    0,  246,    2, 0x0a /* Public */,
+      29,    0,  247,    2, 0x0a /* Public */,
+      30,    1,  248,    2, 0x0a /* Public */,
+      32,    2,  251,    2, 0x0a /* Public */,
+      35,    0,  256,    2, 0x0a /* Public */,
+      36,    0,  257,    2, 0x0a /* Public */,
+      37,    0,  258,    2, 0x0a /* Public */,
+      38,    0,  259,    2, 0x0a /* Public */,
+      39,    0,  260,    2, 0x0a /* Public */,
+      40,    0,  261,    2, 0x0a /* Public */,
+      41,    0,  262,    2, 0x0a /* Public */,
+      42,    0,  263,    2, 0x0a /* Public */,
+      43,    0,  264,    2, 0x0a /* Public */,
+      44,    0,  265,    2, 0x0a /* Public */,
+      45,    0,  266,    2, 0x0a /* Public */,
+      46,    0,  267,    2, 0x0a /* Public */,
 
  // signals: parameters
+    QMetaType::Void,
     QMetaType::Void,
 
  // slots: parameters
@@ -160,12 +186,21 @@ static const uint qt_meta_data_QvtkDicomViewer[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::QPoint,   24,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::QPoint,   26,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Int,   29,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString,   31,   32,
+    QMetaType::Void, QMetaType::Int,   31,
+    QMetaType::Void, QMetaType::QString, QMetaType::QString,   33,   34,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -181,36 +216,46 @@ void QvtkDicomViewer::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         Q_UNUSED(_t)
         switch (_id) {
         case 0: _t->CursorValueChanged(); break;
-        case 1: _t->OnChangeCursorValue(); break;
-        case 2: _t->OnOpenSeriesFolder(); break;
-        case 3: _t->OnOpenDicomFile(); break;
-        case 4: _t->OnOpenDicomDirFile(); break;
-        case 5: _t->OnForward(); break;
-        case 6: _t->OnBackward(); break;
-        case 7: _t->OnResetToFirst(); break;
-        case 8: _t->OnSelectedPointer(); break;
-        case 9: _t->OnSelectedProtractor(); break;
-        case 10: _t->OnSelectedRuler(); break;
-        case 11: _t->OnSelectedContour(); break;
-        case 12: _t->OnSelectedBiDimensional(); break;
-        case 13: _t->OnSelectedGrayLevel(); break;
-        case 14: _t->OnSelectedZoom(); break;
-        case 15: _t->OnSelectedMove(); break;
-        case 16: _t->OnNegative(); break;
-        case 17: _t->OnReset(); break;
-        case 18: _t->OnPlay(); break;
-        case 19: _t->OnStop(); break;
-        case 20: _t->OnSwitchProperty(); break;
-        case 21: _t->on_treeView_customContextMenuRequested((*reinterpret_cast< QPoint(*)>(_a[1]))); break;
-        case 22: _t->OnShowDicomCurrentTags(); break;
-        case 23: _t->OnShowSelectedSeries(); break;
-        case 24: _t->OnShowSelectedImage(); break;
-        case 25: _t->OnSliceScrollBarValueChange((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 26: _t->receiveData((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
-        case 27: _t->OnLatterPatient(); break;
-        case 28: _t->OnPreviousPatient(); break;
-        case 29: _t->OnTestEntrance_01(); break;
-        case 30: _t->OnTestEntrance_02(); break;
+        case 1: _t->WindowWLChanged(); break;
+        case 2: _t->OnChangeCursorValue(); break;
+        case 3: _t->OnChangeWindowsWL(); break;
+        case 4: _t->OnOpenSeriesFolder(); break;
+        case 5: _t->OnOpenDicomFile(); break;
+        case 6: _t->OnOpenDicomDirFile(); break;
+        case 7: _t->OnForward(); break;
+        case 8: _t->OnBackward(); break;
+        case 9: _t->OnResetToFirst(); break;
+        case 10: _t->OnSelectedPointer(); break;
+        case 11: _t->OnSelectedProtractor(); break;
+        case 12: _t->OnSelectedRuler(); break;
+        case 13: _t->OnSelectedContour(); break;
+        case 14: _t->OnSelectedBiDimensional(); break;
+        case 15: _t->OnSelectedGrayLevel(); break;
+        case 16: _t->OnSelectedZoom(); break;
+        case 17: _t->OnSelectedMove(); break;
+        case 18: _t->OnNegative(); break;
+        case 19: _t->OnReset(); break;
+        case 20: _t->OnPlay(); break;
+        case 21: _t->OnStop(); break;
+        case 22: _t->OnSwitchProperty(); break;
+        case 23: _t->on_treeView_customContextMenuRequested((*reinterpret_cast< QPoint(*)>(_a[1]))); break;
+        case 24: _t->OnShowDicomCurrentTags(); break;
+        case 25: _t->OnShowSelectedSeries(); break;
+        case 26: _t->OnShowSelectedImage(); break;
+        case 27: _t->OnSliceScrollBarValueChange((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 28: _t->receiveData((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
+        case 29: _t->OnLatterPatient(); break;
+        case 30: _t->OnPreviousPatient(); break;
+        case 31: _t->OnWindowWL_Defaut(); break;
+        case 32: _t->OnWindowWL_All(); break;
+        case 33: _t->OnWindowWL_CT_Abdomen(); break;
+        case 34: _t->OnWindowWL_CT_BloodVessel(); break;
+        case 35: _t->OnWindowWL_CT_Bones(); break;
+        case 36: _t->OnWindowWL_CT_Brain(); break;
+        case 37: _t->OnWindowWL_CT_Medias(); break;
+        case 38: _t->OnWindowWL_CT_Lungs(); break;
+        case 39: _t->OnTestEntrance_01(); break;
+        case 40: _t->OnTestEntrance_02(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -220,6 +265,13 @@ void QvtkDicomViewer::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
             typedef void (QvtkDicomViewer::*_t)();
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&QvtkDicomViewer::CursorValueChanged)) {
                 *result = 0;
+                return;
+            }
+        }
+        {
+            typedef void (QvtkDicomViewer::*_t)();
+            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&QvtkDicomViewer::WindowWLChanged)) {
+                *result = 1;
                 return;
             }
         }
@@ -251,13 +303,13 @@ int QvtkDicomViewer::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 31)
+        if (_id < 41)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 31;
+        _id -= 41;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 31)
+        if (_id < 41)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 31;
+        _id -= 41;
     }
     return _id;
 }
@@ -266,6 +318,12 @@ int QvtkDicomViewer::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 void QvtkDicomViewer::CursorValueChanged()
 {
     QMetaObject::activate(this, &staticMetaObject, 0, nullptr);
+}
+
+// SIGNAL 1
+void QvtkDicomViewer::WindowWLChanged()
+{
+    QMetaObject::activate(this, &staticMetaObject, 1, nullptr);
 }
 QT_WARNING_POP
 QT_END_MOC_NAMESPACE

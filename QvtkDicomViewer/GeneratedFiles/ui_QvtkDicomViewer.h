@@ -54,6 +54,14 @@ public:
     QAction *action_OpenDicomFile;
     QAction *action_PreviousPatient;
     QAction *action_LatterPatient;
+    QAction *action_WindowWL_Default;
+    QAction *action_WindowWL_All;
+    QAction *action_WindowWL_CT_Abdomen;
+    QAction *action_WindowWL_CT_BloodVessel;
+    QAction *action_WindowWL_CT_Bones;
+    QAction *action_WindowWL_CT_Brain;
+    QAction *action_WindowWL_CT_Medias;
+    QAction *action_WindowWL_CT_Lungs;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QVTKWidget *qvtkWidget;
@@ -64,6 +72,7 @@ public:
     QMenu *menu_3;
     QMenu *menu_4;
     QMenu *menu_5;
+    QMenu *menu_6;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
     QDockWidget *dockWidget_Dir;
@@ -124,6 +133,7 @@ public:
         action_BiDimensional->setIcon(icon7);
         action_Negative = new QAction(QvtkDicomViewerClass);
         action_Negative->setObjectName(QStringLiteral("action_Negative"));
+        action_Negative->setCheckable(true);
         QIcon icon8;
         icon8.addFile(QStringLiteral(":/QvtkDicomViewer/Resources/video_negative_128px_1138773_easyicon.net.ico"), QSize(), QIcon::Normal, QIcon::Off);
         action_Negative->setIcon(icon8);
@@ -187,6 +197,30 @@ public:
         QIcon icon18;
         icon18.addFile(QStringLiteral(":/QvtkDicomViewer/Resources/hand_pointing_right_128px_1143133_easyicon.net.ico"), QSize(), QIcon::Normal, QIcon::Off);
         action_LatterPatient->setIcon(icon18);
+        action_WindowWL_Default = new QAction(QvtkDicomViewerClass);
+        action_WindowWL_Default->setObjectName(QStringLiteral("action_WindowWL_Default"));
+        action_WindowWL_Default->setCheckable(true);
+        action_WindowWL_All = new QAction(QvtkDicomViewerClass);
+        action_WindowWL_All->setObjectName(QStringLiteral("action_WindowWL_All"));
+        action_WindowWL_All->setCheckable(true);
+        action_WindowWL_CT_Abdomen = new QAction(QvtkDicomViewerClass);
+        action_WindowWL_CT_Abdomen->setObjectName(QStringLiteral("action_WindowWL_CT_Abdomen"));
+        action_WindowWL_CT_Abdomen->setCheckable(true);
+        action_WindowWL_CT_BloodVessel = new QAction(QvtkDicomViewerClass);
+        action_WindowWL_CT_BloodVessel->setObjectName(QStringLiteral("action_WindowWL_CT_BloodVessel"));
+        action_WindowWL_CT_BloodVessel->setCheckable(true);
+        action_WindowWL_CT_Bones = new QAction(QvtkDicomViewerClass);
+        action_WindowWL_CT_Bones->setObjectName(QStringLiteral("action_WindowWL_CT_Bones"));
+        action_WindowWL_CT_Bones->setCheckable(true);
+        action_WindowWL_CT_Brain = new QAction(QvtkDicomViewerClass);
+        action_WindowWL_CT_Brain->setObjectName(QStringLiteral("action_WindowWL_CT_Brain"));
+        action_WindowWL_CT_Brain->setCheckable(true);
+        action_WindowWL_CT_Medias = new QAction(QvtkDicomViewerClass);
+        action_WindowWL_CT_Medias->setObjectName(QStringLiteral("action_WindowWL_CT_Medias"));
+        action_WindowWL_CT_Medias->setCheckable(true);
+        action_WindowWL_CT_Lungs = new QAction(QvtkDicomViewerClass);
+        action_WindowWL_CT_Lungs->setObjectName(QStringLiteral("action_WindowWL_CT_Lungs"));
+        action_WindowWL_CT_Lungs->setCheckable(true);
         centralWidget = new QWidget(QvtkDicomViewerClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
@@ -214,7 +248,7 @@ public:
         QvtkDicomViewerClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(QvtkDicomViewerClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1200, 26));
+        menuBar->setGeometry(QRect(0, 0, 1200, 23));
         menu = new QMenu(menuBar);
         menu->setObjectName(QStringLiteral("menu"));
         menu_2 = new QMenu(menuBar);
@@ -225,6 +259,8 @@ public:
         menu_4->setObjectName(QStringLiteral("menu_4"));
         menu_5 = new QMenu(menuBar);
         menu_5->setObjectName(QStringLiteral("menu_5"));
+        menu_6 = new QMenu(menuBar);
+        menu_6->setObjectName(QStringLiteral("menu_6"));
         QvtkDicomViewerClass->setMenuBar(menuBar);
         mainToolBar = new QToolBar(QvtkDicomViewerClass);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -252,6 +288,7 @@ public:
         menuBar->addAction(menu->menuAction());
         menuBar->addAction(menu_2->menuAction());
         menuBar->addAction(menu_3->menuAction());
+        menuBar->addAction(menu_6->menuAction());
         menuBar->addAction(menu_4->menuAction());
         menuBar->addAction(menu_5->menuAction());
         menu->addAction(action_OpenSeriesFolder);
@@ -267,7 +304,6 @@ public:
         menu_3->addAction(action_Ruler);
         menu_3->addAction(action_Contour);
         menu_3->addAction(action_BiDimensional);
-        menu_3->addAction(action_Negative);
         menu_3->addAction(action_Reset);
         menu_3->addAction(action_Zoom);
         menu_3->addAction(action_GrayLevel);
@@ -277,6 +313,17 @@ public:
         menu_4->addAction(action_SwitchOfProperty);
         menu_5->addAction(action_TestEntrance_01);
         menu_5->addAction(action_TestEntrance_02);
+        menu_6->addAction(action_WindowWL_Default);
+        menu_6->addAction(action_WindowWL_All);
+        menu_6->addSeparator();
+        menu_6->addAction(action_WindowWL_CT_Abdomen);
+        menu_6->addAction(action_WindowWL_CT_BloodVessel);
+        menu_6->addAction(action_WindowWL_CT_Bones);
+        menu_6->addAction(action_WindowWL_CT_Brain);
+        menu_6->addAction(action_WindowWL_CT_Medias);
+        menu_6->addAction(action_WindowWL_CT_Lungs);
+        menu_6->addSeparator();
+        menu_6->addAction(action_Negative);
         mainToolBar->addAction(action_OpenDicomDirFile);
         mainToolBar->addAction(action_OpenDicomFile);
         mainToolBar->addAction(action_OpenSeriesFolder);
@@ -327,6 +374,14 @@ public:
         QObject::connect(SliceScrollBar, SIGNAL(valueChanged(int)), QvtkDicomViewerClass, SLOT(OnSliceScrollBarValueChange(int)));
         QObject::connect(action_PreviousPatient, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnPreviousPatient()));
         QObject::connect(action_LatterPatient, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnLatterPatient()));
+        QObject::connect(action_WindowWL_All, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnWindowWL_All()));
+        QObject::connect(action_WindowWL_CT_Abdomen, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnWindowWL_CT_Abdomen()));
+        QObject::connect(action_WindowWL_CT_BloodVessel, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnWindowWL_CT_BloodVessel()));
+        QObject::connect(action_WindowWL_CT_Bones, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnWindowWL_CT_Bones()));
+        QObject::connect(action_WindowWL_CT_Brain, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnWindowWL_CT_Brain()));
+        QObject::connect(action_WindowWL_CT_Lungs, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnWindowWL_CT_Lungs()));
+        QObject::connect(action_WindowWL_CT_Medias, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnWindowWL_CT_Medias()));
+        QObject::connect(action_WindowWL_Default, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnWindowWL_Defaut()));
 
         QMetaObject::connectSlotsByName(QvtkDicomViewerClass);
     } // setupUi
@@ -362,11 +417,20 @@ public:
         action_OpenDicomFile->setText(QApplication::translate("QvtkDicomViewerClass", "\346\211\223\345\274\200Dicom\346\226\207\344\273\266", Q_NULLPTR));
         action_PreviousPatient->setText(QApplication::translate("QvtkDicomViewerClass", "\344\270\212\344\270\200\344\270\252\347\227\205\344\272\272", Q_NULLPTR));
         action_LatterPatient->setText(QApplication::translate("QvtkDicomViewerClass", "\344\270\213\344\270\200\344\270\252\347\227\205\344\272\272", Q_NULLPTR));
+        action_WindowWL_Default->setText(QApplication::translate("QvtkDicomViewerClass", "\351\273\230\350\256\244", Q_NULLPTR));
+        action_WindowWL_All->setText(QApplication::translate("QvtkDicomViewerClass", "\345\205\250\351\203\250\345\212\250\346\200\201\350\214\203\345\233\264", Q_NULLPTR));
+        action_WindowWL_CT_Abdomen->setText(QApplication::translate("QvtkDicomViewerClass", "CT-\350\205\271", Q_NULLPTR));
+        action_WindowWL_CT_BloodVessel->setText(QApplication::translate("QvtkDicomViewerClass", "CT-\350\241\200\347\256\241", Q_NULLPTR));
+        action_WindowWL_CT_Bones->setText(QApplication::translate("QvtkDicomViewerClass", "CT-\351\252\250\351\252\274", Q_NULLPTR));
+        action_WindowWL_CT_Brain->setText(QApplication::translate("QvtkDicomViewerClass", "CT-\350\204\221", Q_NULLPTR));
+        action_WindowWL_CT_Medias->setText(QApplication::translate("QvtkDicomViewerClass", "CT-\347\272\265\350\206\210", Q_NULLPTR));
+        action_WindowWL_CT_Lungs->setText(QApplication::translate("QvtkDicomViewerClass", "CT-\350\202\272", Q_NULLPTR));
         menu->setTitle(QApplication::translate("QvtkDicomViewerClass", "\346\226\207\344\273\266", Q_NULLPTR));
         menu_2->setTitle(QApplication::translate("QvtkDicomViewerClass", "\344\277\241\346\201\257", Q_NULLPTR));
         menu_3->setTitle(QApplication::translate("QvtkDicomViewerClass", "\345\267\245\345\205\267", Q_NULLPTR));
         menu_4->setTitle(QApplication::translate("QvtkDicomViewerClass", "\347\252\227\345\217\243", Q_NULLPTR));
         menu_5->setTitle(QApplication::translate("QvtkDicomViewerClass", "\346\265\213\350\257\225", Q_NULLPTR));
+        menu_6->setTitle(QApplication::translate("QvtkDicomViewerClass", "\347\252\227\345\256\275\347\252\227\344\275\215", Q_NULLPTR));
 #ifndef QT_NO_TOOLTIP
         dockWidget_Dir->setToolTip(QString());
 #endif // QT_NO_TOOLTIP

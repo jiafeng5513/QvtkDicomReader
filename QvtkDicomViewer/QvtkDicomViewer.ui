@@ -58,7 +58,7 @@
      <x>0</x>
      <y>0</y>
      <width>1200</width>
-     <height>26</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu">
@@ -88,7 +88,6 @@
     <addaction name="action_Ruler"/>
     <addaction name="action_Contour"/>
     <addaction name="action_BiDimensional"/>
-    <addaction name="action_Negative"/>
     <addaction name="action_Reset"/>
     <addaction name="action_Zoom"/>
     <addaction name="action_GrayLevel"/>
@@ -109,9 +108,26 @@
     <addaction name="action_TestEntrance_01"/>
     <addaction name="action_TestEntrance_02"/>
    </widget>
+   <widget class="QMenu" name="menu_6">
+    <property name="title">
+     <string>窗宽窗位</string>
+    </property>
+    <addaction name="action_WindowWL_Default"/>
+    <addaction name="action_WindowWL_All"/>
+    <addaction name="separator"/>
+    <addaction name="action_WindowWL_CT_Abdomen"/>
+    <addaction name="action_WindowWL_CT_BloodVessel"/>
+    <addaction name="action_WindowWL_CT_Bones"/>
+    <addaction name="action_WindowWL_CT_Brain"/>
+    <addaction name="action_WindowWL_CT_Medias"/>
+    <addaction name="action_WindowWL_CT_Lungs"/>
+    <addaction name="separator"/>
+    <addaction name="action_Negative"/>
+   </widget>
    <addaction name="menu"/>
    <addaction name="menu_2"/>
    <addaction name="menu_3"/>
+   <addaction name="menu_6"/>
    <addaction name="menu_4"/>
    <addaction name="menu_5"/>
   </widget>
@@ -261,6 +277,9 @@
    </property>
   </action>
   <action name="action_Negative">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
    <property name="icon">
     <iconset resource="QvtkDicomViewer.qrc">
      <normaloff>:/QvtkDicomViewer/Resources/video_negative_128px_1138773_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/video_negative_128px_1138773_easyicon.net.ico</iconset>
@@ -387,6 +406,70 @@
    </property>
    <property name="text">
     <string>下一个病人</string>
+   </property>
+  </action>
+  <action name="action_WindowWL_Default">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>默认</string>
+   </property>
+  </action>
+  <action name="action_WindowWL_All">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>全部动态范围</string>
+   </property>
+  </action>
+  <action name="action_WindowWL_CT_Abdomen">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>CT-腹</string>
+   </property>
+  </action>
+  <action name="action_WindowWL_CT_BloodVessel">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>CT-血管</string>
+   </property>
+  </action>
+  <action name="action_WindowWL_CT_Bones">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>CT-骨骼</string>
+   </property>
+  </action>
+  <action name="action_WindowWL_CT_Brain">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>CT-脑</string>
+   </property>
+  </action>
+  <action name="action_WindowWL_CT_Medias">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>CT-纵膈</string>
+   </property>
+  </action>
+  <action name="action_WindowWL_CT_Lungs">
+   <property name="checkable">
+    <bool>true</bool>
+   </property>
+   <property name="text">
+    <string>CT-肺</string>
    </property>
   </action>
  </widget>
@@ -786,6 +869,134 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>action_WindowWL_All</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnWindowWL_All()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>599</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_WindowWL_CT_Abdomen</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnWindowWL_CT_Abdomen()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>599</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_WindowWL_CT_BloodVessel</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnWindowWL_CT_BloodVessel()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>599</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_WindowWL_CT_Bones</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnWindowWL_CT_Bones()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>599</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_WindowWL_CT_Brain</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnWindowWL_CT_Brain()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>599</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_WindowWL_CT_Lungs</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnWindowWL_CT_Lungs()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>599</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_WindowWL_CT_Medias</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnWindowWL_CT_Medias()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>599</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>action_WindowWL_Default</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnWindowWL_Defaut()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>599</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>OnOpenFile()</slot>
@@ -817,5 +1028,13 @@
   <slot>OnTestEntrance_02()</slot>
   <slot>OnLatterPatient()</slot>
   <slot>OnPreviousPatient()</slot>
+  <slot>OnWindowWL_Defaut()</slot>
+  <slot>OnWindowWL_All()</slot>
+  <slot>OnWindowWL_CT_Abdomen()</slot>
+  <slot>OnWindowWL_CT_BloodVessel()</slot>
+  <slot>OnWindowWL_CT_Bones()</slot>
+  <slot>OnWindowWL_CT_Brain()</slot>
+  <slot>OnWindowWL_CT_Medias()</slot>
+  <slot>OnWindowWL_CT_Lungs()</slot>
  </slots>
 </ui>

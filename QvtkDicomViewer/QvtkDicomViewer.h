@@ -66,6 +66,18 @@ public:
 		BIDI,			//二维尺
 		MOVE			//移动
 	}CursorType;
+
+	enum WINDOWWL
+	{
+		Default,		//默认窗宽窗位
+		All,			//全部动态范围
+		Abdomen,		//腹部
+		BloodVessel,	//血管
+		Bones,			//骨骼
+		Brain,			//脑
+		Medias,			//纵膈
+		Lungs			//肺
+	}ImageWindow;
 private:
 	//CURSOR CursorType;//光标类型
 	Ui::QvtkDicomViewerClass ui;
@@ -109,6 +121,7 @@ private:
 private:
 	///内部操作
 	void setCursor(CURSOR newValue);
+	void setWindowWL(WINDOWWL newWL);
 	void RenderInitializer(std::string folder, int NumOfImage = 1);//渲染器初始化
 	void RenderRefresh(std::string imagefilename, int currentPagenumber, int maxPageNumber);//更新渲染
 	void DirTreeRefresh(DicomPatient * patient);
@@ -123,8 +136,10 @@ private:
 	void ShowImageByIndex(int Index);//显示当前series中的第Index张图,Index从0开始,与滚动条配合
 signals :
 	void CursorValueChanged();      //自定义值更改信号,用于监控当前光标的变化
+	void WindowWLChanged();			//自定义值更改信号,用于监控当前窗宽窗位模式的变化
 public slots:
 	void OnChangeCursorValue();		//响应光标值的修改,执行一些刷新和禁用操作
+	void OnChangeWindowsWL();		//响应窗宽窗位模式值的修改,执行一些禁用和选定动作
 	void OnOpenSeriesFolder();		//改成OnOpenSeriesFolder
 	void OnOpenDicomFile();			//打开单张Dicom文件
 	void OnOpenDicomDirFile();		//打开DICOMDIR文件
@@ -152,6 +167,15 @@ public slots:
 	void receiveData(QString data,QString dir);//响应DicomDir类传送过来的信号,其中包含了一个病人的ID
 	void OnLatterPatient();//上一个病人
 	void OnPreviousPatient();//下一个病人
+
+	void OnWindowWL_Defaut();			//默认窗宽窗位
+	void OnWindowWL_All();				//全部动态范围
+	void OnWindowWL_CT_Abdomen();		//腹部
+	void OnWindowWL_CT_BloodVessel();	//血管
+	void OnWindowWL_CT_Bones();			//骨骼
+	void OnWindowWL_CT_Brain();			//脑
+	void OnWindowWL_CT_Medias();		//纵膈
+	void OnWindowWL_CT_Lungs();		    //肺
 	///测试入口
 	void OnTestEntrance_01();//测试入口1
 	void OnTestEntrance_02();//测试入口2
