@@ -31,6 +31,7 @@
 #include "vtkVolume.h"
 #include "vtkVolumeRayCastMapper.h"
 #include "vtkImageShiftScale.h"
+#include "vtkImageLogic.h"
 
 #include <dcmtk\config\osconfig.h>
 #include <dcmtk\dcmdata\dctk.h>
@@ -376,14 +377,18 @@ void QvtkDicomViewer::SetUsageText(std::string imagefilename)
 	}
 	if (fileformat.getDataset()->findAndGetOFStringArray(DCM_WindowCenter, temp_OFString, OFTrue).good())
 	{//窗位
+		double windowCenter = m_pImageViewer->GetColorWindow();
 		TopLeftCorner.append("Window Center:");
-		TopLeftCorner.append(temp_OFString.c_str());
+		//TopLeftCorner.append(temp_OFString.c_str());
+		TopLeftCorner.append(std::to_string(windowCenter));
 		TopLeftCorner.append("\n");
 	}
 	if (fileformat.getDataset()->findAndGetOFStringArray(DCM_WindowWidth, temp_OFString, OFTrue).good())
 	{//窗宽
+		double windowWidth = m_pImageViewer->GetColorLevel();
 		TopLeftCorner.append("Window Width:");
-		TopLeftCorner.append(temp_OFString.c_str());
+		//TopLeftCorner.append(temp_OFString.c_str());
+		TopLeftCorner.append(std::to_string(windowWidth));
 		TopLeftCorner.append("\n");
 	}
 	if (fileformat.getDataset()->findAndGetOFStringArray(DCM_SpacingBetweenSlices, temp_OFString, OFTrue).good())
@@ -647,7 +652,7 @@ void QvtkDicomViewer::RenderRefresh(std::string imagefilename,int currentPagenum
 	//切换页码信息
 	SetSliceText(currentPagenumber, maxPageNumber);
 	//切换其他信息
-
+	SetUsageText(imagefilename);
 	//更新渲染
 	reader->Update();
 	ui.qvtkWidget->GetRenderWindow()->Render();
@@ -753,9 +758,9 @@ void QvtkDicomViewer::OnSelectedMove()
  */
 void QvtkDicomViewer::OnNegative()
 {
-	m_pImageViewer->SetColorLevel(300.0);
-	m_pImageViewer->SetColorWindow(1500.0);
-	m_pImageViewer->Render();
+	//m_pImageViewer->SetColorLevel(300.0);
+	//m_pImageViewer->SetColorWindow(1500.0);
+	//m_pImageViewer->Render();
 	//m_pImageViewer-
 	//double range[2];
 	//reader->GetOutput()->GetScalarRange(range);
@@ -766,11 +771,10 @@ void QvtkDicomViewer::OnNegative()
 	//shifter->SetInputConnection(reader->GetOutputPort());
 	//计算公式： double val = ((double)(*inSI) + shift) * scale;
 	//输出 = （输入 + shift）*scale; shift为偏移量, scale灰度变
-
-
+	//////////////////////////////////////////////////////////////////////////////
 	//int subRegion[6] = { 0, 511, 0, 511, 0, 61 };//64, 448, 64, 448, 0, 0
-
-	//vtkImageIterator<unsigned char> iter(reader->GetOutput(), subRegion);
+	//ui.qvtkWidget->
+	//vtkImageIterator<unsigned char> iter(reader->GetOutput(),reader->GetOutput()->GetExtent());
 	//											
 	//while (!iter.IsAtEnd())//注意这个迭代有自带的互斥效果					 
 	//{								 	
@@ -783,6 +787,12 @@ void QvtkDicomViewer::OnNegative()
 	//	}									 	
 	//	iter.NextSpan();								
 	//}
+	////////////////////////////////////////////////////////////////////////////////
+	/*vtkSmartPointer<vtkImageLogic>imageMath =vtkSmartPointer<vtkImageLogic>::New();
+	imageMath->SetOperationToNot();
+	imageMath->SetInputConnection(reader->GetOutputPort());
+	imageMath->Update();*/
+	/////////////////////////////////////////////////////////////////////////////////
 	reader->Update();//刷新
 }
 /*
@@ -1015,78 +1025,78 @@ void QvtkDicomViewer::OnStop()
   */
  void QvtkDicomViewer::OnWindowWL_Defaut()
  {
-	 setWindowWL(Default);
 	 m_pImageViewer->SetColorLevel(40.0);
 	 m_pImageViewer->SetColorWindow(400.0);
 	 m_pImageViewer->Render();
+	 setWindowWL(Default);
  }
  /*
   *	全部动态范围
   */
  void QvtkDicomViewer::OnWindowWL_All()
  {
-	 setWindowWL(All);
 	 m_pImageViewer->SetColorLevel(1024.0);
 	 m_pImageViewer->SetColorWindow(4096.0);
 	 m_pImageViewer->Render();
+	 setWindowWL(All);
  }
  /*
   *	腹部
   */
  void QvtkDicomViewer::OnWindowWL_CT_Abdomen()
  {
-	 setWindowWL(Abdomen);
 	 m_pImageViewer->SetColorLevel(60.0);
 	 m_pImageViewer->SetColorWindow(400.0);
 	 m_pImageViewer->Render();
+	 setWindowWL(Abdomen);
  }
  /*
   *	血管
   */
  void QvtkDicomViewer::OnWindowWL_CT_BloodVessel()
  {
-	 setWindowWL(BloodVessel);
 	 m_pImageViewer->SetColorLevel(300.0);
 	 m_pImageViewer->SetColorWindow(600.0);
 	 m_pImageViewer->Render();
+	 setWindowWL(BloodVessel);
  }
  /*
   *	骨骼
   */
  void QvtkDicomViewer::OnWindowWL_CT_Bones()
  {
-	 setWindowWL(Bones);
 	 m_pImageViewer->SetColorLevel(300.0);
 	 m_pImageViewer->SetColorWindow(1500.0);
 	 m_pImageViewer->Render();
+	 setWindowWL(Bones);
  }
  /*
   *	脑
   */
  void QvtkDicomViewer::OnWindowWL_CT_Brain()
  {
-	 setWindowWL(Brain);
 	 m_pImageViewer->SetColorLevel(40.0);
 	 m_pImageViewer->SetColorWindow(80.0);
 	 m_pImageViewer->Render();
+	 setWindowWL(Brain);
  }
  /*
   *	纵膈
   */
  void QvtkDicomViewer::OnWindowWL_CT_Medias()
  {
-	 setWindowWL(Medias);
 	 m_pImageViewer->SetColorLevel(40.0);
 	 m_pImageViewer->SetColorWindow(400.0);
 	 m_pImageViewer->Render();
+	 setWindowWL(Medias);
  }
  /*
   *	肺
   */
  void QvtkDicomViewer::OnWindowWL_CT_Lungs()
  {
-	 setWindowWL(Lungs);
 	 m_pImageViewer->SetColorLevel(-400.0);
 	 m_pImageViewer->SetColorWindow(1500.0);
 	 m_pImageViewer->Render();
+	 setWindowWL(Lungs);
  }
