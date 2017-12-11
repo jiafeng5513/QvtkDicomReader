@@ -35,6 +35,10 @@
 #include <vtkColorTransferFunction.h>
 #include "vtkVolumeRayCastMapper.h"
 #include <vtkPiecewiseFunction.h>
+#include "vtkStringArray.h"
+#include "vtkUnicodeStringArray.h"
+
+
 #include <dcmtk\config\osconfig.h>
 #include <dcmtk\dcmdata\dctk.h>
 #include "dcmtk\dcmdata\dcistrmf.h"
@@ -67,6 +71,7 @@ QvtkDicomViewer::QvtkDicomViewer(QWidget *parent)
 	ui.mainToolBar->addWidget(_Combobox);
 	ui.mainToolBar->addSeparator();
 	//自定义初始化
+	//=====================================================================================================================
 	seg_combo = new QComboBox();
 	seg_combo->setMaxVisibleItems(5);
 
@@ -105,7 +110,7 @@ QvtkDicomViewer::QvtkDicomViewer(QWidget *parent)
 
 	connect(volume, SIGNAL(triggered()), this, SLOT(Slots_Volume()));
 	connect(volume_gpu, SIGNAL(triggered()), this, SLOT(Slots_Volume_gpu()));
-	
+	//=====================================================================================================================
 	ui.action_SwitchOfProperty->setChecked(true);
 	ui.dockWidget_Dir->setHidden(false);
 	icon_Play.addFile(QStringLiteral(":/QvtkDicomViewer/Resources/play_128px_1197036_easyicon.net.ico"), QSize(), QIcon::Normal, QIcon::Off);
@@ -1135,26 +1140,50 @@ void QvtkDicomViewer::OnStop()
 	 setWindowWL(Lungs);
  }
 //==========================================================================================
-
-
+ /*
+  *暂时把功能分成三个部分:重建,分割,配准
+  * 1.重建,两个按钮,考虑在程序启动的时候探测GPU的可用性,若可用直接使用GPU方法,若不可用使用CPU后备方法,并在状态栏提示
+  *		这个功能是用VTK做的,核心代码都在QvtkDicomViewer.cpp中,两个槽函数
+  *		问题是交互不统一,参数来源有问题
+  *	2.分割,有鼠标交互,而且有额外的文字提示,打开速度需要优化,并且会输出文件,首先这个输出我不需要,需要屏蔽
+  *		其次,参数来源不能是静态指定的,整个块都需要重构,
+  *		最后,考虑功能入口的合理性,现在考虑利用树视图上下文菜单预留的接口实现,但是似乎不太形象
+  *	3.配准,根本不知道他需要什么文件,需要断点调试
+  *		这部分的核心功能据我观察是从一个控制台程序里面扒出来的,首先是断点跟踪设法找到他需要喂什么文件格式
+  *		然后输出的那些文件有什么用,能不能屏蔽掉,需要看他是不是用文件做了中转.
+  *	4.目前的计划是先把三维重建搞定,
+  *		第一步是把参数从一个文件夹换成文件序列
+  *		根据RadiAnt的交互逻辑,三维重建新开一个非模态窗口,这个实例只显示重建结果
+  *		这个新的窗口参考主窗口的逻辑,初始化,帧更新,这套渲染流程
+  *
+  */
+ /*
+  *	这个槽函数似乎没有绑定任何信号
+  */
  void QvtkDicomViewer::Slots_PickPixel(int count, QVTKWidget *qvtk)
  {
 	 
 
 	 //std::string dir = CurrentPatient->getCurrentDicomImage()->ReferencedFileID;
-	 char* argv[] = { "   ", "C://Users//bao//Desktop//DICOM//S427870//S20//I10" };
+	 char* argv[] = { "   ", "F:/Dicom/Test1/DICOM/S427870/S20/I10" };
 	 std::string dir = "";
 	 pickpixel(count,argv, ui.qvtkWidget,dir);
  }
+/*
+ * 响应seg_combo的更改,左侧Combox,猜测这是和分割有关系的segment分割
+ */
  void QvtkDicomViewer::Slots_Seg(int count)
  {
 	 Slots_PickPixel(count,ui.qvtkWidget);
  }
+/*
+ * 响应reg_combo的更改,右侧Combox,registration,暂时猜测是配准
+ */
  void QvtkDicomViewer::Slots_Reg(int count)
  {
-	 a.SetCount(count);
-	 a.SetQvtk(ui.qvtkWidget);
-	 a.show();
+	 Reg_Selector_Window.SetCount(count);
+	 Reg_Selector_Window.SetQvtk(ui.qvtkWidget);
+	 Reg_Selector_Window.show();
  }
  /*
   *	向画布输出三维重建的结果
@@ -1182,7 +1211,33 @@ void QvtkDicomViewer::OnStop()
 	 //reader->SetFileName("F:/rat0810.raw");
 	 // reader->SetFileName("F:/reconstruction.raw");
 	 reader1 = vtkSmartPointer<vtkDICOMImageReader>::New();
-	 reader1->SetDirectoryName("F:/Dicom/Test1/DICOM/S427870/S30");
+	 //reader1->SetDirectoryName("F:/Dicom/Test1/DICOM/S427870/S30");
+	
+	/*
+	 * 构造一个vtkStringArray *按顺序存储上述路径中的所有文件的绝对路径,然后初始化
+	 */
+	 vtkStringArray * temp = vtkStringArray::New();
+	 temp->InsertNextValue("F:/Dicom/Test1/DICOM/S427870/S30/I10");
+	 temp->InsertNextValue("F:/Dicom/Test1/DICOM/S427870/S30/I20");
+	 temp->InsertNextValue("F:/Dicom/Test1/DICOM/S427870/S30/I30");
+	 temp->InsertNextValue("F:/Dicom/Test1/DICOM/S427870/S30/I40");
+	 temp->InsertNextValue("F:/Dicom/Test1/DICOM/S427870/S30/I50");
+	 temp->InsertNextValue("F:/Dicom/Test1/DICOM/S427870/S30/I60");
+	 temp->InsertNextValue("F:/Dicom/Test1/DICOM/S427870/S30/I70");
+	 temp->InsertNextValue("F:/Dicom/Test1/DICOM/S427870/S30/I80");
+	 temp->InsertNextValue("F:/Dicom/Test1/DICOM/S427870/S30/I90");
+	 int x=temp->GetSize();
+	 reader1->SetFileNames(temp);
+
+	 //reader->SetFileName("F:/Dicom/Test1/DICOM/S427870/S30/I10");
+	 //reader->SetFileName("F:/Dicom/Test1/DICOM/S427870/S30/I20");
+	 //reader->SetFileName("F:/Dicom/Test1/DICOM/S427870/S30/I30");
+	 //reader->SetFileName("F:/Dicom/Test1/DICOM/S427870/S30/I40");
+	 //reader->SetFileName("F:/Dicom/Test1/DICOM/S427870/S30/I50");
+	 //reader->SetFileName("F:/Dicom/Test1/DICOM/S427870/S30/I60");
+	 //reader->SetFileName("F:/Dicom/Test1/DICOM/S427870/S30/I70");
+	 //reader->SetFileName("F:/Dicom/Test1/DICOM/S427870/S30/I80");
+	 //reader->SetFileName("F:/Dicom/Test1/DICOM/S427870/S30/I90");
 	 reader1->SetFileDimensionality(3);                //设置显示图像的维数
 													   // reader->SetDataScalarType(VTK_UNSIGNED_CHAR);    //VTK_UNSIGNED_short将数据转换为unsigned char型
 	 reader1->SetDataScalarType(VTK_UNSIGNED_SHORT);

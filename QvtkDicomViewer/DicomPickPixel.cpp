@@ -209,7 +209,7 @@ public:
 
 			char * argv[] = {
 				" ",
-				"C://Users//bao//Desktop//DICOM//S427870//S20//I10",
+				"F:/Dicom/Test1/DICOM/S427870/S20/I10",
 				//"C://Users//bao//Desktop//test-image//BrainProtonDensitySlice.png",
 				//dir,
 				"..//segment//ConnectedThresholdOutput1.dcm",
@@ -220,7 +220,7 @@ public:
 			char * argv1[] =
 			{
 				" ",
-				"C://Users//bao//Desktop//DICOM//S427870//S20//I10",
+				"F:/Dicom/Test1/DICOM/S427870/S20/I10",
 				//"C://Users//bao//Desktop//test-image//BrainProtonDensitySlice.png",
 				//dir,
 				"OtsuMultipleThresholdsOutput",
@@ -234,7 +234,7 @@ public:
 			char * argv2[] =
 			{
 				" ",
-				"C://Users//bao//Desktop//DICOM//S427870//S20//I10",
+				"F:/Dicom/Test1/DICOM/S427870/S20/I10",
 				//"C://Users//bao//Desktop//test-image//BrainProtonDensitySlice.png",
 				//dir,
 				"NeighconnectedOutput.dcm",
@@ -246,7 +246,7 @@ public:
 			char * argv3[] =
 			{
 				" ",
-				"C://Users//bao//Desktop//DICOM//S427870//S20//I10",
+				"F:/Dicom/Test1/DICOM/S427870/S20/I10",
 				//"C://Users//bao//Desktop//test-image//BrainProtonDensitySlice.png",
 				//dir,
 				"..//segment//ConfidenceConnectedOutput1.dcm",
@@ -257,7 +257,7 @@ public:
 			{
 				" ",
 				//"C://Users//bao//Desktop//test-image//VisibleWomanEyeSlice.png",
-				"C://Users//bao//Desktop//DICOM//S427870//S20//I10",
+				"F:/Dicom/Test1/DICOM/S427870/S20/I10",
 				//dir,
 				"..//segment//WatershedSegmentation1Output1.dcm",
 				"2",
@@ -271,7 +271,7 @@ public:
 				" ",
 				//"C://Users//bao//Desktop//test-image//BrainProtonDensitySlice.png",
 				//dir,
-				"C://Users//bao//Desktop//DICOM//S427870//S20//I10",
+				"F:/Dicom/Test1/DICOM/S427870/S20/I10",
 				"..//segment//FastMarchingImageFilterOutput5.dcm",
 				pos_x,
 				pos_y,
@@ -289,7 +289,7 @@ public:
 				"",
 				//"C://Users//bao//Desktop//test-image//BrainProtonDensitySlice.png",
 				//dir,
-				"C://Users//bao//Desktop//DICOM//S427870//S20//I10",
+				"F:/Dicom/Test1/DICOM/S427870/S20/I10",
 				"..//segment//ShapeDetectionLevelSetFilterOutput5.dcm",
 				pos_x,
 				pos_y,

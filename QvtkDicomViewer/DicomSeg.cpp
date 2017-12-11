@@ -6,6 +6,12 @@
 #include <vtkDICOMImageReader.h>
 #include "itkGDCMImageIO.h"  
 #include <vtkDICOMImageReader.h>
+/*
+ *1.确认这个类是干什么的,是否有没被调用的函数,如果有,考虑先做出标识,在未来的版本中考虑删除
+ *2.初步判断这个类原来是一个控制台程序的一部分代码扒下来的,关于命令行处理的代码是荣冗余的,需要去掉
+ *
+ *
+ */
 //  Software Guide : BeginCommandLineArgs
 //    INPUTS:  {BrainProtonDensitySlice.png}
 //    OUTPUTS: {ConnectedThresholdOutput1.png}

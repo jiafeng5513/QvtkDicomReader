@@ -18,9 +18,9 @@ Reg_Selector::Reg_Selector(QWidget *parent)
 {
 	ui.setupUi(this);
 	ui.lineEdit->setReadOnly(true);
-	ui.lineEdit->setPlaceholderText("文件一路径");
+	ui.lineEdit->setPlaceholderText(QStringLiteral("文件一路径"));
 	ui.lineEdit_3->setReadOnly(true);
-	ui.lineEdit_3->setPlaceholderText("文件二路径");
+	ui.lineEdit_3->setPlaceholderText(QStringLiteral("文件二路径"));
 	connect(ui.pushButton, SIGNAL(clicked()), this, SLOT(createContentMenu()));
 	connect(ui.pushButton_2, SIGNAL(clicked()), this, SLOT(createContentMenu2()));
 	connect(ui.pushButton_3, SIGNAL(clicked()), this, SLOT(submit()));

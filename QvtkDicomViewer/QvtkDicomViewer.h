@@ -105,7 +105,7 @@ public:
 	QvtkDicomViewer(QWidget *parent = Q_NULLPTR);
 	QComboBox* reg_combo;
 	QComboBox* seg_combo;
-	Reg_Selector a;
+	Reg_Selector Reg_Selector_Window;
 	enum CURSOR		
 	{	POINTRE,		//ƒ¨»œ÷∏’Î
 		ZOOM,			//Àı∑≈
