@@ -58,7 +58,7 @@
      <x>0</x>
      <y>0</y>
      <width>1200</width>
-     <height>23</height>
+     <height>26</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu">
@@ -277,9 +277,6 @@
    </property>
   </action>
   <action name="action_Negative">
-   <property name="checkable">
-    <bool>true</bool>
-   </property>
    <property name="icon">
     <iconset resource="QvtkDicomViewer.qrc">
      <normaloff>:/QvtkDicomViewer/Resources/video_negative_128px_1138773_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/video_negative_128px_1138773_easyicon.net.ico</iconset>
@@ -950,10 +947,10 @@
    </hints>
   </connection>
   <connection>
-   <sender>action_WindowWL_CT_Lungs</sender>
+   <sender>action_WindowWL_CT_Medias</sender>
    <signal>triggered()</signal>
    <receiver>QvtkDicomViewerClass</receiver>
-   <slot>OnWindowWL_CT_Lungs()</slot>
+   <slot>OnWindowWL_CT_Medias()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>
@@ -966,10 +963,10 @@
    </hints>
   </connection>
   <connection>
-   <sender>action_WindowWL_CT_Medias</sender>
+   <sender>action_WindowWL_CT_Lungs</sender>
    <signal>triggered()</signal>
    <receiver>QvtkDicomViewerClass</receiver>
-   <slot>OnWindowWL_CT_Medias()</slot>
+   <slot>OnWindowWL_CT_Lungs()</slot>
    <hints>
     <hint type="sourcelabel">
      <x>-1</x>

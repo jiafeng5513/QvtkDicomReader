@@ -133,7 +133,6 @@ public:
         action_BiDimensional->setIcon(icon7);
         action_Negative = new QAction(QvtkDicomViewerClass);
         action_Negative->setObjectName(QStringLiteral("action_Negative"));
-        action_Negative->setCheckable(true);
         QIcon icon8;
         icon8.addFile(QStringLiteral(":/QvtkDicomViewer/Resources/video_negative_128px_1138773_easyicon.net.ico"), QSize(), QIcon::Normal, QIcon::Off);
         action_Negative->setIcon(icon8);
@@ -248,7 +247,7 @@ public:
         QvtkDicomViewerClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(QvtkDicomViewerClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1200, 23));
+        menuBar->setGeometry(QRect(0, 0, 1200, 26));
         menu = new QMenu(menuBar);
         menu->setObjectName(QStringLiteral("menu"));
         menu_2 = new QMenu(menuBar);
@@ -379,8 +378,8 @@ public:
         QObject::connect(action_WindowWL_CT_BloodVessel, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnWindowWL_CT_BloodVessel()));
         QObject::connect(action_WindowWL_CT_Bones, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnWindowWL_CT_Bones()));
         QObject::connect(action_WindowWL_CT_Brain, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnWindowWL_CT_Brain()));
-        QObject::connect(action_WindowWL_CT_Lungs, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnWindowWL_CT_Lungs()));
         QObject::connect(action_WindowWL_CT_Medias, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnWindowWL_CT_Medias()));
+        QObject::connect(action_WindowWL_CT_Lungs, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnWindowWL_CT_Lungs()));
         QObject::connect(action_WindowWL_Default, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnWindowWL_Defaut()));
 
         QMetaObject::connectSlotsByName(QvtkDicomViewerClass);

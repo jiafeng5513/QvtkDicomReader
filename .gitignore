@@ -9,8 +9,11 @@
 *.ipch
 
 # Libraries
-dcmtk_3.6.2/
-vtk_8.0.0/
+# dcmtk_3.6.2/
+# vtk_8.0.0/
+
+# vs buffer
+.vs/
 
 # Build results
 [Dd]ebug/

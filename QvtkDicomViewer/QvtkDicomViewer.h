@@ -34,7 +34,49 @@
 #include "SlicePlayer.h"
 #include "DicomPatient.h"
 #include "DicomDirTreeModel.h"
+#include <Reg_Selector.h>
+#include <vtkImageCast.h>
 
+#include <vtkPiecewiseFunction.h>
+#include <vtkColorTransferFunction.h>
+#include <vtkVolumeProperty.h>
+#include <vtkVolumeRayCastCompositeFunction.h>
+#include <vtkVolumeRayCastMapper.h>
+#include <vtkSmartPointer.h>  
+#include <vtkStructuredPoints.h>
+#include <vtkStructuredPointsReader.h>  
+#include <vtkGPUVolumeRayCastMapper.h>  
+#include <vtkVolumeProperty.h>  
+#include <vtkPiecewiseFunction.h>  
+#include <vtkColorTransferFunction.h>  
+#include <vtkVolume.h>  
+#include <vtkRenderer.h>  
+#include <vtkRenderWindow.h>  
+#include <vtkRenderWindowInteractor.h>  
+#include <vtkCamera.h>
+#include "vtkUnsignedCharArray.h"    
+#include "vtkPiecewiseFunction.h"    
+#include "vtkColorTransferFunction.h"    
+#include "vtkVolumeRayCastCompositeFunction.h"    
+#include "vtkVolumeRayCastMapper.h"    
+#include "vtkImageData.h"       
+#include "vtkRenderWindow.h"    
+#include "vtkWin32OpenGLRenderWindow.h"  
+#include "vtkInteractorStyleTrackballActor.h"  
+#include "vtkImageChangeInformation.h"  
+#include "vtkGPUVolumeRayCastMapper.h"  
+#include "vtkGPUInfoList.h"  
+#include "vtkGPUInfo.h"  
+#include <vtkStructuredPoints.h>  
+#include <vtkStructuredPointsReader.h>   
+#include <vtkPiecewiseFunction.h>  
+#include <vtkRenderer.h>  
+#include <vtkRenderWindow.h>  
+#include <vtkRenderWindowInteractor.h>  
+#include <vtkVolumeProperty.h>  
+#include <vtkVolumeRayCastIsosurfaceFunction.h>  
+#include <vtkFixedPointVolumeRayCastMapper.h>
+#include <QComboBox>
 class DicomDataBase;
 /*
  * 依赖说明:
@@ -49,6 +91,11 @@ class DicomDataBase;
  *			含有Qt的目录
  */
 VTK_MODULE_INIT(vtkRenderingFreeType)
+VTK_MODULE_INIT(vtkRenderingVolumeOpenGL2)
+#include <vtkAutoInit.h>
+#define vtkRenderingCore_AUTOINIT 4(vtkInteractionStyle,vtkRenderingFreeType,vtkRenderingFreeType,vtkRenderingOpenGL2) 
+//#define vtkRenderingVolume_AUTOINIT 1(vtkRenderingVolumeOpenGL2)
+
 //Qt主程序类
 class QvtkDicomViewer : public QMainWindow
 {
@@ -56,6 +103,9 @@ class QvtkDicomViewer : public QMainWindow
 
 public:
 	QvtkDicomViewer(QWidget *parent = Q_NULLPTR);
+	QComboBox* reg_combo;
+	QComboBox* seg_combo;
+	Reg_Selector a;
 	enum CURSOR		
 	{	POINTRE,		//默认指针
 		ZOOM,			//缩放
@@ -66,7 +116,6 @@ public:
 		BIDI,			//二维尺
 		MOVE			//移动
 	}CursorType;
-
 	enum WINDOWWL
 	{
 		Default,		//默认窗宽窗位
@@ -81,8 +130,8 @@ public:
 private:
 	//CURSOR CursorType;//光标类型
 	Ui::QvtkDicomViewerClass ui;
-	vtkSmartPointer< vtkImageViewer2 > m_pImageViewer;
-	vtkSmartPointer< vtkRenderer > m_pRenderder;
+	vtkSmartPointer<vtkImageViewer2 > m_pImageViewer;
+	vtkSmartPointer<vtkRenderer > m_pRenderder;
 	vtkSmartPointer<vtkRenderWindowInteractor> renderWindowInteractor;
 	vtkSmartPointer<vtkDICOMImageReader> reader;
 	//vtkSmartPointer<vtkTextProperty> sliceTextProp;
@@ -103,6 +152,20 @@ private:
 	vtkSmartPointer<vtkBiDimensionalWidget> biDimensionalWidget;
 	vtkSmartPointer<vtkBiDimensionalCallback> biDimensionalCallback;
 
+	//包旭12.6加体绘制
+	vtkRenderer *ren;
+	vtkRenderWindow *renWin;
+	vtkImageCast *readerImageCast;
+	vtkPiecewiseFunction *opacityTransferFunction;
+	vtkColorTransferFunction *colorTransferFunction;
+	vtkVolumeProperty *volumeProperty;
+	vtkVolumeRayCastCompositeFunction *compositeFunction;
+	vtkFixedPointVolumeRayCastMapper *volumeMapper;
+	vtkVolume *volume1;
+	vtkSmartPointer<vtkDICOMImageReader> reader1;
+	vtkSmartPointer<vtkInteractorStyleTrackballCamera> style;
+	vtkGPUVolumeRayCastMapper *volumeMapper_gpu;
+	//////////////////////
 	QIcon icon_Play;//播放图标
 	QIcon icon_Pause;//暂停图标
 	bool PlayFlag;//false:图标应为播放,处于准备播放状态,true:图标应为暂停,处于播放状态并准备暂停
@@ -114,10 +177,14 @@ private:
 	QMenu * TreeViewMenu_OnSeries;		//树右键菜单->Series节点
 	QMenu * TreeViewMenu_OnImage;		//树右键菜单->Image节点
 
+
 	std::string Current_patientId;//当前的病人ID
 	DicomPatient * CurrentPatient;		//当前病人
 	QModelIndex indexSelect;//树视图中
 	DicomDirTreeModel *m_dicomdirtreemodel;
+
+	QAction * volume;
+	QAction * volume_gpu;
 private:
 	///内部操作
 	void setCursor(CURSOR newValue);
@@ -179,4 +246,10 @@ public slots:
 	///测试入口
 	void OnTestEntrance_01();//测试入口1
 	void OnTestEntrance_02();//测试入口2
+    //bao 11.27日加
+	void Slots_Seg(int count);
+	void Slots_Reg(int count);
+	void Slots_PickPixel(int count,QVTKWidget *qvtk);
+	void Slots_Volume();
+	void Slots_Volume_gpu();
 };

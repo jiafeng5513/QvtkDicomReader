@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_QvtkDicomViewer_t {
-    QByteArrayData data[47];
-    char stringdata0[767];
+    QByteArrayData data[55];
+    char stringdata0[856];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -77,7 +77,15 @@ QT_MOC_LITERAL(42, 670, 19), // "OnWindowWL_CT_Brain"
 QT_MOC_LITERAL(43, 690, 20), // "OnWindowWL_CT_Medias"
 QT_MOC_LITERAL(44, 711, 19), // "OnWindowWL_CT_Lungs"
 QT_MOC_LITERAL(45, 731, 17), // "OnTestEntrance_01"
-QT_MOC_LITERAL(46, 749, 17) // "OnTestEntrance_02"
+QT_MOC_LITERAL(46, 749, 17), // "OnTestEntrance_02"
+QT_MOC_LITERAL(47, 767, 9), // "Slots_Seg"
+QT_MOC_LITERAL(48, 777, 5), // "count"
+QT_MOC_LITERAL(49, 783, 9), // "Slots_Reg"
+QT_MOC_LITERAL(50, 793, 15), // "Slots_PickPixel"
+QT_MOC_LITERAL(51, 809, 11), // "QVTKWidget*"
+QT_MOC_LITERAL(52, 821, 4), // "qvtk"
+QT_MOC_LITERAL(53, 826, 12), // "Slots_Volume"
+QT_MOC_LITERAL(54, 839, 16) // "Slots_Volume_gpu"
 
     },
     "QvtkDicomViewer\0CursorValueChanged\0\0"
@@ -99,7 +107,10 @@ QT_MOC_LITERAL(46, 749, 17) // "OnTestEntrance_02"
     "OnWindowWL_CT_Abdomen\0OnWindowWL_CT_BloodVessel\0"
     "OnWindowWL_CT_Bones\0OnWindowWL_CT_Brain\0"
     "OnWindowWL_CT_Medias\0OnWindowWL_CT_Lungs\0"
-    "OnTestEntrance_01\0OnTestEntrance_02"
+    "OnTestEntrance_01\0OnTestEntrance_02\0"
+    "Slots_Seg\0count\0Slots_Reg\0Slots_PickPixel\0"
+    "QVTKWidget*\0qvtk\0Slots_Volume\0"
+    "Slots_Volume_gpu"
 };
 #undef QT_MOC_LITERAL
 
@@ -109,7 +120,7 @@ static const uint qt_meta_data_QvtkDicomViewer[] = {
        7,       // revision
        0,       // classname
        0,    0, // classinfo
-      41,   14, // methods
+      46,   14, // methods
        0,    0, // properties
        0,    0, // enums/sets
        0,    0, // constructors
@@ -117,49 +128,54 @@ static const uint qt_meta_data_QvtkDicomViewer[] = {
        2,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    0,  219,    2, 0x06 /* Public */,
-       3,    0,  220,    2, 0x06 /* Public */,
+       1,    0,  244,    2, 0x06 /* Public */,
+       3,    0,  245,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       4,    0,  221,    2, 0x0a /* Public */,
-       5,    0,  222,    2, 0x0a /* Public */,
-       6,    0,  223,    2, 0x0a /* Public */,
-       7,    0,  224,    2, 0x0a /* Public */,
-       8,    0,  225,    2, 0x0a /* Public */,
-       9,    0,  226,    2, 0x0a /* Public */,
-      10,    0,  227,    2, 0x0a /* Public */,
-      11,    0,  228,    2, 0x0a /* Public */,
-      12,    0,  229,    2, 0x0a /* Public */,
-      13,    0,  230,    2, 0x0a /* Public */,
-      14,    0,  231,    2, 0x0a /* Public */,
-      15,    0,  232,    2, 0x0a /* Public */,
-      16,    0,  233,    2, 0x0a /* Public */,
-      17,    0,  234,    2, 0x0a /* Public */,
-      18,    0,  235,    2, 0x0a /* Public */,
-      19,    0,  236,    2, 0x0a /* Public */,
-      20,    0,  237,    2, 0x0a /* Public */,
-      21,    0,  238,    2, 0x0a /* Public */,
-      22,    0,  239,    2, 0x0a /* Public */,
-      23,    0,  240,    2, 0x0a /* Public */,
-      24,    0,  241,    2, 0x0a /* Public */,
-      25,    1,  242,    2, 0x0a /* Public */,
-      27,    0,  245,    2, 0x0a /* Public */,
-      28,    0,  246,    2, 0x0a /* Public */,
-      29,    0,  247,    2, 0x0a /* Public */,
-      30,    1,  248,    2, 0x0a /* Public */,
-      32,    2,  251,    2, 0x0a /* Public */,
-      35,    0,  256,    2, 0x0a /* Public */,
-      36,    0,  257,    2, 0x0a /* Public */,
-      37,    0,  258,    2, 0x0a /* Public */,
-      38,    0,  259,    2, 0x0a /* Public */,
-      39,    0,  260,    2, 0x0a /* Public */,
-      40,    0,  261,    2, 0x0a /* Public */,
-      41,    0,  262,    2, 0x0a /* Public */,
-      42,    0,  263,    2, 0x0a /* Public */,
-      43,    0,  264,    2, 0x0a /* Public */,
-      44,    0,  265,    2, 0x0a /* Public */,
-      45,    0,  266,    2, 0x0a /* Public */,
-      46,    0,  267,    2, 0x0a /* Public */,
+       4,    0,  246,    2, 0x0a /* Public */,
+       5,    0,  247,    2, 0x0a /* Public */,
+       6,    0,  248,    2, 0x0a /* Public */,
+       7,    0,  249,    2, 0x0a /* Public */,
+       8,    0,  250,    2, 0x0a /* Public */,
+       9,    0,  251,    2, 0x0a /* Public */,
+      10,    0,  252,    2, 0x0a /* Public */,
+      11,    0,  253,    2, 0x0a /* Public */,
+      12,    0,  254,    2, 0x0a /* Public */,
+      13,    0,  255,    2, 0x0a /* Public */,
+      14,    0,  256,    2, 0x0a /* Public */,
+      15,    0,  257,    2, 0x0a /* Public */,
+      16,    0,  258,    2, 0x0a /* Public */,
+      17,    0,  259,    2, 0x0a /* Public */,
+      18,    0,  260,    2, 0x0a /* Public */,
+      19,    0,  261,    2, 0x0a /* Public */,
+      20,    0,  262,    2, 0x0a /* Public */,
+      21,    0,  263,    2, 0x0a /* Public */,
+      22,    0,  264,    2, 0x0a /* Public */,
+      23,    0,  265,    2, 0x0a /* Public */,
+      24,    0,  266,    2, 0x0a /* Public */,
+      25,    1,  267,    2, 0x0a /* Public */,
+      27,    0,  270,    2, 0x0a /* Public */,
+      28,    0,  271,    2, 0x0a /* Public */,
+      29,    0,  272,    2, 0x0a /* Public */,
+      30,    1,  273,    2, 0x0a /* Public */,
+      32,    2,  276,    2, 0x0a /* Public */,
+      35,    0,  281,    2, 0x0a /* Public */,
+      36,    0,  282,    2, 0x0a /* Public */,
+      37,    0,  283,    2, 0x0a /* Public */,
+      38,    0,  284,    2, 0x0a /* Public */,
+      39,    0,  285,    2, 0x0a /* Public */,
+      40,    0,  286,    2, 0x0a /* Public */,
+      41,    0,  287,    2, 0x0a /* Public */,
+      42,    0,  288,    2, 0x0a /* Public */,
+      43,    0,  289,    2, 0x0a /* Public */,
+      44,    0,  290,    2, 0x0a /* Public */,
+      45,    0,  291,    2, 0x0a /* Public */,
+      46,    0,  292,    2, 0x0a /* Public */,
+      47,    1,  293,    2, 0x0a /* Public */,
+      49,    1,  296,    2, 0x0a /* Public */,
+      50,    2,  299,    2, 0x0a /* Public */,
+      53,    0,  304,    2, 0x0a /* Public */,
+      54,    0,  305,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -203,6 +219,11 @@ static const uint qt_meta_data_QvtkDicomViewer[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void,
+    QMetaType::Void, QMetaType::Int,   48,
+    QMetaType::Void, QMetaType::Int,   48,
+    QMetaType::Void, QMetaType::Int, 0x80000000 | 51,   48,   52,
     QMetaType::Void,
     QMetaType::Void,
 
@@ -256,6 +277,11 @@ void QvtkDicomViewer::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         case 38: _t->OnWindowWL_CT_Lungs(); break;
         case 39: _t->OnTestEntrance_01(); break;
         case 40: _t->OnTestEntrance_02(); break;
+        case 41: _t->Slots_Seg((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 42: _t->Slots_Reg((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 43: _t->Slots_PickPixel((*reinterpret_cast< int(*)>(_a[1])),(*reinterpret_cast< QVTKWidget*(*)>(_a[2]))); break;
+        case 44: _t->Slots_Volume(); break;
+        case 45: _t->Slots_Volume_gpu(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
@@ -303,13 +329,13 @@ int QvtkDicomViewer::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
     if (_id < 0)
         return _id;
     if (_c == QMetaObject::InvokeMetaMethod) {
-        if (_id < 41)
+        if (_id < 46)
             qt_static_metacall(this, _c, _id, _a);
-        _id -= 41;
+        _id -= 46;
     } else if (_c == QMetaObject::RegisterMethodArgumentMetaType) {
-        if (_id < 41)
+        if (_id < 46)
             *reinterpret_cast<int*>(_a[0]) = -1;
-        _id -= 41;
+        _id -= 46;
     }
     return _id;
 }

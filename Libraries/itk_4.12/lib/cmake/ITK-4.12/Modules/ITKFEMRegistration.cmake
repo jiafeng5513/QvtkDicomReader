@@ -1,0 +1,12 @@
+set(ITKFEMRegistration_LOADED 1)
+set(ITKFEMRegistration_ENABLE_SHARED "0")
+set(ITKFEMRegistration_DEPENDS "ITKFEM;ITKImageFeature;ITKImageStatistics;ITKPDEDeformableRegistration;ITKSpatialObjects")
+set(ITKFEMRegistration_PUBLIC_DEPENDS "ITKFEM;ITKImageFeature;ITKImageStatistics;ITKPDEDeformableRegistration;ITKSpatialObjects")
+set(ITKFEMRegistration_TRANSITIVE_DEPENDS "ITKFEM;ITKImageFeature;ITKImageStatistics;ITKPDEDeformableRegistration;ITKSpatialObjects")
+set(ITKFEMRegistration_PRIVATE_DEPENDS "")
+set(ITKFEMRegistration_LIBRARIES "ITKFEM;ITKCommon;ITKStatistics;ITKTransform;ITKSpatialObjects;ITKPath;ITKMesh;ITKOptimizers")
+set(ITKFEMRegistration_INCLUDE_DIRS "${ITK_INSTALL_PREFIX}/include/ITK-4.12")
+set(ITKFEMRegistration_LIBRARY_DIRS "")
+set(ITKFEMRegistration_RUNTIME_LIBRARY_DIRS "${ITK_INSTALL_PREFIX}/bin")
+set(ITKFEMRegistration_TARGETS_FILE "")
+

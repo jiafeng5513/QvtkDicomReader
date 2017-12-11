@@ -1,0 +1,12 @@
+set(ITKPolynomials_LOADED 1)
+set(ITKPolynomials_ENABLE_SHARED "1")
+set(ITKPolynomials_DEPENDS "ITKCommon")
+set(ITKPolynomials_PUBLIC_DEPENDS "ITKCommon")
+set(ITKPolynomials_TRANSITIVE_DEPENDS "ITKCommon")
+set(ITKPolynomials_PRIVATE_DEPENDS "")
+set(ITKPolynomials_LIBRARIES "ITKPolynomials")
+set(ITKPolynomials_INCLUDE_DIRS "${ITK_INSTALL_PREFIX}/include/ITK-4.12")
+set(ITKPolynomials_LIBRARY_DIRS "")
+set(ITKPolynomials_RUNTIME_LIBRARY_DIRS "${ITK_INSTALL_PREFIX}/bin")
+set(ITKPolynomials_TARGETS_FILE "")
+

@@ -2,12 +2,15 @@
 #include "vtkBiDimensionalCallback.h"
 #include "DicomDir.h"
 
+#include <QListView>
 #include "QvtkDicomViewer.h"
 #include <QMessageBox>
 #include <qDebug>
 #include <QComboBox>
 #include <QStandardItem>
 #include <QTableView>
+#include <QAction>
+#include <QMenu>
 
 #include <vtkActor2D.h>
 #include <vtkTextMapper.h>
@@ -29,10 +32,9 @@
 #include "vtkVolumeRayCastCompositeFunction.h"
 #include "vtkVolumeProperty.h"
 #include "vtkVolume.h"
+#include <vtkColorTransferFunction.h>
 #include "vtkVolumeRayCastMapper.h"
-#include "vtkImageShiftScale.h"
-#include "vtkImageLogic.h"
-
+#include <vtkPiecewiseFunction.h>
 #include <dcmtk\config\osconfig.h>
 #include <dcmtk\dcmdata\dctk.h>
 #include "dcmtk\dcmdata\dcistrmf.h"
@@ -41,33 +43,69 @@
 #include <QFileSystemModel>
 #include "DicomDirTreeModel.h"
 
+#include <DicomPickPixel.h>
+#include <vtkDecimatePro.h>
+#include <Reg_Selector.h>
 /*
- * 构造方法
+ * 构造方法(这里学长改了什么)
  */
 QvtkDicomViewer::QvtkDicomViewer(QWidget *parent)
 	: QMainWindow(parent)
 {
 	ui.setupUi(this);
 	ui.action_Pointer->setChecked(true);
-	CursorType = POINTRE;
-	ImageWindow = Default;
+	CursorType = CURSOR::POINTRE;
 	//监控光标类型的修改
 	connect(this, SIGNAL(CursorValueChanged()), this, SLOT(OnChangeCursorValue()));
-	connect(this, SIGNAL(WindowWLChanged()), this, SLOT(OnChangeWindowsWL()));
 	//创建并构造一个下拉列表
 	QComboBox* _Combobox = new QComboBox();
-	_Combobox->addItem(QStringLiteral("默认窗宽窗位"));
-	_Combobox->addItem(QStringLiteral("全部动态范围"));
-	_Combobox->addItem(QStringLiteral("CT-腹"));
-	_Combobox->addItem(QStringLiteral("CT-血管"));
-	_Combobox->addItem(QStringLiteral("CT-骨骼"));
-	_Combobox->addItem(QStringLiteral("CT-脑"));
-	_Combobox->addItem(QStringLiteral("CT-纵膈"));
+	_Combobox->addItem(QStringLiteral("骨骼"));
+	_Combobox->addItem(QStringLiteral("肌肉"));
+	_Combobox->addItem(QStringLiteral("查克拉"));
 	//添加到菜单栏
 	ui.mainToolBar->addSeparator();
 	ui.mainToolBar->addWidget(_Combobox);
 	ui.mainToolBar->addSeparator();
 	//自定义初始化
+	seg_combo = new QComboBox();
+	seg_combo->setMaxVisibleItems(5);
+
+	seg_combo->addItem(QWidget::tr("NULL_Seg"));
+	seg_combo->addItem(QWidget::tr("seg_connectedthres"));
+	seg_combo->addItem(QWidget::tr("seg_ostu"));
+	seg_combo->addItem(QWidget::tr("seg_neighconnected"));
+	seg_combo->addItem(QWidget::tr("seg_confidconnected"));
+	//seg_combo->addItem(QWidget::tr("seg_waterseg"));
+	seg_combo->addItem(QWidget::tr("seg_fastmarching"));
+	seg_combo->addItem(QWidget::tr("seg_shapedectection"));
+
+	reg_combo = new QComboBox();
+	reg_combo->setMaxVisibleItems(5);
+
+	reg_combo->addItem(QWidget::tr("NULL_Reg"));
+	reg_combo->addItem(QWidget::tr("reg_normal"));
+	reg_combo->addItem(QWidget::tr("reg_2Dtransform"));
+	reg_combo->addItem(QWidget::tr("reg_AffineTrans"));
+	reg_combo->addItem(QWidget::tr("reg_MultiAffine"));
+	//reg_combo->resize(50,10);
+	connect(seg_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(Slots_Seg(int)));
+	connect(reg_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(Slots_Reg(int)));
+
+	//ui.mainToolBar->addWidget(reg_combo);
+
+	ui.mainToolBar->addWidget(seg_combo);
+	ui.mainToolBar->addWidget(reg_combo);
+
+
+	volume = new QAction(QIcon(":/QvtkDicomViewer/Resources/video_negative_128px_1138773_easyicon.net.ico"), "Volume", this);
+	volume_gpu = new QAction(QIcon(":/QvtkDicomViewer/Resources/video_negative_128px_1138773_easyicon.net.ico"), "Volume_Gpu", this);
+
+	ui.mainToolBar->addAction(volume);
+	ui.mainToolBar->addAction(volume_gpu);
+
+	connect(volume, SIGNAL(triggered()), this, SLOT(Slots_Volume()));
+	connect(volume_gpu, SIGNAL(triggered()), this, SLOT(Slots_Volume_gpu()));
+	
 	ui.action_SwitchOfProperty->setChecked(true);
 	ui.dockWidget_Dir->setHidden(false);
 	icon_Play.addFile(QStringLiteral(":/QvtkDicomViewer/Resources/play_128px_1197036_easyicon.net.ico"), QSize(), QIcon::Normal, QIcon::Off);
@@ -135,11 +173,11 @@ void QvtkDicomViewer::OnChangeCursorValue()
 	}
 }
 /*
- * 响应窗宽窗位模式值的修改,执行一些禁用和选定动作
- */
+* 响应窗宽窗位模式值的修改,执行一些禁用和选定动作
+*/
 void QvtkDicomViewer::OnChangeWindowsWL()
 {
-	
+
 	ui.action_WindowWL_Default->setChecked(false);
 	ui.action_WindowWL_All->setChecked(false);
 	ui.action_WindowWL_CT_Abdomen->setChecked(false);
@@ -377,18 +415,14 @@ void QvtkDicomViewer::SetUsageText(std::string imagefilename)
 	}
 	if (fileformat.getDataset()->findAndGetOFStringArray(DCM_WindowCenter, temp_OFString, OFTrue).good())
 	{//窗位
-		double windowCenter = m_pImageViewer->GetColorWindow();
 		TopLeftCorner.append("Window Center:");
-		//TopLeftCorner.append(temp_OFString.c_str());
-		TopLeftCorner.append(std::to_string(windowCenter));
+		TopLeftCorner.append(temp_OFString.c_str());
 		TopLeftCorner.append("\n");
 	}
 	if (fileformat.getDataset()->findAndGetOFStringArray(DCM_WindowWidth, temp_OFString, OFTrue).good())
 	{//窗宽
-		double windowWidth = m_pImageViewer->GetColorLevel();
 		TopLeftCorner.append("Window Width:");
-		//TopLeftCorner.append(temp_OFString.c_str());
-		TopLeftCorner.append(std::to_string(windowWidth));
+		TopLeftCorner.append(temp_OFString.c_str());
 		TopLeftCorner.append("\n");
 	}
 	if (fileformat.getDataset()->findAndGetOFStringArray(DCM_SpacingBetweenSlices, temp_OFString, OFTrue).good())
@@ -562,8 +596,8 @@ void QvtkDicomViewer::setCursor(CURSOR newValue)
 	emit CursorValueChanged();//值更改,发出信号
 }
 /*
- * 修改窗宽窗位模式
- */
+* 修改窗宽窗位模式
+*/
 void QvtkDicomViewer::setWindowWL(WINDOWWL newWL)
 {
 	ImageWindow = newWL;
@@ -602,7 +636,6 @@ void QvtkDicomViewer::RenderInitializer(std::string folder,int NumOfImage )
 	 */
 	m_pImageViewer = vtkSmartPointer< vtkImageViewer2 >::New();
 	m_pImageViewer->SetInputConnection(reader->GetOutputPort());
-	
 	/*
 	 * 叠加文字
 	 */
@@ -629,8 +662,8 @@ void QvtkDicomViewer::RenderInitializer(std::string folder,int NumOfImage )
 	 * 自动连续播放功能初始化
 	 */
 	m_slice_player = new SlicePlayer(0,NumOfImage-1,ui.SliceScrollBar->sliderPosition(),50);
-	connect(m_slice_player, SIGNAL(isTimeToTurnNextSlice()), this, SLOT(OnForward()));
-	connect(m_slice_player, SIGNAL(isTimeToReset()), this, SLOT(OnResetToFirst()));
+	connect(m_slice_player, SIGNAL(isTimeToTurnNextSlice()), this, SLOT(OnForward()), Qt::QueuedConnection);
+	connect(m_slice_player, SIGNAL(isTimeToReset()), this, SLOT(OnResetToFirst()), Qt::QueuedConnection);
 	/*
 	 * 渲染
 	 */
@@ -652,7 +685,7 @@ void QvtkDicomViewer::RenderRefresh(std::string imagefilename,int currentPagenum
 	//切换页码信息
 	SetSliceText(currentPagenumber, maxPageNumber);
 	//切换其他信息
-	SetUsageText(imagefilename);
+
 	//更新渲染
 	reader->Update();
 	ui.qvtkWidget->GetRenderWindow()->Render();
@@ -1020,9 +1053,10 @@ void QvtkDicomViewer::OnStop()
 	 DirTreeRefresh(CurrentPatient);//刷新树视图
 	 RenderInitializer(CurrentPatient->getCurrentDicomImage()->AbsFilePath, CurrentPatient->getCurrentDicomSeries()->ImageList.size());
  }
+
  /*
-  * 默认窗宽窗位
-  */
+ * 默认窗宽窗位
+ */
  void QvtkDicomViewer::OnWindowWL_Defaut()
  {
 	 m_pImageViewer->SetColorLevel(40.0);
@@ -1031,8 +1065,8 @@ void QvtkDicomViewer::OnStop()
 	 setWindowWL(Default);
  }
  /*
-  *	全部动态范围
-  */
+ *	全部动态范围
+ */
  void QvtkDicomViewer::OnWindowWL_All()
  {
 	 m_pImageViewer->SetColorLevel(1024.0);
@@ -1041,8 +1075,8 @@ void QvtkDicomViewer::OnStop()
 	 setWindowWL(All);
  }
  /*
-  *	腹部
-  */
+ *	腹部
+ */
  void QvtkDicomViewer::OnWindowWL_CT_Abdomen()
  {
 	 m_pImageViewer->SetColorLevel(60.0);
@@ -1051,8 +1085,8 @@ void QvtkDicomViewer::OnStop()
 	 setWindowWL(Abdomen);
  }
  /*
-  *	血管
-  */
+ *	血管
+ */
  void QvtkDicomViewer::OnWindowWL_CT_BloodVessel()
  {
 	 m_pImageViewer->SetColorLevel(300.0);
@@ -1061,8 +1095,8 @@ void QvtkDicomViewer::OnStop()
 	 setWindowWL(BloodVessel);
  }
  /*
-  *	骨骼
-  */
+ *	骨骼
+ */
  void QvtkDicomViewer::OnWindowWL_CT_Bones()
  {
 	 m_pImageViewer->SetColorLevel(300.0);
@@ -1071,8 +1105,8 @@ void QvtkDicomViewer::OnStop()
 	 setWindowWL(Bones);
  }
  /*
-  *	脑
-  */
+ *	脑
+ */
  void QvtkDicomViewer::OnWindowWL_CT_Brain()
  {
 	 m_pImageViewer->SetColorLevel(40.0);
@@ -1081,8 +1115,8 @@ void QvtkDicomViewer::OnStop()
 	 setWindowWL(Brain);
  }
  /*
-  *	纵膈
-  */
+ *	纵膈
+ */
  void QvtkDicomViewer::OnWindowWL_CT_Medias()
  {
 	 m_pImageViewer->SetColorLevel(40.0);
@@ -1091,12 +1125,249 @@ void QvtkDicomViewer::OnStop()
 	 setWindowWL(Medias);
  }
  /*
-  *	肺
-  */
+ *	肺
+ */
  void QvtkDicomViewer::OnWindowWL_CT_Lungs()
  {
 	 m_pImageViewer->SetColorLevel(-400.0);
 	 m_pImageViewer->SetColorWindow(1500.0);
 	 m_pImageViewer->Render();
 	 setWindowWL(Lungs);
+ }
+//==========================================================================================
+
+
+ void QvtkDicomViewer::Slots_PickPixel(int count, QVTKWidget *qvtk)
+ {
+	 
+
+	 //std::string dir = CurrentPatient->getCurrentDicomImage()->ReferencedFileID;
+	 char* argv[] = { "   ", "C://Users//bao//Desktop//DICOM//S427870//S20//I10" };
+	 std::string dir = "";
+	 pickpixel(count,argv, ui.qvtkWidget,dir);
+ }
+ void QvtkDicomViewer::Slots_Seg(int count)
+ {
+	 Slots_PickPixel(count,ui.qvtkWidget);
+ }
+ void QvtkDicomViewer::Slots_Reg(int count)
+ {
+	 a.SetCount(count);
+	 a.SetQvtk(ui.qvtkWidget);
+	 a.show();
+ }
+ /*
+  *	向画布输出三维重建的结果
+  *	触发条件:点击:volume
+  *	绑定:本类构造函数,手动绑定
+  */
+ void QvtkDicomViewer::Slots_Volume()
+ {
+	 ren = vtkRenderer::New();             //设置绘制者(绘制对象指针)
+	 renWin = vtkRenderWindow::New();  //设置绘制窗口
+	 renWin->SetWindowName("dicom数据的体绘制与3D重现");
+	 renWin->AddRenderer(ren);                          //将绘制者加入绘制窗口
+	 //renWin->GlobalWarningDisplayOff();
+	 ui.qvtkWidget->SetRenderWindow(renWin);
+	 renderWindowInteractor = vtkRenderWindowInteractor::New();//设置绘制交互操作窗口的
+	 renderWindowInteractor->SetRenderWindow(renWin);    //将绘制窗口添加到交互窗口
+
+	vtkDecimatePro *deci = vtkDecimatePro::New(); //减少数据读取点，以牺牲数据量加速交互
+	deci->SetTargetReduction(0.3);
+
+	 style = vtkInteractorStyleTrackballCamera::New();//交互摄像机
+													  //为交互模式       
+	 renderWindowInteractor->SetInteractorStyle(style);
+	 //vtkImageReader *reader = vtkImageReader::New();
+	 //reader->SetFileName("F:/rat0810.raw");
+	 // reader->SetFileName("F:/reconstruction.raw");
+	 reader1 = vtkSmartPointer<vtkDICOMImageReader>::New();
+	 reader1->SetDirectoryName("F:/Dicom/Test1/DICOM/S427870/S30");
+	 reader1->SetFileDimensionality(3);                //设置显示图像的维数
+													   // reader->SetDataScalarType(VTK_UNSIGNED_CHAR);    //VTK_UNSIGNED_short将数据转换为unsigned char型
+	 reader1->SetDataScalarType(VTK_UNSIGNED_SHORT);
+	 reader1->SetDataExtent(0, 255, 0, 255, 0, 123);        //图片属性图片像素256x256，最后两参数表示有124张图
+	 reader1->SetDataSpacing(0.9, 0.9, 0.9);            //设置像素间间距
+														// reader->SetDataOrigin(0.0, 0.0, 0.0);            //设置基准点，（一般没有用）做虚拟切片时可能会用的上
+	 readerImageCast = vtkImageCast::New();//数据类型转换
+	 readerImageCast->SetInputConnection(reader1->GetOutputPort());
+	 readerImageCast->SetOutputScalarTypeToUnsignedShort();
+	 readerImageCast->ClampOverflowOn();                 //阀值
+
+														 //设置不透明度传递函数//该函数确定各体绘像素或单位长度值的不透明度
+	 opacityTransferFunction = vtkPiecewiseFunction::New(); //一维分段函数变换
+	 opacityTransferFunction->AddPoint(20, 0.0);
+	 opacityTransferFunction->AddPoint(255, 0.2);
+	 //设置颜色传递函数//该函数确定体绘像素的颜色值或者灰度值
+	 colorTransferFunction = vtkColorTransferFunction::New();
+	 colorTransferFunction->AddRGBPoint(0.0, 0.0, 0.5, 0.0);         //添加色彩点（第一个参数索引）
+	 colorTransferFunction->AddRGBPoint(60.0, 1.0, 0.0, 0.0);
+	 colorTransferFunction->AddRGBPoint(128.0, 0.2, 0.1, 0.9);
+	 colorTransferFunction->AddRGBPoint(196.0, 0.27, 0.21, 0.1);
+	 colorTransferFunction->AddRGBPoint(255.0, 0.8, 0.8, 0.8);
+	 //vtkPiecewiseFunction *gradientTransferFunction = vtkPiecewiseFunction::New();//设置梯度传递函数
+	 //gradientTransferFunction->AddPoint(20, 0.0);
+	 //gradientTransferFunction->AddPoint(255, 2.0);
+	 //gradientTransferFunction->AddSegment (600, 0.73, 900, 0.9);
+	 //gradientTransferFunction->AddPoint(1300, 0.1); 
+	 volumeProperty = vtkVolumeProperty::New();  //设定一个体绘容器的属性
+
+	 volumeProperty->SetColor(colorTransferFunction);               //设置颜色
+	 volumeProperty->SetScalarOpacity(opacityTransferFunction);     //不透明度
+																	// volumeProperty->SetGradientOpacity(opacityTransferFunction);
+	 volumeProperty->ShadeOn();                                     //影阴
+	 volumeProperty->SetInterpolationTypeToLinear();                //直线与样条插值之间逐发函数
+	 volumeProperty->SetAmbient(0.2);                               //环境光系数
+	 volumeProperty->SetDiffuse(0.9);                               //漫反射
+	 volumeProperty->SetSpecular(0.2);                              //高光系数
+	 volumeProperty->SetSpecularPower(10);                          //高光强度 
+																	//定义绘制者
+	// compositeFunction =
+	//	 vtkVolumeRayCastCompositeFunction::New();                 //运行沿着光线合成
+																   /*vtkVolumeRayCastIsosurfaceFunction *compositeFunction =
+																   vtkVolumeRayCastIsosurfaceFunction::New();   */              //运行沿着光线合成
+
+	 volumeMapper = vtkFixedPointVolumeRayCastMapper::New();   //体绘制器
+	 //volumeMapper->SetVolumeRayCastFunction(compositeFunction);              //载入绘制方法
+	 volumeMapper->SetInputConnection(readerImageCast->GetOutputPort());     //图像数据输入
+	 volumeMapper->SetNumberOfThreads(3);
+	 //定义Volume
+	 volume1 = vtkVolume::New();       //表示透示图中的一组三维数据
+	 volume1->SetMapper(volumeMapper);
+	 volume1->SetProperty(volumeProperty);       //设置体属性
+												// //保存
+												// vtkVolumeWriter *wSP=vtkVolumeWriter::New();
+												//// vtkVolume *wSP=vtkVolume::New();
+												// wSP->SetInputConnection(readerImageCast->GetOutputPort());
+												// wSP->SetFileName("F://ct/mmmm.vtk");
+												// wSP->Write();
+												// wSP->Delete();
+	 ren->AddVolume(volume1);               //将Volume装载到绘制类中
+										   // ren->SetBackground(1, 1, 1);
+
+										   //ren->SetBackground(0, 0, 0);
+										   //ren->SetBackground(255, 255, 255);
+										   //renWin->SetSize(600, 600);            //设置背景颜色和绘制窗口大小
+	 renWin->Render();                     //窗口进行绘制
+	 renderWindowInteractor->Initialize();
+	 renderWindowInteractor->Start();                       //初始化并进行交互绘制
+	 ren->ResetCameraClippingRange();
+	 //volumeMapper->Delete();             //释放类存
+	 //readerImageCast->Delete();
+	 //renderWindowInteractor->Delete();
+	 //ren->Delete();
+	 //renWin->Delete();
+	 //opacityTransferFunction->Delete();
+	 //volumeProperty->Delete();
+	 //compositeFunction->Delete();
+	 //volume->Delete();
+	 //colorTransferFunction->Delete();
+ }
+ /*
+  *	向画布输出三维重建的结果,GPU
+  *	触发条件:点击volum_gpu
+  *	绑定:本类构造函数,手动绑定
+  */
+ void QvtkDicomViewer::Slots_Volume_gpu()
+ {
+	 ren = vtkRenderer::New();             //设置绘制者(绘制对象指针)
+	 renWin = vtkRenderWindow::New();  //设置绘制窗口
+	 renWin->SetWindowName("dicom数据的体绘制与3D重现");
+	 renWin->AddRenderer(ren);                          //将绘制者加入绘制窗口
+														//renWin->GlobalWarningDisplayOff();
+	 ui.qvtkWidget->SetRenderWindow(renWin);
+	 renderWindowInteractor = vtkRenderWindowInteractor::New();//设置绘制交互操作窗口的
+	 renderWindowInteractor->SetRenderWindow(renWin);    //将绘制窗口添加到交互窗口
+
+	 vtkDecimatePro *deci = vtkDecimatePro::New(); //减少数据读取点，以牺牲数据量加速交互
+	 deci->SetTargetReduction(0.3);
+
+	 style = vtkInteractorStyleTrackballCamera::New();//交互摄像机
+													  //为交互模式       
+	 renderWindowInteractor->SetInteractorStyle(style);
+	 //vtkImageReader *reader = vtkImageReader::New();
+	 //reader->SetFileName("F:/rat0810.raw");
+	 // reader->SetFileName("F:/reconstruction.raw");
+	 reader1 = vtkSmartPointer<vtkDICOMImageReader>::New();
+	 reader1->SetDirectoryName("F:/Dicom/Test1/DICOM/S427870/S30");
+	 reader1->SetFileDimensionality(3);                //设置显示图像的维数
+													   // reader->SetDataScalarType(VTK_UNSIGNED_CHAR);    //VTK_UNSIGNED_short将数据转换为unsigned char型
+	 reader1->SetDataScalarType(VTK_UNSIGNED_SHORT);
+	 reader1->SetDataExtent(0, 255, 0, 255, 0, 123);        //图片属性图片像素256x256，最后两参数表示有124张图
+	 reader1->SetDataSpacing(0.9, 0.9, 0.9);            //设置像素间间距
+														// reader->SetDataOrigin(0.0, 0.0, 0.0);            //设置基准点，（一般没有用）做虚拟切片时可能会用的上
+	 readerImageCast = vtkImageCast::New();//数据类型转换
+	 readerImageCast->SetInputConnection(reader1->GetOutputPort());
+	 readerImageCast->SetOutputScalarTypeToUnsignedShort();
+	 readerImageCast->ClampOverflowOn();                 //阀值
+
+														 //设置不透明度传递函数//该函数确定各体绘像素或单位长度值的不透明度
+	 opacityTransferFunction = vtkPiecewiseFunction::New(); //一维分段函数变换
+	 opacityTransferFunction->AddPoint(20, 0.0);
+	 opacityTransferFunction->AddPoint(255, 0.2);
+	 //设置颜色传递函数//该函数确定体绘像素的颜色值或者灰度值
+	 colorTransferFunction = vtkColorTransferFunction::New();
+	 colorTransferFunction->AddRGBPoint(0.0, 0.0, 0.5, 0.0);         //添加色彩点（第一个参数索引）
+	 colorTransferFunction->AddRGBPoint(60.0, 1.0, 0.0, 0.0);
+	 colorTransferFunction->AddRGBPoint(128.0, 0.2, 0.1, 0.9);
+	 colorTransferFunction->AddRGBPoint(196.0, 0.27, 0.21, 0.1);
+	 colorTransferFunction->AddRGBPoint(255.0, 0.8, 0.8, 0.8);
+	 //vtkPiecewiseFunction *gradientTransferFunction = vtkPiecewiseFunction::New();//设置梯度传递函数
+	 //gradientTransferFunction->AddPoint(20, 0.0);
+	 //gradientTransferFunction->AddPoint(255, 2.0);
+	 //gradientTransferFunction->AddSegment (600, 0.73, 900, 0.9);
+	 //gradientTransferFunction->AddPoint(1300, 0.1); 
+	 volumeProperty = vtkVolumeProperty::New();  //设定一个体绘容器的属性
+
+	 volumeProperty->SetColor(colorTransferFunction);               //设置颜色
+	 volumeProperty->SetScalarOpacity(opacityTransferFunction);     //不透明度
+																	// volumeProperty->SetGradientOpacity(opacityTransferFunction);
+	 volumeProperty->ShadeOn();                                     //影阴
+	 volumeProperty->SetInterpolationTypeToLinear();                //直线与样条插值之间逐发函数
+	 volumeProperty->SetAmbient(0.2);                               //环境光系数
+	 volumeProperty->SetDiffuse(0.9);                               //漫反射
+	 volumeProperty->SetSpecular(0.2);                              //高光系数
+	 volumeProperty->SetSpecularPower(10);                          //高光强度 
+																	//定义绘制者
+																	// compositeFunction =
+																	//	 vtkVolumeRayCastCompositeFunction::New();                 //运行沿着光线合成
+																	/*vtkVolumeRayCastIsosurfaceFunction *compositeFunction =
+																	vtkVolumeRayCastIsosurfaceFunction::New();   */              //运行沿着光线合成
+
+	 volumeMapper_gpu = vtkGPUVolumeRayCastMapper::New();   //体绘制器
+															   //volumeMapper->SetVolumeRayCastFunction(compositeFunction);              //载入绘制方法
+	 volumeMapper_gpu->SetInputConnection(readerImageCast->GetOutputPort());     //图像数据输入
+	 //volumeMapper_gpu->SetNumberOfThreads(3);
+	 //定义Volume
+	 volume1 = vtkVolume::New();       //表示透示图中的一组三维数据
+	 volume1->SetMapper(volumeMapper_gpu);
+	 volume1->SetProperty(volumeProperty);       //设置体属性
+												 // //保存
+												 // vtkVolumeWriter *wSP=vtkVolumeWriter::New();
+												 //// vtkVolume *wSP=vtkVolume::New();
+												 // wSP->SetInputConnection(readerImageCast->GetOutputPort());
+												 // wSP->SetFileName("F://ct/mmmm.vtk");
+												 // wSP->Write();
+												 // wSP->Delete();
+	 ren->AddVolume(volume1);               //将Volume装载到绘制类中
+											// ren->SetBackground(1, 1, 1);
+
+											//ren->SetBackground(0, 0, 0);
+											//ren->SetBackground(255, 255, 255);
+											//renWin->SetSize(600, 600);            //设置背景颜色和绘制窗口大小
+	 renWin->Render();                     //窗口进行绘制
+	 renderWindowInteractor->Initialize();
+	 renderWindowInteractor->Start();                       //初始化并进行交互绘制
+	 ren->ResetCameraClippingRange();
+	 //volumeMapper->Delete();             //释放类存
+	 //readerImageCast->Delete();
+	 //renderWindowInteractor->Delete();
+	 //ren->Delete();
+	 //renWin->Delete();
+	 //opacityTransferFunction->Delete();
+	 //volumeProperty->Delete();
+	 //compositeFunction->Delete();
+	 //volume->Delete();
+	 //colorTransferFunction->Delete();
+	 
  }
