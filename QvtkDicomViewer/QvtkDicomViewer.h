@@ -162,7 +162,7 @@ private:
 	vtkVolumeRayCastCompositeFunction *compositeFunction;
 	vtkFixedPointVolumeRayCastMapper *volumeMapper;
 	vtkVolume *volume1;
-	vtkSmartPointer<vtkDICOMImageReader> reader1;
+	vtkSmartPointer<vtkImageReader2> reader1;
 	vtkSmartPointer<vtkInteractorStyleTrackballCamera> style;
 	vtkGPUVolumeRayCastMapper *volumeMapper_gpu;
 	//////////////////////

@@ -135,6 +135,7 @@
     <ClCompile Include="SlicePlayer.cpp" />
     <ClCompile Include="DicomTreeItem.cpp" />
     <ClCompile Include="vtkBiDimensionalCallback.cpp" />
+    <ClCompile Include="vtkMyDICOMImageReader.cpp" />
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="QvtkDicomViewer.h">
@@ -161,6 +162,7 @@
     </CustomBuild>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="vtkMyDICOMImageReader.h" />
     <CustomBuild Include="DicomDir.h">
       <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
       <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing DicomDir.h...</Message>

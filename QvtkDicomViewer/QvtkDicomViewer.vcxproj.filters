@@ -114,6 +114,9 @@
     <ClCompile Include="Reg_Selector.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="vtkMyDICOMImageReader.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
   <ItemGroup>
     <CustomBuild Include="QvtkDicomViewer.h">
@@ -189,6 +192,9 @@
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_Reg_Selector.h">
       <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vtkMyDICOMImageReader.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>

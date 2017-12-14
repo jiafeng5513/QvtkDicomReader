@@ -37,7 +37,7 @@
 #include <vtkPiecewiseFunction.h>
 #include "vtkStringArray.h"
 #include "vtkUnicodeStringArray.h"
-
+#include "vtkImageAppend.h"
 
 #include <dcmtk\config\osconfig.h>
 #include <dcmtk\dcmdata\dctk.h>
@@ -1194,58 +1194,149 @@ void QvtkDicomViewer::OnStop()
  {
 	 ren = vtkRenderer::New();             //设置绘制者(绘制对象指针)
 	 renWin = vtkRenderWindow::New();  //设置绘制窗口
-	 renWin->SetWindowName("dicom数据的体绘制与3D重现");
+	 //renWin->SetWindowName("dicom数据的体绘制与3D重现");蛤??????????/?????????????????????????????????????
 	 renWin->AddRenderer(ren);                          //将绘制者加入绘制窗口
 	 //renWin->GlobalWarningDisplayOff();
 	 ui.qvtkWidget->SetRenderWindow(renWin);
 	 renderWindowInteractor = vtkRenderWindowInteractor::New();//设置绘制交互操作窗口的
 	 renderWindowInteractor->SetRenderWindow(renWin);    //将绘制窗口添加到交互窗口
 
-	vtkDecimatePro *deci = vtkDecimatePro::New(); //减少数据读取点，以牺牲数据量加速交互
-	deci->SetTargetReduction(0.3);
+	 vtkDecimatePro *deci = vtkDecimatePro::New(); //减少数据读取点，以牺牲数据量加速交互
+	 deci->SetTargetReduction(0.3);
 
 	 style = vtkInteractorStyleTrackballCamera::New();//交互摄像机
 													  //为交互模式       
 	 renderWindowInteractor->SetInteractorStyle(style);
-	 //vtkImageReader *reader = vtkImageReader::New();
-	 //reader->SetFileName("F:/rat0810.raw");
-	 // reader->SetFileName("F:/reconstruction.raw");
-	 reader1 = vtkSmartPointer<vtkDICOMImageReader>::New();
-	 //reader1->SetDirectoryName("F:/Dicom/Test1/DICOM/S427870/S30");
-	
-	/*
-	 * 构造一个vtkStringArray *按顺序存储上述路径中的所有文件的绝对路径,然后初始化
-	 */
-	 vtkStringArray * temp = vtkStringArray::New();
-	 temp->InsertNextValue("F:/Dicom/Test1/DICOM/S427870/S30/I10");
-	 temp->InsertNextValue("F:/Dicom/Test1/DICOM/S427870/S30/I20");
-	 temp->InsertNextValue("F:/Dicom/Test1/DICOM/S427870/S30/I30");
-	 temp->InsertNextValue("F:/Dicom/Test1/DICOM/S427870/S30/I40");
-	 temp->InsertNextValue("F:/Dicom/Test1/DICOM/S427870/S30/I50");
-	 temp->InsertNextValue("F:/Dicom/Test1/DICOM/S427870/S30/I60");
-	 temp->InsertNextValue("F:/Dicom/Test1/DICOM/S427870/S30/I70");
-	 temp->InsertNextValue("F:/Dicom/Test1/DICOM/S427870/S30/I80");
-	 temp->InsertNextValue("F:/Dicom/Test1/DICOM/S427870/S30/I90");
-	 int x=temp->GetSize();
-	 reader1->SetFileNames(temp);
 
-	 //reader->SetFileName("F:/Dicom/Test1/DICOM/S427870/S30/I10");
-	 //reader->SetFileName("F:/Dicom/Test1/DICOM/S427870/S30/I20");
-	 //reader->SetFileName("F:/Dicom/Test1/DICOM/S427870/S30/I30");
-	 //reader->SetFileName("F:/Dicom/Test1/DICOM/S427870/S30/I40");
-	 //reader->SetFileName("F:/Dicom/Test1/DICOM/S427870/S30/I50");
-	 //reader->SetFileName("F:/Dicom/Test1/DICOM/S427870/S30/I60");
-	 //reader->SetFileName("F:/Dicom/Test1/DICOM/S427870/S30/I70");
-	 //reader->SetFileName("F:/Dicom/Test1/DICOM/S427870/S30/I80");
-	 //reader->SetFileName("F:/Dicom/Test1/DICOM/S427870/S30/I90");
-	 reader1->SetFileDimensionality(3);                //设置显示图像的维数
-													   // reader->SetDataScalarType(VTK_UNSIGNED_CHAR);    //VTK_UNSIGNED_short将数据转换为unsigned char型
+	 reader1 = vtkSmartPointer<vtkImageReader2>::New();
+	 /*
+	  * 1.从文件夹初始化reader
+	  */
+	  //reader1->SetDirectoryName("F:/Dicom/Test1/DICOM/S427870/S30");
+
+	 /*
+	  * 尝试从分散的文件名初始化reader,这是唯一的出路
+	  */
+#pragma region static String
+	 std::vector<QString> *qstem = new std::vector<QString>();
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I10");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I20");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I30");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I40");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I50");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I60");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I70");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I80");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I90");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I100");
+
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I110");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I120");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I130");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I140");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I150");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I160");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I170");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I180");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I190");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I200");
+
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I210");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I220");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I230");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I240");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I250");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I260");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I270");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I280");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I290");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I300");
+
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I310");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I320");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I330");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I340");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I350");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I360");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I370");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I380");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I390");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I400");
+
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I410");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I420");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I430");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I440");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I450");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I460");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I470");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I480");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I490");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I500");
+
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I510");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I520");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I530");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I540");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I550");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I560");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I570");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I580");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I590");
+
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I600");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I610");
+	 qstem->push_back("F:/Dicom/Test1/DICOM/S427870/S30/I620");
+#pragma endregion 
+
+	 /*
+	  *	2.
+	  */
+	 vtkSmartPointer<vtkImageAppend > append = vtkSmartPointer<vtkImageAppend >::New();
+	 append->SetAppendAxis(2);//具体含义跟踪注释
+	 //for (int i = 0; i < 62; i++)
+	 //{
+		// std::string hah = qstem->at(i).toStdString();
+		// reader1->SetFileName(hah.c_str());
+		// append->AddInputConnection(reader1->GetOutputPort());
+	 //}
+	 /*
+	  *	3.
+	  */
+	 //vtkSmartPointer < vtkStringArray >_FilesYouWant = vtkSmartPointer<vtkStringArray>::New();
+
+	 //for (int i = 0; i < 62; i++)
+	 //{
+		// std::string hah = qstem->at(i).toStdString();
+		// _FilesYouWant->InsertNextValue(hah);
+	 //}
+
+	 /*
+	  * 输出到文件
+	  */
+	 reader1->SetFileNames(_FilesYouWant);
+	 std::filebuf fb;
+	 fb.open("vtkdicomviewer.log", std::ios::out);//输出日志文件
+	 std::ostream out(&fb);
+	 reader1->Print(out);
+	 fb.close();
+
+	 /*
+	  *	在这之前出现运行时错误,考虑日志是没有意义的.
+	  *	应该将断点前移先判断日志是否干净
+	  */
+	  /*
+	   * 一看就是抄的...
+	   */
+	 reader1->SetFileDimensionality(3);                //设置显示图像的维数											
 	 reader1->SetDataScalarType(VTK_UNSIGNED_SHORT);
-	 reader1->SetDataExtent(0, 255, 0, 255, 0, 123);        //图片属性图片像素256x256，最后两参数表示有124张图
-	 reader1->SetDataSpacing(0.9, 0.9, 0.9);            //设置像素间间距
-														// reader->SetDataOrigin(0.0, 0.0, 0.0);            //设置基准点，（一般没有用）做虚拟切片时可能会用的上
+	 reader1->SetDataExtent(0, 255, 0, 255, 0, 62);        //图片属性图片像素256x256，最后两参数表示有124张图
+	 reader1->SetDataSpacing(0.9, 0.9, 0.9);             //设置像素间间距
+	 // reader->SetDataOrigin(0.0, 0.0, 0.0);            //设置基准点，（一般没有用）做虚拟切片时可能会用的上
 	 readerImageCast = vtkImageCast::New();//数据类型转换
 	 readerImageCast->SetInputConnection(reader1->GetOutputPort());
+	 //readerImageCast->SetInputConnection(append->GetOutputPort());
+
 	 readerImageCast->SetOutputScalarTypeToUnsignedShort();
 	 readerImageCast->ClampOverflowOn();                 //阀值
 
@@ -1325,104 +1416,104 @@ void QvtkDicomViewer::OnStop()
   */
  void QvtkDicomViewer::Slots_Volume_gpu()
  {
-	 ren = vtkRenderer::New();             //设置绘制者(绘制对象指针)
-	 renWin = vtkRenderWindow::New();  //设置绘制窗口
-	 renWin->SetWindowName("dicom数据的体绘制与3D重现");
-	 renWin->AddRenderer(ren);                          //将绘制者加入绘制窗口
-														//renWin->GlobalWarningDisplayOff();
-	 ui.qvtkWidget->SetRenderWindow(renWin);
-	 renderWindowInteractor = vtkRenderWindowInteractor::New();//设置绘制交互操作窗口的
-	 renderWindowInteractor->SetRenderWindow(renWin);    //将绘制窗口添加到交互窗口
+	 //ren = vtkRenderer::New();             //设置绘制者(绘制对象指针)
+	 //renWin = vtkRenderWindow::New();  //设置绘制窗口
+	 //renWin->SetWindowName("dicom数据的体绘制与3D重现");
+	 //renWin->AddRenderer(ren);                          //将绘制者加入绘制窗口
+		//												//renWin->GlobalWarningDisplayOff();
+	 //ui.qvtkWidget->SetRenderWindow(renWin);
+	 //renderWindowInteractor = vtkRenderWindowInteractor::New();//设置绘制交互操作窗口的
+	 //renderWindowInteractor->SetRenderWindow(renWin);    //将绘制窗口添加到交互窗口
 
-	 vtkDecimatePro *deci = vtkDecimatePro::New(); //减少数据读取点，以牺牲数据量加速交互
-	 deci->SetTargetReduction(0.3);
+	 //vtkDecimatePro *deci = vtkDecimatePro::New(); //减少数据读取点，以牺牲数据量加速交互
+	 //deci->SetTargetReduction(0.3);
 
-	 style = vtkInteractorStyleTrackballCamera::New();//交互摄像机
-													  //为交互模式       
-	 renderWindowInteractor->SetInteractorStyle(style);
-	 //vtkImageReader *reader = vtkImageReader::New();
-	 //reader->SetFileName("F:/rat0810.raw");
-	 // reader->SetFileName("F:/reconstruction.raw");
-	 reader1 = vtkSmartPointer<vtkDICOMImageReader>::New();
-	 reader1->SetDirectoryName("F:/Dicom/Test1/DICOM/S427870/S30");
-	 reader1->SetFileDimensionality(3);                //设置显示图像的维数
-													   // reader->SetDataScalarType(VTK_UNSIGNED_CHAR);    //VTK_UNSIGNED_short将数据转换为unsigned char型
-	 reader1->SetDataScalarType(VTK_UNSIGNED_SHORT);
-	 reader1->SetDataExtent(0, 255, 0, 255, 0, 123);        //图片属性图片像素256x256，最后两参数表示有124张图
-	 reader1->SetDataSpacing(0.9, 0.9, 0.9);            //设置像素间间距
-														// reader->SetDataOrigin(0.0, 0.0, 0.0);            //设置基准点，（一般没有用）做虚拟切片时可能会用的上
-	 readerImageCast = vtkImageCast::New();//数据类型转换
-	 readerImageCast->SetInputConnection(reader1->GetOutputPort());
-	 readerImageCast->SetOutputScalarTypeToUnsignedShort();
-	 readerImageCast->ClampOverflowOn();                 //阀值
+	 //style = vtkInteractorStyleTrackballCamera::New();//交互摄像机
+		//											  //为交互模式       
+	 //renderWindowInteractor->SetInteractorStyle(style);
+	 ////vtkImageReader *reader = vtkImageReader::New();
+	 ////reader->SetFileName("F:/rat0810.raw");
+	 //// reader->SetFileName("F:/reconstruction.raw");
+	 //reader1 = vtkSmartPointer<vtkDICOMImageReader>::New();
+	 //reader1->SetDirectoryName("F:/Dicom/Test1/DICOM/S427870/S30");
+	 //reader1->SetFileDimensionality(3);                //设置显示图像的维数
+		//											   // reader->SetDataScalarType(VTK_UNSIGNED_CHAR);    //VTK_UNSIGNED_short将数据转换为unsigned char型
+	 //reader1->SetDataScalarType(VTK_UNSIGNED_SHORT);
+	 //reader1->SetDataExtent(0, 255, 0, 255, 0, 123);        //图片属性图片像素256x256，最后两参数表示有124张图
+	 //reader1->SetDataSpacing(0.9, 0.9, 0.9);            //设置像素间间距
+		//												// reader->SetDataOrigin(0.0, 0.0, 0.0);            //设置基准点，（一般没有用）做虚拟切片时可能会用的上
+	 //readerImageCast = vtkImageCast::New();//数据类型转换
+	 //readerImageCast->SetInputConnection(reader1->GetOutputPort());
+	 //readerImageCast->SetOutputScalarTypeToUnsignedShort();
+	 //readerImageCast->ClampOverflowOn();                 //阀值
 
-														 //设置不透明度传递函数//该函数确定各体绘像素或单位长度值的不透明度
-	 opacityTransferFunction = vtkPiecewiseFunction::New(); //一维分段函数变换
-	 opacityTransferFunction->AddPoint(20, 0.0);
-	 opacityTransferFunction->AddPoint(255, 0.2);
-	 //设置颜色传递函数//该函数确定体绘像素的颜色值或者灰度值
-	 colorTransferFunction = vtkColorTransferFunction::New();
-	 colorTransferFunction->AddRGBPoint(0.0, 0.0, 0.5, 0.0);         //添加色彩点（第一个参数索引）
-	 colorTransferFunction->AddRGBPoint(60.0, 1.0, 0.0, 0.0);
-	 colorTransferFunction->AddRGBPoint(128.0, 0.2, 0.1, 0.9);
-	 colorTransferFunction->AddRGBPoint(196.0, 0.27, 0.21, 0.1);
-	 colorTransferFunction->AddRGBPoint(255.0, 0.8, 0.8, 0.8);
-	 //vtkPiecewiseFunction *gradientTransferFunction = vtkPiecewiseFunction::New();//设置梯度传递函数
-	 //gradientTransferFunction->AddPoint(20, 0.0);
-	 //gradientTransferFunction->AddPoint(255, 2.0);
-	 //gradientTransferFunction->AddSegment (600, 0.73, 900, 0.9);
-	 //gradientTransferFunction->AddPoint(1300, 0.1); 
-	 volumeProperty = vtkVolumeProperty::New();  //设定一个体绘容器的属性
+		//												 //设置不透明度传递函数//该函数确定各体绘像素或单位长度值的不透明度
+	 //opacityTransferFunction = vtkPiecewiseFunction::New(); //一维分段函数变换
+	 //opacityTransferFunction->AddPoint(20, 0.0);
+	 //opacityTransferFunction->AddPoint(255, 0.2);
+	 ////设置颜色传递函数//该函数确定体绘像素的颜色值或者灰度值
+	 //colorTransferFunction = vtkColorTransferFunction::New();
+	 //colorTransferFunction->AddRGBPoint(0.0, 0.0, 0.5, 0.0);         //添加色彩点（第一个参数索引）
+	 //colorTransferFunction->AddRGBPoint(60.0, 1.0, 0.0, 0.0);
+	 //colorTransferFunction->AddRGBPoint(128.0, 0.2, 0.1, 0.9);
+	 //colorTransferFunction->AddRGBPoint(196.0, 0.27, 0.21, 0.1);
+	 //colorTransferFunction->AddRGBPoint(255.0, 0.8, 0.8, 0.8);
+	 ////vtkPiecewiseFunction *gradientTransferFunction = vtkPiecewiseFunction::New();//设置梯度传递函数
+	 ////gradientTransferFunction->AddPoint(20, 0.0);
+	 ////gradientTransferFunction->AddPoint(255, 2.0);
+	 ////gradientTransferFunction->AddSegment (600, 0.73, 900, 0.9);
+	 ////gradientTransferFunction->AddPoint(1300, 0.1); 
+	 //volumeProperty = vtkVolumeProperty::New();  //设定一个体绘容器的属性
 
-	 volumeProperty->SetColor(colorTransferFunction);               //设置颜色
-	 volumeProperty->SetScalarOpacity(opacityTransferFunction);     //不透明度
-																	// volumeProperty->SetGradientOpacity(opacityTransferFunction);
-	 volumeProperty->ShadeOn();                                     //影阴
-	 volumeProperty->SetInterpolationTypeToLinear();                //直线与样条插值之间逐发函数
-	 volumeProperty->SetAmbient(0.2);                               //环境光系数
-	 volumeProperty->SetDiffuse(0.9);                               //漫反射
-	 volumeProperty->SetSpecular(0.2);                              //高光系数
-	 volumeProperty->SetSpecularPower(10);                          //高光强度 
-																	//定义绘制者
-																	// compositeFunction =
-																	//	 vtkVolumeRayCastCompositeFunction::New();                 //运行沿着光线合成
-																	/*vtkVolumeRayCastIsosurfaceFunction *compositeFunction =
-																	vtkVolumeRayCastIsosurfaceFunction::New();   */              //运行沿着光线合成
+	 //volumeProperty->SetColor(colorTransferFunction);               //设置颜色
+	 //volumeProperty->SetScalarOpacity(opacityTransferFunction);     //不透明度
+		//															// volumeProperty->SetGradientOpacity(opacityTransferFunction);
+	 //volumeProperty->ShadeOn();                                     //影阴
+	 //volumeProperty->SetInterpolationTypeToLinear();                //直线与样条插值之间逐发函数
+	 //volumeProperty->SetAmbient(0.2);                               //环境光系数
+	 //volumeProperty->SetDiffuse(0.9);                               //漫反射
+	 //volumeProperty->SetSpecular(0.2);                              //高光系数
+	 //volumeProperty->SetSpecularPower(10);                          //高光强度 
+		//															//定义绘制者
+		//															// compositeFunction =
+		//															//	 vtkVolumeRayCastCompositeFunction::New();                 //运行沿着光线合成
+		//															/*vtkVolumeRayCastIsosurfaceFunction *compositeFunction =
+		//															vtkVolumeRayCastIsosurfaceFunction::New();   */              //运行沿着光线合成
 
-	 volumeMapper_gpu = vtkGPUVolumeRayCastMapper::New();   //体绘制器
-															   //volumeMapper->SetVolumeRayCastFunction(compositeFunction);              //载入绘制方法
-	 volumeMapper_gpu->SetInputConnection(readerImageCast->GetOutputPort());     //图像数据输入
-	 //volumeMapper_gpu->SetNumberOfThreads(3);
-	 //定义Volume
-	 volume1 = vtkVolume::New();       //表示透示图中的一组三维数据
-	 volume1->SetMapper(volumeMapper_gpu);
-	 volume1->SetProperty(volumeProperty);       //设置体属性
-												 // //保存
-												 // vtkVolumeWriter *wSP=vtkVolumeWriter::New();
-												 //// vtkVolume *wSP=vtkVolume::New();
-												 // wSP->SetInputConnection(readerImageCast->GetOutputPort());
-												 // wSP->SetFileName("F://ct/mmmm.vtk");
-												 // wSP->Write();
-												 // wSP->Delete();
-	 ren->AddVolume(volume1);               //将Volume装载到绘制类中
-											// ren->SetBackground(1, 1, 1);
+	 //volumeMapper_gpu = vtkGPUVolumeRayCastMapper::New();   //体绘制器
+		//													   //volumeMapper->SetVolumeRayCastFunction(compositeFunction);              //载入绘制方法
+	 //volumeMapper_gpu->SetInputConnection(readerImageCast->GetOutputPort());     //图像数据输入
+	 ////volumeMapper_gpu->SetNumberOfThreads(3);
+	 ////定义Volume
+	 //volume1 = vtkVolume::New();       //表示透示图中的一组三维数据
+	 //volume1->SetMapper(volumeMapper_gpu);
+	 //volume1->SetProperty(volumeProperty);       //设置体属性
+		//										 // //保存
+		//										 // vtkVolumeWriter *wSP=vtkVolumeWriter::New();
+		//										 //// vtkVolume *wSP=vtkVolume::New();
+		//										 // wSP->SetInputConnection(readerImageCast->GetOutputPort());
+		//										 // wSP->SetFileName("F://ct/mmmm.vtk");
+		//										 // wSP->Write();
+		//										 // wSP->Delete();
+	 //ren->AddVolume(volume1);               //将Volume装载到绘制类中
+		//									// ren->SetBackground(1, 1, 1);
 
-											//ren->SetBackground(0, 0, 0);
-											//ren->SetBackground(255, 255, 255);
-											//renWin->SetSize(600, 600);            //设置背景颜色和绘制窗口大小
-	 renWin->Render();                     //窗口进行绘制
-	 renderWindowInteractor->Initialize();
-	 renderWindowInteractor->Start();                       //初始化并进行交互绘制
-	 ren->ResetCameraClippingRange();
-	 //volumeMapper->Delete();             //释放类存
-	 //readerImageCast->Delete();
-	 //renderWindowInteractor->Delete();
-	 //ren->Delete();
-	 //renWin->Delete();
-	 //opacityTransferFunction->Delete();
-	 //volumeProperty->Delete();
-	 //compositeFunction->Delete();
-	 //volume->Delete();
-	 //colorTransferFunction->Delete();
+		//									//ren->SetBackground(0, 0, 0);
+		//									//ren->SetBackground(255, 255, 255);
+		//									//renWin->SetSize(600, 600);            //设置背景颜色和绘制窗口大小
+	 //renWin->Render();                     //窗口进行绘制
+	 //renderWindowInteractor->Initialize();
+	 //renderWindowInteractor->Start();                       //初始化并进行交互绘制
+	 //ren->ResetCameraClippingRange();
+	 ////volumeMapper->Delete();             //释放类存
+	 ////readerImageCast->Delete();
+	 ////renderWindowInteractor->Delete();
+	 ////ren->Delete();
+	 ////renWin->Delete();
+	 ////opacityTransferFunction->Delete();
+	 ////volumeProperty->Delete();
+	 ////compositeFunction->Delete();
+	 ////volume->Delete();
+	 ////colorTransferFunction->Delete();
 	 
  }
