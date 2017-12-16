@@ -184,8 +184,8 @@ private:
 	QModelIndex indexSelect;//树视图中
 	DicomDirTreeModel *m_dicomdirtreemodel;
 
-	QAction * volume;
-	QAction * volume_gpu;
+	//QAction * volume;
+	//QAction * volume_gpu;
 private:
 	///内部操作
 	void setCursor(CURSOR newValue);
@@ -254,6 +254,4 @@ public slots:
 	void Slots_Seg(int count);
 	void Slots_Reg(int count);
 	void Slots_PickPixel(int count,QVTKWidget *qvtk);
-	//void Slots_Volume();
-	//void Slots_Volume_gpu();
 };

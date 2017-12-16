@@ -1,0 +1,116 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Segmenter</class>
+ <widget class="QWidget" name="Segmenter">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>707</width>
+    <height>529</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>分割</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="2">
+    <widget class="QGroupBox" name="groupBox_LevelSet">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>55</height>
+      </size>
+     </property>
+     <property name="title">
+      <string>水平集法</string>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout">
+      <item>
+       <widget class="QPushButton" name="pushButton_ShapeDetection">
+        <property name="text">
+         <string>形状检测法</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_FastMarching">
+        <property name="text">
+         <string>快速匹配法</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+    </widget>
+   </item>
+   <item row="0" column="0" colspan="2">
+    <widget class="QGroupBox" name="groupBox_RegionGrowing">
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>55</height>
+      </size>
+     </property>
+     <property name="title">
+      <string>区域生长法</string>
+     </property>
+     <layout class="QHBoxLayout" name="horizontalLayout_2">
+      <item>
+       <widget class="QPushButton" name="pushButton_ConnectedThreshold">
+        <property name="text">
+         <string>联通阈值法</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_OtsuThreshold">
+        <property name="text">
+         <string>最大类间方差法</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_ConfidenceConnected">
+        <property name="text">
+         <string>置信连接法</string>
+        </property>
+       </widget>
+      </item>
+      <item>
+       <widget class="QPushButton" name="pushButton_NeighborhoodConnected">
+        <property name="text">
+         <string>邻域连接法</string>
+        </property>
+       </widget>
+      </item>
+     </layout>
+     <zorder>pushButton_ConnectedThreshold</zorder>
+     <zorder>pushButton_OtsuThreshold</zorder>
+     <zorder>pushButton_NeighborhoodConnected</zorder>
+     <zorder>qvtkWidget_Segment</zorder>
+     <zorder>pushButton_ConfidenceConnected</zorder>
+    </widget>
+   </item>
+   <item row="1" column="0" colspan="3">
+    <widget class="QVTKWidget" name="qvtkWidget_Segment">
+     <property name="minimumSize">
+      <size>
+       <width>550</width>
+       <height>450</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>QVTKWidget</class>
+   <extends>QWidget</extends>
+   <header>QVTKWidget.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections/>
+</ui>

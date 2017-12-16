@@ -47,7 +47,7 @@
 #include <QFileSystemModel>
 #include "DicomDirTreeModel.h"
 
-#include <DicomPickPixel.h>
+#include <vtkImageSegmentCallback.h>
 #include <vtkDecimatePro.h>
 #include <Reg_Selector.h>
 #include "ThreeD_Reconstruction.h"
@@ -73,7 +73,7 @@ QvtkDicomViewer::QvtkDicomViewer(QWidget *parent)
 	ui.mainToolBar->addWidget(_Combobox);
 	ui.mainToolBar->addSeparator();
 	//自定义初始化
-	//=====================================================================================================================
+#pragma region 包旭添加 
 	seg_combo = new QComboBox();
 	seg_combo->setMaxVisibleItems(5);
 
@@ -102,17 +102,8 @@ QvtkDicomViewer::QvtkDicomViewer(QWidget *parent)
 
 	ui.mainToolBar->addWidget(seg_combo);
 	ui.mainToolBar->addWidget(reg_combo);
+#pragma endregion
 
-
-	volume = new QAction(QIcon(":/QvtkDicomViewer/Resources/video_negative_128px_1138773_easyicon.net.ico"), "Volume", this);
-	volume_gpu = new QAction(QIcon(":/QvtkDicomViewer/Resources/video_negative_128px_1138773_easyicon.net.ico"), "Volume_Gpu", this);
-
-	ui.mainToolBar->addAction(volume);
-	ui.mainToolBar->addAction(volume_gpu);
-
-	connect(volume, SIGNAL(triggered()), this, SLOT(Slots_Volume()));
-	connect(volume_gpu, SIGNAL(triggered()), this, SLOT(Slots_Volume_gpu()));
-	//=====================================================================================================================
 	ui.action_SwitchOfProperty->setChecked(true);
 	ui.dockWidget_Dir->setHidden(false);
 	icon_Play.addFile(QStringLiteral(":/QvtkDicomViewer/Resources/play_128px_1197036_easyicon.net.ico"), QSize(), QIcon::Normal, QIcon::Off);
@@ -1189,11 +1180,12 @@ void QvtkDicomViewer::On3D_Reconstruction()
 
 	 //std::string dir = CurrentPatient->getCurrentDicomImage()->ReferencedFileID;
 	 char* argv[] = { "   ", "F:/Dicom/Test1/DICOM/S427870/S20/I10" };
-	 std::string dir = "";
+	std::string dir = "";
 	 pickpixel(count,argv, ui.qvtkWidget,dir);
  }
 /*
  * 响应seg_combo的更改,左侧Combox,猜测这是和分割有关系的segment分割
+ * 推测分割是针对单张dicom实行的,入口装在右键上,没毛病
  */
  void QvtkDicomViewer::Slots_Seg(int count)
  {

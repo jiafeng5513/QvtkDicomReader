@@ -17,6 +17,9 @@
 //    OUTPUTS: {ConnectedThresholdOutput1.png}
 //    ARGUMENTS:    60 116 150 180
 //  Software Guide : EndCommandLineArgs
+/*
+ * 区域生长法
+ */
 void seg_connectedthres(int argc, char * argv[],QVTKWidget* qvtk)
 {
 	//std::cerr << "Missing Parameters " << std::endl;
@@ -33,8 +36,7 @@ void seg_connectedthres(int argc, char * argv[],QVTKWidget* qvtk)
 	typedef itk::ImageToVTKImageFilter<OutputImageType>   ConnectorType;
 	ConnectorType::Pointer connector = ConnectorType::New();
 
-	typedef itk::CastImageFilter< InternalImageType, OutputImageType >
-		CastingFilterType;
+	typedef itk::CastImageFilter< InternalImageType, OutputImageType >CastingFilterType;
 	CastingFilterType::Pointer caster = CastingFilterType::New();
 
 	typedef  itk::ImageFileReader< InternalImageType > ReaderType;
@@ -62,11 +64,9 @@ void seg_connectedthres(int argc, char * argv[],QVTKWidget* qvtk)
 	typedef itk::CurvatureFlowImageFilter< InternalImageType, InternalImageType >
 		CurvatureFlowImageFilterType;
 
-	CurvatureFlowImageFilterType::Pointer smoothing =
-		CurvatureFlowImageFilterType::New();
+	CurvatureFlowImageFilterType::Pointer smoothing = CurvatureFlowImageFilterType::New();
 
-	typedef itk::ConnectedThresholdImageFilter< InternalImageType,
-		InternalImageType > ConnectedFilterType;
+	typedef itk::ConnectedThresholdImageFilter< InternalImageType,InternalImageType > ConnectedFilterType;
 
 	ConnectedFilterType::Pointer connectedThreshold = ConnectedFilterType::New();
 
@@ -108,8 +108,7 @@ void seg_connectedthres(int argc, char * argv[],QVTKWidget* qvtk)
 		std::cerr << "Exception caught !" << std::endl;
 		std::cerr << excep << std::endl;
 	}
-	vtkSmartPointer<vtkImageActor> actor =
-		vtkSmartPointer<vtkImageActor>::New();
+	vtkSmartPointer<vtkImageActor> actor = vtkSmartPointer<vtkImageActor>::New();
 #if VTK_MAJOR_VERSION <= 5
 	actor->SetInput(connector->GetOutput());
 #else
@@ -117,20 +116,16 @@ void seg_connectedthres(int argc, char * argv[],QVTKWidget* qvtk)
 	actor->GetMapper()->SetInputData(connector->GetOutput());
 
 #endif
-	vtkSmartPointer<vtkRenderer> renderer =
-		vtkSmartPointer<vtkRenderer>::New();
+	vtkSmartPointer<vtkRenderer> renderer = vtkSmartPointer<vtkRenderer>::New();
 	renderer->AddActor(actor);
 	renderer->ResetCamera();
 	renderer->SetBackground(0.0,0.0,0.0);
 
-	vtkSmartPointer<vtkRenderWindow> renderWindow =
-		vtkSmartPointer<vtkRenderWindow>::New();
+	vtkSmartPointer<vtkRenderWindow> renderWindow = vtkSmartPointer<vtkRenderWindow>::New();
 	renderWindow->AddRenderer(renderer);
 
-	vtkSmartPointer<vtkRenderWindowInteractor> renderWindowInteractor =
-		vtkSmartPointer<vtkRenderWindowInteractor>::New();
-	vtkSmartPointer<vtkInteractorStyleImage> style =
-		vtkSmartPointer<vtkInteractorStyleImage>::New();
+	vtkSmartPointer<vtkRenderWindowInteractor> renderWindowInteractor = vtkSmartPointer<vtkRenderWindowInteractor>::New();
+	vtkSmartPointer<vtkInteractorStyleImage> style = vtkSmartPointer<vtkInteractorStyleImage>::New();
 	qvtk->SetRenderWindow(renderWindow);
 	
 	renderWindow->Render();
@@ -147,6 +142,9 @@ void seg_connectedthres(int argc, char * argv[],QVTKWidget* qvtk)
 //    INPUTS: {BrainProtonDensitySlice.png}
 //    ARGUMENTS:   OtsuMultipleThresholdsOutput png 4
 //  Software Guide : EndCommandLineArgs
+/*
+ * 大津算法.最大类间方差法
+ */
 void seg_ostu(int argc, char * argv[], QVTKWidget* qvtk)
 {
 
@@ -355,6 +353,9 @@ void seg_ostu(int argc, char * argv[], QVTKWidget* qvtk)
 		std::cerr << "Exception thrown " << excp << std::endl;
 	}
 }
+/*
+ *
+ */
 void seg_neighconnected(int argc, char * argv[], QVTKWidget* qvtk)
 {
 	if (argc < 7)

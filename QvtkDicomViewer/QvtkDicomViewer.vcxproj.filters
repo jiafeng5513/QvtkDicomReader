@@ -96,9 +96,6 @@
     <ClCompile Include="GeneratedFiles\Release\moc_DicomDirTreeModel.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
-    <ClCompile Include="DicomPickPixel.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="DicomSeg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -124,6 +121,18 @@
       <Filter>Generated Files</Filter>
     </ClCompile>
     <ClCompile Include="ThreeD_Reconstruction.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_Segmenter.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_Segmenter.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Segmenter.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="vtkImageSegmentCallback.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -161,6 +170,12 @@
     <CustomBuild Include="ThreeD_Reconstruction.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
+    <CustomBuild Include="Segmenter.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Segmenter.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="GeneratedFiles\ui_QvtkDicomViewer.h">
@@ -193,9 +208,6 @@
     <ClInclude Include="DicomTreeItem.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DicomPickPixel.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
     <ClInclude Include="head_all.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -213,6 +225,12 @@
     </ClInclude>
     <ClInclude Include="GeneratedFiles\ui_ThreeD_Reconstruction.h">
       <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_Segmenter.h">
+      <Filter>Generated Files</Filter>
+    </ClInclude>
+    <ClInclude Include="vtkImageSegmentCallback.h">
+      <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
