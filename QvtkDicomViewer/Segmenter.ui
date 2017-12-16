@@ -87,7 +87,6 @@
      <zorder>pushButton_ConnectedThreshold</zorder>
      <zorder>pushButton_OtsuThreshold</zorder>
      <zorder>pushButton_NeighborhoodConnected</zorder>
-     <zorder>qvtkWidget_Segment</zorder>
      <zorder>pushButton_ConfidenceConnected</zorder>
     </widget>
    </item>
