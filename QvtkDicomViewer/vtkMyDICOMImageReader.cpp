@@ -23,6 +23,7 @@ PURPOSE.  See the above copyright notice for more information.
 #include "vtkObjectFactory.h"
 #include "vtkPointData.h"
 #include "vtkErrorCode.h"
+#include "vtkStringArray.h"
 
 #include <vtksys/SystemTools.hxx>
 
@@ -113,7 +114,7 @@ int vtkMyDICOMImageReader::CanReadFile(const char* fname)
 //----------------------------------------------------------------------------
 void vtkMyDICOMImageReader::ExecuteInformation()
 {
-	if (this->FileName == NULL && this->DirectoryName == NULL)
+	if (this->FileName == NULL && this->DirectoryName == NULL&&this->FileNames == NULL)
 	{
 		return;//此时应该探测FileNames中有没有东西
 	}
@@ -123,7 +124,7 @@ void vtkMyDICOMImageReader::ExecuteInformation()
 	 * 情况二:数据在DirectoryName中
 	 * 实际上我们还应该看看FileNames中有没有货
 	 */
-	if (this->FileName)
+	if (this->FileName)//如果用单张图片
 	{
 		vtksys::SystemTools::Stat_t fs;
 		if (vtksys::SystemTools::Stat(this->FileName, &fs))
@@ -236,6 +237,106 @@ void vtkMyDICOMImageReader::ExecuteInformation()
 			vtkErrorMacro(<< "Couldn't get sorted files. Slices may be in wrong order!");
 		}
 		dir->Delete();
+	}
+	else if (this->FileNames)//如果现在Filenames非空,从这里初始化
+	{
+		//vtkDirectory* dir = vtkDirectory::New();
+		//int opened = dir->Open(this->DirectoryName);
+		//if (!opened)
+		//{
+		//	vtkErrorMacro("Couldn't open " << this->DirectoryName);
+		//	dir->Delete();
+		//	return;
+		//}
+		////vtkIdType numFiles = dir->GetNumberOfFiles();
+		vtkIdType numFiles = FileNames->GetSize();//由于不明原因,这个size是不可信的,往往要多一些,
+
+		vtkDebugMacro(<< "There are " << numFiles << " files in the directory.");
+
+		this->DICOMFileNames->clear();
+		this->AppHelper->Clear();
+
+		for (vtkIdType i = 0; i < numFiles; i++)
+		{
+			//if (strcmp(dir->GetFile(i), ".") == 0 ||
+			//	strcmp(dir->GetFile(i), "..") == 0)
+			//{
+			//	continue;
+			//}
+
+			//std::string fileString = this->DirectoryName;
+			//fileString += "/";
+			//fileString += dir->GetFile(i);
+
+			std::string fileString = FileNames->GetValue(i);
+			if (fileString=="")
+			{
+				continue;//跳过空值,以免由于size的冗余大小导致的CanReadFile报运行时错误
+			}
+			int val = this->CanReadFile(fileString.c_str());
+
+			if (val == 1)
+			{
+				vtkDebugMacro(<< "Adding " << fileString.c_str() << " to DICOMFileNames.");
+				this->DICOMFileNames->push_back(fileString);
+			}
+			else
+			{
+				vtkDebugMacro(<< fileString.c_str() << " - DICOMParser CanReadFile returned : " << val);
+			}
+
+		}
+		std::vector<std::string>::iterator iter;
+
+		for (iter = this->DICOMFileNames->begin();
+			iter != this->DICOMFileNames->end();
+			++iter)
+		{
+			const char* fn = iter->c_str();
+			vtkDebugMacro(<< "Trying : " << fn);
+
+			bool couldOpen = this->Parser->OpenFile(fn);
+			if (!couldOpen)
+			{
+				return;//突然死亡法,一个失败文件直接导致整个函数退掉
+			}
+
+			//
+			this->Parser->ClearAllDICOMTagCallbacks();
+			this->AppHelper->RegisterCallbacks(this->Parser);
+
+			this->Parser->ReadHeader();
+			this->Parser->CloseFile();
+
+			vtkDebugMacro(<< "File name : " << fn);
+			vtkDebugMacro(<< "Slice number : " << this->AppHelper->GetSliceNumber());
+		}
+
+		std::vector<std::pair<float, std::string> > sortedFiles;
+
+		this->AppHelper->GetImagePositionPatientFilenamePairs(sortedFiles, false);
+		this->SetupOutputInformation(static_cast<int>(sortedFiles.size()));
+
+		//this->AppHelper->OutputSeries();
+
+		if (sortedFiles.size() > 0)
+		{
+			this->DICOMFileNames->clear();
+			std::vector<std::pair<float, std::string> >::iterator siter;
+			for (siter = sortedFiles.begin();
+				siter != sortedFiles.end();
+				++siter)
+			{
+				vtkDebugMacro(<< "Sorted filename : " << (*siter).second.c_str());
+				vtkDebugMacro(<< "Adding file " << (*siter).second.c_str() << " at slice : " << (*siter).first);
+				this->DICOMFileNames->push_back((*siter).second);
+			}
+		}
+		else
+		{
+			vtkErrorMacro(<< "Couldn't get sorted files. Slices may be in wrong order!");
+		}
+		//dir->Delete();
 	}
 
 }
@@ -444,7 +545,7 @@ void vtkMyDICOMImageReader::SetDirectoryName(const char* dn)
 /*
  * 听说这个函数能解决全人类的一切烦恼?(+1s....)
  */
-void vtkMyDICOMImageReader::SetFileNames(vtkStringArray*)
+void vtkMyDICOMImageReader::SetFileNames(vtkStringArray*filenames_array)
 {
 	/*
 	 * 要解决这个问题实际上分两步
@@ -456,6 +557,33 @@ void vtkMyDICOMImageReader::SetFileNames(vtkStringArray*)
 	 * 
 	 * 备注:全局检索 DirectoryName 
 	 */
+	if (filenames_array == this->FileNames)
+	{
+		return;
+	}
+	if (this->FileNames)
+	{
+		this->FileNames->Delete();
+		this->FileNames = 0;
+	}
+	if (filenames_array)
+	{
+		this->FileNames = filenames_array;
+		this->FileNames->Register(this);
+		if (this->FileNames->GetNumberOfValues() > 0)
+		{
+			this->DataExtent[4] = 0;
+			this->DataExtent[5] = this->FileNames->GetNumberOfValues() - 1;
+		}
+		delete[] this->FilePrefix;
+		this->FilePrefix = NULL;
+		delete[] this->FileName;
+		this->FileName = NULL;
+	}
+
+	this->Modified();
+
+
 }
 
 //----------------------------------------------------------------------------

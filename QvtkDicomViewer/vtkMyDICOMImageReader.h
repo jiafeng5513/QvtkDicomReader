@@ -35,7 +35,7 @@ class vtkDICOMImageReaderVector;
 class DICOMParser;
 class DICOMAppHelper;
 
-class VTKIOIMAGE_EXPORT vtkMyDICOMImageReader:public vtkImageReader2
+class /*VTKIOIMAGE_EXPORT*/ vtkMyDICOMImageReader:public vtkImageReader2
 {
 public:
 	//@{

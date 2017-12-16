@@ -77,6 +77,7 @@
 #include <vtkVolumeRayCastIsosurfaceFunction.h>  
 #include <vtkFixedPointVolumeRayCastMapper.h>
 #include <QComboBox>
+#include "vtkMyDICOMImageReader.h"
 class DicomDataBase;
 /*
  * 依赖说明:
@@ -153,18 +154,18 @@ private:
 	vtkSmartPointer<vtkBiDimensionalCallback> biDimensionalCallback;
 
 	//包旭12.6加体绘制
-	vtkRenderer *ren;
-	vtkRenderWindow *renWin;
-	vtkImageCast *readerImageCast;
-	vtkPiecewiseFunction *opacityTransferFunction;
-	vtkColorTransferFunction *colorTransferFunction;
-	vtkVolumeProperty *volumeProperty;
-	vtkVolumeRayCastCompositeFunction *compositeFunction;
-	vtkFixedPointVolumeRayCastMapper *volumeMapper;
-	vtkVolume *volume1;
-	vtkSmartPointer<vtkImageReader2> reader1;
-	vtkSmartPointer<vtkInteractorStyleTrackballCamera> style;
-	vtkGPUVolumeRayCastMapper *volumeMapper_gpu;
+	//vtkRenderer *ren;
+	//vtkRenderWindow *renWin;
+	//vtkImageCast *readerImageCast;
+	//vtkPiecewiseFunction *opacityTransferFunction;
+	//vtkColorTransferFunction *colorTransferFunction;
+	//vtkVolumeProperty *volumeProperty;
+	//vtkVolumeRayCastCompositeFunction *compositeFunction;
+	//vtkFixedPointVolumeRayCastMapper *volumeMapper;
+	//vtkVolume *volume1;
+	//vtkSmartPointer<vtkMyDICOMImageReader> reader1;
+	//vtkSmartPointer<vtkInteractorStyleTrackballCamera> style;
+	//vtkGPUVolumeRayCastMapper *volumeMapper_gpu;
 	//////////////////////
 	QIcon icon_Play;//播放图标
 	QIcon icon_Pause;//暂停图标
@@ -246,10 +247,13 @@ public slots:
 	///测试入口
 	void OnTestEntrance_01();//测试入口1
 	void OnTestEntrance_02();//测试入口2
+
+	void On3D_Reconstruction();			//响应3维重建
+
     //bao 11.27日加
 	void Slots_Seg(int count);
 	void Slots_Reg(int count);
 	void Slots_PickPixel(int count,QVTKWidget *qvtk);
-	void Slots_Volume();
-	void Slots_Volume_gpu();
+	//void Slots_Volume();
+	//void Slots_Volume_gpu();
 };
