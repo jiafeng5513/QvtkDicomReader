@@ -89,7 +89,6 @@
     <ClCompile Include="DicomPatient.cpp" />
     <ClCompile Include="vtkImageSegmentCallback.cpp" />
     <ClCompile Include="DicomReg.cpp" />
-    <ClCompile Include="DicomSeg.cpp" />
     <ClCompile Include="DicomSeries.cpp" />
     <ClCompile Include="DicomStudy.cpp" />
     <ClCompile Include="GeneratedFiles\Debug\moc_DicomDir.cpp">
@@ -224,7 +223,6 @@
     <ClInclude Include="DicomPatient.h" />
     <ClInclude Include="vtkImageSegmentCallback.h" />
     <ClInclude Include="DicomReg.h" />
-    <ClInclude Include="DicomSeg.h" />
     <ClInclude Include="DicomSeries.h" />
     <ClInclude Include="DicomStudy.h" />
     <ClInclude Include="GeneratedFiles\ui_DicomDir.h" />

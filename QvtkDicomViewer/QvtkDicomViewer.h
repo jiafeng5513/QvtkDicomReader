@@ -105,7 +105,6 @@ class QvtkDicomViewer : public QMainWindow
 public:
 	QvtkDicomViewer(QWidget *parent = Q_NULLPTR);
 	QComboBox* reg_combo;
-	QComboBox* seg_combo;
 	Reg_Selector Reg_Selector_Window;
 	enum CURSOR		
 	{	POINTRE,		//默认指针
@@ -153,20 +152,6 @@ private:
 	vtkSmartPointer<vtkBiDimensionalWidget> biDimensionalWidget;
 	vtkSmartPointer<vtkBiDimensionalCallback> biDimensionalCallback;
 
-	//包旭12.6加体绘制
-	//vtkRenderer *ren;
-	//vtkRenderWindow *renWin;
-	//vtkImageCast *readerImageCast;
-	//vtkPiecewiseFunction *opacityTransferFunction;
-	//vtkColorTransferFunction *colorTransferFunction;
-	//vtkVolumeProperty *volumeProperty;
-	//vtkVolumeRayCastCompositeFunction *compositeFunction;
-	//vtkFixedPointVolumeRayCastMapper *volumeMapper;
-	//vtkVolume *volume1;
-	//vtkSmartPointer<vtkMyDICOMImageReader> reader1;
-	//vtkSmartPointer<vtkInteractorStyleTrackballCamera> style;
-	//vtkGPUVolumeRayCastMapper *volumeMapper_gpu;
-	//////////////////////
 	QIcon icon_Play;//播放图标
 	QIcon icon_Pause;//暂停图标
 	bool PlayFlag;//false:图标应为播放,处于准备播放状态,true:图标应为暂停,处于播放状态并准备暂停
@@ -178,14 +163,10 @@ private:
 	QMenu * TreeViewMenu_OnSeries;		//树右键菜单->Series节点
 	QMenu * TreeViewMenu_OnImage;		//树右键菜单->Image节点
 
-
 	std::string Current_patientId;//当前的病人ID
 	DicomPatient * CurrentPatient;		//当前病人
 	QModelIndex indexSelect;//树视图中
 	DicomDirTreeModel *m_dicomdirtreemodel;
-
-	//QAction * volume;
-	//QAction * volume_gpu;
 private:
 	///内部操作
 	void setCursor(CURSOR newValue);
@@ -245,13 +226,11 @@ public slots:
 	void OnWindowWL_CT_Medias();		//纵膈
 	void OnWindowWL_CT_Lungs();		    //肺
 	///测试入口
-	void OnTestEntrance_01();//测试入口1
-	void OnTestEntrance_02();//测试入口2
+	void OnTestEntrance_01();			//测试入口1
+	void OnTestEntrance_02();			//测试入口2
 
 	void On3D_Reconstruction();			//响应3维重建
-
+	void OnSegmentImage();				//响应图像分割
     //bao 11.27日加
-	void Slots_Seg(int count);
 	void Slots_Reg(int count);
-	void Slots_PickPixel(int count,QVTKWidget *qvtk);
 };

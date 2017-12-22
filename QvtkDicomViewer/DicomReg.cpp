@@ -67,17 +67,11 @@ void reg_test(int argc, char *argv[],QVTKWidget* qvtk)
 	typedef itk::TranslationTransform< double, Dimension > TransformType;
 	typedef itk::RegularStepGradientDescentOptimizer       OptimizerType;
 
-	typedef itk::MeanSquaresImageToImageMetric<
-		FixedImageType,
-		MovingImageType >    MetricType;
+	typedef itk::MeanSquaresImageToImageMetric<FixedImageType,MovingImageType >    MetricType;
 	
-	typedef itk::LinearInterpolateImageFunction<
-		MovingImageType,
-		double          >    InterpolatorType;
+	typedef itk::LinearInterpolateImageFunction<MovingImageType,double>    InterpolatorType;
 
-	typedef itk::ImageRegistrationMethod<
-		FixedImageType,
-		MovingImageType >    RegistrationType;
+	typedef itk::ImageRegistrationMethod<FixedImageType,MovingImageType >  RegistrationType;
 	
 	MetricType::Pointer         metric = MetricType::New();
 	TransformType::Pointer      transform = TransformType::New();
@@ -98,17 +92,16 @@ void reg_test(int argc, char *argv[],QVTKWidget* qvtk)
 	FixedImageReaderType::Pointer  fixedImageReader = FixedImageReaderType::New();
 	MovingImageReaderType::Pointer movingImageReader = MovingImageReaderType::New();
 
-	fixedImageReader->SetFileName(argv[1]);
+	fixedImageReader->SetFileName("BrainProtonDensitySliceBorder20.png");//argv[1]
 	fixedImageReader->SetImageIO(gdcmIO);
-	movingImageReader->SetFileName(argv[2]);
+	movingImageReader->SetFileName("BrainProtonDensitySliceR10X13Y17.png");//argv[2]
 	movingImageReader->SetImageIO(gdcmIO);
 
 	registration->SetFixedImage(fixedImageReader->GetOutput());
 	registration->SetMovingImage(movingImageReader->GetOutput());
 	
 	fixedImageReader->Update();
-	registration->SetFixedImageRegion(
-		fixedImageReader->GetOutput()->GetBufferedRegion());
+	registration->SetFixedImageRegion(fixedImageReader->GetOutput()->GetBufferedRegion());
 
 	typedef RegistrationType::ParametersType ParametersType;
 	ParametersType initialParameters(transform->GetNumberOfParameters());
@@ -384,10 +377,10 @@ void reg_2Dtransform(int argc, char *argv[], QVTKWidget* qvtk)
 	FixedImageReaderType::Pointer  fixedImageReader = FixedImageReaderType::New();
 	MovingImageReaderType::Pointer movingImageReader = MovingImageReaderType::New();
 
-	fixedImageReader->SetFileName(argv[1]);
+	fixedImageReader->SetFileName("BrainProtonDensitySliceBorder20.png");//argv[1]
 	fixedImageReader->SetImageIO(gdcmIO);
 
-	movingImageReader->SetFileName(argv[2]);
+	movingImageReader->SetFileName("BrainProtonDensitySliceR10X13Y17S12.png");//argv[2]
 	movingImageReader->SetImageIO(gdcmIO);
 
 	registration->SetFixedImage(fixedImageReader->GetOutput());

@@ -27,7 +27,7 @@ signals:
 	void SegmentFuncChange();		//用户重新选择/首次选择分割算法
 public slots:
 	void OnConnectedThreshold();	//联通阈值方法
-	void OnOtsuThreshold();			//大津算法,最大类间方差法
+	void OnWatershedThreshold();	//分水岭
 	void OnNeighborhoodConnected(); //邻域连接法
 	void OnConfidenceConnected();	//置信连接法
 	void OnFastMarching();			//快速匹配

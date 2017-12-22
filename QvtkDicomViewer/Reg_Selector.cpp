@@ -62,9 +62,10 @@ void Reg_Selector::submit()
 	Reg_enum  reg_enum = (Reg_enum)this->reg_count;
 	char * argv[] = {
 		" ",
-		chr,
-		chr2,
-		//"C://Users//bao//Desktop//DICOM//S427870//S10//I10",
+		//chr,
+		"F:/Dicom/Test3/BrainProtonDensitySliceBorder20.png",
+		"F:/Dicom/Test3/BrainProtonDensitySliceR10X13Y17.png",
+		//chr2,
 		"..//registration//ImageRegistration1Output.dcm",
 		"..//registration//ImageRegistration1DifferenceAfter.dcm",
 		"..//registration//ImageRegistration1DifferenceBefore.dcm"

@@ -1,2 +1,74 @@
-﻿  QvtkDicomViewer.cpp
+﻿  DicomReg.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.12.25827\include\xutility(2430): warning C4996: 'std::copy::_Unchecked_iterators::_Deprecate': Call to 'std::copy' with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators'
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.12.25827\include\xutility(2430): note: 参见“std::copy::_Unchecked_iterators::_Deprecate”的声明
+  f:\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkTransform.hxx(529): note: 参见对正在编译的函数 模板 实例化“_OutIt std::copy<const double*,T*>(_InIt,_InIt,_OutIt)”的引用
+          with
+          [
+              _OutIt=double *,
+              T=double,
+              _InIt=const double *
+          ]
+  f:\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkTransform.hxx(524): note: 编译 类 模板 成员函数 "void itk::Transform<itk::ImageToImageMetric<TFixedImage,TMovingImage>::CoordinateRepresentationType,2,2>::CopyInParameters(const double *const ,const double *const )" 时
+          with
+          [
+              TFixedImage=FixedImageType,
+              TMovingImage=MovingImageType
+          ]
+  f:\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImageToImageMetric.h(92): note: 参见对正在编译的 类 模板 实例化 "itk::Transform<itk::ImageToImageMetric<TFixedImage,TMovingImage>::CoordinateRepresentationType,2,2>" 的引用
+          with
+          [
+              TFixedImage=FixedImageType,
+              TMovingImage=MovingImageType
+          ]
+  f:\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkMeanSquaresImageToImageMetric.h(41): note: 参见对正在编译的 类 模板 实例化 "itk::ImageToImageMetric<TFixedImage,TMovingImage>" 的引用
+          with
+          [
+              TFixedImage=FixedImageType,
+              TMovingImage=MovingImageType
+          ]
+  DicomReg.cpp(76): note: 参见对正在编译的 类 模板 实例化 "itk::MeanSquaresImageToImageMetric<FixedImageType,MovingImageType>" 的引用
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.12.25827\include\algorithm(1019): warning C4996: 'std::transform::_Unchecked_iterators::_Deprecate': Call to 'std::transform' with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators'
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.12.25827\include\algorithm(1019): note: 参见“std::transform::_Unchecked_iterators::_Deprecate”的声明
+  f:\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImageAlgorithm.h(213): note: 参见对正在编译的函数 模板 实例化“_OutIt *std::transform<const TInputType*,TOutputType*,itk::ImageAlgorithm::StaticCast<TInputType,TOutputType>>(_InIt,_InIt,_OutIt,_Fn)”的引用
+          with
+          [
+              _OutIt=double *,
+              TInputType=float,
+              TOutputType=double,
+              _InIt=const float *,
+              _Fn=itk::ImageAlgorithm::StaticCast<float,double>
+          ]
+  f:\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImageAlgorithm.hxx(136): note: 参见对正在编译的函数 模板 实例化“TOutputType *itk::ImageAlgorithm::CopyHelper<float,double>(const TInputType *,const TInputType *,TOutputType *)”的引用
+          with
+          [
+              TOutputType=double,
+              TInputType=float
+          ]
+  f:\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImageAlgorithm.h(112): note: 参见对正在编译的函数 模板 实例化“void itk::ImageAlgorithm::DispatchedCopy<itk::Image<PixelType,2>,itk::Image<double,2>>(const InputImageType *,OutputImageType *,const itk::ImageRegion<2> &,const itk::ImageRegion<2> &,itk::ImageAlgorithm::TrueType)”的引用
+          with
+          [
+              InputImageType=itk::Image<PixelType,2>,
+              OutputImageType=itk::Image<double,2>
+          ]
+  f:\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkCastImageFilter.hxx(73): note: 参见对正在编译的函数 模板 实例化“void itk::ImageAlgorithm::Copy<PixelType,double,2>(const itk::Image<PixelType,2> *,itk::Image<double,2> *,const itk::ImageRegion<2> &,const itk::ImageRegion<2> &)”的引用
+  f:\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkCastImageFilter.hxx(59): note: 编译 类 模板 成员函数 "void itk::CastImageFilter<itk::Image<PixelType,2>,itk::Image<double,2>>::ThreadedGenerateData(const itk::ImageRegion<2> &,itk::ThreadIdType)" 时
+  f:\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImageRegistrationMethodv4.hxx(518): note: 参见对正在编译的 类 模板 实例化 "itk::CastImageFilter<itk::Image<PixelType,2>,itk::Image<double,2>>" 的引用
+  f:\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImageRegistrationMethodv4.hxx(292): note: 编译 类 模板 成员函数 "void itk::ImageRegistrationMethodv4<FixedImageType,MovingImageType,TransformType,TFixedImage,itk::PointSet<unsigned int,2,itk::DefaultStaticMeshTraits<TPixelType,2,2,float,float,TPixelType>>>::InitializeRegistrationAtEachLevel(const itk::SizeValueType)" 时
+          with
+          [
+              TFixedImage=FixedImageType,
+              TPixelType=unsigned int
+          ]
+  f:\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImageRegistrationMethodv4.hxx(800): note: 参见对正在编译的函数 模板 实例化“void itk::ImageRegistrationMethodv4<FixedImageType,MovingImageType,TransformType,TFixedImage,itk::PointSet<unsigned int,2,itk::DefaultStaticMeshTraits<TPixelType,2,2,float,float,TPixelType>>>::InitializeRegistrationAtEachLevel(const itk::SizeValueType)”的引用
+          with
+          [
+              TFixedImage=FixedImageType,
+              TPixelType=unsigned int
+          ]
+  DicomReg.cpp(1192): note: 参见对正在编译的 类 模板 实例化 "itk::ImageRegistrationMethodv4<FixedImageType,MovingImageType,TransformType,TFixedImage,itk::PointSet<unsigned int,2,itk::DefaultStaticMeshTraits<TPixelType,2,2,float,float,TPixelType>>>" 的引用
+          with
+          [
+              TFixedImage=FixedImageType,
+              TPixelType=unsigned int
+          ]
   QvtkDicomViewer.vcxproj -> F:\QvtkDicomReader\x64\Debug\QvtkDicomViewer.exe

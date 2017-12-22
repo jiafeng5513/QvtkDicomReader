@@ -16,7 +16,9 @@ Segmenter::Segmenter(std::string Filename, QWidget* parent) : QWidget(parent)
 {
 	ui.setupUi(this);
 	m_Filename = Filename;
-
+	m_segment_fun = NULL_Seg;
+	//监控当前所选的算法的变化
+	connect(this, SIGNAL(SegmentFuncChange()), this, SLOT(OnSegmentFuncChange()));
 }
 /*
  * 析构,处理掉所有的非智能指针对象
@@ -29,37 +31,49 @@ Segmenter::~Segmenter()
  */
 void Segmenter::OnConnectedThreshold()
 {
+	m_segment_fun = Seg_connectedthres;
+	emit SegmentFuncChange();
 }
 
 /*
- *大津算法,最大类间方差法
+ *分水岭
  */
-void Segmenter::OnOtsuThreshold()
+void Segmenter::OnWatershedThreshold()
 {
+	m_segment_fun = Seg_waterseg;
+	emit SegmentFuncChange();
 }
 /*
  *邻域连接法
  */
 void Segmenter::OnNeighborhoodConnected()
 {
+	m_segment_fun = Seg_neighconnected;
+	emit SegmentFuncChange();
 }
 /*
  * 置信连接法
  */
 void Segmenter::OnConfidenceConnected()
 {
+	m_segment_fun = Seg_confidconnected;
+	emit SegmentFuncChange();
 }
 /*
  * 快速匹配
  */
 void Segmenter::OnFastMarching()
 {
+	m_segment_fun = Seg_fastmarching;
+	emit SegmentFuncChange();
 }
 /*
  * 形状检测
  */
 void Segmenter::OnShapeDetection()
 {
+	m_segment_fun = Seg_shapedectection;
+	emit SegmentFuncChange();
 }
 /*
  * 响应分割方法的变化/首次设置
@@ -99,7 +113,7 @@ void Segmenter::OnSegmentFuncChange()
 	renderer->SetBackground(0, 0, 0);//背景颜色
 	//renderer->SetBackground2(1, 1, 1);
 
-	// Annotate the image with window/level and mouse over pixel information
+	// 在画布上叠加 窗宽窗位 鼠标悬停位置 
 	vtkSmartPointer<vtkCornerAnnotation> cornerAnnotation = vtkSmartPointer<vtkCornerAnnotation>::New();
 	cornerAnnotation->SetLinearFontScaleFactor(2);
 	cornerAnnotation->SetNonlinearFontScaleFactor(1);
@@ -116,7 +130,7 @@ void Segmenter::OnSegmentFuncChange()
 	callback->SetAnnotation(cornerAnnotation);
 	callback->SetPicker(propPicker);
 	callback->SetQvtk(ui.qvtkWidget_Segment);
-	callback->SetCount(m_segment_fun);//注意值的对应
+	callback->SetCount(m_segment_fun);//注意值的对应=============================>>>>>这里是启动对应的算法的位置
 	//callback->SetDir(dir);//这个函数还有用么
 	// InteractorStyleImage allows for the following controls:
 	// 1) middle mouse + move = camera pan

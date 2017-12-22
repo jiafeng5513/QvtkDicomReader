@@ -65,7 +65,7 @@
       <item>
        <widget class="QPushButton" name="pushButton_OtsuThreshold">
         <property name="text">
-         <string>最大类间方差法</string>
+         <string>分水岭法</string>
         </property>
        </widget>
       </item>
@@ -111,5 +111,127 @@
   </customwidget>
  </customwidgets>
  <resources/>
- <connections/>
+ <connections>
+  <connection>
+   <sender>pushButton_ConnectedThreshold</sender>
+   <signal>clicked()</signal>
+   <receiver>Segmenter</receiver>
+   <slot>OnConnectedThreshold()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>66</x>
+     <y>41</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>66</x>
+     <y>7</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_OtsuThreshold</sender>
+   <signal>clicked()</signal>
+   <receiver>Segmenter</receiver>
+   <slot>OnOtsuThreshold()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>189</x>
+     <y>46</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>189</x>
+     <y>66</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_ConfidenceConnected</sender>
+   <signal>clicked()</signal>
+   <receiver>Segmenter</receiver>
+   <slot>OnConfidenceConnected()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>294</x>
+     <y>46</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>295</x>
+     <y>66</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_NeighborhoodConnected</sender>
+   <signal>clicked()</signal>
+   <receiver>Segmenter</receiver>
+   <slot>OnNeighborhoodConnected()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>399</x>
+     <y>43</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>448</x>
+     <y>66</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_ShapeDetection</sender>
+   <signal>clicked()</signal>
+   <receiver>Segmenter</receiver>
+   <slot>OnShapeDetection()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>524</x>
+     <y>40</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>534</x>
+     <y>4</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_FastMarching</sender>
+   <signal>clicked()</signal>
+   <receiver>Segmenter</receiver>
+   <slot>OnFastMarching()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>648</x>
+     <y>45</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>663</x>
+     <y>65</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_OtsuThreshold</sender>
+   <signal>clicked()</signal>
+   <receiver>Segmenter</receiver>
+   <slot>OnWatershedThreshold()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>221</x>
+     <y>42</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>222</x>
+     <y>67</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>OnConnectedThreshold()</slot>
+  <slot>OnOtsuThreshold()</slot>
+  <slot>OnNeighborhoodConnected()</slot>
+  <slot>OnConfidenceConnected()</slot>
+  <slot>OnFastMarching()</slot>
+  <slot>OnShapeDetection()</slot>
+  <slot>OnWatershedThreshold()</slot>
+ </slots>
 </ui>

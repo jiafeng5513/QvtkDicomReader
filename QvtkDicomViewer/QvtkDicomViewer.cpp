@@ -1,7 +1,7 @@
 #include "myVtkInteractorStyleImage.h"
 #include "vtkBiDimensionalCallback.h"
 #include "DicomDir.h"
-
+#include "Segmenter.h"
 #include <QListView>
 #include "QvtkDicomViewer.h"
 #include <QMessageBox>
@@ -53,7 +53,7 @@
 #include "ThreeD_Reconstruction.h"
 
 /*
- * 构造方法(这里学长改了什么)
+ * 构造方法
  */
 QvtkDicomViewer::QvtkDicomViewer(QWidget *parent)
 	: QMainWindow(parent)
@@ -63,44 +63,16 @@ QvtkDicomViewer::QvtkDicomViewer(QWidget *parent)
 	CursorType = CURSOR::POINTRE;
 	//监控光标类型的修改
 	connect(this, SIGNAL(CursorValueChanged()), this, SLOT(OnChangeCursorValue()));
-	//创建并构造一个下拉列表
-	QComboBox* _Combobox = new QComboBox();
-	_Combobox->addItem(QStringLiteral("骨骼"));
-	_Combobox->addItem(QStringLiteral("肌肉"));
-	_Combobox->addItem(QStringLiteral("查克拉"));
-	//添加到菜单栏
-	ui.mainToolBar->addSeparator();
-	ui.mainToolBar->addWidget(_Combobox);
-	ui.mainToolBar->addSeparator();
-	//自定义初始化
 #pragma region 包旭添加 
-	seg_combo = new QComboBox();
-	seg_combo->setMaxVisibleItems(5);
-
-	seg_combo->addItem(QWidget::tr("NULL_Seg"));
-	seg_combo->addItem(QWidget::tr("seg_connectedthres"));
-	seg_combo->addItem(QWidget::tr("seg_ostu"));
-	seg_combo->addItem(QWidget::tr("seg_neighconnected"));
-	seg_combo->addItem(QWidget::tr("seg_confidconnected"));
-	//seg_combo->addItem(QWidget::tr("seg_waterseg"));
-	seg_combo->addItem(QWidget::tr("seg_fastmarching"));
-	seg_combo->addItem(QWidget::tr("seg_shapedectection"));
 
 	reg_combo = new QComboBox();
 	reg_combo->setMaxVisibleItems(5);
-
 	reg_combo->addItem(QWidget::tr("NULL_Reg"));
 	reg_combo->addItem(QWidget::tr("reg_normal"));
 	reg_combo->addItem(QWidget::tr("reg_2Dtransform"));
 	reg_combo->addItem(QWidget::tr("reg_AffineTrans"));
 	reg_combo->addItem(QWidget::tr("reg_MultiAffine"));
-	//reg_combo->resize(50,10);
-	connect(seg_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(Slots_Seg(int)));
 	connect(reg_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(Slots_Reg(int)));
-
-	//ui.mainToolBar->addWidget(reg_combo);
-
-	ui.mainToolBar->addWidget(seg_combo);
 	ui.mainToolBar->addWidget(reg_combo);
 #pragma endregion
 
@@ -565,7 +537,10 @@ void QvtkDicomViewer::CreateContextMenu()
 
 	QAction* action_New_Render_Image = new QAction(QStringLiteral("&显示这个Image"), ui.treeView);
 	connect(action_New_Render_Image, SIGNAL(triggered()), this, SLOT(OnShowSelectedImage()));
-	
+
+	QAction* action_Segment_Image = new QAction(QStringLiteral("&对该Image进行分割"), ui.treeView);
+	connect(action_Segment_Image, SIGNAL(triggered()), this, SLOT(OnSegmentImage()));
+
 	//树右键菜单->空树
 	TreeViewMenu_OnEmpty = new QMenu(ui.treeView);
 	TreeViewMenu_OnEmpty->addAction(action_New_Open_DICOMDIR_File);
@@ -579,6 +554,7 @@ void QvtkDicomViewer::CreateContextMenu()
 	//树右键菜单->Image节点
 	TreeViewMenu_OnImage = new QMenu(ui.treeView);
 	TreeViewMenu_OnImage->addAction(action_New_Render_Image);
+	TreeViewMenu_OnImage->addAction(action_Segment_Image);
 }
 /*
  * 显示当前series中的第Index张图,Index从0开始,与滚动条配合
@@ -1005,8 +981,8 @@ void QvtkDicomViewer::OnStop()
 	 //for (int column = 0; column < model->columnCount(); ++column)
 		//ui.treeView->resizeColumnToContents(column);
 
-	 DicomDataBase::getInstance()->Init("F:/Dicom/Test2/DICOMDIR");
-	 Current_patientId = "335645";
+	 DicomDataBase::getInstance()->Init("F:/Dicom/Test1/DICOMDIR");
+	 Current_patientId = "CT475430";
 	 CurrentPatient = new DicomPatient(DicomDataBase::getInstance()->getPatientById(Current_patientId));
 	 m_dicomdirtreemodel = new DicomDirTreeModel(headers, CurrentPatient);
 
@@ -1030,6 +1006,23 @@ void QvtkDicomViewer::On3D_Reconstruction()
 	ThreeD_Reconstruction * _3d_reconstructer = new ThreeD_Reconstruction(filenames_v);
 	_3d_reconstructer->show();
 	_3d_reconstructer->OnReconstruction();
+}
+/*
+ * 响应图像分割操作
+ */
+void QvtkDicomViewer::OnSegmentImage()
+{
+	/*
+	 * 先显示这张image
+	 */
+	CurrentPatient->getDicomImageByRfid(m_dicomdirtreemodel->getItem(indexSelect)->itemData[1].toString().toStdString());
+	RenderInitializer(CurrentPatient->getCurrentDicomImage()->AbsFilePath, CurrentPatient->getCurrentDicomSeries()->ImageList.size());
+	ui.SliceScrollBar->setValue(CurrentPatient->indexOfCurrentImage);
+	/*
+	 * 启动分割工具并传递关键参数
+	 */
+	Segmenter *_segmenter = new Segmenter(CurrentPatient->getCurrentDicomImage()->AbsFilePath);
+	_segmenter->show();
 }
 
 /*
@@ -1156,41 +1149,10 @@ void QvtkDicomViewer::On3D_Reconstruction()
 //==========================================================================================
  /*
   *暂时把功能分成三个部分:重建,分割,配准
-  * 1.重建,两个按钮,考虑在程序启动的时候探测GPU的可用性,若可用直接使用GPU方法,若不可用使用CPU后备方法,并在状态栏提示
-  *		这个功能是用VTK做的,核心代码都在QvtkDicomViewer.cpp中,两个槽函数
-  *		问题是交互不统一,参数来源有问题
-  *	2.分割,有鼠标交互,而且有额外的文字提示,打开速度需要优化,并且会输出文件,首先这个输出我不需要,需要屏蔽
-  *		其次,参数来源不能是静态指定的,整个块都需要重构,
-  *		最后,考虑功能入口的合理性,现在考虑利用树视图上下文菜单预留的接口实现,但是似乎不太形象
   *	3.配准,根本不知道他需要什么文件,需要断点调试
   *		这部分的核心功能据我观察是从一个控制台程序里面扒出来的,首先是断点跟踪设法找到他需要喂什么文件格式
   *		然后输出的那些文件有什么用,能不能屏蔽掉,需要看他是不是用文件做了中转.
-  *	4.目前的计划是先把三维重建搞定,
-  *		第一步是把参数从一个文件夹换成文件序列
-  *		根据RadiAnt的交互逻辑,三维重建新开一个非模态窗口,这个实例只显示重建结果
-  *		这个新的窗口参考主窗口的逻辑,初始化,帧更新,这套渲染流程
-  *
   */
- /*
-  *	这个槽函数似乎没有绑定任何信号
-  */
- void QvtkDicomViewer::Slots_PickPixel(int count, QVTKWidget *qvtk)
- {
-	 
-
-	 //std::string dir = CurrentPatient->getCurrentDicomImage()->ReferencedFileID;
-	 char* argv[] = { "   ", "F:/Dicom/Test1/DICOM/S427870/S20/I10" };
-	std::string dir = "";
-	 pickpixel(count,argv, ui.qvtkWidget,dir);
- }
-/*
- * 响应seg_combo的更改,左侧Combox,猜测这是和分割有关系的segment分割
- * 推测分割是针对单张dicom实行的,入口装在右键上,没毛病
- */
- void QvtkDicomViewer::Slots_Seg(int count)
- {
-	 Slots_PickPixel(count,ui.qvtkWidget);
- }
 /*
  * 响应reg_combo的更改,右侧Combox,registration,暂时猜测是配准
  */

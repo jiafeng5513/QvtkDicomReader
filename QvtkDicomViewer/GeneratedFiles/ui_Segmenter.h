@@ -110,6 +110,13 @@ public:
 
 
         retranslateUi(Segmenter);
+        QObject::connect(pushButton_ConnectedThreshold, SIGNAL(clicked()), Segmenter, SLOT(OnConnectedThreshold()));
+        QObject::connect(pushButton_OtsuThreshold, SIGNAL(clicked()), Segmenter, SLOT(OnOtsuThreshold()));
+        QObject::connect(pushButton_ConfidenceConnected, SIGNAL(clicked()), Segmenter, SLOT(OnConfidenceConnected()));
+        QObject::connect(pushButton_NeighborhoodConnected, SIGNAL(clicked()), Segmenter, SLOT(OnNeighborhoodConnected()));
+        QObject::connect(pushButton_ShapeDetection, SIGNAL(clicked()), Segmenter, SLOT(OnShapeDetection()));
+        QObject::connect(pushButton_FastMarching, SIGNAL(clicked()), Segmenter, SLOT(OnFastMarching()));
+        QObject::connect(pushButton_OtsuThreshold, SIGNAL(clicked()), Segmenter, SLOT(OnWatershedThreshold()));
 
         QMetaObject::connectSlotsByName(Segmenter);
     } // setupUi
@@ -122,7 +129,7 @@ public:
         pushButton_FastMarching->setText(QApplication::translate("Segmenter", "\345\277\253\351\200\237\345\214\271\351\205\215\346\263\225", Q_NULLPTR));
         groupBox_RegionGrowing->setTitle(QApplication::translate("Segmenter", "\345\214\272\345\237\237\347\224\237\351\225\277\346\263\225", Q_NULLPTR));
         pushButton_ConnectedThreshold->setText(QApplication::translate("Segmenter", "\350\201\224\351\200\232\351\230\210\345\200\274\346\263\225", Q_NULLPTR));
-        pushButton_OtsuThreshold->setText(QApplication::translate("Segmenter", "\346\234\200\345\244\247\347\261\273\351\227\264\346\226\271\345\267\256\346\263\225", Q_NULLPTR));
+        pushButton_OtsuThreshold->setText(QApplication::translate("Segmenter", "\345\210\206\346\260\264\345\262\255\346\263\225", Q_NULLPTR));
         pushButton_ConfidenceConnected->setText(QApplication::translate("Segmenter", "\347\275\256\344\277\241\350\277\236\346\216\245\346\263\225", Q_NULLPTR));
         pushButton_NeighborhoodConnected->setText(QApplication::translate("Segmenter", "\351\202\273\345\237\237\350\277\236\346\216\245\346\263\225", Q_NULLPTR));
     } // retranslateUi

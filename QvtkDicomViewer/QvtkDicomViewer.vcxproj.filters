@@ -96,9 +96,6 @@
     <ClCompile Include="GeneratedFiles\Release\moc_DicomDirTreeModel.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
-    <ClCompile Include="DicomSeg.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="DicomReg.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -209,9 +206,6 @@
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="head_all.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="DicomSeg.h">
       <Filter>Header Files</Filter>
     </ClInclude>
     <ClInclude Include="DicomReg.h">
