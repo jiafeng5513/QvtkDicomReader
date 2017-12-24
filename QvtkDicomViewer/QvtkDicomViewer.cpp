@@ -49,7 +49,6 @@
 
 #include <vtkImageSegmentCallback.h>
 #include <vtkDecimatePro.h>
-#include <Reg_Selector.h>
 #include "ThreeD_Reconstruction.h"
 
 /*
@@ -58,6 +57,8 @@
 QvtkDicomViewer::QvtkDicomViewer(QWidget *parent)
 	: QMainWindow(parent)
 {
+	//无边框,保持在顶端
+	//setWindowFlags(Qt::FramelessWindowHint | Qt::WindowMinimizeButtonHint | Qt::WindowStaysOnTopHint);
 	ui.setupUi(this);
 	ui.action_Pointer->setChecked(true);
 	CursorType = CURSOR::POINTRE;
@@ -1158,7 +1159,7 @@ void QvtkDicomViewer::OnSegmentImage()
  */
  void QvtkDicomViewer::Slots_Reg(int count)
  {
-	 Reg_Selector_Window.SetCount(count);
-	 Reg_Selector_Window.SetQvtk(ui.qvtkWidget);
-	 Reg_Selector_Window.show();
+	 m_Reg_Window.SetCount(count);
+	 m_Reg_Window.SetQvtk(ui.qvtkWidget);
+	 m_Reg_Window.show();
  }

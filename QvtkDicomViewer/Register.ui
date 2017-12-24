@@ -1,0 +1,288 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>Register</class>
+ <widget class="QWidget" name="Register">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>698</width>
+    <height>616</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>Register</string>
+  </property>
+  <layout class="QGridLayout" name="gridLayout">
+   <item row="0" column="0">
+    <widget class="QPushButton" name="pushButton_SelectImageFix">
+     <property name="minimumSize">
+      <size>
+       <width>100</width>
+       <height>25</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>100</width>
+       <height>25</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>基准图像</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="5">
+    <widget class="QRadioButton" name="radioButton_4">
+     <property name="text">
+      <string>魔法变换</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="7">
+    <widget class="QPushButton" name="pushButton_Cancel">
+     <property name="minimumSize">
+      <size>
+       <width>100</width>
+       <height>25</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>100</width>
+       <height>25</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>退出</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0">
+    <widget class="QPushButton" name="pushButton_SelectImageMove">
+     <property name="minimumSize">
+      <size>
+       <width>100</width>
+       <height>25</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>100</width>
+       <height>25</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>待配准图像</string>
+     </property>
+    </widget>
+   </item>
+   <item row="7" column="0" colspan="8">
+    <widget class="QVTKWidget" name="qvtkWidget_Registration">
+     <property name="minimumSize">
+      <size>
+       <width>680</width>
+       <height>510</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="4">
+    <widget class="QRadioButton" name="radioButton_3">
+     <property name="text">
+      <string>仿射变换</string>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="7">
+    <widget class="QPushButton" name="pushButton_Ok">
+     <property name="minimumSize">
+      <size>
+       <width>100</width>
+       <height>25</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>100</width>
+       <height>25</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>开始计算</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="1">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="4" column="2">
+    <widget class="QRadioButton" name="radioButton_1">
+     <property name="text">
+      <string>平移变换</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="3">
+    <widget class="QRadioButton" name="radioButton_2">
+     <property name="text">
+      <string>中心相似二维变换</string>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="6">
+    <spacer name="horizontalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>40</width>
+       <height>20</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="3" column="1" colspan="6">
+    <widget class="QLineEdit" name="lineEdit_ImageMove">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>25</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>25</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="0" column="1" colspan="6">
+    <widget class="QLineEdit" name="lineEdit_ImageFix">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>25</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>25</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+  </layout>
+ </widget>
+ <layoutdefault spacing="6" margin="11"/>
+ <customwidgets>
+  <customwidget>
+   <class>QVTKWidget</class>
+   <extends>QWidget</extends>
+   <header>QVTKWidget.h</header>
+  </customwidget>
+ </customwidgets>
+ <resources/>
+ <connections>
+  <connection>
+   <sender>pushButton_SelectImageFix</sender>
+   <signal>clicked()</signal>
+   <receiver>Register</receiver>
+   <slot>OnSelectImageFix()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>82</x>
+     <y>27</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>160</x>
+     <y>4</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_SelectImageMove</sender>
+   <signal>clicked()</signal>
+   <receiver>Register</receiver>
+   <slot>OnSelectImageMove()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>32</x>
+     <y>55</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>43</x>
+     <y>82</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_Ok</sender>
+   <signal>clicked()</signal>
+   <receiver>Register</receiver>
+   <slot>OnButtonOk()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>637</x>
+     <y>19</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>541</x>
+     <y>5</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>pushButton_Cancel</sender>
+   <signal>clicked()</signal>
+   <receiver>Register</receiver>
+   <slot>OnButtonCancel()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>657</x>
+     <y>49</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>675</x>
+     <y>83</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_4</sender>
+   <signal>clicked()</signal>
+   <receiver>Register</receiver>
+   <slot>OnSelectImageFix()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>475</x>
+     <y>82</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>639</x>
+     <y>81</y>
+    </hint>
+   </hints>
+  </connection>
+ </connections>
+ <slots>
+  <slot>OnSelectImageFix()</slot>
+  <slot>OnSelectImageMove()</slot>
+  <slot>OnButtonOk()</slot>
+  <slot>OnButtonCancel()</slot>
+ </slots>
+</ui>

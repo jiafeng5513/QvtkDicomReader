@@ -34,7 +34,6 @@
 #include "SlicePlayer.h"
 #include "DicomPatient.h"
 #include "DicomDirTreeModel.h"
-#include <Reg_Selector.h>
 #include <vtkImageCast.h>
 
 #include <vtkPiecewiseFunction.h>
@@ -78,6 +77,7 @@
 #include <vtkFixedPointVolumeRayCastMapper.h>
 #include <QComboBox>
 #include "vtkMyDICOMImageReader.h"
+#include "Register.h"
 class DicomDataBase;
 /*
  * 依赖说明:
@@ -105,7 +105,7 @@ class QvtkDicomViewer : public QMainWindow
 public:
 	QvtkDicomViewer(QWidget *parent = Q_NULLPTR);
 	QComboBox* reg_combo;
-	Reg_Selector Reg_Selector_Window;
+	Register m_Reg_Window;
 	enum CURSOR		
 	{	POINTRE,		//默认指针
 		ZOOM,			//缩放

@@ -4,7 +4,7 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup>
     <IncludePath>$(SolutionDir)Libraries\dcmtk_3.6.2\include\dcmtk;$(SolutionDir)Libraries\dcmtk_3.6.2\include;$(SolutionDir)Libraries\vtk_8.0.0\include\vtk-8.0;$(SolutionDir)Libraries\itk_4.12\include\ITK-4.12;$(SolutionDir)Libraries\vtk_8.0.0\include;$(IncludePath)</IncludePath>
-    <LibraryPath>$(SolutionDir)Libraries\dcmtk_3.6.2\lib;$(SolutionDir)Libraries\vtk_8.0.0\lib;$(LibraryPath)</LibraryPath>
+    <LibraryPath>$(SolutionDir)Libraries\dcmtk_3.6.2\lib;$(SolutionDir)Libraries\vtk_8.0.0\lib;$(SolutionDir)Libraries\itk_4.12\lib;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup>
     <Link>

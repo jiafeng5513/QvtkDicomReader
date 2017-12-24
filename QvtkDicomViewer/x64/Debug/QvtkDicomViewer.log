@@ -1,35 +1,6 @@
-﻿  Moc'ing QvtkDicomViewer.h...
-  Uic'ing QvtkDicomViewer.ui...
-  Moc'ing ThreeD_Reconstruction.h...
-  Moc'ing Segmenter.h...
-  Moc'ing DicomDir.h...
-  Moc'ing DicomDirTreeModel.h...
-  Moc'ing SlicePlayer.h...
-  Moc'ing Reg_Selector.h...
-  Rcc'ing QvtkDicomViewer.qrc...
-  Uic'ing DicomDir.ui...
-  Uic'ing Reg_Selector.ui...
-  Uic'ing ThreeD_Reconstruction.ui...
-  Uic'ing Segmenter.ui...
-  DicomDataBase.cpp
-  DicomDir.cpp
-  DicomDirTreeModel.cpp
-  DicomImage.cpp
-  DicomPatient.cpp
-  vtkImageSegmentCallback.cpp
-C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Tools\MSVC\14.11.25503\include\xutility(2294): warning C4996: 'std::copy::_Unchecked_iterators::_Deprecate': Call to 'std::copy' with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators'
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Tools\MSVC\14.11.25503\include\xutility(2294): note: 参见“std::copy::_Unchecked_iterators::_Deprecate”的声明
-  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImageFileReader.hxx(453): note: 参见对正在编译的函数 模板 实例化“_OutIt *std::copy<const float*,float*>(_InIt,_InIt,_OutIt)”的引用
-          with
-          [
-              _OutIt=float *,
-              _InIt=const float *
-          ]
-  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImageFileReader.hxx(365): note: 编译 类 模板 成员函数 "void itk::ImageFileReader<InternalImageType,itk::DefaultConvertPixelTraits<float>>::GenerateData(void)" 时
-  vtkImageSegmentCallback.cpp(101): note: 参见对正在编译的 类 模板 实例化 "itk::ImageFileReader<InternalImageType,itk::DefaultConvertPixelTraits<float>>" 的引用
-  DicomReg.cpp
-C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Tools\MSVC\14.11.25503\include\xutility(2294): warning C4996: 'std::copy::_Unchecked_iterators::_Deprecate': Call to 'std::copy' with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators'
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Tools\MSVC\14.11.25503\include\xutility(2294): note: 参见“std::copy::_Unchecked_iterators::_Deprecate”的声明
+﻿  Register.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.12.25827\include\xutility(2430): warning C4996: 'std::copy::_Unchecked_iterators::_Deprecate': Call to 'std::copy' with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators'
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.12.25827\include\xutility(2430): note: 参见“std::copy::_Unchecked_iterators::_Deprecate”的声明
   e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkTransform.hxx(529): note: 参见对正在编译的函数 模板 实例化“_OutIt std::copy<const double*,T*>(_InIt,_InIt,_OutIt)”的引用
           with
           [
@@ -37,96 +8,68 @@ C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Tools\MSVC\1
               T=double,
               _InIt=const double *
           ]
-  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkTransform.hxx(524): note: 编译 类 模板 成员函数 "void itk::Transform<itk::ImageToImageMetric<TFixedImage,TMovingImage>::CoordinateRepresentationType,2,2>::CopyInParameters(const double *const ,const double *const )" 时
+  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkTransform.hxx(524): note: 编译 类 模板 成员函数 "void itk::Transform<TParametersValueType,2,2>::CopyInParameters(const double *const ,const double *const )" 时
+          with
+          [
+              TParametersValueType=double
+          ]
+  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkObjectToObjectMetric.h(158): note: 参见对正在编译的 类 模板 实例化 "itk::Transform<TParametersValueType,2,2>" 的引用
+          with
+          [
+              TParametersValueType=double
+          ]
+  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImageToImageMetricv4.h(173): note: 参见对正在编译的 类 模板 实例化 "itk::ObjectToObjectMetric<2,2,TVirtualImage,TInternalComputationValueType>" 的引用
+          with
+          [
+              TVirtualImage=FixedImageType,
+              TInternalComputationValueType=double
+          ]
+  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkMeanSquaresImageToImageMetricv4.h(46): note: 参见对正在编译的 类 模板 实例化 "itk::ImageToImageMetricv4<TFixedImage,TMovingImage,TVirtualImage,TInternalComputationValueType,TMetricTraits>" 的引用
           with
           [
               TFixedImage=FixedImageType,
-              TMovingImage=MovingImageType
+              TMovingImage=MovingImageType,
+              TVirtualImage=FixedImageType,
+              TInternalComputationValueType=double,
+              TMetricTraits=itk::DefaultImageToImageMetricTraitsv4<FixedImageType,MovingImageType,FixedImageType,double>
           ]
-  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImageToImageMetric.h(92): note: 参见对正在编译的 类 模板 实例化 "itk::Transform<itk::ImageToImageMetric<TFixedImage,TMovingImage>::CoordinateRepresentationType,2,2>" 的引用
+  Register.cpp(54): note: 参见对正在编译的 类 模板 实例化 "itk::MeanSquaresImageToImageMetricv4<FixedImageType,MovingImageType,TFixedImage,double,itk::DefaultImageToImageMetricTraitsv4<TFixedImage,TMovingImage,TVirtualImage,TInternalComputationValueType>>" 的引用
           with
           [
               TFixedImage=FixedImageType,
-              TMovingImage=MovingImageType
+              TMovingImage=MovingImageType,
+              TVirtualImage=FixedImageType,
+              TInternalComputationValueType=double
           ]
-  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkMeanSquaresImageToImageMetric.h(41): note: 参见对正在编译的 类 模板 实例化 "itk::ImageToImageMetric<TFixedImage,TMovingImage>" 的引用
-          with
-          [
-              TFixedImage=FixedImageType,
-              TMovingImage=MovingImageType
-          ]
-  DicomReg.cpp(76): note: 参见对正在编译的 类 模板 实例化 "itk::MeanSquaresImageToImageMetric<FixedImageType,MovingImageType>" 的引用
-C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Tools\MSVC\14.11.25503\include\algorithm(923): warning C4996: 'std::transform::_Unchecked_iterators::_Deprecate': Call to 'std::transform' with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators'
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Tools\MSVC\14.11.25503\include\algorithm(923): note: 参见“std::transform::_Unchecked_iterators::_Deprecate”的声明
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.12.25827\include\algorithm(1019): warning C4996: 'std::transform::_Unchecked_iterators::_Deprecate': Call to 'std::transform' with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators'
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.12.25827\include\algorithm(1019): note: 参见“std::transform::_Unchecked_iterators::_Deprecate”的声明
   e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImageAlgorithm.h(213): note: 参见对正在编译的函数 模板 实例化“_OutIt *std::transform<const TInputType*,TOutputType*,itk::ImageAlgorithm::StaticCast<TInputType,TOutputType>>(_InIt,_InIt,_OutIt,_Fn)”的引用
           with
           [
-              _OutIt=double *,
+              _OutIt=unsigned char *,
               TInputType=float,
-              TOutputType=double,
+              TOutputType=unsigned char,
               _InIt=const float *,
-              _Fn=itk::ImageAlgorithm::StaticCast<float,double>
+              _Fn=itk::ImageAlgorithm::StaticCast<float,unsigned char>
           ]
-  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImageAlgorithm.hxx(136): note: 参见对正在编译的函数 模板 实例化“TOutputType *itk::ImageAlgorithm::CopyHelper<float,double>(const TInputType *,const TInputType *,TOutputType *)”的引用
+  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImageAlgorithm.hxx(136): note: 参见对正在编译的函数 模板 实例化“TOutputType *itk::ImageAlgorithm::CopyHelper<float,unsigned char>(const TInputType *,const TInputType *,TOutputType *)”的引用
           with
           [
-              TOutputType=double,
+              TOutputType=unsigned char,
               TInputType=float
           ]
-  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImageAlgorithm.h(112): note: 参见对正在编译的函数 模板 实例化“void itk::ImageAlgorithm::DispatchedCopy<itk::Image<PixelType,2>,itk::Image<double,2>>(const InputImageType *,OutputImageType *,const itk::ImageRegion<2> &,const itk::ImageRegion<2> &,itk::ImageAlgorithm::TrueType)”的引用
+  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImageAlgorithm.h(112): note: 参见对正在编译的函数 模板 实例化“void itk::ImageAlgorithm::DispatchedCopy<itk::Image<PixelType,2>,itk::Image<OutputPixelType,2>>(const InputImageType *,OutputImageType *,const itk::ImageRegion<2> &,const itk::ImageRegion<2> &,itk::ImageAlgorithm::TrueType)”的引用
           with
           [
               InputImageType=itk::Image<PixelType,2>,
-              OutputImageType=itk::Image<double,2>
+              OutputImageType=itk::Image<OutputPixelType,2>
           ]
-  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkCastImageFilter.hxx(73): note: 参见对正在编译的函数 模板 实例化“void itk::ImageAlgorithm::Copy<PixelType,double,2>(const itk::Image<PixelType,2> *,itk::Image<double,2> *,const itk::ImageRegion<2> &,const itk::ImageRegion<2> &)”的引用
-  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkCastImageFilter.hxx(59): note: 编译 类 模板 成员函数 "void itk::CastImageFilter<itk::Image<PixelType,2>,itk::Image<double,2>>::ThreadedGenerateData(const itk::ImageRegion<2> &,itk::ThreadIdType)" 时
-  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImageRegistrationMethodv4.hxx(518): note: 参见对正在编译的 类 模板 实例化 "itk::CastImageFilter<itk::Image<PixelType,2>,itk::Image<double,2>>" 的引用
-  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImageRegistrationMethodv4.hxx(292): note: 编译 类 模板 成员函数 "void itk::ImageRegistrationMethodv4<FixedImageType,MovingImageType,TransformType,TFixedImage,itk::PointSet<unsigned int,2,itk::DefaultStaticMeshTraits<TPixelType,2,2,float,float,TPixelType>>>::InitializeRegistrationAtEachLevel(const itk::SizeValueType)" 时
-          with
-          [
-              TFixedImage=FixedImageType,
-              TPixelType=unsigned int
-          ]
-  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImageRegistrationMethodv4.hxx(800): note: 参见对正在编译的函数 模板 实例化“void itk::ImageRegistrationMethodv4<FixedImageType,MovingImageType,TransformType,TFixedImage,itk::PointSet<unsigned int,2,itk::DefaultStaticMeshTraits<TPixelType,2,2,float,float,TPixelType>>>::InitializeRegistrationAtEachLevel(const itk::SizeValueType)”的引用
-          with
-          [
-              TFixedImage=FixedImageType,
-              TPixelType=unsigned int
-          ]
-  DicomReg.cpp(1192): note: 参见对正在编译的 类 模板 实例化 "itk::ImageRegistrationMethodv4<FixedImageType,MovingImageType,TransformType,TFixedImage,itk::PointSet<unsigned int,2,itk::DefaultStaticMeshTraits<TPixelType,2,2,float,float,TPixelType>>>" 的引用
-          with
-          [
-              TFixedImage=FixedImageType,
-              TPixelType=unsigned int
-          ]
-  DicomSeries.cpp
-  DicomStudy.cpp
-  moc_DicomDir.cpp
-  moc_DicomDirTreeModel.cpp
-  moc_QvtkDicomViewer.cpp
-  moc_Reg_Selector.cpp
-  moc_Segmenter.cpp
-C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Tools\MSVC\14.11.25503\include\xutility(2294): warning C4996: 'std::copy::_Unchecked_iterators::_Deprecate': Call to 'std::copy' with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators'
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Tools\MSVC\14.11.25503\include\xutility(2294): note: 参见“std::copy::_Unchecked_iterators::_Deprecate”的声明
-  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImportImageContainer.hxx(72): note: 参见对正在编译的函数 模板 实例化“_OutIt std::copy<TElement*,TElement*>(_InIt,_InIt,_OutIt)”的引用
-          with
-          [
-              _OutIt=float *,
-              TElement=float,
-              _InIt=float *
-          ]
-  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImportImageContainer.hxx(60): note: 编译 类 模板 成员函数 "void itk::ImportImageContainer<unsigned __int64,float>::Reserve(unsigned __int64,const bool)" 时
-  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImage.hxx(56): note: 参见对正在编译的函数 模板 实例化“void itk::ImportImageContainer<unsigned __int64,float>::Reserve(unsigned __int64,const bool)”的引用
-  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImage.hxx(50): note: 编译 类 模板 成员函数 "void itk::Image<InputPixelType,2>::Allocate(bool)" 时
-  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImageFileReader.h(74): note: 参见对正在编译的 类 模板 实例化 "itk::Image<InputPixelType,2>" 的引用
-  moc_SlicePlayer.cpp
-  moc_ThreeD_Reconstruction.cpp
-  main.cpp
-  myVtkInteractorStyleImage.cpp
+  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkCastImageFilter.hxx(73): note: 参见对正在编译的函数 模板 实例化“void itk::ImageAlgorithm::Copy<PixelType,OutputPixelType,2>(const itk::Image<PixelType,2> *,itk::Image<OutputPixelType,2> *,const itk::ImageRegion<2> &,const itk::ImageRegion<2> &)”的引用
+  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkCastImageFilter.hxx(59): note: 编译 类 模板 成员函数 "void itk::CastImageFilter<FixedImageType,OutputImageType>::ThreadedGenerateData(const itk::ImageRegion<2> &,itk::ThreadIdType)" 时
+  Register.cpp(156): note: 参见对正在编译的 类 模板 实例化 "itk::CastImageFilter<FixedImageType,OutputImageType>" 的引用
   QvtkDicomViewer.cpp
-C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Tools\MSVC\14.11.25503\include\xutility(2294): warning C4996: 'std::copy::_Unchecked_iterators::_Deprecate': Call to 'std::copy' with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators'
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Tools\MSVC\14.11.25503\include\xutility(2294): note: 参见“std::copy::_Unchecked_iterators::_Deprecate”的声明
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.12.25827\include\xutility(2430): warning C4996: 'std::copy::_Unchecked_iterators::_Deprecate': Call to 'std::copy' with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators'
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.12.25827\include\xutility(2430): note: 参见“std::copy::_Unchecked_iterators::_Deprecate”的声明
   e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImportImageContainer.hxx(72): note: 参见对正在编译的函数 模板 实例化“_OutIt std::copy<TElement*,TElement*>(_InIt,_InIt,_OutIt)”的引用
           with
           [
@@ -136,121 +79,7 @@ C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Tools\MSVC\1
           ]
   e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImportImageContainer.hxx(60): note: 编译 类 模板 成员函数 "void itk::ImportImageContainer<unsigned __int64,float>::Reserve(unsigned __int64,const bool)" 时
   e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImage.hxx(56): note: 参见对正在编译的函数 模板 实例化“void itk::ImportImageContainer<unsigned __int64,float>::Reserve(unsigned __int64,const bool)”的引用
-  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImage.hxx(50): note: 编译 类 模板 成员函数 "void itk::Image<InputPixelType,2>::Allocate(bool)" 时
-  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImageFileReader.h(74): note: 参见对正在编译的 类 模板 实例化 "itk::Image<InputPixelType,2>" 的引用
-  Reg_Selector.cpp
+  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImage.hxx(50): note: 编译 类 模板 成员函数 "void itk::Image<vtkImageSegmentCallback::InputPixelType,2>::Allocate(bool)" 时
+  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImageFileReader.h(74): note: 参见对正在编译的 类 模板 实例化 "itk::Image<vtkImageSegmentCallback::InputPixelType,2>" 的引用
   正在生成代码...
-e:\visualstudio\qvtkdicomreader\qvtkdicomviewer\dicompatient.cpp(140): warning C4715: “DicomPatient::getDicomImageByRfid”: 不是所有的控件路径都返回值
-  正在编译...
-  Segmenter.cpp
-C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Tools\MSVC\14.11.25503\include\xutility(2294): warning C4996: 'std::copy::_Unchecked_iterators::_Deprecate': Call to 'std::copy' with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators'
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Tools\MSVC\14.11.25503\include\xutility(2294): note: 参见“std::copy::_Unchecked_iterators::_Deprecate”的声明
-  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImportImageContainer.hxx(72): note: 参见对正在编译的函数 模板 实例化“_OutIt std::copy<TElement*,TElement*>(_InIt,_InIt,_OutIt)”的引用
-          with
-          [
-              _OutIt=float *,
-              TElement=float,
-              _InIt=float *
-          ]
-  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImportImageContainer.hxx(60): note: 编译 类 模板 成员函数 "void itk::ImportImageContainer<unsigned __int64,float>::Reserve(unsigned __int64,const bool)" 时
-  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImage.hxx(56): note: 参见对正在编译的函数 模板 实例化“void itk::ImportImageContainer<unsigned __int64,float>::Reserve(unsigned __int64,const bool)”的引用
-  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImage.hxx(50): note: 编译 类 模板 成员函数 "void itk::Image<InputPixelType,2>::Allocate(bool)" 时
-  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImageFileReader.h(74): note: 参见对正在编译的 类 模板 实例化 "itk::Image<InputPixelType,2>" 的引用
-  SlicePlayer.cpp
-  DicomTreeItem.cpp
-  ThreeD_Reconstruction.cpp
-  vtkBiDimensionalCallback.cpp
-  vtkMyDICOMImageReader.cpp
-  正在生成代码...
-  qrc_QvtkDicomViewer.cpp
-itksys-4.12-gd.lib(EncodingC.obj) : warning LNK4099: 未找到 PDB“itksys.pdb”(使用“itksys-4.12-gd.lib(EncodingC.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itksys.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itksys-4.12-gd.lib(Directory.obj) : warning LNK4099: 未找到 PDB“itksys.pdb”(使用“itksys-4.12-gd.lib(Directory.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itksys.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itksys-4.12-gd.lib(EncodingCXX.obj) : warning LNK4099: 未找到 PDB“itksys.pdb”(使用“itksys-4.12-gd.lib(EncodingCXX.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itksys.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itksys-4.12-gd.lib(RegularExpression.obj) : warning LNK4099: 未找到 PDB“itksys.pdb”(使用“itksys-4.12-gd.lib(RegularExpression.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itksys.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itksys-4.12-gd.lib(SystemTools.obj) : warning LNK4099: 未找到 PDB“itksys.pdb”(使用“itksys-4.12-gd.lib(SystemTools.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itksys.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkv3p_netlib-4.12-gd.lib(v3p_netlib_init.obj) : warning LNK4099: 未找到 PDB“itkv3p_netlib.pdb”(使用“itkv3p_netlib-4.12-gd.lib(v3p_netlib_init.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkv3p_netlib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkv3p_netlib-4.12-gd.lib(d_sign.obj) : warning LNK4099: 未找到 PDB“itkv3p_netlib.pdb”(使用“itkv3p_netlib-4.12-gd.lib(d_sign.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkv3p_netlib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkv3p_netlib-4.12-gd.lib(pow_di.obj) : warning LNK4099: 未找到 PDB“itkv3p_netlib.pdb”(使用“itkv3p_netlib-4.12-gd.lib(pow_di.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkv3p_netlib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkv3p_netlib-4.12-gd.lib(pow_ri.obj) : warning LNK4099: 未找到 PDB“itkv3p_netlib.pdb”(使用“itkv3p_netlib-4.12-gd.lib(pow_ri.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkv3p_netlib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkv3p_netlib-4.12-gd.lib(r_sign.obj) : warning LNK4099: 未找到 PDB“itkv3p_netlib.pdb”(使用“itkv3p_netlib-4.12-gd.lib(r_sign.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkv3p_netlib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkv3p_netlib-4.12-gd.lib(daxpy.obj) : warning LNK4099: 未找到 PDB“itkv3p_netlib.pdb”(使用“itkv3p_netlib-4.12-gd.lib(daxpy.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkv3p_netlib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkv3p_netlib-4.12-gd.lib(dcopy.obj) : warning LNK4099: 未找到 PDB“itkv3p_netlib.pdb”(使用“itkv3p_netlib-4.12-gd.lib(dcopy.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkv3p_netlib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkv3p_netlib-4.12-gd.lib(ddot.obj) : warning LNK4099: 未找到 PDB“itkv3p_netlib.pdb”(使用“itkv3p_netlib-4.12-gd.lib(ddot.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkv3p_netlib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkv3p_netlib-4.12-gd.lib(dlamch.obj) : warning LNK4099: 未找到 PDB“itkv3p_netlib.pdb”(使用“itkv3p_netlib-4.12-gd.lib(dlamch.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkv3p_netlib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkv3p_netlib-4.12-gd.lib(dnrm2.obj) : warning LNK4099: 未找到 PDB“itkv3p_netlib.pdb”(使用“itkv3p_netlib-4.12-gd.lib(dnrm2.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkv3p_netlib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkv3p_netlib-4.12-gd.lib(drot.obj) : warning LNK4099: 未找到 PDB“itkv3p_netlib.pdb”(使用“itkv3p_netlib-4.12-gd.lib(drot.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkv3p_netlib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkv3p_netlib-4.12-gd.lib(drotg.obj) : warning LNK4099: 未找到 PDB“itkv3p_netlib.pdb”(使用“itkv3p_netlib-4.12-gd.lib(drotg.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkv3p_netlib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkv3p_netlib-4.12-gd.lib(dscal.obj) : warning LNK4099: 未找到 PDB“itkv3p_netlib.pdb”(使用“itkv3p_netlib-4.12-gd.lib(dscal.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkv3p_netlib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkv3p_netlib-4.12-gd.lib(dswap.obj) : warning LNK4099: 未找到 PDB“itkv3p_netlib.pdb”(使用“itkv3p_netlib-4.12-gd.lib(dswap.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkv3p_netlib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkv3p_netlib-4.12-gd.lib(saxpy.obj) : warning LNK4099: 未找到 PDB“itkv3p_netlib.pdb”(使用“itkv3p_netlib-4.12-gd.lib(saxpy.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkv3p_netlib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkv3p_netlib-4.12-gd.lib(sdot.obj) : warning LNK4099: 未找到 PDB“itkv3p_netlib.pdb”(使用“itkv3p_netlib-4.12-gd.lib(sdot.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkv3p_netlib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkv3p_netlib-4.12-gd.lib(slamch.obj) : warning LNK4099: 未找到 PDB“itkv3p_netlib.pdb”(使用“itkv3p_netlib-4.12-gd.lib(slamch.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkv3p_netlib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkv3p_netlib-4.12-gd.lib(snrm2.obj) : warning LNK4099: 未找到 PDB“itkv3p_netlib.pdb”(使用“itkv3p_netlib-4.12-gd.lib(snrm2.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkv3p_netlib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkv3p_netlib-4.12-gd.lib(srot.obj) : warning LNK4099: 未找到 PDB“itkv3p_netlib.pdb”(使用“itkv3p_netlib-4.12-gd.lib(srot.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkv3p_netlib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkv3p_netlib-4.12-gd.lib(srotg.obj) : warning LNK4099: 未找到 PDB“itkv3p_netlib.pdb”(使用“itkv3p_netlib-4.12-gd.lib(srotg.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkv3p_netlib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkv3p_netlib-4.12-gd.lib(sscal.obj) : warning LNK4099: 未找到 PDB“itkv3p_netlib.pdb”(使用“itkv3p_netlib-4.12-gd.lib(sscal.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkv3p_netlib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkv3p_netlib-4.12-gd.lib(sswap.obj) : warning LNK4099: 未找到 PDB“itkv3p_netlib.pdb”(使用“itkv3p_netlib-4.12-gd.lib(sswap.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkv3p_netlib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkv3p_netlib-4.12-gd.lib(dqrdc.obj) : warning LNK4099: 未找到 PDB“itkv3p_netlib.pdb”(使用“itkv3p_netlib-4.12-gd.lib(dqrdc.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkv3p_netlib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkv3p_netlib-4.12-gd.lib(dqrsl.obj) : warning LNK4099: 未找到 PDB“itkv3p_netlib.pdb”(使用“itkv3p_netlib-4.12-gd.lib(dqrsl.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkv3p_netlib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkv3p_netlib-4.12-gd.lib(dsvdc.obj) : warning LNK4099: 未找到 PDB“itkv3p_netlib.pdb”(使用“itkv3p_netlib-4.12-gd.lib(dsvdc.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkv3p_netlib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkv3p_netlib-4.12-gd.lib(ssvdc.obj) : warning LNK4099: 未找到 PDB“itkv3p_netlib.pdb”(使用“itkv3p_netlib-4.12-gd.lib(ssvdc.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkv3p_netlib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkv3p_netlib-4.12-gd.lib(balanc.obj) : warning LNK4099: 未找到 PDB“itkv3p_netlib.pdb”(使用“itkv3p_netlib-4.12-gd.lib(balanc.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkv3p_netlib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkv3p_netlib-4.12-gd.lib(balbak.obj) : warning LNK4099: 未找到 PDB“itkv3p_netlib.pdb”(使用“itkv3p_netlib-4.12-gd.lib(balbak.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkv3p_netlib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkv3p_netlib-4.12-gd.lib(cdiv.obj) : warning LNK4099: 未找到 PDB“itkv3p_netlib.pdb”(使用“itkv3p_netlib-4.12-gd.lib(cdiv.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkv3p_netlib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkv3p_netlib-4.12-gd.lib(elmhes.obj) : warning LNK4099: 未找到 PDB“itkv3p_netlib.pdb”(使用“itkv3p_netlib-4.12-gd.lib(elmhes.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkv3p_netlib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkv3p_netlib-4.12-gd.lib(eltran.obj) : warning LNK4099: 未找到 PDB“itkv3p_netlib.pdb”(使用“itkv3p_netlib-4.12-gd.lib(eltran.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkv3p_netlib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkv3p_netlib-4.12-gd.lib(hqr.obj) : warning LNK4099: 未找到 PDB“itkv3p_netlib.pdb”(使用“itkv3p_netlib-4.12-gd.lib(hqr.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkv3p_netlib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkv3p_netlib-4.12-gd.lib(hqr2.obj) : warning LNK4099: 未找到 PDB“itkv3p_netlib.pdb”(使用“itkv3p_netlib-4.12-gd.lib(hqr2.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkv3p_netlib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkv3p_netlib-4.12-gd.lib(pythag.obj) : warning LNK4099: 未找到 PDB“itkv3p_netlib.pdb”(使用“itkv3p_netlib-4.12-gd.lib(pythag.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkv3p_netlib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkv3p_netlib-4.12-gd.lib(rg.obj) : warning LNK4099: 未找到 PDB“itkv3p_netlib.pdb”(使用“itkv3p_netlib-4.12-gd.lib(rg.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkv3p_netlib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkv3p_netlib-4.12-gd.lib(rs.obj) : warning LNK4099: 未找到 PDB“itkv3p_netlib.pdb”(使用“itkv3p_netlib-4.12-gd.lib(rs.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkv3p_netlib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkv3p_netlib-4.12-gd.lib(tql1.obj) : warning LNK4099: 未找到 PDB“itkv3p_netlib.pdb”(使用“itkv3p_netlib-4.12-gd.lib(tql1.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkv3p_netlib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkv3p_netlib-4.12-gd.lib(tql2.obj) : warning LNK4099: 未找到 PDB“itkv3p_netlib.pdb”(使用“itkv3p_netlib-4.12-gd.lib(tql2.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkv3p_netlib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkv3p_netlib-4.12-gd.lib(tred1.obj) : warning LNK4099: 未找到 PDB“itkv3p_netlib.pdb”(使用“itkv3p_netlib-4.12-gd.lib(tred1.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkv3p_netlib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkv3p_netlib-4.12-gd.lib(tred2.obj) : warning LNK4099: 未找到 PDB“itkv3p_netlib.pdb”(使用“itkv3p_netlib-4.12-gd.lib(tred2.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkv3p_netlib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkv3p_netlib-4.12-gd.lib(dlartg.obj) : warning LNK4099: 未找到 PDB“itkv3p_netlib.pdb”(使用“itkv3p_netlib-4.12-gd.lib(dlartg.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkv3p_netlib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkv3p_netlib-4.12-gd.lib(slartg.obj) : warning LNK4099: 未找到 PDB“itkv3p_netlib.pdb”(使用“itkv3p_netlib-4.12-gd.lib(slartg.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkv3p_netlib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkv3p_netlib-4.12-gd.lib(lsame.obj) : warning LNK4099: 未找到 PDB“itkv3p_netlib.pdb”(使用“itkv3p_netlib-4.12-gd.lib(lsame.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkv3p_netlib.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkvcl-4.12-gd.lib(vcl_deprecated.obj) : warning LNK4099: 未找到 PDB“itkvcl.pdb”(使用“itkvcl-4.12-gd.lib(vcl_deprecated.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkvcl.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkvnl_algo-4.12-gd.lib(vnl_real_eigensystem.obj) : warning LNK4099: 未找到 PDB“itkvnl_algo.pdb”(使用“itkvnl_algo-4.12-gd.lib(vnl_real_eigensystem.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkvnl_algo.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkvnl_algo-4.12-gd.lib(vnl_determinant+double-.obj) : warning LNK4099: 未找到 PDB“itkvnl_algo.pdb”(使用“itkvnl_algo-4.12-gd.lib(vnl_determinant+double-.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkvnl_algo.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkvnl_algo-4.12-gd.lib(vnl_qr+double-.obj) : warning LNK4099: 未找到 PDB“itkvnl_algo.pdb”(使用“itkvnl_algo-4.12-gd.lib(vnl_qr+double-.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkvnl_algo.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkvnl_algo-4.12-gd.lib(vnl_svd+double-.obj) : warning LNK4099: 未找到 PDB“itkvnl_algo.pdb”(使用“itkvnl_algo-4.12-gd.lib(vnl_svd+double-.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkvnl_algo.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkvnl_algo-4.12-gd.lib(vnl_svd+float-.obj) : warning LNK4099: 未找到 PDB“itkvnl_algo.pdb”(使用“itkvnl_algo-4.12-gd.lib(vnl_svd+float-.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkvnl_algo.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkvnl_algo-4.12-gd.lib(vnl_symmetric_eigensystem+double-.obj) : warning LNK4099: 未找到 PDB“itkvnl_algo.pdb”(使用“itkvnl_algo-4.12-gd.lib(vnl_symmetric_eigensystem+double-.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkvnl_algo.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkvnl_algo-4.12-gd.lib(vnl_symmetric_eigensystem+float-.obj) : warning LNK4099: 未找到 PDB“itkvnl_algo.pdb”(使用“itkvnl_algo-4.12-gd.lib(vnl_symmetric_eigensystem+float-.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkvnl_algo.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkvnl-4.12-gd.lib(vnl_math.obj) : warning LNK4099: 未找到 PDB“itkvnl.pdb”(使用“itkvnl-4.12-gd.lib(vnl_math.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkvnl.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkvnl-4.12-gd.lib(vnl_copy.obj) : warning LNK4099: 未找到 PDB“itkvnl.pdb”(使用“itkvnl-4.12-gd.lib(vnl_copy.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkvnl.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkvnl-4.12-gd.lib(vnl_error.obj) : warning LNK4099: 未找到 PDB“itkvnl.pdb”(使用“itkvnl-4.12-gd.lib(vnl_error.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkvnl.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkvnl-4.12-gd.lib(vnl_matlab_print_format.obj) : warning LNK4099: 未找到 PDB“itkvnl.pdb”(使用“itkvnl-4.12-gd.lib(vnl_matlab_print_format.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkvnl.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkvnl-4.12-gd.lib(vnl_matlab_print_scalar.obj) : warning LNK4099: 未找到 PDB“itkvnl.pdb”(使用“itkvnl-4.12-gd.lib(vnl_matlab_print_scalar.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkvnl.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkvnl-4.12-gd.lib(vnl_real_polynomial.obj) : warning LNK4099: 未找到 PDB“itkvnl.pdb”(使用“itkvnl-4.12-gd.lib(vnl_real_polynomial.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkvnl.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkvnl-4.12-gd.lib(vnl_fastops.obj) : warning LNK4099: 未找到 PDB“itkvnl.pdb”(使用“itkvnl-4.12-gd.lib(vnl_fastops.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkvnl.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkvnl-4.12-gd.lib(vnl_c_vector+double-.obj) : warning LNK4099: 未找到 PDB“itkvnl.pdb”(使用“itkvnl-4.12-gd.lib(vnl_c_vector+double-.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkvnl.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkvnl-4.12-gd.lib(vnl_c_vector+double_complex-.obj) : warning LNK4099: 未找到 PDB“itkvnl.pdb”(使用“itkvnl-4.12-gd.lib(vnl_c_vector+double_complex-.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkvnl.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkvnl-4.12-gd.lib(vnl_c_vector+float-.obj) : warning LNK4099: 未找到 PDB“itkvnl.pdb”(使用“itkvnl-4.12-gd.lib(vnl_c_vector+float-.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkvnl.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkvnl-4.12-gd.lib(vnl_c_vector+long-.obj) : warning LNK4099: 未找到 PDB“itkvnl.pdb”(使用“itkvnl-4.12-gd.lib(vnl_c_vector+long-.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkvnl.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkvnl-4.12-gd.lib(vnl_c_vector+uint-.obj) : warning LNK4099: 未找到 PDB“itkvnl.pdb”(使用“itkvnl-4.12-gd.lib(vnl_c_vector+uint-.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkvnl.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkvnl-4.12-gd.lib(vnl_c_vector+ulong-.obj) : warning LNK4099: 未找到 PDB“itkvnl.pdb”(使用“itkvnl-4.12-gd.lib(vnl_c_vector+ulong-.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkvnl.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkvnl-4.12-gd.lib(vnl_c_vector+ulonglong-.obj) : warning LNK4099: 未找到 PDB“itkvnl.pdb”(使用“itkvnl-4.12-gd.lib(vnl_c_vector+ulonglong-.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkvnl.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkvnl-4.12-gd.lib(vnl_diag_matrix+double-.obj) : warning LNK4099: 未找到 PDB“itkvnl.pdb”(使用“itkvnl-4.12-gd.lib(vnl_diag_matrix+double-.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkvnl.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkvnl-4.12-gd.lib(vnl_diag_matrix+float-.obj) : warning LNK4099: 未找到 PDB“itkvnl.pdb”(使用“itkvnl-4.12-gd.lib(vnl_diag_matrix+float-.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkvnl.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkvnl-4.12-gd.lib(vnl_fortran_copy+double-.obj) : warning LNK4099: 未找到 PDB“itkvnl.pdb”(使用“itkvnl-4.12-gd.lib(vnl_fortran_copy+double-.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkvnl.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkvnl-4.12-gd.lib(vnl_fortran_copy+float-.obj) : warning LNK4099: 未找到 PDB“itkvnl.pdb”(使用“itkvnl-4.12-gd.lib(vnl_fortran_copy+float-.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkvnl.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkvnl-4.12-gd.lib(vnl_matlab_print+double-.obj) : warning LNK4099: 未找到 PDB“itkvnl.pdb”(使用“itkvnl-4.12-gd.lib(vnl_matlab_print+double-.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkvnl.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkvnl-4.12-gd.lib(vnl_matlab_print+float-.obj) : warning LNK4099: 未找到 PDB“itkvnl.pdb”(使用“itkvnl-4.12-gd.lib(vnl_matlab_print+float-.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkvnl.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkvnl-4.12-gd.lib(vnl_matrix+double-.obj) : warning LNK4099: 未找到 PDB“itkvnl.pdb”(使用“itkvnl-4.12-gd.lib(vnl_matrix+double-.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkvnl.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkvnl-4.12-gd.lib(vnl_matrix+float-.obj) : warning LNK4099: 未找到 PDB“itkvnl.pdb”(使用“itkvnl-4.12-gd.lib(vnl_matrix+float-.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkvnl.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkvnl-4.12-gd.lib(vnl_matrix+long-.obj) : warning LNK4099: 未找到 PDB“itkvnl.pdb”(使用“itkvnl-4.12-gd.lib(vnl_matrix+long-.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkvnl.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkvnl-4.12-gd.lib(vnl_matrix+uint-.obj) : warning LNK4099: 未找到 PDB“itkvnl.pdb”(使用“itkvnl-4.12-gd.lib(vnl_matrix+uint-.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkvnl.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkvnl-4.12-gd.lib(vnl_matrix+ulong-.obj) : warning LNK4099: 未找到 PDB“itkvnl.pdb”(使用“itkvnl-4.12-gd.lib(vnl_matrix+ulong-.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkvnl.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkvnl-4.12-gd.lib(vnl_matrix+ulonglong-.obj) : warning LNK4099: 未找到 PDB“itkvnl.pdb”(使用“itkvnl-4.12-gd.lib(vnl_matrix+ulonglong-.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkvnl.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkvnl-4.12-gd.lib(vnl_matrix+vcl_complex+double--.obj) : warning LNK4099: 未找到 PDB“itkvnl.pdb”(使用“itkvnl-4.12-gd.lib(vnl_matrix+vcl_complex+double--.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkvnl.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkvnl-4.12-gd.lib(vnl_vector+double-.obj) : warning LNK4099: 未找到 PDB“itkvnl.pdb”(使用“itkvnl-4.12-gd.lib(vnl_vector+double-.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkvnl.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkvnl-4.12-gd.lib(vnl_vector+float-.obj) : warning LNK4099: 未找到 PDB“itkvnl.pdb”(使用“itkvnl-4.12-gd.lib(vnl_vector+float-.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkvnl.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkvnl-4.12-gd.lib(vnl_vector+long-.obj) : warning LNK4099: 未找到 PDB“itkvnl.pdb”(使用“itkvnl-4.12-gd.lib(vnl_vector+long-.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkvnl.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkvnl-4.12-gd.lib(vnl_vector+uint-.obj) : warning LNK4099: 未找到 PDB“itkvnl.pdb”(使用“itkvnl-4.12-gd.lib(vnl_vector+uint-.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkvnl.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkvnl-4.12-gd.lib(vnl_vector+ulong-.obj) : warning LNK4099: 未找到 PDB“itkvnl.pdb”(使用“itkvnl-4.12-gd.lib(vnl_vector+ulong-.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkvnl.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkvnl-4.12-gd.lib(vnl_vector+ulonglong-.obj) : warning LNK4099: 未找到 PDB“itkvnl.pdb”(使用“itkvnl-4.12-gd.lib(vnl_vector+ulonglong-.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkvnl.pdb”中寻找)；正在链接对象，如同没有调试信息一样
-itkvnl-4.12-gd.lib(vnl_vector+vcl_complex+double--.obj) : warning LNK4099: 未找到 PDB“itkvnl.pdb”(使用“itkvnl-4.12-gd.lib(vnl_vector+vcl_complex+double--.obj)”或在“E:\VisualStudio\QvtkDicomReader\x64\Debug\itkvnl.pdb”中寻找)；正在链接对象，如同没有调试信息一样
   QvtkDicomViewer.vcxproj -> E:\VisualStudio\QvtkDicomReader\x64\Debug\QvtkDicomViewer.exe

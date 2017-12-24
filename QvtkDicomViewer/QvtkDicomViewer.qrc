@@ -23,5 +23,6 @@
         <file>Resources/file_128px_1197084_easyicon.net.ico</file>
         <file>Resources/hand_pointing_left_128px_1143134_easyicon.net.ico</file>
         <file>Resources/hand_pointing_right_128px_1143133_easyicon.net.ico</file>
+        <file>Resources/theme_black.qss</file>
     </qresource>
 </RCC>

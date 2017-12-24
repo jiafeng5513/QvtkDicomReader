@@ -15,21 +15,7 @@ enum  SegmentFunc
 	Seg_shapedectection,
 	Seg_gibblsprior
 };
-const unsigned int Dimension = 2;
-typedef  float  InputPixelType;
-typedef  float  OutputPixelType;
-typedef  float  InternalPixelType;
 
-typedef itk::Image< InputPixelType, Dimension >   InputImageType;
-typedef itk::Image< InternalPixelType, Dimension >  InternalImageType;
-typedef itk::Image< OutputPixelType, Dimension > OutputImageType;
-
-typedef itk::ImageToVTKImageFilter<OutputImageType>   ConnectorType;
-typedef itk::ImageFileReader< InternalImageType > ReaderType;
-typedef itk::ImageFileWriter<  OutputImageType  > WriterType;
-typedef itk::GDCMImageIO      ImageIOType;
-typedef itk::CastImageFilter< InternalImageType, OutputImageType >CastingFilterType;
-typedef itk::CurvatureFlowImageFilter< InternalImageType, InternalImageType > CurvatureFlowImageFilterType;//平滑用的
 
 class MyStyle : public vtkInteractorStyleImage
 {
@@ -39,6 +25,21 @@ public:
 };
 class vtkImageSegmentCallback : public vtkCommand
 {
+	//const unsigned int Dimension = 2;
+	typedef  float  InputPixelType;
+	typedef  float  OutputPixelType;
+	typedef  float  InternalPixelType;
+	
+	typedef itk::Image< InputPixelType, 2 >   InputImageType;
+	typedef itk::Image< InternalPixelType, 2 >  InternalImageType;
+	typedef itk::Image< OutputPixelType, 2 > OutputImageType;
+	
+	typedef itk::ImageToVTKImageFilter<OutputImageType>   ConnectorType;
+	typedef itk::ImageFileReader< InternalImageType > ReaderType;
+	typedef itk::ImageFileWriter<  OutputImageType  > WriterType;
+	typedef itk::GDCMImageIO      ImageIOType;
+	typedef itk::CastImageFilter< InternalImageType, OutputImageType >CastingFilterType;
+	typedef itk::CurvatureFlowImageFilter< InternalImageType, InternalImageType > CurvatureFlowImageFilterType;//平滑用的
 public:
 	static vtkImageSegmentCallback *New();
 	vtkImageSegmentCallback();

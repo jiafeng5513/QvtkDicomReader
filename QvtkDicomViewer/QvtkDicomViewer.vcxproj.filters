@@ -96,18 +96,6 @@
     <ClCompile Include="GeneratedFiles\Release\moc_DicomDirTreeModel.cpp">
       <Filter>Generated Files</Filter>
     </ClCompile>
-    <ClCompile Include="DicomReg.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_Reg_Selector.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_Reg_Selector.cpp">
-      <Filter>Generated Files</Filter>
-    </ClCompile>
-    <ClCompile Include="Reg_Selector.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
     <ClCompile Include="vtkMyDICOMImageReader.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
@@ -130,6 +118,18 @@
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="vtkImageSegmentCallback.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="CommonHelper.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Debug\moc_Register.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="GeneratedFiles\Release\moc_Register.cpp">
+      <Filter>Generated Files</Filter>
+    </ClCompile>
+    <ClCompile Include="Register.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>
@@ -155,12 +155,6 @@
     <CustomBuild Include="DicomDirTreeModel.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
-    <CustomBuild Include="Reg_Selector.ui">
-      <Filter>Form Files</Filter>
-    </CustomBuild>
-    <CustomBuild Include="Reg_Selector.h">
-      <Filter>Header Files</Filter>
-    </CustomBuild>
     <CustomBuild Include="ThreeD_Reconstruction.h">
       <Filter>Header Files</Filter>
     </CustomBuild>
@@ -171,6 +165,12 @@
       <Filter>Header Files</Filter>
     </CustomBuild>
     <CustomBuild Include="Segmenter.ui">
+      <Filter>Form Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Register.h">
+      <Filter>Header Files</Filter>
+    </CustomBuild>
+    <CustomBuild Include="Register.ui">
       <Filter>Form Files</Filter>
     </CustomBuild>
   </ItemGroup>
@@ -208,12 +208,6 @@
     <ClInclude Include="head_all.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="DicomReg.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="GeneratedFiles\ui_Reg_Selector.h">
-      <Filter>Generated Files</Filter>
-    </ClInclude>
     <ClInclude Include="vtkMyDICOMImageReader.h">
       <Filter>Header Files</Filter>
     </ClInclude>
@@ -225,6 +219,12 @@
     </ClInclude>
     <ClInclude Include="vtkImageSegmentCallback.h">
       <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="CommonHelper.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
+    <ClInclude Include="GeneratedFiles\ui_Register.h">
+      <Filter>Generated Files</Filter>
     </ClInclude>
   </ItemGroup>
 </Project>
