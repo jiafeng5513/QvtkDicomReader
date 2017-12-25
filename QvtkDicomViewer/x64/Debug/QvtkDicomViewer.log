@@ -1,4 +1,21 @@
-﻿  Register.cpp
+﻿  Moc'ing Register.h...
+  moc_QvtkDicomViewer.cpp
+  moc_Register.cpp
+  QvtkDicomViewer.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.12.25827\include\xutility(2430): warning C4996: 'std::copy::_Unchecked_iterators::_Deprecate': Call to 'std::copy' with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators'
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.12.25827\include\xutility(2430): note: 参见“std::copy::_Unchecked_iterators::_Deprecate”的声明
+  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImportImageContainer.hxx(72): note: 参见对正在编译的函数 模板 实例化“_OutIt std::copy<TElement*,TElement*>(_InIt,_InIt,_OutIt)”的引用
+          with
+          [
+              _OutIt=float *,
+              TElement=float,
+              _InIt=float *
+          ]
+  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImportImageContainer.hxx(60): note: 编译 类 模板 成员函数 "void itk::ImportImageContainer<unsigned __int64,float>::Reserve(unsigned __int64,const bool)" 时
+  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImage.hxx(56): note: 参见对正在编译的函数 模板 实例化“void itk::ImportImageContainer<unsigned __int64,float>::Reserve(unsigned __int64,const bool)”的引用
+  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImage.hxx(50): note: 编译 类 模板 成员函数 "void itk::Image<vtkImageSegmentCallback::InputPixelType,2>::Allocate(bool)" 时
+  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImageFileReader.h(74): note: 参见对正在编译的 类 模板 实例化 "itk::Image<vtkImageSegmentCallback::InputPixelType,2>" 的引用
+  Register.cpp
 C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.12.25827\include\xutility(2430): warning C4996: 'std::copy::_Unchecked_iterators::_Deprecate': Call to 'std::copy' with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators'
   C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.12.25827\include\xutility(2430): note: 参见“std::copy::_Unchecked_iterators::_Deprecate”的声明
   e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkTransform.hxx(529): note: 参见对正在编译的函数 模板 实例化“_OutIt std::copy<const double*,T*>(_InIt,_InIt,_OutIt)”的引用
@@ -33,7 +50,7 @@ C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.
               TInternalComputationValueType=double,
               TMetricTraits=itk::DefaultImageToImageMetricTraitsv4<FixedImageType,MovingImageType,FixedImageType,double>
           ]
-  Register.cpp(54): note: 参见对正在编译的 类 模板 实例化 "itk::MeanSquaresImageToImageMetricv4<FixedImageType,MovingImageType,TFixedImage,double,itk::DefaultImageToImageMetricTraitsv4<TFixedImage,TMovingImage,TVirtualImage,TInternalComputationValueType>>" 的引用
+  Register.cpp(60): note: 参见对正在编译的 类 模板 实例化 "itk::MeanSquaresImageToImageMetricv4<FixedImageType,MovingImageType,TFixedImage,double,itk::DefaultImageToImageMetricTraitsv4<TFixedImage,TMovingImage,TVirtualImage,TInternalComputationValueType>>" 的引用
           with
           [
               TFixedImage=FixedImageType,
@@ -66,20 +83,8 @@ C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.
           ]
   e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkCastImageFilter.hxx(73): note: 参见对正在编译的函数 模板 实例化“void itk::ImageAlgorithm::Copy<PixelType,OutputPixelType,2>(const itk::Image<PixelType,2> *,itk::Image<OutputPixelType,2> *,const itk::ImageRegion<2> &,const itk::ImageRegion<2> &)”的引用
   e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkCastImageFilter.hxx(59): note: 编译 类 模板 成员函数 "void itk::CastImageFilter<FixedImageType,OutputImageType>::ThreadedGenerateData(const itk::ImageRegion<2> &,itk::ThreadIdType)" 时
-  Register.cpp(156): note: 参见对正在编译的 类 模板 实例化 "itk::CastImageFilter<FixedImageType,OutputImageType>" 的引用
-  QvtkDicomViewer.cpp
-C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.12.25827\include\xutility(2430): warning C4996: 'std::copy::_Unchecked_iterators::_Deprecate': Call to 'std::copy' with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators'
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.12.25827\include\xutility(2430): note: 参见“std::copy::_Unchecked_iterators::_Deprecate”的声明
-  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImportImageContainer.hxx(72): note: 参见对正在编译的函数 模板 实例化“_OutIt std::copy<TElement*,TElement*>(_InIt,_InIt,_OutIt)”的引用
-          with
-          [
-              _OutIt=float *,
-              TElement=float,
-              _InIt=float *
-          ]
-  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImportImageContainer.hxx(60): note: 编译 类 模板 成员函数 "void itk::ImportImageContainer<unsigned __int64,float>::Reserve(unsigned __int64,const bool)" 时
-  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImage.hxx(56): note: 参见对正在编译的函数 模板 实例化“void itk::ImportImageContainer<unsigned __int64,float>::Reserve(unsigned __int64,const bool)”的引用
-  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImage.hxx(50): note: 编译 类 模板 成员函数 "void itk::Image<vtkImageSegmentCallback::InputPixelType,2>::Allocate(bool)" 时
-  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImageFileReader.h(74): note: 参见对正在编译的 类 模板 实例化 "itk::Image<vtkImageSegmentCallback::InputPixelType,2>" 的引用
+  Register.cpp(343): note: 参见对正在编译的 类 模板 实例化 "itk::CastImageFilter<FixedImageType,OutputImageType>" 的引用
+  main.cpp
+  myVtkInteractorStyleImage.cpp
   正在生成代码...
   QvtkDicomViewer.vcxproj -> E:\VisualStudio\QvtkDicomReader\x64\Debug\QvtkDicomViewer.exe

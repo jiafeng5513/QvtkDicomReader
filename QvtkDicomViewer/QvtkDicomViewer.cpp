@@ -64,19 +64,6 @@ QvtkDicomViewer::QvtkDicomViewer(QWidget *parent)
 	CursorType = CURSOR::POINTRE;
 	//监控光标类型的修改
 	connect(this, SIGNAL(CursorValueChanged()), this, SLOT(OnChangeCursorValue()));
-#pragma region 包旭添加 
-
-	reg_combo = new QComboBox();
-	reg_combo->setMaxVisibleItems(5);
-	reg_combo->addItem(QWidget::tr("NULL_Reg"));
-	reg_combo->addItem(QWidget::tr("reg_normal"));
-	reg_combo->addItem(QWidget::tr("reg_2Dtransform"));
-	reg_combo->addItem(QWidget::tr("reg_AffineTrans"));
-	reg_combo->addItem(QWidget::tr("reg_MultiAffine"));
-	connect(reg_combo, SIGNAL(currentIndexChanged(int)), this, SLOT(Slots_Reg(int)));
-	ui.mainToolBar->addWidget(reg_combo);
-#pragma endregion
-
 	ui.action_SwitchOfProperty->setChecked(true);
 	ui.dockWidget_Dir->setHidden(false);
 	icon_Play.addFile(QStringLiteral(":/QvtkDicomViewer/Resources/play_128px_1197036_easyicon.net.ico"), QSize(), QIcon::Normal, QIcon::Off);
@@ -86,6 +73,7 @@ QvtkDicomViewer::QvtkDicomViewer(QWidget *parent)
 	//上下文菜单
 	CreateContextMenu();
 	//DirTreeRefresh(NULL);
+	m_Reg_Window = new Register();//事先初始化配准工具
 }
 /*
  * 响应光标值的修改,执行一些刷新和禁用操作
@@ -1025,7 +1013,6 @@ void QvtkDicomViewer::OnSegmentImage()
 	Segmenter *_segmenter = new Segmenter(CurrentPatient->getCurrentDicomImage()->AbsFilePath);
 	_segmenter->show();
 }
-
 /*
   *	响应DicomDir类传送过来的信号,其中包含了一个病人的ID
   */
@@ -1147,19 +1134,11 @@ void QvtkDicomViewer::OnSegmentImage()
 	 m_pImageViewer->Render();
 	 setWindowWL(Lungs);
  }
-//==========================================================================================
  /*
-  *暂时把功能分成三个部分:重建,分割,配准
-  *	3.配准,根本不知道他需要什么文件,需要断点调试
-  *		这部分的核心功能据我观察是从一个控制台程序里面扒出来的,首先是断点跟踪设法找到他需要喂什么文件格式
-  *		然后输出的那些文件有什么用,能不能屏蔽掉,需要看他是不是用文件做了中转.
-  */
-/*
- * 响应reg_combo的更改,右侧Combox,registration,暂时猜测是配准
+ * 启动配准工具
  */
- void QvtkDicomViewer::Slots_Reg(int count)
+ void QvtkDicomViewer::OnRegistration()
  {
-	 m_Reg_Window.SetCount(count);
-	 m_Reg_Window.SetQvtk(ui.qvtkWidget);
-	 m_Reg_Window.show();
+	 m_Reg_Window->show();
+	//为了增加响应速度,初始化代码应该统一起来,这是一个尝试,以后会逐渐改成这样
  }

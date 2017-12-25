@@ -23,26 +23,23 @@ Register::Register(QWidget *parent)
 	: QWidget(parent)
 {
 	ui.setupUi(this);
+	for(int i=0;i<4;i++ )
+	{
+		actor[i] = vtkSmartPointer<vtkImageActor>::New();
+		renderer[i] = vtkSmartPointer<vtkRenderer>::New();
+		renderWindowInteractor[i] = vtkSmartPointer<vtkRenderWindowInteractor>::New();
+		style[i] = vtkSmartPointer<vtkInteractorStyleImage>::New();
+	}
+	m_output_widgets[0]=ui.qvtkWidget_Registration_DL;
+	m_output_widgets[1]=ui.qvtkWidget_Registration_DR;
+	m_output_widgets[2]=ui.qvtkWidget_Registration_UL;
+	m_output_widgets[3]=ui.qvtkWidget_Registration_UR;
 }
 /*
  * 析构
  */
 Register::~Register()
 {
-}
-/*
- * 外部用于告知用户选择的配准方法(即将废弃)
- */
-void Register::SetCount(int count)
-{
-	this->reg_count = count;
-}
-/*
- * 传递父窗口的qvtk组件(即将废弃)
- */
-void Register::SetQvtk(QVTKWidget * qvtk)
-{
-	this->qvtk = qvtk;
 }
 /*
  * 平移变换
@@ -73,6 +70,15 @@ void Register::TranslationReg(char* argv[])
 	MovingLinearInterpolatorType::Pointer movingInterpolator = MovingLinearInterpolatorType::New();
 	metric->SetFixedInterpolator(fixedInterpolator);
 	metric->SetMovingInterpolator(movingInterpolator);
+	//绘图和输出准备
+	//typedef unsigned char                            OutputPixelType;
+	typedef itk::Image< PixelType, Dimension > OutputImageType;
+	typedef itk::ImageToVTKImageFilter<OutputImageType>   ConnectorType;
+	ConnectorType::Pointer connector[4];//数据转接器iTk->vtk
+	for(int i=0;i<4;i++)
+	{
+		connector[i] = ConnectorType::New();
+	}
 	//加入输入图片文件读取器(注意此处使用的是ITK的类型)
 	typedef itk::ImageFileReader< FixedImageType  >   FixedImageReaderType;
 	typedef itk::ImageFileReader< MovingImageType >   MovingImageReaderType;
@@ -82,6 +88,9 @@ void Register::TranslationReg(char* argv[])
 	movingImageReader->SetFileName(argv[2]);
 	registration->SetFixedImage(fixedImageReader->GetOutput());
 	registration->SetMovingImage(movingImageReader->GetOutput());
+	connector[0]->SetInput(fixedImageReader->GetOutput());//显示输入1
+	connector[1]->SetInput(movingImageReader->GetOutput());//显示输入2
+
 
 	//加入平移变换器(给移动过的那张图用的)
 	TransformType::Pointer movingInitialTransform = TransformType::New();
@@ -155,18 +164,19 @@ void Register::TranslationReg(char* argv[])
 	resampler->SetOutputDirection(fixedImage->GetDirection());
 	resampler->SetDefaultPixelValue(100);
 	//准备输出
-	typedef unsigned char                            OutputPixelType;
-	typedef itk::Image< OutputPixelType, Dimension > OutputImageType;
+
 	typedef itk::CastImageFilter<FixedImageType, OutputImageType >          CastFilterType;
 	typedef itk::ImageFileWriter< OutputImageType >  WriterType;
+	//转接器
 
 	//输出1:输出的是配准结果
-	WriterType::Pointer      writer = WriterType::New();
+	//WriterType::Pointer      writer = WriterType::New();
 	CastFilterType::Pointer  caster = CastFilterType::New();
-	writer->SetFileName(argv[3]);
+	connector[3]->SetInput(caster->GetOutput());//显示输出结果
+	//writer->SetFileName(argv[3]);
 	caster->SetInput(resampler->GetOutput());
-	writer->SetInput(caster->GetOutput());
-	writer->Update();
+	//writer->SetInput(caster->GetOutput());
+	//writer->Update();
 
 	//输出2:视差图A
 	typedef itk::SubtractImageFilter<FixedImageType, FixedImageType, FixedImageType > DifferenceFilterType;
@@ -179,17 +189,37 @@ void Register::TranslationReg(char* argv[])
 	intensityRescaler->SetOutputMinimum(0);
 	intensityRescaler->SetOutputMaximum(255);
 	resampler->SetDefaultPixelValue(1);
-	WriterType::Pointer writer2 = WriterType::New();
-	writer2->SetInput(intensityRescaler->GetOutput());
-	writer2->SetFileName(argv[4]);
-	writer2->Update();
+	connector[2]->SetInput(intensityRescaler->GetOutput());//显示计算过程
+	//WriterType::Pointer writer2 = WriterType::New();
+	//writer2->SetInput(intensityRescaler->GetOutput());
+	//writer2->SetFileName(argv[4]);
+	//writer2->Update();
 
 	//输出3:视差图B
 	resampler->SetTransform(identityTransform);
-	writer2->SetFileName(argv[5]);
-	writer2->Update();
+	//writer2->SetFileName(argv[5]);
+	//writer2->Update();
 
-	return;
+	for (int i=0;i<4;i++)
+	{
+		connector[i]->Update();
+		actor[i]->GetMapper()->SetInputData(connector[0]->GetOutput());
+		renderer[i]->AddActor(actor[i]);
+		m_output_widgets[i]->GetRenderWindow()->AddRenderer(renderer[i]);
+		//m_output_widgets[i]->GetRenderWindow()->Render();
+		renderWindowInteractor[i]->SetRenderWindow(m_output_widgets[i]->GetRenderWindow());
+		renderWindowInteractor[i]->SetInteractorStyle(style[i]);
+		renderWindowInteractor[i]->Initialize();
+	}
+	for (int i = 0; i<4; i++)
+	{
+		m_output_widgets[i]->GetRenderWindow()->Render();
+	}
+	//下边的这个有阻塞,不要放在循环里
+	renderWindowInteractor[0]->Start();
+	renderWindowInteractor[1]->Start();
+	renderWindowInteractor[2]->Start();
+	renderWindowInteractor[3]->Start();
 }
 /*
  * 中心相似二维变换
@@ -732,7 +762,7 @@ void Register::OnButtonOk()
 	default:
 		break;
 	}
-	this->close();
+	//this->close();
 }
 /*
  * 退出

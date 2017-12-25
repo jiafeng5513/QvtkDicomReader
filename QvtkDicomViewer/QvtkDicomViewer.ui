@@ -58,7 +58,7 @@
      <x>0</x>
      <y>0</y>
      <width>1200</width>
-     <height>26</height>
+     <height>23</height>
     </rect>
    </property>
    <widget class="QMenu" name="menu">
@@ -94,6 +94,8 @@
     <addaction name="action_Move"/>
     <addaction name="action_Play"/>
     <addaction name="action_Stop"/>
+    <addaction name="separator"/>
+    <addaction name="action_Registration"/>
    </widget>
    <widget class="QMenu" name="menu_4">
     <property name="title">
@@ -162,6 +164,7 @@
    <addaction name="action_Negative"/>
    <addaction name="action_Reset"/>
    <addaction name="separator"/>
+   <addaction name="action_Registration"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QDockWidget" name="dockWidget_Dir">
@@ -467,6 +470,15 @@
    </property>
    <property name="text">
     <string>CT-肺</string>
+   </property>
+  </action>
+  <action name="action_Registration">
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/aim_128px_1207156_easyicon.net.ico</normaloff>:/QvtkDicomViewer/Resources/aim_128px_1207156_easyicon.net.ico</iconset>
+   </property>
+   <property name="text">
+    <string>配准工具</string>
    </property>
   </action>
  </widget>
@@ -994,6 +1006,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>action_Registration</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnRegistration()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>599</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>OnOpenFile()</slot>
@@ -1033,5 +1061,6 @@
   <slot>OnWindowWL_CT_Brain()</slot>
   <slot>OnWindowWL_CT_Medias()</slot>
   <slot>OnWindowWL_CT_Lungs()</slot>
+  <slot>OnRegistration()</slot>
  </slots>
 </ui>

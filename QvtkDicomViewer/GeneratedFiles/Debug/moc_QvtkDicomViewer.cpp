@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_QvtkDicomViewer_t {
-    QByteArrayData data[51];
-    char stringdata0[818];
+    QByteArrayData data[50];
+    char stringdata0[817];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -80,8 +80,7 @@ QT_MOC_LITERAL(45, 731, 17), // "OnTestEntrance_01"
 QT_MOC_LITERAL(46, 749, 17), // "OnTestEntrance_02"
 QT_MOC_LITERAL(47, 767, 19), // "On3D_Reconstruction"
 QT_MOC_LITERAL(48, 787, 14), // "OnSegmentImage"
-QT_MOC_LITERAL(49, 802, 9), // "Slots_Reg"
-QT_MOC_LITERAL(50, 812, 5) // "count"
+QT_MOC_LITERAL(49, 802, 14) // "OnRegistration"
 
     },
     "QvtkDicomViewer\0CursorValueChanged\0\0"
@@ -105,7 +104,7 @@ QT_MOC_LITERAL(50, 812, 5) // "count"
     "OnWindowWL_CT_Medias\0OnWindowWL_CT_Lungs\0"
     "OnTestEntrance_01\0OnTestEntrance_02\0"
     "On3D_Reconstruction\0OnSegmentImage\0"
-    "Slots_Reg\0count"
+    "OnRegistration"
 };
 #undef QT_MOC_LITERAL
 
@@ -168,7 +167,7 @@ static const uint qt_meta_data_QvtkDicomViewer[] = {
       46,    0,  282,    2, 0x0a /* Public */,
       47,    0,  283,    2, 0x0a /* Public */,
       48,    0,  284,    2, 0x0a /* Public */,
-      49,    1,  285,    2, 0x0a /* Public */,
+      49,    0,  285,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -216,7 +215,7 @@ static const uint qt_meta_data_QvtkDicomViewer[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
-    QMetaType::Void, QMetaType::Int,   50,
+    QMetaType::Void,
 
        0        // eod
 };
@@ -270,7 +269,7 @@ void QvtkDicomViewer::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         case 40: _t->OnTestEntrance_02(); break;
         case 41: _t->On3D_Reconstruction(); break;
         case 42: _t->OnSegmentImage(); break;
-        case 43: _t->Slots_Reg((*reinterpret_cast< int(*)>(_a[1]))); break;
+        case 43: _t->OnRegistration(); break;
         default: ;
         }
     } else if (_c == QMetaObject::IndexOfMethod) {

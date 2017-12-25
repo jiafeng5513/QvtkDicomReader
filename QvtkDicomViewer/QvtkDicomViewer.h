@@ -104,8 +104,8 @@ class QvtkDicomViewer : public QMainWindow
 
 public:
 	QvtkDicomViewer(QWidget *parent = Q_NULLPTR);
-	QComboBox* reg_combo;
-	Register m_Reg_Window;
+	//QComboBox* reg_combo;
+	Register * m_Reg_Window;
 	enum CURSOR		
 	{	POINTRE,		//默认指针
 		ZOOM,			//缩放
@@ -231,6 +231,5 @@ public slots:
 
 	void On3D_Reconstruction();			//响应3维重建
 	void OnSegmentImage();				//响应图像分割
-    //bao 11.27日加
-	void Slots_Reg(int count);
+	void OnRegistration();				//启动配准工具
 };

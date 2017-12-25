@@ -6,95 +6,14 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>698</width>
-    <height>616</height>
+    <width>840</width>
+    <height>719</height>
    </rect>
   </property>
   <property name="windowTitle">
    <string>Register</string>
   </property>
-  <layout class="QGridLayout" name="gridLayout">
-   <item row="0" column="0">
-    <widget class="QPushButton" name="pushButton_SelectImageFix">
-     <property name="minimumSize">
-      <size>
-       <width>100</width>
-       <height>25</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>100</width>
-       <height>25</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>基准图像</string>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="5">
-    <widget class="QRadioButton" name="radioButton_4">
-     <property name="text">
-      <string>魔法变换</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="7">
-    <widget class="QPushButton" name="pushButton_Cancel">
-     <property name="minimumSize">
-      <size>
-       <width>100</width>
-       <height>25</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>100</width>
-       <height>25</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>退出</string>
-     </property>
-    </widget>
-   </item>
-   <item row="3" column="0">
-    <widget class="QPushButton" name="pushButton_SelectImageMove">
-     <property name="minimumSize">
-      <size>
-       <width>100</width>
-       <height>25</height>
-      </size>
-     </property>
-     <property name="maximumSize">
-      <size>
-       <width>100</width>
-       <height>25</height>
-      </size>
-     </property>
-     <property name="text">
-      <string>待配准图像</string>
-     </property>
-    </widget>
-   </item>
-   <item row="7" column="0" colspan="8">
-    <widget class="QVTKWidget" name="qvtkWidget_Registration">
-     <property name="minimumSize">
-      <size>
-       <width>680</width>
-       <height>510</height>
-      </size>
-     </property>
-    </widget>
-   </item>
-   <item row="4" column="4">
-    <widget class="QRadioButton" name="radioButton_3">
-     <property name="text">
-      <string>仿射变换</string>
-     </property>
-    </widget>
-   </item>
+  <layout class="QGridLayout" name="gridLayout_2">
    <item row="0" column="7">
     <widget class="QPushButton" name="pushButton_Ok">
      <property name="minimumSize">
@@ -114,59 +33,36 @@
      </property>
     </widget>
    </item>
-   <item row="4" column="1">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="4" column="2">
-    <widget class="QRadioButton" name="radioButton_1">
+   <item row="2" column="5">
+    <widget class="QRadioButton" name="radioButton_4">
      <property name="text">
-      <string>平移变换</string>
+      <string>魔法变换</string>
      </property>
     </widget>
    </item>
-   <item row="4" column="3">
+   <item row="2" column="3">
     <widget class="QRadioButton" name="radioButton_2">
      <property name="text">
       <string>中心相似二维变换</string>
      </property>
     </widget>
    </item>
-   <item row="4" column="6">
-    <spacer name="horizontalSpacer_2">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="3" column="1" colspan="6">
-    <widget class="QLineEdit" name="lineEdit_ImageMove">
+   <item row="0" column="0">
+    <widget class="QPushButton" name="pushButton_SelectImageFix">
      <property name="minimumSize">
       <size>
-       <width>0</width>
+       <width>100</width>
        <height>25</height>
       </size>
      </property>
      <property name="maximumSize">
       <size>
-       <width>16777215</width>
+       <width>100</width>
        <height>25</height>
       </size>
+     </property>
+     <property name="text">
+      <string>基准图像</string>
      </property>
     </widget>
    </item>
@@ -184,6 +80,255 @@
        <height>25</height>
       </size>
      </property>
+    </widget>
+   </item>
+   <item row="2" column="2">
+    <widget class="QRadioButton" name="radioButton_1">
+     <property name="text">
+      <string>平移变换</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="1">
+    <spacer name="horizontalSpacer">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>115</width>
+       <height>17</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="2" column="6">
+    <spacer name="horizontalSpacer_2">
+     <property name="orientation">
+      <enum>Qt::Horizontal</enum>
+     </property>
+     <property name="sizeHint" stdset="0">
+      <size>
+       <width>115</width>
+       <height>17</height>
+      </size>
+     </property>
+    </spacer>
+   </item>
+   <item row="1" column="0">
+    <widget class="QPushButton" name="pushButton_SelectImageMove">
+     <property name="minimumSize">
+      <size>
+       <width>100</width>
+       <height>25</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>100</width>
+       <height>25</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>待配准图像</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="4">
+    <widget class="QRadioButton" name="radioButton_3">
+     <property name="text">
+      <string>仿射变换</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1" colspan="6">
+    <widget class="QLineEdit" name="lineEdit_ImageMove">
+     <property name="minimumSize">
+      <size>
+       <width>0</width>
+       <height>25</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>16777215</width>
+       <height>25</height>
+      </size>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="7">
+    <widget class="QPushButton" name="pushButton_Cancel">
+     <property name="minimumSize">
+      <size>
+       <width>100</width>
+       <height>25</height>
+      </size>
+     </property>
+     <property name="maximumSize">
+      <size>
+       <width>100</width>
+       <height>25</height>
+      </size>
+     </property>
+     <property name="text">
+      <string>退出</string>
+     </property>
+    </widget>
+   </item>
+   <item row="3" column="0" colspan="8">
+    <widget class="QWidget" name="widget" native="true">
+     <layout class="QGridLayout" name="gridLayout_5">
+      <item row="0" column="0">
+       <widget class="QSplitter" name="splitter_3">
+        <property name="orientation">
+         <enum>Qt::Horizontal</enum>
+        </property>
+        <widget class="QSplitter" name="splitter">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <widget class="QWidget" name="widget_2" native="true">
+          <layout class="QVBoxLayout" name="verticalLayout_2">
+           <item>
+            <widget class="QLabel" name="label_2">
+             <property name="minimumSize">
+              <size>
+               <width>60</width>
+               <height>16</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>60</width>
+               <height>16</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>基准图像</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QVTKWidget" name="qvtkWidget_Registration_UL">
+             <property name="minimumSize">
+              <size>
+               <width>340</width>
+               <height>255</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="widget_3" native="true">
+          <layout class="QVBoxLayout" name="verticalLayout_3">
+           <item>
+            <widget class="QVTKWidget" name="qvtkWidget_Registration_DL">
+             <property name="minimumSize">
+              <size>
+               <width>340</width>
+               <height>255</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label">
+             <property name="minimumSize">
+              <size>
+               <width>60</width>
+               <height>16</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>60</width>
+               <height>16</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>中间结果</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+        <widget class="QSplitter" name="splitter_2">
+         <property name="orientation">
+          <enum>Qt::Vertical</enum>
+         </property>
+         <widget class="QWidget" name="widget_4" native="true">
+          <layout class="QVBoxLayout" name="verticalLayout">
+           <item>
+            <widget class="QLabel" name="label_3">
+             <property name="minimumSize">
+              <size>
+               <width>60</width>
+               <height>16</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>60</width>
+               <height>16</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>待配准图像</string>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QVTKWidget" name="qvtkWidget_Registration_UR">
+             <property name="minimumSize">
+              <size>
+               <width>340</width>
+               <height>255</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+         <widget class="QWidget" name="widget_5" native="true">
+          <layout class="QVBoxLayout" name="verticalLayout_4">
+           <item>
+            <widget class="QVTKWidget" name="qvtkWidget_Registration_DR">
+             <property name="minimumSize">
+              <size>
+               <width>340</width>
+               <height>255</height>
+              </size>
+             </property>
+            </widget>
+           </item>
+           <item>
+            <widget class="QLabel" name="label_4">
+             <property name="minimumSize">
+              <size>
+               <width>60</width>
+               <height>16</height>
+              </size>
+             </property>
+             <property name="maximumSize">
+              <size>
+               <width>60</width>
+               <height>16</height>
+              </size>
+             </property>
+             <property name="text">
+              <string>最终结果</string>
+             </property>
+            </widget>
+           </item>
+          </layout>
+         </widget>
+        </widget>
+       </widget>
+      </item>
+     </layout>
     </widget>
    </item>
   </layout>

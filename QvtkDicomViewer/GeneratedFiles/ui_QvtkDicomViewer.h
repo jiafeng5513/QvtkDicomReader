@@ -62,6 +62,7 @@ public:
     QAction *action_WindowWL_CT_Brain;
     QAction *action_WindowWL_CT_Medias;
     QAction *action_WindowWL_CT_Lungs;
+    QAction *action_Registration;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QVTKWidget *qvtkWidget;
@@ -220,6 +221,11 @@ public:
         action_WindowWL_CT_Lungs = new QAction(QvtkDicomViewerClass);
         action_WindowWL_CT_Lungs->setObjectName(QStringLiteral("action_WindowWL_CT_Lungs"));
         action_WindowWL_CT_Lungs->setCheckable(true);
+        action_Registration = new QAction(QvtkDicomViewerClass);
+        action_Registration->setObjectName(QStringLiteral("action_Registration"));
+        QIcon icon19;
+        icon19.addFile(QStringLiteral(":/QvtkDicomViewer/Resources/aim_128px_1207156_easyicon.net.ico"), QSize(), QIcon::Normal, QIcon::Off);
+        action_Registration->setIcon(icon19);
         centralWidget = new QWidget(QvtkDicomViewerClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         gridLayout = new QGridLayout(centralWidget);
@@ -247,7 +253,7 @@ public:
         QvtkDicomViewerClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(QvtkDicomViewerClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1200, 26));
+        menuBar->setGeometry(QRect(0, 0, 1200, 23));
         menu = new QMenu(menuBar);
         menu->setObjectName(QStringLiteral("menu"));
         menu_2 = new QMenu(menuBar);
@@ -309,6 +315,8 @@ public:
         menu_3->addAction(action_Move);
         menu_3->addAction(action_Play);
         menu_3->addAction(action_Stop);
+        menu_3->addSeparator();
+        menu_3->addAction(action_Registration);
         menu_4->addAction(action_SwitchOfProperty);
         menu_5->addAction(action_TestEntrance_01);
         menu_5->addAction(action_TestEntrance_02);
@@ -347,6 +355,7 @@ public:
         mainToolBar->addAction(action_Negative);
         mainToolBar->addAction(action_Reset);
         mainToolBar->addSeparator();
+        mainToolBar->addAction(action_Registration);
 
         retranslateUi(QvtkDicomViewerClass);
         QObject::connect(action_back, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnBackward()));
@@ -381,6 +390,7 @@ public:
         QObject::connect(action_WindowWL_CT_Medias, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnWindowWL_CT_Medias()));
         QObject::connect(action_WindowWL_CT_Lungs, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnWindowWL_CT_Lungs()));
         QObject::connect(action_WindowWL_Default, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnWindowWL_Defaut()));
+        QObject::connect(action_Registration, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnRegistration()));
 
         QMetaObject::connectSlotsByName(QvtkDicomViewerClass);
     } // setupUi
@@ -424,6 +434,7 @@ public:
         action_WindowWL_CT_Brain->setText(QApplication::translate("QvtkDicomViewerClass", "CT-\350\204\221", Q_NULLPTR));
         action_WindowWL_CT_Medias->setText(QApplication::translate("QvtkDicomViewerClass", "CT-\347\272\265\350\206\210", Q_NULLPTR));
         action_WindowWL_CT_Lungs->setText(QApplication::translate("QvtkDicomViewerClass", "CT-\350\202\272", Q_NULLPTR));
+        action_Registration->setText(QApplication::translate("QvtkDicomViewerClass", "\351\205\215\345\207\206\345\267\245\345\205\267", Q_NULLPTR));
         menu->setTitle(QApplication::translate("QvtkDicomViewerClass", "\346\226\207\344\273\266", Q_NULLPTR));
         menu_2->setTitle(QApplication::translate("QvtkDicomViewerClass", "\344\277\241\346\201\257", Q_NULLPTR));
         menu_3->setTitle(QApplication::translate("QvtkDicomViewerClass", "\345\267\245\345\205\267", Q_NULLPTR));

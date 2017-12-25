@@ -3,6 +3,11 @@
 #include <QWidget>
 #include "ui_Register.h"
 #include <QVTKWidget.h>
+#include <vtkImageActor.h>
+#include <vtkSmartPointer.h>
+#include <vtkRenderer.h>
+#include <vtkRenderWindowInteractor.h>
+#include <vtkInteractorStyleImage.h>
 
 #define ITK_IO_FACTORY_REGISTER_MANAGER
 
@@ -25,8 +30,6 @@ class Register : public QWidget
 public:
 	Register(QWidget *parent = Q_NULLPTR);
 	~Register();
-	void SetCount(int count);
-	void SetQvtk(QVTKWidget* qvtk);
 private:
 	Ui::Register ui;
 private:
@@ -41,7 +44,11 @@ private slots:
 	void OnButtonOk();				//ok-开始计算
 	void OnButtonCancel();			//退出
 private:
+	vtkSmartPointer<vtkImageActor> actor[4];
+	vtkSmartPointer<vtkRenderer> renderer[4];
+	vtkSmartPointer<vtkRenderWindowInteractor> renderWindowInteractor[4];
+	vtkSmartPointer<vtkInteractorStyleImage> style[4];
+	QVTKWidget * m_output_widgets[4];
 	///即将废弃的变量
-	int reg_count;
-	QVTKWidget* qvtk;
+	int reg_count= Reg_2Dtransform;//选路变量
 };
