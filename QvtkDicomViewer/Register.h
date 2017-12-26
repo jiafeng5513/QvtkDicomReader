@@ -8,6 +8,8 @@
 #include <vtkRenderer.h>
 #include <vtkRenderWindowInteractor.h>
 #include <vtkInteractorStyleImage.h>
+#include <itkImage.h>
+#include <itkImageToVTKImageFilter.h>
 
 #define ITK_IO_FACTORY_REGISTER_MANAGER
 
@@ -26,7 +28,9 @@ enum Reg_enum
 class Register : public QWidget
 {
 	Q_OBJECT
-
+	typedef  float           PixelType;
+	typedef itk::Image< PixelType, 2 > OutputImageType;
+	typedef itk::ImageToVTKImageFilter<OutputImageType>   ConnectorType;
 public:
 	Register(QWidget *parent = Q_NULLPTR);
 	~Register();
@@ -38,6 +42,8 @@ private:
 	void CenteredSimilarityTransformReg(char *argv[]);
 	void AffineTransformReg(char*argv[]);
 	void MultiTransformReg(char*argv[]);
+
+	void updateOutputImage();
 private slots:
 	void OnSelectImageFix();		//选择基准图像
 	void OnSelectImageMove();		//选择待配准图像
@@ -49,6 +55,7 @@ private:
 	vtkSmartPointer<vtkRenderWindowInteractor> renderWindowInteractor[4];
 	vtkSmartPointer<vtkInteractorStyleImage> style[4];
 	QVTKWidget * m_output_widgets[4];
+	ConnectorType::Pointer connector[4];
 	///即将废弃的变量
-	int reg_count= Reg_2Dtransform;//选路变量
+	int reg_count= Reg_Multi;//选路变量
 };

@@ -29,11 +29,13 @@ Register::Register(QWidget *parent)
 		renderer[i] = vtkSmartPointer<vtkRenderer>::New();
 		renderWindowInteractor[i] = vtkSmartPointer<vtkRenderWindowInteractor>::New();
 		style[i] = vtkSmartPointer<vtkInteractorStyleImage>::New();
+		connector[i] = ConnectorType::New();
 	}
-	m_output_widgets[0]=ui.qvtkWidget_Registration_DL;
-	m_output_widgets[1]=ui.qvtkWidget_Registration_DR;
-	m_output_widgets[2]=ui.qvtkWidget_Registration_UL;
-	m_output_widgets[3]=ui.qvtkWidget_Registration_UR;
+	m_output_widgets[0]=ui.qvtkWidget_Registration_UL;
+	m_output_widgets[1]=ui.qvtkWidget_Registration_UR;
+	m_output_widgets[2]=ui.qvtkWidget_Registration_DL;
+	m_output_widgets[3]=ui.qvtkWidget_Registration_DR;
+
 }
 /*
  * 析构
@@ -42,15 +44,14 @@ Register::~Register()
 {
 }
 /*
- * 平移变换
+ * 平移变换-重构完成
  */
 void Register::TranslationReg(char* argv[])
 {
-	const    unsigned int    Dimension = 2;
-	typedef  float           PixelType;
-	typedef itk::Image< PixelType, Dimension >  FixedImageType;
-	typedef itk::Image< PixelType, Dimension >  MovingImageType;
-	typedef itk::TranslationTransform< double, Dimension > TransformType;//配准方案
+
+	typedef itk::Image< PixelType, 2 >  FixedImageType;
+	typedef itk::Image< PixelType, 2 >  MovingImageType;
+	typedef itk::TranslationTransform< double, 2 > TransformType;//配准方案
 	typedef itk::RegularStepGradientDescentOptimizerv4<double> OptimizerType;//优化求解器
 																			 //用于比较两张图片的相似程度
 	typedef itk::MeanSquaresImageToImageMetricv4<FixedImageType, MovingImageType >  MetricType;
@@ -72,13 +73,10 @@ void Register::TranslationReg(char* argv[])
 	metric->SetMovingInterpolator(movingInterpolator);
 	//绘图和输出准备
 	//typedef unsigned char                            OutputPixelType;
-	typedef itk::Image< PixelType, Dimension > OutputImageType;
-	typedef itk::ImageToVTKImageFilter<OutputImageType>   ConnectorType;
-	ConnectorType::Pointer connector[4];//数据转接器iTk->vtk
-	for(int i=0;i<4;i++)
-	{
-		connector[i] = ConnectorType::New();
-	}
+	
+
+	
+
 	//加入输入图片文件读取器(注意此处使用的是ITK的类型)
 	typedef itk::ImageFileReader< FixedImageType  >   FixedImageReaderType;
 	typedef itk::ImageFileReader< MovingImageType >   MovingImageReaderType;
@@ -146,7 +144,7 @@ void Register::TranslationReg(char* argv[])
 	const double bestValue = optimizer->GetValue();
 	//复合变换类型的定义何实例的定义以及绑定
 	//最终的结果是靠这个来输出的
-	typedef itk::CompositeTransform<double, Dimension > CompositeTransformType;
+	typedef itk::CompositeTransform<double, 2 > CompositeTransformType;
 	CompositeTransformType::Pointer outputCompositeTransform = CompositeTransformType::New();
 	outputCompositeTransform->AddTransform(movingInitialTransform);
 	outputCompositeTransform->AddTransform(registration->GetModifiableTransform());
@@ -200,36 +198,15 @@ void Register::TranslationReg(char* argv[])
 	//writer2->SetFileName(argv[5]);
 	//writer2->Update();
 
-	for (int i=0;i<4;i++)
-	{
-		connector[i]->Update();
-		actor[i]->GetMapper()->SetInputData(connector[0]->GetOutput());
-		renderer[i]->AddActor(actor[i]);
-		m_output_widgets[i]->GetRenderWindow()->AddRenderer(renderer[i]);
-		//m_output_widgets[i]->GetRenderWindow()->Render();
-		renderWindowInteractor[i]->SetRenderWindow(m_output_widgets[i]->GetRenderWindow());
-		renderWindowInteractor[i]->SetInteractorStyle(style[i]);
-		renderWindowInteractor[i]->Initialize();
-	}
-	for (int i = 0; i<4; i++)
-	{
-		m_output_widgets[i]->GetRenderWindow()->Render();
-	}
-	//下边的这个有阻塞,不要放在循环里
-	renderWindowInteractor[0]->Start();
-	renderWindowInteractor[1]->Start();
-	renderWindowInteractor[2]->Start();
-	renderWindowInteractor[3]->Start();
+	updateOutputImage();
 }
 /*
- * 中心相似二维变换
+ * 中心相似二维变换-重构完成
  */
 void Register::CenteredSimilarityTransformReg(char * argv[])
 {
-	const    unsigned int    Dimension = 2;
-	typedef  float           PixelType;
-	typedef itk::Image< PixelType, Dimension >  FixedImageType;
-	typedef itk::Image< PixelType, Dimension >  MovingImageType;
+	typedef itk::Image< PixelType, 2 >  FixedImageType;
+	typedef itk::Image< PixelType, 2 >  MovingImageType;
 	//中心相似二维变换
 	typedef itk::CenteredSimilarity2DTransform< double > TransformType;
 	typedef itk::RegularStepGradientDescentOptimizerv4<double>         OptimizerType;
@@ -242,6 +219,11 @@ void Register::CenteredSimilarityTransformReg(char * argv[])
 	//registration负责串联各个组件
 	registration->SetMetric(metric);
 	registration->SetOptimizer(optimizer);
+	//绘图和输出准备
+	//typedef unsigned char                            OutputPixelType;
+
+
+
 
 	//变换器
 	TransformType::Pointer  transform = TransformType::New();
@@ -254,6 +236,8 @@ void Register::CenteredSimilarityTransformReg(char * argv[])
 	movingImageReader->SetFileName(argv[2]);
 	registration->SetFixedImage(fixedImageReader->GetOutput());
 	registration->SetMovingImage(movingImageReader->GetOutput());
+	connector[0]->SetInput(fixedImageReader->GetOutput());//显示输入1
+	connector[1]->SetInput(movingImageReader->GetOutput());//显示输入2
 	//变换器初始化
 	typedef itk::CenteredTransformInitializer<TransformType, FixedImageType, MovingImageType > TransformInitializerType;
 	TransformInitializerType::Pointer initializer = TransformInitializerType::New();
@@ -333,18 +317,20 @@ void Register::CenteredSimilarityTransformReg(char * argv[])
 	resampler->SetOutputDirection(fixedImage->GetDirection());
 	resampler->SetDefaultPixelValue(100);
 
-	typedef  unsigned char  OutputPixelType;
-	typedef itk::Image< OutputPixelType, Dimension > OutputImageType;
+	/*typedef  unsigned char  OutputPixelType;//png输出必须用unsigned char
+	typedef itk::Image< OutputPixelType, Dimension > OutputImageType;*/
 	typedef itk::CastImageFilter< FixedImageType, OutputImageType >CastFilterType;
 	typedef itk::ImageFileWriter< OutputImageType >  WriterType;
 
 	//输出1
-	WriterType::Pointer      writer = WriterType::New();
+	//WriterType::Pointer      writer = WriterType::New();
 	CastFilterType::Pointer  caster = CastFilterType::New();
-	writer->SetFileName(argv[3]);
+	//writer->SetFileName(argv[3]);
+	connector[3]->SetInput(caster->GetOutput());//到底放caster前面还是后面
 	caster->SetInput(resampler->GetOutput());
-	writer->SetInput(caster->GetOutput());
-	writer->Update();
+	
+	//writer->SetInput(caster->GetOutput());
+	//writer->Update();
 
 	//输出2
 	typedef itk::SubtractImageFilter<FixedImageType, FixedImageType, FixedImageType > DifferenceFilterType;
@@ -357,32 +343,36 @@ void Register::CenteredSimilarityTransformReg(char * argv[])
 	difference->SetInput1(fixedImageReader->GetOutput());
 	difference->SetInput2(resampler->GetOutput());
 	resampler->SetDefaultPixelValue(1);
+	
+	connector[2]->SetInput(intensityRescaler->GetOutput());
 
-	WriterType::Pointer writer2 = WriterType::New();
-	writer2->SetInput(intensityRescaler->GetOutput());
-	writer2->SetFileName(argv[5]);
-	writer2->Update();
+	//WriterType::Pointer writer2 = WriterType::New();
+	//writer2->SetInput(intensityRescaler->GetOutput());
+	//writer2->SetFileName(argv[5]);
+	//writer2->Update();
 
 	//输出3
-	typedef itk::IdentityTransform< double, Dimension > IdentityTransformType;
+	typedef itk::IdentityTransform< double, 2 > IdentityTransformType;
 	IdentityTransformType::Pointer identity = IdentityTransformType::New();
 	resampler->SetTransform(identity);
-	writer2->SetFileName(argv[4]);
-	writer2->Update();
+	//writer2->SetFileName(argv[4]);
+	//writer2->Update();
+
+
+	updateOutputImage();
+
 
 	return /*EXIT_SUCCESS*/;
 }
 /*
- * 仿射变换
+ * 仿射变换-重构完成
  */
 void Register::AffineTransformReg(char * argv[])
 {
-	const    unsigned int    Dimension = 2;
-	typedef  float           PixelType;
-	typedef itk::Image< PixelType, Dimension >  FixedImageType;
-	typedef itk::Image< PixelType, Dimension >  MovingImageType;
+	typedef itk::Image< PixelType, 2 >  FixedImageType;
+	typedef itk::Image< PixelType, 2 >  MovingImageType;
 	//放射变换
-	typedef itk::AffineTransform< double, Dimension  > TransformType;
+	typedef itk::AffineTransform< double, 2  > TransformType;
 	typedef itk::RegularStepGradientDescentOptimizerv4<double>       OptimizerType;
 	typedef itk::MeanSquaresImageToImageMetricv4<FixedImageType, MovingImageType > MetricType;
 	typedef itk::ImageRegistrationMethodv4<FixedImageType, MovingImageType, TransformType > RegistrationType;
@@ -395,6 +385,12 @@ void Register::AffineTransformReg(char * argv[])
 	registration->SetOptimizer(optimizer);
 	//变换器
 	TransformType::Pointer  transform = TransformType::New();
+
+	//绘图和输出准备
+	//typedef unsigned char                            OutputPixelType;
+	
+
+
 	//读入两个输入文件
 	typedef itk::ImageFileReader< FixedImageType  > FixedImageReaderType;
 	typedef itk::ImageFileReader< MovingImageType > MovingImageReaderType;
@@ -404,6 +400,8 @@ void Register::AffineTransformReg(char * argv[])
 	movingImageReader->SetFileName(argv[2]);
 	registration->SetFixedImage(fixedImageReader->GetOutput());
 	registration->SetMovingImage(movingImageReader->GetOutput());
+	connector[0]->SetInput(fixedImageReader->GetOutput());
+	connector[1]->SetInput(movingImageReader->GetOutput());
 	//初始化变换器
 	typedef itk::CenteredTransformInitializer<TransformType, FixedImageType, MovingImageType > TransformInitializerType;
 	TransformInitializerType::Pointer initializer = TransformInitializerType::New();
@@ -499,25 +497,26 @@ void Register::AffineTransformReg(char * argv[])
 	resampler->SetOutputDirection(fixedImage->GetDirection());
 	resampler->SetDefaultPixelValue(100);
 
-	typedef  unsigned char  OutputPixelType;
-	typedef itk::Image< OutputPixelType, Dimension > OutputImageType;
+	//typedef  unsigned char  OutputPixelType;
+	//typedef itk::Image< OutputPixelType, Dimension > OutputImageType;
 	typedef itk::CastImageFilter<FixedImageType, OutputImageType > CastFilterType;
 	typedef itk::ImageFileWriter< OutputImageType >  WriterType;
 
 	//输出1
-	WriterType::Pointer      writer = WriterType::New();
+	//WriterType::Pointer      writer = WriterType::New();
 	CastFilterType::Pointer  caster = CastFilterType::New();
-	writer->SetFileName(argv[3]);
+	//writer->SetFileName(argv[3]);
+	connector[3]->SetInput(caster->GetOutput());
 	caster->SetInput(resampler->GetOutput());
-	writer->SetInput(caster->GetOutput());
-	writer->Update();
+	//writer->SetInput(caster->GetOutput());
+	//writer->Update();
 
 	//输出2
 	typedef itk::SubtractImageFilter<FixedImageType, FixedImageType, FixedImageType > DifferenceFilterType;
 	DifferenceFilterType::Pointer difference = DifferenceFilterType::New();
 	difference->SetInput1(fixedImageReader->GetOutput());
 	difference->SetInput2(resampler->GetOutput());
-	WriterType::Pointer writer2 = WriterType::New();
+	//WriterType::Pointer writer2 = WriterType::New();
 
 	typedef itk::RescaleIntensityImageFilter<FixedImageType, OutputImageType >   RescalerType;
 	RescalerType::Pointer intensityRescaler = RescalerType::New();
@@ -525,18 +524,19 @@ void Register::AffineTransformReg(char * argv[])
 	intensityRescaler->SetOutputMinimum(0);
 	intensityRescaler->SetOutputMaximum(255);
 
-	writer2->SetInput(intensityRescaler->GetOutput());
+	//writer2->SetInput(intensityRescaler->GetOutput());
+	connector[2]->SetInput(intensityRescaler->GetOutput());
 	resampler->SetDefaultPixelValue(1);
-	writer2->SetFileName(argv[5]);
-	writer2->Update();
+	//writer2->SetFileName(argv[5]);
+	//writer2->Update();
 
 	//输出3
-	typedef itk::IdentityTransform< double, Dimension > IdentityTransformType;
+	typedef itk::IdentityTransform< double, 2 > IdentityTransformType;
 	IdentityTransformType::Pointer identity = IdentityTransformType::New();
 	resampler->SetTransform(identity);
-	writer2->SetFileName(argv[4]);
-	writer2->Update();
-
+	//writer2->SetFileName(argv[4]);
+	//writer2->Update();
+	updateOutputImage();
 	return;
 }
 /*
@@ -544,8 +544,6 @@ void Register::AffineTransformReg(char * argv[])
  */
 void Register::MultiTransformReg(char * argv[])
 {
-	const    unsigned int    Dimension = 2;
-	typedef  float           PixelType;
 	//转移参数
 	const std::string fixedImageFile = argv[1];
 	const std::string movingImageFile = argv[2];
@@ -555,9 +553,9 @@ void Register::MultiTransformReg(char * argv[])
 	const std::string checkerBoardAfter = argv[6];
 	const int numberOfBins = 0;
 
-	typedef itk::Image< PixelType, Dimension >  FixedImageType;
-	typedef itk::Image< PixelType, Dimension >  MovingImageType;
-	typedef itk::TranslationTransform< double, Dimension >              TransformType;
+	typedef itk::Image< PixelType, 2 >  FixedImageType;
+	typedef itk::Image< PixelType, 2 >  MovingImageType;
+	typedef itk::TranslationTransform< double, 2 >              TransformType;
 	typedef itk::RegularStepGradientDescentOptimizerv4<double>          OptimizerType;
 	typedef itk::MattesMutualInformationImageToImageMetricv4<FixedImageType, MovingImageType > MetricType;
 	typedef itk::ImageRegistrationMethodv4<FixedImageType, MovingImageType, TransformType > RegistrationType;
@@ -568,6 +566,8 @@ void Register::MultiTransformReg(char * argv[])
 	RegistrationType::Pointer   registration = RegistrationType::New();
 	registration->SetOptimizer(optimizer);
 	registration->SetMetric(metric);
+	//绘图和输出准备
+	//typedef unsigned char                            OutputPixelType;
 	//读取两幅输入文件
 	typedef itk::ImageFileReader< FixedImageType  > FixedImageReaderType;
 	typedef itk::ImageFileReader< MovingImageType > MovingImageReaderType;
@@ -577,6 +577,8 @@ void Register::MultiTransformReg(char * argv[])
 	movingImageReader->SetFileName(movingImageFile);
 	registration->SetFixedImage(fixedImageReader->GetOutput());
 	registration->SetMovingImage(movingImageReader->GetOutput());
+	connector[0]->SetInput(fixedImageReader->GetOutput());
+	connector[1]->SetInput(movingImageReader->GetOutput());
 	//初始化
 	typedef OptimizerType::ParametersType ParametersType;
 	ParametersType initialParameters(transform->GetNumberOfParameters());
@@ -634,18 +636,21 @@ void Register::MultiTransformReg(char * argv[])
 	resample->SetOutputDirection(fixedImage->GetDirection());
 	resample->SetDefaultPixelValue(backgroundGrayLevel);
 	//准备输出
-	typedef  unsigned char  OutputPixelType;
-	typedef itk::Image< OutputPixelType, Dimension > OutputImageType;
+	//typedef  unsigned char  OutputPixelType;
+	//typedef itk::Image< OutputPixelType, Dimension > OutputImageType;
 	typedef itk::CastImageFilter<FixedImageType, OutputImageType > CastFilterType;
 	typedef itk::ImageFileWriter< OutputImageType >  WriterType;
 
 	//输出1
-	WriterType::Pointer      writer = WriterType::New();
+	//WriterType::Pointer      writer = WriterType::New();
 	CastFilterType::Pointer  caster = CastFilterType::New();
-	writer->SetFileName(outImagefile);
+	//writer->SetFileName(outImagefile);
+	
 	caster->SetInput(resample->GetOutput());
-	writer->SetInput(caster->GetOutput());
-	writer->Update();
+	caster->Update();
+connector[3]->SetInput(resample->GetOutput());
+	//writer->SetInput(caster->GetOutput());
+	//writer->Update();
 
 	// 准备好棋盘格图像
 	typedef itk::CheckerBoardImageFilter< FixedImageType > CheckerBoardFilterType;
@@ -653,22 +658,52 @@ void Register::MultiTransformReg(char * argv[])
 	checker->SetInput1(fixedImage);
 	checker->SetInput2(resample->GetOutput());
 	caster->SetInput(checker->GetOutput());
-	writer->SetInput(caster->GetOutput());
+	
+	//writer->SetInput(caster->GetOutput());
 	resample->SetDefaultPixelValue(0);
 
 	//输出:2 registration之前的棋盘格
 	TransformType::Pointer identityTransform = TransformType::New();
 	identityTransform->SetIdentity();
 	resample->SetTransform(identityTransform);
-	writer->SetFileName(checkerBoardBefore);
-	writer->Update();
+	//writer->SetFileName(checkerBoardBefore);
+	//writer->Update();
 
 	// 输出3: registration之后的棋盘格
 	resample->SetTransform(transform);
-	writer->SetFileName(checkerBoardAfter);
-	writer->Update();
+connector[2]->SetInput(caster->GetOutput());
+	//writer->SetFileName(checkerBoardAfter);
+	//writer->Update();
+	updateOutputImage();
 	return /*EXIT_SUCCESS*/;
 }
+/*
+ * 刷新图片
+ */
+void Register::updateOutputImage()
+{
+	for (int i = 0; i<4; i++)
+	{
+		connector[i]->Update();
+		actor[i]->GetMapper()->SetInputData(connector[i]->GetOutput());
+		renderer[i]->AddActor(actor[i]);
+		m_output_widgets[i]->GetRenderWindow()->AddRenderer(renderer[i]);
+		//m_output_widgets[i]->GetRenderWindow()->Render();
+		renderWindowInteractor[i]->SetRenderWindow(m_output_widgets[i]->GetRenderWindow());
+		renderWindowInteractor[i]->SetInteractorStyle(style[i]);
+		renderWindowInteractor[i]->Initialize();
+	}
+	for (int i = 0; i<4; i++)
+	{
+		m_output_widgets[i]->GetRenderWindow()->Render();
+	}
+	//下边的这个有阻塞,不要放在循环里
+	renderWindowInteractor[0]->Start();
+	renderWindowInteractor[1]->Start();
+	renderWindowInteractor[2]->Start();
+	renderWindowInteractor[3]->Start();
+}
+
 /*
  * 选择基准图片
  */
