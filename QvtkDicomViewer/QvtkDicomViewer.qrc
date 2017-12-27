@@ -25,7 +25,6 @@
         <file>Resources/hand_pointing_right_128px_1143133_easyicon.net.ico</file>
         <file>Resources/theme_black.qss</file>
         <file>Resources/aim_128px_1207156_easyicon.net.ico</file>
-        <file>Resources/background.jpg</file>
     </qresource>
     <qresource prefix="/Black">
         <file>Resources/Black/arrowBottom.png</file>

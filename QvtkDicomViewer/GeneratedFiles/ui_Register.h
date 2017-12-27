@@ -109,6 +109,7 @@ public:
 
         radioButton_Translation = new QRadioButton(Register);
         radioButton_Translation->setObjectName(QStringLiteral("radioButton_Translation"));
+        radioButton_Translation->setChecked(true);
 
         gridLayout_2->addWidget(radioButton_Translation, 2, 2, 1, 1);
 
@@ -129,7 +130,7 @@ public:
 
         radioButton_Affine = new QRadioButton(Register);
         radioButton_Affine->setObjectName(QStringLiteral("radioButton_Affine"));
-        radioButton_Affine->setChecked(true);
+        radioButton_Affine->setChecked(false);
 
         gridLayout_2->addWidget(radioButton_Affine, 2, 4, 1, 1);
 
@@ -256,14 +257,17 @@ public:
         QObject::connect(pushButton_SelectImageMove, SIGNAL(clicked()), Register, SLOT(OnSelectImageMove()));
         QObject::connect(pushButton_Ok, SIGNAL(clicked()), Register, SLOT(OnButtonOk()));
         QObject::connect(pushButton_Cancel, SIGNAL(clicked()), Register, SLOT(OnButtonCancel()));
-        QObject::connect(radioButton_Multi, SIGNAL(clicked()), Register, SLOT(OnSelectImageFix()));
+        QObject::connect(radioButton_Translation, SIGNAL(clicked()), Register, SLOT(OnSelectTranslation()));
+        QObject::connect(radioButton_CenteredSimilarity, SIGNAL(clicked()), Register, SLOT(OnSelectCenteredSimilarity()));
+        QObject::connect(radioButton_Affine, SIGNAL(clicked()), Register, SLOT(OnSelectAffine()));
+        QObject::connect(radioButton_Multi, SIGNAL(clicked()), Register, SLOT(OnSelectMulit()));
 
         QMetaObject::connectSlotsByName(Register);
     } // setupUi
 
     void retranslateUi(QWidget *Register)
     {
-        Register->setWindowTitle(QApplication::translate("Register", "Register", Q_NULLPTR));
+        Register->setWindowTitle(QApplication::translate("Register", "\351\205\215\345\207\206\345\267\245\345\205\267", Q_NULLPTR));
         pushButton_Ok->setText(QApplication::translate("Register", "\345\274\200\345\247\213\350\256\241\347\256\227", Q_NULLPTR));
         radioButton_Multi->setText(QApplication::translate("Register", "\351\255\224\346\263\225\345\217\230\346\215\242", Q_NULLPTR));
         radioButton_CenteredSimilarity->setText(QApplication::translate("Register", "\344\270\255\345\277\203\347\233\270\344\274\274\344\272\214\347\273\264\345\217\230\346\215\242", Q_NULLPTR));

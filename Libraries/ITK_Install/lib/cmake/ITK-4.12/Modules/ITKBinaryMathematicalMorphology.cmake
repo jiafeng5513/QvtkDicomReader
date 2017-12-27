@@ -1,0 +1,12 @@
+set(ITKBinaryMathematicalMorphology_LOADED 1)
+set(ITKBinaryMathematicalMorphology_ENABLE_SHARED "0")
+set(ITKBinaryMathematicalMorphology_DEPENDS "ITKLabelMap;ITKMathematicalMorphology")
+set(ITKBinaryMathematicalMorphology_PUBLIC_DEPENDS "")
+set(ITKBinaryMathematicalMorphology_TRANSITIVE_DEPENDS "ITKLabelMap;ITKMathematicalMorphology")
+set(ITKBinaryMathematicalMorphology_PRIVATE_DEPENDS "")
+set(ITKBinaryMathematicalMorphology_LIBRARIES "ITKLabelMap;ITKCommon;ITKStatistics;ITKTransform;ITKSpatialObjects;ITKPath")
+set(ITKBinaryMathematicalMorphology_INCLUDE_DIRS "${ITK_INSTALL_PREFIX}/include/ITK-4.12")
+set(ITKBinaryMathematicalMorphology_LIBRARY_DIRS "")
+set(ITKBinaryMathematicalMorphology_RUNTIME_LIBRARY_DIRS "${ITK_INSTALL_PREFIX}/bin")
+set(ITKBinaryMathematicalMorphology_TARGETS_FILE "")
+

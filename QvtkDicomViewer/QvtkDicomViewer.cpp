@@ -73,7 +73,7 @@ QvtkDicomViewer::QvtkDicomViewer(QWidget *parent)
 	//上下文菜单
 	CreateContextMenu();
 	//DirTreeRefresh(NULL);
-	m_Reg_Window = new Register();//事先初始化配准工具
+	
 }
 /*
  * 响应光标值的修改,执行一些刷新和禁用操作
@@ -1139,6 +1139,7 @@ void QvtkDicomViewer::OnSegmentImage()
  */
  void QvtkDicomViewer::OnRegistration()
  {
+	 m_Reg_Window = new Register();//事先初始化配准工具
 	 m_Reg_Window->show();
 	//为了增加响应速度,初始化代码应该统一起来,这是一个尝试,以后会逐渐改成这样
  }

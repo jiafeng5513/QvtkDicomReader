@@ -10,6 +10,7 @@
 #include <vtkInteractorStyleImage.h>
 #include <itkImage.h>
 #include <itkImageToVTKImageFilter.h>
+#include <itkImageFileReader.h>
 
 #define ITK_IO_FACTORY_REGISTER_MANAGER
 
@@ -30,6 +31,10 @@ class Register : public QWidget
 	typedef  float           PixelType;
 	typedef itk::Image< PixelType, 2 > OutputImageType;
 	typedef itk::ImageToVTKImageFilter<OutputImageType>   ConnectorType;
+	typedef itk::Image< PixelType, 2 >  FixedImageType;
+	typedef itk::Image< PixelType, 2 >  MovingImageType;
+	typedef itk::ImageFileReader< FixedImageType  >   FixedImageReaderType;
+	typedef itk::ImageFileReader< MovingImageType >   MovingImageReaderType;
 public:
 	Register(QWidget *parent = Q_NULLPTR);
 	~Register();
@@ -37,10 +42,11 @@ private:
 	Ui::Register ui;
 private:
 	///配准方法
-	void TranslationReg(char *argv[]);
-	void CenteredSimilarityTransformReg(char *argv[]);
-	void AffineTransformReg(char*argv[]);
-	void MultiTransformReg(char*argv[]);
+	void TranslationReg(FixedImageReaderType::Pointer _fixedImageReader, MovingImageReaderType::Pointer _movingImageReader);
+	void CenteredSimilarityTransformReg(FixedImageReaderType::Pointer _fixedImageReader,
+		MovingImageReaderType::Pointer _movingImageReader, double initialScale=1.0, double initialAngle=0.0, double steplength=1.0);
+	void AffineTransformReg(FixedImageReaderType::Pointer _fixedImageReader, MovingImageReaderType::Pointer _movingImageReader, double steplength=1.0, unsigned int maxNumberOfIterations=300);
+	void MultiTransformReg(FixedImageReaderType::Pointer _fixedImageReader, MovingImageReaderType::Pointer _movingImageReader, PixelType backgroundGrayLevel=128.0);
 
 	void updateOutputImage();
 private slots:
@@ -48,6 +54,7 @@ private slots:
 	void OnSelectImageMove();		    //选择待配准图像
 	void OnButtonOk();				    //ok-开始计算
 	void OnButtonCancel();			    //退出
+
 	void OnSelectTranslation();			//选择平移变换
 	void OnSelectCenteredSimilarity();	//选择中心相似二维变换
 	void OnSelectAffine();				//选择仿射变换
@@ -59,8 +66,9 @@ private:
 	vtkSmartPointer<vtkInteractorStyleImage> style[4];
 	QVTKWidget * m_output_widgets[4];
 	ConnectorType::Pointer connector[4];
-	///即将废弃的变量
-	int reg_count= RegFunc_Multi;
+	FixedImageReaderType::Pointer   fixedImageReader ;
+	MovingImageReaderType::Pointer  movingImageReader ;
+	FixedImageReaderType::Pointer   defaultImageReader;//用于加载默认图片用来初始化
 	RegistrationFunc m_CurrentRegFunc;//选路变量
 
 };

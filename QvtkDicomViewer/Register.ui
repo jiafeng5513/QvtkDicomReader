@@ -11,7 +11,7 @@
    </rect>
   </property>
   <property name="windowTitle">
-   <string>Register</string>
+   <string>配准工具</string>
   </property>
   <property name="styleSheet">
    <string notr="true"/>
@@ -222,7 +222,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QVTKWidget" name="qvtkWidget_Registration_UL">
+            <widget class="QVTKWidget" name="qvtkWidget_Registration_UL" native="true">
              <property name="minimumSize">
               <size>
                <width>340</width>
@@ -236,7 +236,7 @@
          <widget class="QWidget" name="widget_3" native="true">
           <layout class="QVBoxLayout" name="verticalLayout_3">
            <item>
-            <widget class="QVTKWidget" name="qvtkWidget_Registration_DL">
+            <widget class="QVTKWidget" name="qvtkWidget_Registration_DL" native="true">
              <property name="minimumSize">
               <size>
                <width>340</width>
@@ -293,7 +293,7 @@
             </widget>
            </item>
            <item>
-            <widget class="QVTKWidget" name="qvtkWidget_Registration_UR">
+            <widget class="QVTKWidget" name="qvtkWidget_Registration_UR" native="true">
              <property name="minimumSize">
               <size>
                <width>340</width>
@@ -307,7 +307,7 @@
          <widget class="QWidget" name="widget_5" native="true">
           <layout class="QVBoxLayout" name="verticalLayout_4">
            <item>
-            <widget class="QVTKWidget" name="qvtkWidget_Registration_DR">
+            <widget class="QVTKWidget" name="qvtkWidget_Registration_DR" native="true">
              <property name="minimumSize">
               <size>
                <width>340</width>
@@ -396,8 +396,8 @@
    <slot>OnButtonOk()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>637</x>
-     <y>19</y>
+     <x>830</x>
+     <y>28</y>
     </hint>
     <hint type="destinationlabel">
      <x>541</x>
@@ -412,8 +412,8 @@
    <slot>OnButtonCancel()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>657</x>
-     <y>49</y>
+     <x>830</x>
+     <y>64</y>
     </hint>
     <hint type="destinationlabel">
      <x>675</x>
@@ -422,18 +422,66 @@
    </hints>
   </connection>
   <connection>
+   <sender>radioButton_Translation</sender>
+   <signal>clicked()</signal>
+   <receiver>Register</receiver>
+   <slot>OnSelectTranslation()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>276</x>
+     <y>80</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>221</x>
+     <y>35</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_CenteredSimilarity</sender>
+   <signal>clicked()</signal>
+   <receiver>Register</receiver>
+   <slot>OnSelectCenteredSimilarity()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>374</x>
+     <y>73</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>337</x>
+     <y>37</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
+   <sender>radioButton_Affine</sender>
+   <signal>clicked()</signal>
+   <receiver>Register</receiver>
+   <slot>OnSelectAffine()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>485</x>
+     <y>81</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>462</x>
+     <y>37</y>
+    </hint>
+   </hints>
+  </connection>
+  <connection>
    <sender>radioButton_Multi</sender>
    <signal>clicked()</signal>
    <receiver>Register</receiver>
-   <slot>OnSelectImageFix()</slot>
+   <slot>OnSelectMulit()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>475</x>
-     <y>82</y>
+     <x>547</x>
+     <y>77</y>
     </hint>
     <hint type="destinationlabel">
-     <x>639</x>
-     <y>81</y>
+     <x>533</x>
+     <y>37</y>
     </hint>
    </hints>
   </connection>
@@ -443,5 +491,9 @@
   <slot>OnSelectImageMove()</slot>
   <slot>OnButtonOk()</slot>
   <slot>OnButtonCancel()</slot>
+  <slot>OnSelectTranslation()</slot>
+  <slot>OnSelectCenteredSimilarity()</slot>
+  <slot>OnSelectAffine()</slot>
+  <slot>OnSelectMulit()</slot>
  </slots>
 </ui>
