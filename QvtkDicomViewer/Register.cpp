@@ -35,7 +35,7 @@ Register::Register(QWidget *parent)
 	m_output_widgets[1]=ui.qvtkWidget_Registration_UR;
 	m_output_widgets[2]=ui.qvtkWidget_Registration_DL;
 	m_output_widgets[3]=ui.qvtkWidget_Registration_DR;
-
+	m_CurrentRegFunc = RegFunc_Translation;//默认
 }
 /*
  * 析构
@@ -44,7 +44,7 @@ Register::~Register()
 {
 }
 /*
- * 平移变换-重构完成
+ * 平移变换
  */
 void Register::TranslationReg(char* argv[])
 {
@@ -201,7 +201,7 @@ void Register::TranslationReg(char* argv[])
 	updateOutputImage();
 }
 /*
- * 中心相似二维变换-重构完成
+ * 中心相似二维变换
  */
 void Register::CenteredSimilarityTransformReg(char * argv[])
 {
@@ -365,7 +365,7 @@ void Register::CenteredSimilarityTransformReg(char * argv[])
 	return /*EXIT_SUCCESS*/;
 }
 /*
- * 仿射变换-重构完成
+ * 仿射变换
  */
 void Register::AffineTransformReg(char * argv[])
 {
@@ -736,7 +736,7 @@ void Register::OnButtonOk()
 
 	char *chr2 = arr2.data();
 
-	Reg_enum  reg_enum = (Reg_enum)this->reg_count;
+	RegistrationFunc  reg_enum = (RegistrationFunc)this->reg_count;
 	char * argv[] = {
 		"ImageRegistration1.exe",
 		"D:\\Libraries\\ITK\\ITK_4.12.0\\ITK_src\\Examples\\Data\\BrainProtonDensitySliceBorder20.png",
@@ -780,18 +780,17 @@ void Register::OnButtonOk()
 	};
 	switch (reg_enum)
 	{
-	case Reg_Null:
-		break;
-	case Reg_test:
+
+	case RegFunc_Translation:
 		TranslationReg(argv);
 		break;
-	case Reg_2Dtransform:
+	case RegFunc_CenteredSimilarity:
 		CenteredSimilarityTransformReg(argv1);
 		break;
-	case Reg_AffineTrans:
+	case RegFunc_Affine:
 		AffineTransformReg(argv2);
 		break;
-	case Reg_Multi:
+	case RegFunc_Multi:
 		MultiTransformReg(argv3);
 		break;
 	default:
@@ -805,4 +804,32 @@ void Register::OnButtonOk()
 void Register::OnButtonCancel()
 {
 	this->close();
+}
+/*
+ * 选择平移变换
+ */
+void Register::OnSelectTranslation()
+{
+	m_CurrentRegFunc = RegFunc_Translation;
+}
+/*
+ * 选择中心对称二维变换
+ */
+void Register::OnSelectCenteredSimilarity()
+{
+	m_CurrentRegFunc = RegFunc_CenteredSimilarity;
+}
+/*
+ * 选择仿射变换
+ */
+void Register::OnSelectAffine()
+{
+	m_CurrentRegFunc = RegFunc_Affine;
+}
+/*
+ * 选择膜法变换
+ */
+void Register::OnSelectMulit()
+{
+	m_CurrentRegFunc = RegFunc_Multi;
 }

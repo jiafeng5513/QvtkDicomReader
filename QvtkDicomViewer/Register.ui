@@ -13,6 +13,9 @@
   <property name="windowTitle">
    <string>Register</string>
   </property>
+  <property name="styleSheet">
+   <string notr="true"/>
+  </property>
   <layout class="QGridLayout" name="gridLayout_2">
    <item row="0" column="7">
     <widget class="QPushButton" name="pushButton_Ok">
@@ -34,14 +37,17 @@
     </widget>
    </item>
    <item row="2" column="5">
-    <widget class="QRadioButton" name="radioButton_4">
+    <widget class="QRadioButton" name="radioButton_Multi">
      <property name="text">
       <string>魔法变换</string>
+     </property>
+     <property name="checked">
+      <bool>false</bool>
      </property>
     </widget>
    </item>
    <item row="2" column="3">
-    <widget class="QRadioButton" name="radioButton_2">
+    <widget class="QRadioButton" name="radioButton_CenteredSimilarity">
      <property name="text">
       <string>中心相似二维变换</string>
      </property>
@@ -83,9 +89,12 @@
     </widget>
    </item>
    <item row="2" column="2">
-    <widget class="QRadioButton" name="radioButton_1">
+    <widget class="QRadioButton" name="radioButton_Translation">
      <property name="text">
       <string>平移变换</string>
+     </property>
+     <property name="checked">
+      <bool>true</bool>
      </property>
     </widget>
    </item>
@@ -135,9 +144,12 @@
     </widget>
    </item>
    <item row="2" column="4">
-    <widget class="QRadioButton" name="radioButton_3">
+    <widget class="QRadioButton" name="radioButton_Affine">
      <property name="text">
       <string>仿射变换</string>
+     </property>
+     <property name="checked">
+      <bool>false</bool>
      </property>
     </widget>
    </item>
@@ -341,7 +353,9 @@
    <header>QVTKWidget.h</header>
   </customwidget>
  </customwidgets>
- <resources/>
+ <resources>
+  <include location="QvtkDicomViewer.qrc"/>
+ </resources>
  <connections>
   <connection>
    <sender>pushButton_SelectImageFix</sender>
@@ -408,7 +422,7 @@
    </hints>
   </connection>
   <connection>
-   <sender>radioButton_4</sender>
+   <sender>radioButton_Multi</sender>
    <signal>clicked()</signal>
    <receiver>Register</receiver>
    <slot>OnSelectImageFix()</slot>

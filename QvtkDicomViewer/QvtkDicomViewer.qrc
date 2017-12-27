@@ -25,5 +25,69 @@
         <file>Resources/hand_pointing_right_128px_1143133_easyicon.net.ico</file>
         <file>Resources/theme_black.qss</file>
         <file>Resources/aim_128px_1207156_easyicon.net.ico</file>
+        <file>Resources/background.jpg</file>
+    </qresource>
+    <qresource prefix="/Black">
+        <file>Resources/Black/arrowBottom.png</file>
+        <file>Resources/Black/arrowLeft.png</file>
+        <file>Resources/Black/arrowRight.png</file>
+        <file>Resources/Black/arrowTop.png</file>
+        <file>Resources/Black/bottomArrow.png</file>
+        <file>Resources/Black/bottomArrowHover.png</file>
+        <file>Resources/Black/checkBox.png</file>
+        <file>Resources/Black/checkBoxChecked.png</file>
+        <file>Resources/Black/checkBoxCheckedHover.png</file>
+        <file>Resources/Black/checkBoxCheckedPressed.png</file>
+        <file>Resources/Black/checkBoxHover.png</file>
+        <file>Resources/Black/checkBoxIndeterminate.png</file>
+        <file>Resources/Black/checkBoxIndeterminateHover.png</file>
+        <file>Resources/Black/checkBoxIndeterminatePressed.png</file>
+        <file>Resources/Black/checkBoxPressed.png</file>
+        <file>Resources/Black/close.png</file>
+        <file>Resources/Black/closeHover.png</file>
+        <file>Resources/Black/closePressed.png</file>
+        <file>Resources/Black/delete.png</file>
+        <file>Resources/Black/deleteHover.png</file>
+        <file>Resources/Black/deletePressed.png</file>
+        <file>Resources/Black/downButton.png</file>
+        <file>Resources/Black/error.png</file>
+        <file>Resources/Black/feedback.png</file>
+        <file>Resources/Black/feedbackHover.png</file>
+        <file>Resources/Black/feedbackPressed.png</file>
+        <file>Resources/Black/information.png</file>
+        <file>Resources/Black/left.png</file>
+        <file>Resources/Black/maximize.png</file>
+        <file>Resources/Black/maximizeHover.png</file>
+        <file>Resources/Black/maximizePressed.png</file>
+        <file>Resources/Black/minimize.png</file>
+        <file>Resources/Black/minimizeHover.png</file>
+        <file>Resources/Black/minimizePressed.png</file>
+        <file>Resources/Black/nscc.png</file>
+        <file>Resources/Black/open.png</file>
+        <file>Resources/Black/openHover.png</file>
+        <file>Resources/Black/openPressed.png</file>
+        <file>Resources/Black/progressBar.png</file>
+        <file>Resources/Black/progressBarChunk.png</file>
+        <file>Resources/Black/question.png</file>
+        <file>Resources/Black/radioButton.png</file>
+        <file>Resources/Black/radioButtonChecked.png</file>
+        <file>Resources/Black/radioButtonCheckedHover.png</file>
+        <file>Resources/Black/radioButtonCheckedPressed.png</file>
+        <file>Resources/Black/radioButtonHover.png</file>
+        <file>Resources/Black/radioButtonPressed.png</file>
+        <file>Resources/Black/restore.png</file>
+        <file>Resources/Black/restoreHover.png</file>
+        <file>Resources/Black/restorePressed.png</file>
+        <file>Resources/Black/right.png</file>
+        <file>Resources/Black/scan.png</file>
+        <file>Resources/Black/skin.png</file>
+        <file>Resources/Black/skinHover.png</file>
+        <file>Resources/Black/skinPressed.png</file>
+        <file>Resources/Black/success.png</file>
+        <file>Resources/Black/topArrow.png</file>
+        <file>Resources/Black/topArrowHover.png</file>
+        <file>Resources/Black/transfer.png</file>
+        <file>Resources/Black/upButton.png</file>
+        <file>Resources/Black/warning.png</file>
     </qresource>
 </RCC>

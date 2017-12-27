@@ -197,21 +197,21 @@ QHeaderView::up-arrow {
     width: 13px;
     height: 11px;
     padding-right: 5px;
-    image: url(:/Black/topArrow);
+    image: url(:/Black/Resources/Black/topArrow.png);
     subcontrol-position: center right;
 }
 QHeaderView::up-arrow:hover, QHeaderView::up-arrow:pressed {
-    image: url(:/Black/topArrowHover);
+    image: url(:/Black/Resources/Black/topArrowHover.png);
 }
 QHeaderView::down-arrow {
     width: 13px;
     height: 11px;
     padding-right: 5px;
-    image: url(:/Black/bottomArrow);
+    image: url(:/Black/Resources/Black/bottomArrow.png);
     subcontrol-position: center right;
 }
 QHeaderView::down-arrow:hover, QHeaderView::down-arrow:pressed {
-    image: url(:/Black/bottomArrowHover);
+    image: url(:/Black/Resources/Black/bottomArrowHover.png);
 }
 
 /**********表格**********/
@@ -239,31 +239,31 @@ QTableView::indicator {
     height: 20px;
 }
 QTableView::indicator:enabled:unchecked {
-    image: url(:/Black/checkBox);
+    image: url(:/Black/Resources/Black/checkBox.png);
 }
 QTableView::indicator:enabled:unchecked:hover {
-    image: url(:/Black/checkBoxHover);
+    image: url(:/Black/Resources/Black/checkBoxHover.png);
 }
 QTableView::indicator:enabled:unchecked:pressed {
-    image: url(:/Black/checkBoxPressed);
+    image: url(:/Black/Resources/Black/checkBoxPressed.png);
 }
 QTableView::indicator:enabled:checked {
-    image: url(:/Black/checkBoxChecked);
+    image: url(:/Black/Resources/Black/checkBoxChecked.png);
 }
 QTableView::indicator:enabled:checked:hover {
-    image: url(:/Black/checkBoxCheckedHover);
+    image: url(:/Black/Resources/Black/checkBoxCheckedHover.png);
 }
 QTableView::indicator:enabled:checked:pressed {
-    image: url(:/Black/checkBoxCheckedPressed);
+    image: url(:/Black/Resources/Black/checkBoxCheckedPressed.png);
 }
 QTableView::indicator:enabled:indeterminate {
-    image: url(:/Black/checkBoxIndeterminate);
+    image: url(:/Black/Resources/Black/checkBoxIndeterminate.png);
 }
 QTableView::indicator:enabled:indeterminate:hover {
-    image: url(:/Black/checkBoxIndeterminateHover);
+    image: url(:/Black/Resources/Black/checkBoxIndeterminateHover.png);
 }
 QTableView::indicator:enabled:indeterminate:pressed {
-    image: url(:/Black/checkBoxIndeterminatePressed);
+    image: url(:/Black/Resources/Black/checkBoxIndeterminatePressed.png);
 }
 
 /**********滚动条-水平**********/
@@ -286,13 +286,13 @@ QScrollBar::handle:horizontal:hover {
 QScrollBar::sub-line:horizontal {
     width: 15px;
     background: transparent;
-    image: url(:/Black/arrowLeft);
+    image: url(:/Black/Resources/Black/arrowLeft.png);
     subcontrol-position: left;
 }
 QScrollBar::add-line:horizontal {
     width: 15px;
     background: transparent;
-    image: url(:/Black/arrowRight);
+    image: url(:/Black/Resources/Black/arrowRight.png);
     subcontrol-position: right;
 }
 QScrollBar::sub-line:horizontal:hover {
@@ -325,13 +325,13 @@ QScrollBar::handle:vertical:hover {
 QScrollBar::sub-line:vertical {
     height: 15px;
     background: transparent;
-    image: url(:/Black/arrowTop);
+    image: url(:/Black/Resources/Black/arrowTop.png);
     subcontrol-position: top;
 }
 QScrollBar::add-line:vertical {
     height: 15px;
     background: transparent;
-    image: url(:/Black/arrowBottom);
+    image: url(:/Black/Resources/Black/arrowBottom.png);
     subcontrol-position: bottom;
 }
 QScrollBar::sub-line:vertical:hover {
@@ -374,7 +374,7 @@ QComboBox::drop-down:hover {
     background: rgba(255, 255, 255, 30);
 }
 QComboBox::down-arrow {
-    image: url(:/Black/arrowBottom);
+    image: url(:/Black/Resources/Black/arrowBottom.png);
 }
 QComboBox::down-arrow:on {
     /**top: 1px;**/
@@ -409,13 +409,13 @@ QProgressBar#progressBar {
     text-align: center;
     color: white;
     background-color: transparent;
-    background-image: url(":/Black/progressBar");
+    background-image: url(":/Black/Resources/Black/progressBar.png");
     background-repeat: repeat-x;
 }
 QProgressBar#progressBar::chunk {
     border: none;
     background-color: transparent;
-    background-image: url(":/Black/progressBarChunk");
+    background-image: url(":/Black/Resources/Black/progressBarChunk.png");
     background-repeat: repeat-x;
 }
 
@@ -437,31 +437,31 @@ QCheckBox::indicator {
     height: 20px;
 }
 QCheckBox::indicator:unchecked {
-    image: url(:/Black/checkBox);
+    image: url(:/Black/Resources/Black/checkBox.png);
 }
 QCheckBox::indicator:unchecked:hover {
-    image: url(:/Black/checkBoxHover);
+    image: url(:/Black/Resources/Black/checkBoxHover.png);
 }
 QCheckBox::indicator:unchecked:pressed {
-    image: url(:/Black/checkBoxPressed);
+    image: url(:/Black/Resources/Black/checkBoxPressed.png);
 }
 QCheckBox::indicator:checked {
-    image: url(:/Black/checkBoxChecked);
+    image: url(:/Black/Resources/Black/checkBoxChecked.png);
 }
 QCheckBox::indicator:checked:hover {
-    image: url(:/Black/checkBoxCheckedHover);
+    image: url(:/Black/Resources/Black/checkBoxCheckedHover.png);
 }
 QCheckBox::indicator:checked:pressed {
-    image: url(:/Black/checkBoxCheckedPressed);
+    image: url(:/Black/Resources/Black/checkBoxCheckedPressed.png);
 }
 QCheckBox::indicator:indeterminate {
-    image: url(:/Black/checkBoxIndeterminate);
+    image: url(:/Black/Resources/Black/checkBoxIndeterminate.png);
 }
 QCheckBox::indicator:indeterminate:hover {
-    image: url(:/Black/checkBoxIndeterminateHover);
+    image: url(:/Black/Resources/Black/checkBoxIndeterminateHover.png);
 }
 QCheckBox::indicator:indeterminate:pressed {
-    image: url(:/Black/checkBoxIndeterminatePressed);
+    image: url(:/Black/Resources/Black/checkBoxIndeterminatePressed.png);
 }
 
 /**********单选框**********/
@@ -482,22 +482,22 @@ QRadioButton::indicator {
     height: 20px;
 }
 QRadioButton::indicator:unchecked {
-    image: url(:/Black/radioButton);
+    image: url(:/Black/Resources/Black/radioButton.png);
 }
 QRadioButton::indicator:unchecked:hover {
-    image: url(:/Black/radioButtonHover);
+    image: url(:/Black/Resources/Black/radioButtonHover.png);
 }
 QRadioButton::indicator:unchecked:pressed {
-    image: url(:/Black/radioButtonPressed);
+    image: url(:/Black/Resources/Black/radioButtonPressed.png);
 }
 QRadioButton::indicator:checked {
-    image: url(:/Black/radioButtonChecked);
+    image: url(:/Black/Resources/Black/radioButtonChecked.png);
 }
 QRadioButton::indicator:checked:hover {
-    image: url(:/Black/radioButtonCheckedHover);
+    image: url(:/Black/Resources/Black/radioButtonCheckedHover.png);
 }
 QRadioButton::indicator:checked:pressed {
-    image: url(:/Black/radioButtonCheckedPressed);
+    image: url(:/Black/Resources/Black/radioButtonCheckedPressed.png);
 }
 
 /**********输入框**********/
@@ -558,7 +558,7 @@ QSpinBox::up-button {
     height: 12px;
     border-top-right-radius: 4px;
     border-left: 1px solid rgb(100, 100, 100);
-    image: url(:/Black/upButton);
+    image: url(:/Black/Resources/Black/upButton.png);
     background: rgb(50, 50, 50);
 }
 QSpinBox::up-button:!enabled {
@@ -573,7 +573,7 @@ QSpinBox::down-button {
     height: 12px;
     border-bottom-right-radius: 4px;
     border-left: 1px solid rgb(100, 100, 100);
-    image: url(:/Black/downButton);
+    image: url(:/Black/Resources/Black/downButton.png);
     background: rgb(50, 50, 50);
 }
 QSpinBox::down-button:!enabled {
@@ -637,23 +637,23 @@ QLabel#skinLabel[colorProperty="highlight"] {
 }
 
 QLabel#informationLabel {
-    qproperty-pixmap: url(:/Black/information);
+    qproperty-pixmap: url(:/Black/Resources/Black/information.png);
 }
 
 QLabel#errorLabel {
-    qproperty-pixmap: url(:/Black/error);
+    qproperty-pixmap: url(:/Black/Resources/Black/error.png);
 }
 
 QLabel#successLabel {
-    qproperty-pixmap: url(:/Black/success);
+    qproperty-pixmap: url(:/Black/Resources/Black/success.png);
 }
 
 QLabel#questionLabel {
-    qproperty-pixmap: url(:/Black/question);
+    qproperty-pixmap: url(:/Black/Resources/Black/question.png);
 }
 
 QLabel#warningLabel {
-    qproperty-pixmap: url(:/Black/warning);
+    qproperty-pixmap: url(:/Black/Resources/Black/warning.png);
 }
 
 QLabel#groupLabel {
@@ -671,7 +671,7 @@ QToolButton#nsccButton{
     color: rgb(175, 175, 175);
     background: transparent;
     padding: 10px;
-    qproperty-icon: url(:/Black/nscc);
+    qproperty-icon: url(:/Black/Resources/Black/nscc.png);
     qproperty-iconSize: 32px 32px;
     qproperty-toolButtonStyle: ToolButtonTextUnderIcon;
 }
@@ -685,7 +685,7 @@ QToolButton#transferButton{
     color: rgb(175, 175, 175);
     background: transparent;
     padding: 10px;
-    qproperty-icon: url(:/Black/transfer);
+    qproperty-icon: url(:/Black/Resources/Black/transfer.png);
     qproperty-iconSize: 32px 32px;
     qproperty-toolButtonStyle: ToolButtonTextUnderIcon;
 }
@@ -738,7 +738,7 @@ QPushButton#selectButton {
     border: none;
     border-radius: none;
     border-left: 1px solid rgb(100, 100, 100);
-    image: url(:/Black/scan);
+    image: url(:/Black/Resources/Black/scan.png);
     background: transparent;
     color: white;
 }
@@ -772,15 +772,15 @@ QPushButton#minimizeButton {
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
     background: rgb(50, 50, 50);
-    image: url(:/Black/minimize);
+    image: url(:/Black/Resources/Black/minimize.png);
 }
 QPushButton#minimizeButton:hover {
     background: rgb(60, 60, 60);
-    image: url(:/Black/minimizeHover);
+    image: url(:/Black/Resources/Black/minimizeHover.png);
 }
 QPushButton#minimizeButton:pressed {
     background: rgb(55, 55, 55);
-    image: url(:/Black/minimizePressed);
+    image: url(:/Black/Resources/Black/minimizePressed.png);
 }
 
 QPushButton#maximizeButton[maximizeProperty="maximize"] {
@@ -788,15 +788,15 @@ QPushButton#maximizeButton[maximizeProperty="maximize"] {
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
     background: rgb(50, 50, 50);
-    image: url(:/Black/maximize);
+    image: url(:/Black/Resources/Black/maximize.png);
 }
 QPushButton#maximizeButton[maximizeProperty="maximize"]:hover {
     background: rgb(60, 60, 60);
-    image: url(:/Black/maximizeHover);
+    image: url(:/Black/Resources/Black/maximizeHover.png);
 }
 QPushButton#maximizeButton[maximizeProperty="maximize"]:pressed {
     background: rgb(55, 55, 55);
-    image: url(:/Black/maximizePressed);
+    image: url(:/Black/Resources/Black/maximizePressed.png);
 }
 
 QPushButton#maximizeButton[maximizeProperty="restore"] {
@@ -804,15 +804,15 @@ QPushButton#maximizeButton[maximizeProperty="restore"] {
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
     background: rgb(50, 50, 50);
-    image: url(:/Black/restore);
+    image: url(:/Black/Resources/Black/restore.png);
 }
 QPushButton#maximizeButton[maximizeProperty="restore"]:hover {
     background: rgb(60, 60, 60);
-    image: url(:/Black/restoreHover);
+    image: url(:/Black/Resources/Black/restoreHover.png);
 }
 QPushButton#maximizeButton[maximizeProperty="restore"]:pressed {
     background: rgb(55, 55, 55);
-    image: url(:/Black/restorePressed);
+    image: url(:/Black/Resources/Black/restorePressed.png);
 }
 
 QPushButton#closeButton {
@@ -820,15 +820,15 @@ QPushButton#closeButton {
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
     background: rgb(50, 50, 50);
-    image: url(:/Black/close);
+    image: url(:/Black/Resources/Black/close.png);
 }
 QPushButton#closeButton:hover {
     background: rgb(60, 60, 60);
-    image: url(:/Black/closeHover);
+    image: url(:/Black/Resources/Black/closeHover.png);
 }
 QPushButton#closeButton:pressed {
     background: rgb(55, 55, 55);
-    image: url(:/Black/closePressed);
+    image: url(:/Black/Resources/Black/closePressed.png);
 }
 
 QPushButton#skinButton {
@@ -836,15 +836,15 @@ QPushButton#skinButton {
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
     background: rgb(50, 50, 50);
-    image: url(:/Black/skin);
+    image: url(:/Black/Resources/Black/skin.png);
 }
 QPushButton#skinButton:hover {
     background: rgb(60, 60, 60);
-    image: url(:/Black/skinHover);
+    image: url(:/Black/Resources/Black/skinHover.png);
 }
 QPushButton#skinButton:pressed {
     background: rgb(55, 55, 55);
-    image: url(:/Black/skinPressed);
+    image: url(:/Black/Resources/Black/skinPressed.png);
 }
 
 QPushButton#feedbackButton {
@@ -852,27 +852,27 @@ QPushButton#feedbackButton {
     border-bottom-left-radius: 4px;
     border-bottom-right-radius: 4px;
     background: rgb(50, 50, 50);
-    image: url(:/Black/feedback);
+    image: url(:/Black/Resources/Black/feedback.png);
 }
 QPushButton#feedbackButton:hover {
     background: rgb(60, 60, 60);
-    image: url(:/Black/feedbackHover);
+    image: url(:/Black/Resources/Black/feedbackHover.png);
 }
 QPushButton#feedbackButton:pressed {
     background: rgb(55, 55, 55);
-    image: url(:/Black/feedbackPressed);
+    image: url(:/Black/Resources/Black/feedbackPressed.png);
 }
 
 QPushButton#closeTipButton {
     border-radius: none;
-    border-image: url(:/Black/close);
+    border-image: url(:/Black/Resources/Black/close.png);
     background: transparent;
 }
 QPushButton#closeTipButton:hover {
-    border-image: url(:/Black/closeHover);
+    border-image: url(:/Black/Resources/Black/closeHover.png);
 }
 QPushButton#closeTipButton:pressed {
-    border-image: url(:/Black/closePressed);
+    border-image: url(:/Black/Resources/Black/closePressed.png);
 }
 
 QPushButton#changeSkinButton{
@@ -900,34 +900,34 @@ QPushButton#transferButton:pressed {
     background: rgb(0, 140, 215);
 }
 QPushButton#transferButton[iconProperty="left"] {
-    qproperty-icon: url(:/Black/left);
+    qproperty-icon: url(:/Black/Resources/Black/left.png);
 }
 QPushButton#transferButton[iconProperty="right"] {
-    qproperty-icon: url(:/Black/right);
+    qproperty-icon: url(:/Black/Resources/Black/right.png);
 }
 
 QPushButton#openButton {
     border-radius: none;
-    image: url(:/Black/open);
+    image: url(:/Black/Resources/Black/open.png);
     background: transparent;
 }
 QPushButton#openButton:hover {
-    image: url(:/Black/openHover);
+    image: url(:/Black/Resources/Black/openHover.png);
 }
 QPushButton#openButton:pressed {
-    image: url(:/Black/openPressed);
+    image: url(:/Black/Resources/Black/openPressed.png);
 }
 
 QPushButton#deleteButton {
     border-radius: none;
-    image: url(:/Black/delete);
+    image: url(:/Black/Resources/Black/delete.png);
     background: transparent;
 }
 QPushButton#deleteButton:hover {
-    image: url(:/Black/deleteHover);
+    image: url(:/Black/Resources/Black/deleteHover.png);
 }
 QPushButton#deleteButton:pressed {
-    image: url(:/Black/deletePressed);
+    image: url(:/Black/Resources/Black/deletePressed.png);
 }
 
 QPushButton#menuButton {
@@ -940,6 +940,6 @@ QPushButton#menuButton {
 QPushButton#menuButton::menu-indicator{
     subcontrol-position: right center;
     subcontrol-origin: padding;
-    image: url(:/Black/arrowBottom);
+    image: url(:/Black/Resources/Black/arrowBottom.png);
     padding-right: 3px;
 }

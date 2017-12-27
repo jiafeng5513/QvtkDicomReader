@@ -32,15 +32,15 @@ class Ui_Register
 public:
     QGridLayout *gridLayout_2;
     QPushButton *pushButton_Ok;
-    QRadioButton *radioButton_4;
-    QRadioButton *radioButton_2;
+    QRadioButton *radioButton_Multi;
+    QRadioButton *radioButton_CenteredSimilarity;
     QPushButton *pushButton_SelectImageFix;
     QLineEdit *lineEdit_ImageFix;
-    QRadioButton *radioButton_1;
+    QRadioButton *radioButton_Translation;
     QSpacerItem *horizontalSpacer;
     QSpacerItem *horizontalSpacer_2;
     QPushButton *pushButton_SelectImageMove;
-    QRadioButton *radioButton_3;
+    QRadioButton *radioButton_Affine;
     QLineEdit *lineEdit_ImageMove;
     QPushButton *pushButton_Cancel;
     QWidget *widget;
@@ -70,6 +70,7 @@ public:
         if (Register->objectName().isEmpty())
             Register->setObjectName(QStringLiteral("Register"));
         Register->resize(840, 719);
+        Register->setStyleSheet(QStringLiteral(""));
         gridLayout_2 = new QGridLayout(Register);
         gridLayout_2->setSpacing(6);
         gridLayout_2->setContentsMargins(11, 11, 11, 11);
@@ -81,15 +82,16 @@ public:
 
         gridLayout_2->addWidget(pushButton_Ok, 0, 7, 1, 1);
 
-        radioButton_4 = new QRadioButton(Register);
-        radioButton_4->setObjectName(QStringLiteral("radioButton_4"));
+        radioButton_Multi = new QRadioButton(Register);
+        radioButton_Multi->setObjectName(QStringLiteral("radioButton_Multi"));
+        radioButton_Multi->setChecked(false);
 
-        gridLayout_2->addWidget(radioButton_4, 2, 5, 1, 1);
+        gridLayout_2->addWidget(radioButton_Multi, 2, 5, 1, 1);
 
-        radioButton_2 = new QRadioButton(Register);
-        radioButton_2->setObjectName(QStringLiteral("radioButton_2"));
+        radioButton_CenteredSimilarity = new QRadioButton(Register);
+        radioButton_CenteredSimilarity->setObjectName(QStringLiteral("radioButton_CenteredSimilarity"));
 
-        gridLayout_2->addWidget(radioButton_2, 2, 3, 1, 1);
+        gridLayout_2->addWidget(radioButton_CenteredSimilarity, 2, 3, 1, 1);
 
         pushButton_SelectImageFix = new QPushButton(Register);
         pushButton_SelectImageFix->setObjectName(QStringLiteral("pushButton_SelectImageFix"));
@@ -105,10 +107,10 @@ public:
 
         gridLayout_2->addWidget(lineEdit_ImageFix, 0, 1, 1, 6);
 
-        radioButton_1 = new QRadioButton(Register);
-        radioButton_1->setObjectName(QStringLiteral("radioButton_1"));
+        radioButton_Translation = new QRadioButton(Register);
+        radioButton_Translation->setObjectName(QStringLiteral("radioButton_Translation"));
 
-        gridLayout_2->addWidget(radioButton_1, 2, 2, 1, 1);
+        gridLayout_2->addWidget(radioButton_Translation, 2, 2, 1, 1);
 
         horizontalSpacer = new QSpacerItem(115, 17, QSizePolicy::Expanding, QSizePolicy::Minimum);
 
@@ -125,10 +127,11 @@ public:
 
         gridLayout_2->addWidget(pushButton_SelectImageMove, 1, 0, 1, 1);
 
-        radioButton_3 = new QRadioButton(Register);
-        radioButton_3->setObjectName(QStringLiteral("radioButton_3"));
+        radioButton_Affine = new QRadioButton(Register);
+        radioButton_Affine->setObjectName(QStringLiteral("radioButton_Affine"));
+        radioButton_Affine->setChecked(true);
 
-        gridLayout_2->addWidget(radioButton_3, 2, 4, 1, 1);
+        gridLayout_2->addWidget(radioButton_Affine, 2, 4, 1, 1);
 
         lineEdit_ImageMove = new QLineEdit(Register);
         lineEdit_ImageMove->setObjectName(QStringLiteral("lineEdit_ImageMove"));
@@ -253,7 +256,7 @@ public:
         QObject::connect(pushButton_SelectImageMove, SIGNAL(clicked()), Register, SLOT(OnSelectImageMove()));
         QObject::connect(pushButton_Ok, SIGNAL(clicked()), Register, SLOT(OnButtonOk()));
         QObject::connect(pushButton_Cancel, SIGNAL(clicked()), Register, SLOT(OnButtonCancel()));
-        QObject::connect(radioButton_4, SIGNAL(clicked()), Register, SLOT(OnSelectImageFix()));
+        QObject::connect(radioButton_Multi, SIGNAL(clicked()), Register, SLOT(OnSelectImageFix()));
 
         QMetaObject::connectSlotsByName(Register);
     } // setupUi
@@ -262,12 +265,12 @@ public:
     {
         Register->setWindowTitle(QApplication::translate("Register", "Register", Q_NULLPTR));
         pushButton_Ok->setText(QApplication::translate("Register", "\345\274\200\345\247\213\350\256\241\347\256\227", Q_NULLPTR));
-        radioButton_4->setText(QApplication::translate("Register", "\351\255\224\346\263\225\345\217\230\346\215\242", Q_NULLPTR));
-        radioButton_2->setText(QApplication::translate("Register", "\344\270\255\345\277\203\347\233\270\344\274\274\344\272\214\347\273\264\345\217\230\346\215\242", Q_NULLPTR));
+        radioButton_Multi->setText(QApplication::translate("Register", "\351\255\224\346\263\225\345\217\230\346\215\242", Q_NULLPTR));
+        radioButton_CenteredSimilarity->setText(QApplication::translate("Register", "\344\270\255\345\277\203\347\233\270\344\274\274\344\272\214\347\273\264\345\217\230\346\215\242", Q_NULLPTR));
         pushButton_SelectImageFix->setText(QApplication::translate("Register", "\345\237\272\345\207\206\345\233\276\345\203\217", Q_NULLPTR));
-        radioButton_1->setText(QApplication::translate("Register", "\345\271\263\347\247\273\345\217\230\346\215\242", Q_NULLPTR));
+        radioButton_Translation->setText(QApplication::translate("Register", "\345\271\263\347\247\273\345\217\230\346\215\242", Q_NULLPTR));
         pushButton_SelectImageMove->setText(QApplication::translate("Register", "\345\276\205\351\205\215\345\207\206\345\233\276\345\203\217", Q_NULLPTR));
-        radioButton_3->setText(QApplication::translate("Register", "\344\273\277\345\260\204\345\217\230\346\215\242", Q_NULLPTR));
+        radioButton_Affine->setText(QApplication::translate("Register", "\344\273\277\345\260\204\345\217\230\346\215\242", Q_NULLPTR));
         pushButton_Cancel->setText(QApplication::translate("Register", "\351\200\200\345\207\272", Q_NULLPTR));
         label_2->setText(QApplication::translate("Register", "\345\237\272\345\207\206\345\233\276\345\203\217", Q_NULLPTR));
         label->setText(QApplication::translate("Register", "\344\270\255\351\227\264\347\273\223\346\236\234", Q_NULLPTR));

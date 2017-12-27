@@ -16,13 +16,12 @@
 //上述宏定义的意义目前还无法否定
 //缺乏相应的实验
 
-enum Reg_enum
+enum RegistrationFunc
 {
-	Reg_Null,
-	Reg_test,
-	Reg_2Dtransform,
-	Reg_AffineTrans,
-	Reg_Multi
+	RegFunc_Translation,
+	RegFunc_CenteredSimilarity,
+	RegFunc_Affine,
+	RegFunc_Multi
 };
 
 class Register : public QWidget
@@ -45,10 +44,14 @@ private:
 
 	void updateOutputImage();
 private slots:
-	void OnSelectImageFix();		//选择基准图像
-	void OnSelectImageMove();		//选择待配准图像
-	void OnButtonOk();				//ok-开始计算
-	void OnButtonCancel();			//退出
+	void OnSelectImageFix();		    //选择基准图像
+	void OnSelectImageMove();		    //选择待配准图像
+	void OnButtonOk();				    //ok-开始计算
+	void OnButtonCancel();			    //退出
+	void OnSelectTranslation();			//选择平移变换
+	void OnSelectCenteredSimilarity();	//选择中心相似二维变换
+	void OnSelectAffine();				//选择仿射变换
+	void OnSelectMulit();				//选择膜法变换
 private:
 	vtkSmartPointer<vtkImageActor> actor[4];
 	vtkSmartPointer<vtkRenderer> renderer[4];
@@ -57,5 +60,7 @@ private:
 	QVTKWidget * m_output_widgets[4];
 	ConnectorType::Pointer connector[4];
 	///即将废弃的变量
-	int reg_count= Reg_Multi;//选路变量
+	int reg_count= RegFunc_Multi;
+	RegistrationFunc m_CurrentRegFunc;//选路变量
+
 };
