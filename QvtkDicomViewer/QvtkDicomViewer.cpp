@@ -51,9 +51,8 @@
 #include <vtkDecimatePro.h>
 #include "ThreeD_Reconstruction.h"
 
-/*
- * 构造方法
- */
+
+//构造方法
 QvtkDicomViewer::QvtkDicomViewer(QWidget *parent)
 	: QMainWindow(parent)
 {
@@ -62,6 +61,9 @@ QvtkDicomViewer::QvtkDicomViewer(QWidget *parent)
 	ui.setupUi(this);
 	ui.action_Pointer->setChecked(true);
 	CursorType = CURSOR::POINTRE;
+	//AppState = Idel;//初始状态,程序性处于空闲状态
+	connect(this, SIGNAL(AppStateChanged()), this, SLOT(OnChangeAppState()));
+	setAppState(Idel);
 	//监控光标类型的修改
 	connect(this, SIGNAL(CursorValueChanged()), this, SLOT(OnChangeCursorValue()));
 	ui.action_SwitchOfProperty->setChecked(true);
@@ -73,11 +75,137 @@ QvtkDicomViewer::QvtkDicomViewer(QWidget *parent)
 	//上下文菜单
 	CreateContextMenu();
 	//DirTreeRefresh(NULL);
+	setContentsMargins(0, 0, 0, 0);
+	ui.centralWidget->setContentsMargins(0, 0, 0, 0);
+	ui.qvtkWidget->setContentsMargins(0, 0, 0, 0);
 	
 }
-/*
- * 响应光标值的修改,执行一些刷新和禁用操作
- */
+
+// 响应程序状态的更改,执行一些禁用/启用/刷新操作
+void QvtkDicomViewer::OnChangeAppState()
+{
+	switch (AppState)
+	{
+	case Idel:		  //空闲状态
+		ui.action_PreviousPatient->setEnabled(false);
+		ui.action_LatterPatient->setEnabled(false);
+		ui.action_back->setEnabled(false);
+		ui.action_Play->setEnabled(false);
+		ui.action_next->setEnabled(false);
+		ui.action_Stop->setEnabled(false);
+		ui.action_Pointer->setEnabled(false);
+		ui.action_Zoom->setEnabled(false);
+		ui.action_GrayLevel->setEnabled(false);
+		ui.action_Move->setEnabled(false);
+		ui.action_Protractor->setEnabled(false);
+		ui.action_Ruler->setEnabled(false);
+		ui.action_Contour->setEnabled(false);
+		ui.action_BiDimensional->setEnabled(false);
+		ui.action_Negative->setEnabled(false);
+		ui.action_Reset->setEnabled(false);
+		ui.SliceScrollBar->setEnabled(false);
+		break;
+	case SingleImage: //单张图片状态
+		ui.action_PreviousPatient->setEnabled(false);
+		ui.action_LatterPatient->setEnabled(false);
+		ui.action_back->setEnabled(false);
+		ui.action_Play->setEnabled(false);
+		ui.action_next->setEnabled(false);
+		ui.action_Stop->setEnabled(false);
+		ui.action_Pointer->setEnabled(true);
+		ui.action_Zoom->setEnabled(true);
+		ui.action_GrayLevel->setEnabled(true);
+		ui.action_Move->setEnabled(true);
+		ui.action_Protractor->setEnabled(true);
+		ui.action_Ruler->setEnabled(true);
+		ui.action_Contour->setEnabled(true);
+		ui.action_BiDimensional->setEnabled(true);
+		ui.action_Negative->setEnabled(true);
+		ui.action_Reset->setEnabled(true);
+		ui.SliceScrollBar->setEnabled(false);
+		break;
+	case Forlder:	  //打开series文件夹状态
+		ui.action_PreviousPatient->setEnabled(false);
+		ui.action_LatterPatient->setEnabled(false);
+		ui.action_back->setEnabled(true);
+		ui.action_Play->setEnabled(true);
+		ui.action_next->setEnabled(true);
+		ui.action_Stop->setEnabled(true);
+		ui.action_Pointer->setEnabled(true);
+		ui.action_Zoom->setEnabled(true);
+		ui.action_GrayLevel->setEnabled(true);
+		ui.action_Move->setEnabled(true);
+		ui.action_Protractor->setEnabled(true);
+		ui.action_Ruler->setEnabled(true);
+		ui.action_Contour->setEnabled(true);
+		ui.action_BiDimensional->setEnabled(true);
+		ui.action_Negative->setEnabled(true);
+		ui.action_Reset->setEnabled(true);
+		ui.SliceScrollBar->setEnabled(true);
+		break;	
+	case Dir:		  //打开DICOMDIR状态
+		ui.action_PreviousPatient->setEnabled(true);
+		ui.action_LatterPatient->setEnabled(true);
+		ui.action_back->setEnabled(true);
+		ui.action_Play->setEnabled(true);
+		ui.action_next->setEnabled(true);
+		ui.action_Stop->setEnabled(true);
+		ui.action_Pointer->setEnabled(true);
+		ui.action_Zoom->setEnabled(true);
+		ui.action_GrayLevel->setEnabled(true);
+		ui.action_Move->setEnabled(true);
+		ui.action_Protractor->setEnabled(true);
+		ui.action_Ruler->setEnabled(true);
+		ui.action_Contour->setEnabled(true);
+		ui.action_BiDimensional->setEnabled(true);
+		ui.action_Negative->setEnabled(true);
+		ui.action_Reset->setEnabled(true);
+		ui.SliceScrollBar->setEnabled(true);
+		break;	
+	case Err:		  //出现严重错误的状态
+		ui.action_PreviousPatient->setEnabled(false);
+		ui.action_LatterPatient->setEnabled(false);
+		ui.action_back->setEnabled(false);
+		ui.action_Play->setEnabled(false);
+		ui.action_next->setEnabled(false);
+		ui.action_Stop->setEnabled(false);
+		ui.action_Pointer->setEnabled(false);
+		ui.action_Zoom->setEnabled(false);
+		ui.action_GrayLevel->setEnabled(false);
+		ui.action_Move->setEnabled(false);
+		ui.action_Protractor->setEnabled(false);
+		ui.action_Ruler->setEnabled(false);
+		ui.action_Contour->setEnabled(false);
+		ui.action_BiDimensional->setEnabled(false);
+		ui.action_Negative->setEnabled(false);
+		ui.action_Reset->setEnabled(false);
+		ui.SliceScrollBar->setEnabled(false);
+		break;		
+	case Debug:		  //调试状态(全部启用)
+		ui.action_PreviousPatient->setEnabled(true);
+		ui.action_LatterPatient->setEnabled(true);
+		ui.action_back->setEnabled(true);
+		ui.action_Play->setEnabled(true);
+		ui.action_next->setEnabled(true);
+		ui.action_Stop->setEnabled(true);
+		ui.action_Pointer->setEnabled(true);
+		ui.action_Zoom->setEnabled(true);
+		ui.action_GrayLevel->setEnabled(true);
+		ui.action_Move->setEnabled(true);
+		ui.action_Protractor->setEnabled(true);
+		ui.action_Ruler->setEnabled(true);
+		ui.action_Contour->setEnabled(true);
+		ui.action_BiDimensional->setEnabled(true);
+		ui.action_Negative->setEnabled(true);
+		ui.action_Reset->setEnabled(true);
+		ui.SliceScrollBar->setEnabled(true);
+		break;	
+	default:
+		break;
+	}
+}
+
+//响应光标值的修改,执行一些刷新和禁用操作
 void QvtkDicomViewer::OnChangeCursorValue()
 {
 	biDimensionalWidget->EnabledOff();
@@ -131,9 +259,8 @@ void QvtkDicomViewer::OnChangeCursorValue()
 		break;
 	}
 }
-/*
-* 响应窗宽窗位模式值的修改,执行一些禁用和选定动作
-*/
+
+//响应窗宽窗位模式值的修改,执行一些禁用和选定动作
 void QvtkDicomViewer::OnChangeWindowsWL()
 {
 
@@ -174,9 +301,8 @@ void QvtkDicomViewer::OnChangeWindowsWL()
 		break;
 	}
 }
-/*
- * 打开Series文件夹
- */
+
+//打开Series文件夹
 void QvtkDicomViewer::OnOpenSeriesFolder()
 {
 	//获取Series文件夹的绝对路径名
@@ -186,16 +312,20 @@ void QvtkDicomViewer::OnOpenSeriesFolder()
 	std::string folder = dir.toStdString();
 	RenderInitializer(folder);
 }
-/*
- * 打开单张Dicom文件
- */
+
+//打开单张Dicom文件
 void QvtkDicomViewer::OnOpenDicomFile()
 {
-
+	//单张模式下只有一个操作
+	//1.打开文件
+	QString path = QFileDialog::getOpenFileName(this, QStringLiteral("打开DICOM文件"), ".", QStringLiteral("全部类型(*.*)"));
+	if (path.isEmpty() == true)
+		return;
+	//2.初始化渲染
+	RenderInitializer(path.toStdString());
 }
-/*
- * 打开DICOMDIR文件
- */
+
+//打开DICOMDIR文件
 void QvtkDicomViewer::OnOpenDicomDirFile()
 {							  
 	//打开文件选择页面
@@ -206,13 +336,13 @@ void QvtkDicomViewer::OnOpenDicomDirFile()
 	 * 先校验path是不是DICOMDIR文件的路径,如果不是,弹出警告并退出
 	 * 如果是,执行下面的三条语句
 	 */
-	DicomDir *m_dicomdir = new DicomDir(path);
-	connect(m_dicomdir, SIGNAL(sendData(QString,QString)), this, SLOT(receiveData(QString,QString)));
+	DicomDir *m_dicomdir = new DicomDir();
+	m_dicomdir->InitDirExplorerFromDirPath(path);
+	connect(m_dicomdir, SIGNAL(sendData(QString)), this, SLOT(receiveData(QString)));
 	m_dicomdir->show();
 }
-/*
- * 添加测距尺
- */
+
+//添加测距尺
 void QvtkDicomViewer::addDistanceWidget()
 {
 	distanceWidget = vtkSmartPointer<vtkDistanceWidget>::New();
@@ -223,18 +353,16 @@ void QvtkDicomViewer::addDistanceWidget()
 	//VTK世界坐标系的单位÷所需的单位=SetScale()
 	static_cast<vtkDistanceRepresentation *>(distanceWidget->GetRepresentation())->SetLabelFormat("%-#6.3g mm");
 }
-/*
- * 添加量角器
- */
+
+//添加量角器
 void QvtkDicomViewer::addAngleWidget()
 {
 	angleWidget = vtkSmartPointer<vtkAngleWidget>::New();
 	angleWidget->SetInteractor(renderWindowInteractor);
 	angleWidget->CreateDefaultRepresentation();
 }
-/*
- * 添加轮廓工具
- */
+
+//添加轮廓工具
 void QvtkDicomViewer::addContourWidget()
 {
 	contourWidget =vtkSmartPointer<vtkContourWidget>::New();
@@ -269,9 +397,8 @@ void QvtkDicomViewer::addContourWidget()
 
 	contourWidget->SetInteractor(renderWindowInteractor);
 }
-/*
- * 添加切片页码
- */
+
+//添加切片页码
 void QvtkDicomViewer::SetSliceText(int current,int max)
 {
 	m_pImageViewer->GetRenderer()->RemoveActor(sliceTextActor);
@@ -292,9 +419,8 @@ void QvtkDicomViewer::SetSliceText(int current,int max)
 	m_pImageViewer->GetRenderer()->AddActor2D(sliceTextActor);
 	
 }
-/*
- * 添加Dicom文件头信息
- */
+
+//添加Dicom文件头信息
 void QvtkDicomViewer::SetUsageText(std::string imagefilename)
 {
 	DcmFileFormat fileformat;
@@ -480,9 +606,8 @@ void QvtkDicomViewer::SetUsageText(std::string imagefilename)
 	usageTextActor3->GetPositionCoordinate()->SetValue(0.95, 0.05);//坐标
 	m_pImageViewer->GetRenderer()->AddActor2D(usageTextActor3);
 }
-/*
- * 添加坐标轴指示
- */
+
+//添加坐标轴指示
 void QvtkDicomViewer::addOrientationMarker()
 {
 	axes =vtkSmartPointer<vtkAxesActor>::New();
@@ -495,9 +620,8 @@ void QvtkDicomViewer::addOrientationMarker()
 	widget->InteractiveOff();//禁用交互
 	//widget->InteractiveOn();
 }
-/*
- * 添加二维尺度标尺
- */
+
+//添加二维尺度标尺
 void QvtkDicomViewer::addBiDimensionalWidget()
 {
 	biDimensionalWidget =vtkSmartPointer<vtkBiDimensionalWidget>::New();
@@ -506,9 +630,8 @@ void QvtkDicomViewer::addBiDimensionalWidget()
 	biDimensionalCallback =vtkSmartPointer<vtkBiDimensionalCallback>::New();
 	biDimensionalWidget->AddObserver(vtkCommand::InteractionEvent, biDimensionalCallback);
 }
-/*
- * 创建树视图上下文菜单
- */
+
+//创建树视图上下文菜单
 void QvtkDicomViewer::CreateContextMenu()
 {
 
@@ -545,33 +668,76 @@ void QvtkDicomViewer::CreateContextMenu()
 	TreeViewMenu_OnImage->addAction(action_New_Render_Image);
 	TreeViewMenu_OnImage->addAction(action_Segment_Image);
 }
-/*
- * 显示当前series中的第Index张图,Index从0开始,与滚动条配合
- */
+
+//显示当前series中的第Index张图,Index从0开始,与滚动条配合
 void QvtkDicomViewer::ShowImageByIndex(int Index)
 {
 	RenderRefresh(CurrentPatient->getDicomImageByIndex(Index)->AbsFilePath, 
 				  Index + 1, 
 				  CurrentPatient->getCurrentDicomSeries()->ImageList.size());
 }
-/*
- *修改当前光标类型
- */
+
+//修改当前光标类型
 void QvtkDicomViewer::setCursor(CURSOR newValue)
 {
 	CursorType = newValue;
 	emit CursorValueChanged();//值更改,发出信号
 }
-/*
-* 修改窗宽窗位模式
-*/
+
+//修改窗宽窗位模式
 void QvtkDicomViewer::setWindowWL(WINDOWWL newWL)
 {
 	ImageWindow = newWL;
+	//选项互斥
+	ui.action_WindowWL_All->setChecked(false);
+	ui.action_WindowWL_CT_Abdomen->setChecked(false);
+	ui.action_WindowWL_CT_BloodVessel->setChecked(false);
+	ui.action_WindowWL_CT_Bones->setChecked(false);
+	ui.action_WindowWL_CT_Brain->setChecked(false);
+	ui.action_WindowWL_CT_Lungs->setChecked(false);
+	ui.action_WindowWL_CT_Medias->setChecked(false);
+	ui.action_WindowWL_Default->setChecked(false);
+	switch (ImageWindow)
+	{
+	case Default:
+		ui.action_WindowWL_Default->setChecked(true);
+		break;
+	case All:
+		ui.action_WindowWL_All->setChecked(true);
+		break;
+	case Abdomen:
+		ui.action_WindowWL_CT_Abdomen->setChecked(true);
+		break;
+	case BloodVessel:	
+		ui.action_WindowWL_CT_BloodVessel->setChecked(true);
+		break;
+	case Bones:
+		ui.action_WindowWL_CT_Bones->setChecked(true);
+		break;
+	case Brain:
+		ui.action_WindowWL_CT_Brain->setChecked(true);
+		break;
+	case Medias:
+		ui.action_WindowWL_CT_Medias->setChecked(true);
+		break;
+	case Lungs:
+		ui.action_WindowWL_CT_Lungs->setChecked(true);
+		break;
+	default:
+		ui.action_WindowWL_Default->setChecked(true);
+		break;
+	}
 	emit WindowWLChanged();//值更改,发出信号
 }
+// 改变程序的状态
+void QvtkDicomViewer::setAppState(STATE new_state)
+{
+	AppState = new_state;
+	emit AppStateChanged();//值更改,发出信号
+}
+
+// 渲染器初始化
 /*
- * 渲染器初始化
  * 参数:一张图片的文件路径
  *	    将要显示的图片的数量,默认为1
  * 说明:对于渲染器,要么是渲染单张图,要么是渲染一个图像序列(多张图)
@@ -641,8 +807,9 @@ void QvtkDicomViewer::RenderInitializer(std::string folder,int NumOfImage )
 	 */
 	ui.SliceScrollBar->setRange(0, NumOfImage - 1);
 }
+
+//更新渲染/渲染下一帧
 /*
- * 更新渲染/渲染下一帧
  * 调用这个函数之前必须先调用渲染器初始化函数,否则将会发生运行时错误
  */
 void QvtkDicomViewer::RenderRefresh(std::string imagefilename,int currentPagenumber,int maxPageNumber)
@@ -657,9 +824,8 @@ void QvtkDicomViewer::RenderRefresh(std::string imagefilename,int currentPagenum
 	reader->Update();
 	ui.qvtkWidget->GetRenderWindow()->Render();
 }
-/*
- * 刷新DIR树
- */
+
+//刷新DIR树
 void QvtkDicomViewer::DirTreeRefresh(DicomPatient * patient)
 {
 	QStringList headers;
@@ -671,91 +837,78 @@ void QvtkDicomViewer::DirTreeRefresh(DicomPatient * patient)
 	for (int column = 0; column < m_dicomdirtreemodel->columnCount(); ++column)
 		ui.treeView->resizeColumnToContents(column);
 }
-/*
- * 工具条->前一张
- */
+
+//工具条->前一张
 void QvtkDicomViewer::OnForward()
 {
 	ui.SliceScrollBar->setSliderPosition(ui.SliceScrollBar->sliderPosition() + 1);
 }
-/*
- * 工具条->后一张
- */
+
+//工具条->后一张
 void QvtkDicomViewer::OnBackward()
 {
 	ui.SliceScrollBar->setSliderPosition(ui.SliceScrollBar->sliderPosition() - 1);
 }
 
-/*
- * 回到第一张
- */
+//回到第一张
 void QvtkDicomViewer::OnResetToFirst()
 {
 	ui.SliceScrollBar->setSliderPosition(0);
 }
-/*
- * 选中默认鼠标指针工具
- */
+
+//选中默认鼠标指针工具
 void QvtkDicomViewer::OnSelectedPointer()
 {
 	setCursor(CURSOR::POINTRE);
 	myInteractorStyle->MouseFunction = myVtkInteractorStyleImage::POINTER;
 }
-/*
- * 选中量角器工具
- */
+
+//选中量角器工具
 void QvtkDicomViewer::OnSelectedProtractor()
 {
 	setCursor(CURSOR::PROTRACTOR);
 }
-/*
- * 选中测距尺工具
- */
+
+//选中测距尺工具
 void QvtkDicomViewer::OnSelectedRuler()
 {
 	setCursor(CURSOR::RULER);
 }
-/*
- * 选中轮廓工具
- */
+
+//选中轮廓工具
 void QvtkDicomViewer::OnSelectedContour()
 {
 	setCursor(CURSOR::CONTOUR);
 }
-/*
- * 选中二维标尺工具
- */
+
+//选中二维标尺工具
 void QvtkDicomViewer::OnSelectedBiDimensional()
 {
 	setCursor(CURSOR::BIDI);
 }
-/*
- * 选中灰阶工具
- */
+
+//选中灰阶工具
 void QvtkDicomViewer::OnSelectedGrayLevel()
 {
 	setCursor(CURSOR::GRAYLEVEL);
 	myInteractorStyle->MouseFunction = myVtkInteractorStyleImage::GRAYLEVEL;
 }
-/*
- * 选中缩放工具
- */
+
+//选中缩放工具
 void QvtkDicomViewer::OnSelectedZoom()
 {
 	setCursor(CURSOR::ZOOM);
 	myInteractorStyle->MouseFunction = myVtkInteractorStyleImage::ZOOM;
 }
-/*
- * 选中移动工具
- */
+
+ //选中移动工具
 void QvtkDicomViewer::OnSelectedMove()
 {
 	setCursor(CURSOR::MOVE);
 	myInteractorStyle->MouseFunction = myVtkInteractorStyleImage::MOVE;
 }
-/*
- * 使用负片效果
- */
+
+//使用负片效果
 void QvtkDicomViewer::OnNegative()
 {
 	//m_pImageViewer->SetColorLevel(300.0);
@@ -795,21 +948,17 @@ void QvtkDicomViewer::OnNegative()
 	/////////////////////////////////////////////////////////////////////////////////
 	reader->Update();//刷新
 }
-/*
- * 复位按钮
- */
+
+//复位按钮
 void QvtkDicomViewer::OnReset()
 {
-	//setCursor(CURSOR::POINTRE);
+	setCursor(CURSOR::POINTRE);
 	//myInteractorStyle->MouseFunction = myVtkInteractorStyleImage::POINTER;
-	//RenderInitializer(folder);
-	/*
-	 * 复位功能换一种写法
-	 */
+	RenderInitializer(CurrentPatient->getCurrentDicomImage()->AbsFilePath, CurrentPatient->getCurrentDicomSeries()->ImageList.size());
+	ui.SliceScrollBar->setValue(CurrentPatient->indexOfCurrentImage);
 }
-/*
- * 播放
- */
+
+//播放
 void QvtkDicomViewer::OnPlay()
 {
 	//myInteractorStyle->MoveSliceBackward();
@@ -838,9 +987,8 @@ void QvtkDicomViewer::OnPlay()
 	}
 	PlayFlag = !PlayFlag;
 }
-/*
- * 停止
- */
+
+//停止
 void QvtkDicomViewer::OnStop()
 {
 	ui.action_Play->setIcon(icon_Play);
@@ -850,9 +998,8 @@ void QvtkDicomViewer::OnStop()
 	//myInteractorStyle->ResetSliceToMin();
 	ui.action_Stop->setEnabled(false);
 }
-/*
- * 属性docking窗口的开关
- */
+
+//属性docking窗口的开关
  void QvtkDicomViewer::OnSwitchProperty()
  {
 	 //ui.action_SwitchOfProperty->isChecked();
@@ -865,9 +1012,8 @@ void QvtkDicomViewer::OnStop()
 		 ui.dockWidget_Dir->setHidden(true);
 	 }
  }
-/*
- * 树视图上下文菜单分发
- */
+
+//树视图上下文菜单分发
  void QvtkDicomViewer::on_treeView_customContextMenuRequested(QPoint pos)
  {
 	 if (PrePosition != pos) {//这次触发是正常触发
@@ -908,24 +1054,21 @@ void QvtkDicomViewer::OnStop()
 		 PrePosition.setY(-1);
 	 }
  }
-/*
- *树视图右键菜单->显示当前病人的所有信息
- */
+
+//树视图右键菜单->显示当前病人的所有信息
  void QvtkDicomViewer::OnShowDicomCurrentTags()
  {
 	 QMessageBox::information(this, QStringLiteral("嘿嘿!"), QStringLiteral("这个人很懒,什么都没留下!"));
  }
-/*
- * 显示选中的Series
- */
+
+//显示选中的Series
  void QvtkDicomViewer::OnShowSelectedSeries()
  {
 	 CurrentPatient->setCurrentDicomSeriesById(m_dicomdirtreemodel->getItem(indexSelect)->itemData[0].toString().toStdString());
 	 RenderInitializer(CurrentPatient->getCurrentDicomImage()->AbsFilePath, CurrentPatient->getCurrentDicomSeries()->ImageList.size());
  }
-/*
- * 显示当前选中的Image
- */
+
+//显示当前选中的Image
  void QvtkDicomViewer::OnShowSelectedImage()
  {
 	 /*
@@ -935,16 +1078,14 @@ void QvtkDicomViewer::OnStop()
 	 RenderInitializer(CurrentPatient->getCurrentDicomImage()->AbsFilePath, CurrentPatient->getCurrentDicomSeries()->ImageList.size());
 	 ui.SliceScrollBar->setValue(CurrentPatient->indexOfCurrentImage);
  }
-/*
- * Slice滚动条值更改事件
- */
+
+//Slice滚动条值更改事件
  void QvtkDicomViewer::OnSliceScrollBarValueChange(int a)
  {
 	 ShowImageByIndex(a);
  }
- /*
-  *	测试入口1
-  */
+
+//测试入口1
  void QvtkDicomViewer::OnTestEntrance_01()
  {
 	/*
@@ -952,9 +1093,8 @@ void QvtkDicomViewer::OnStop()
 	 */
 	 RenderInitializer("F:/100098.dcm");
  }
- /*
-  *	测试入口2
-  */
+
+//测试入口2
  void QvtkDicomViewer::OnTestEntrance_02()
  {
 	 QStringList headers;
@@ -980,9 +1120,8 @@ void QvtkDicomViewer::OnStop()
 	 for (int column = 0; column < m_dicomdirtreemodel->columnCount(); ++column)
 		 ui.treeView->resizeColumnToContents(column);
  }
- /*
-  *	响应三维重建命令
-  */
+
+//响应三维重建命令
 void QvtkDicomViewer::On3D_Reconstruction()
 {
 	CurrentPatient->setCurrentDicomSeriesById(m_dicomdirtreemodel->getItem(indexSelect)->itemData[0].toString().toStdString());
@@ -996,9 +1135,8 @@ void QvtkDicomViewer::On3D_Reconstruction()
 	_3d_reconstructer->show();
 	_3d_reconstructer->OnReconstruction();
 }
-/*
- * 响应图像分割操作
- */
+
+//响应图像分割操作
 void QvtkDicomViewer::OnSegmentImage()
 {
 	/*
@@ -1013,10 +1151,9 @@ void QvtkDicomViewer::OnSegmentImage()
 	Segmenter *_segmenter = new Segmenter(CurrentPatient->getCurrentDicomImage()->AbsFilePath);
 	_segmenter->show();
 }
-/*
-  *	响应DicomDir类传送过来的信号,其中包含了一个病人的ID
-  */
- void QvtkDicomViewer::receiveData(QString data,QString dir)
+
+//响应DicomDir类传送过来的信号,其中包含了一个病人的ID
+ void QvtkDicomViewer::receiveData(QString data)
  {
 	DicomDataBase * temp_database = DicomDataBase::getInstance();
 	Current_patientId = data.toStdString();//当前的病人ID
@@ -1025,9 +1162,8 @@ void QvtkDicomViewer::OnSegmentImage()
 	DirTreeRefresh(CurrentPatient);//刷新树视图
 	RenderInitializer(CurrentPatient->getCurrentDicomImage()->AbsFilePath, CurrentPatient->getCurrentDicomSeries()->ImageList.size());
  }
- /*
-  * 下一个病人
-  */
+ 
+ //下一个病人
  void QvtkDicomViewer::OnLatterPatient()
  {
 	 if (CurrentPatient == NULL)
@@ -1039,9 +1175,8 @@ void QvtkDicomViewer::OnSegmentImage()
 	 DirTreeRefresh(CurrentPatient);//刷新树视图
 	 RenderInitializer(CurrentPatient->getCurrentDicomImage()->AbsFilePath, CurrentPatient->getCurrentDicomSeries()->ImageList.size());
  }
- /*
-  * 上一个病人
-  */
+ 
+ //上一个病人
  void QvtkDicomViewer::OnPreviousPatient()
  {
 	 if (CurrentPatient == NULL)
@@ -1054,9 +1189,8 @@ void QvtkDicomViewer::OnSegmentImage()
 	 RenderInitializer(CurrentPatient->getCurrentDicomImage()->AbsFilePath, CurrentPatient->getCurrentDicomSeries()->ImageList.size());
  }
 
- /*
- * 默认窗宽窗位
- */
+
+ //默认窗宽窗位
  void QvtkDicomViewer::OnWindowWL_Defaut()
  {
 	 m_pImageViewer->SetColorLevel(40.0);
@@ -1064,9 +1198,8 @@ void QvtkDicomViewer::OnSegmentImage()
 	 m_pImageViewer->Render();
 	 setWindowWL(Default);
  }
- /*
- *	全部动态范围
- */
+
+//全部动态范围
  void QvtkDicomViewer::OnWindowWL_All()
  {
 	 m_pImageViewer->SetColorLevel(1024.0);
@@ -1074,9 +1207,8 @@ void QvtkDicomViewer::OnSegmentImage()
 	 m_pImageViewer->Render();
 	 setWindowWL(All);
  }
- /*
- *	腹部
- */
+
+//腹部
  void QvtkDicomViewer::OnWindowWL_CT_Abdomen()
  {
 	 m_pImageViewer->SetColorLevel(60.0);
@@ -1084,9 +1216,8 @@ void QvtkDicomViewer::OnSegmentImage()
 	 m_pImageViewer->Render();
 	 setWindowWL(Abdomen);
  }
- /*
- *	血管
- */
+ 
+ //血管
  void QvtkDicomViewer::OnWindowWL_CT_BloodVessel()
  {
 	 m_pImageViewer->SetColorLevel(300.0);
@@ -1094,9 +1225,8 @@ void QvtkDicomViewer::OnSegmentImage()
 	 m_pImageViewer->Render();
 	 setWindowWL(BloodVessel);
  }
- /*
- *	骨骼
- */
+ 
+ //骨骼
  void QvtkDicomViewer::OnWindowWL_CT_Bones()
  {
 	 m_pImageViewer->SetColorLevel(300.0);
@@ -1104,9 +1234,8 @@ void QvtkDicomViewer::OnSegmentImage()
 	 m_pImageViewer->Render();
 	 setWindowWL(Bones);
  }
- /*
- *	脑
- */
+ 
+//脑
  void QvtkDicomViewer::OnWindowWL_CT_Brain()
  {
 	 m_pImageViewer->SetColorLevel(40.0);
@@ -1114,9 +1243,8 @@ void QvtkDicomViewer::OnSegmentImage()
 	 m_pImageViewer->Render();
 	 setWindowWL(Brain);
  }
- /*
- *	纵膈
- */
+ 
+ //纵膈
  void QvtkDicomViewer::OnWindowWL_CT_Medias()
  {
 	 m_pImageViewer->SetColorLevel(40.0);
@@ -1124,9 +1252,8 @@ void QvtkDicomViewer::OnSegmentImage()
 	 m_pImageViewer->Render();
 	 setWindowWL(Medias);
  }
- /*
- *	肺
- */
+ 
+ //肺
  void QvtkDicomViewer::OnWindowWL_CT_Lungs()
  {
 	 m_pImageViewer->SetColorLevel(-400.0);
@@ -1134,9 +1261,8 @@ void QvtkDicomViewer::OnSegmentImage()
 	 m_pImageViewer->Render();
 	 setWindowWL(Lungs);
  }
- /*
- * 启动配准工具
- */
+ 
+ //启动配准工具
  void QvtkDicomViewer::OnRegistration()
  {
 	 m_Reg_Window = new Register();//事先初始化配准工具

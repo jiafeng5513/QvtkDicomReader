@@ -127,6 +127,15 @@ public:
 		Medias,			//纵膈
 		Lungs			//肺
 	}ImageWindow;
+	enum STATE
+	{
+		Idel,			//空闲状态
+		SingleImage,	//单张图片状态
+		Forlder,		//打开文件夹状态
+		Dir,			//打开DICOMDIR状态
+		Err,			//出现严重错误的状态
+		Debug			//调试状态
+	}AppState;
 private:
 	//CURSOR CursorType;//光标类型
 	Ui::QvtkDicomViewerClass ui;
@@ -169,8 +178,9 @@ private:
 	DicomDirTreeModel *m_dicomdirtreemodel;
 private:
 	///内部操作
-	void setCursor(CURSOR newValue);
-	void setWindowWL(WINDOWWL newWL);
+	void setCursor(CURSOR newValue);		//改变鼠标指针交互模式
+	void setWindowWL(WINDOWWL newWL);		//改变窗宽窗位模式
+	void setAppState(STATE new_state);		//改变程序的状态
 	void RenderInitializer(std::string folder, int NumOfImage = 1);//渲染器初始化
 	void RenderRefresh(std::string imagefilename, int currentPagenumber, int maxPageNumber);//更新渲染
 	void DirTreeRefresh(DicomPatient * patient);
@@ -186,10 +196,13 @@ private:
 signals :
 	void CursorValueChanged();      //自定义值更改信号,用于监控当前光标的变化
 	void WindowWLChanged();			//自定义值更改信号,用于监控当前窗宽窗位模式的变化
+	void AppStateChanged();			//程序状态更改信号,用于动态变更程序的状态
+
 public slots:
+	void OnChangeAppState();		//响应程序状态的更改,执行一些禁用/启用/刷新操作
 	void OnChangeCursorValue();		//响应光标值的修改,执行一些刷新和禁用操作
 	void OnChangeWindowsWL();		//响应窗宽窗位模式值的修改,执行一些禁用和选定动作
-	void OnOpenSeriesFolder();		//改成OnOpenSeriesFolder
+	void OnOpenSeriesFolder();		//打开series目录
 	void OnOpenDicomFile();			//打开单张Dicom文件
 	void OnOpenDicomDirFile();		//打开DICOMDIR文件
 	void OnForward();				//前一张按键
@@ -213,7 +226,7 @@ public slots:
 	void OnShowSelectedSeries();	//显示选中的Series
 	void OnShowSelectedImage();		//显示当前选中的Image
 	void OnSliceScrollBarValueChange(int a);//Slice滚动条值更改事件
-	void receiveData(QString data,QString dir);//响应DicomDir类传送过来的信号,其中包含了一个病人的ID
+	void receiveData(QString data);//响应DicomDir类传送过来的信号,其中包含了一个病人的ID
 	void OnLatterPatient();//上一个病人
 	void OnPreviousPatient();//下一个病人
 

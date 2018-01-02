@@ -21,6 +21,6 @@ int main(int argc, char *argv[])
 	QApplication a(argc, argv);
 	CommonHelper::setStyle(QStringLiteral(":/QvtkDicomViewer/Resources/theme_black.qss"));
 	QvtkDicomViewer w;
-	w.show();
+	w.show();//在里边show自己给启动画面留出时间
 	return a.exec();
 }

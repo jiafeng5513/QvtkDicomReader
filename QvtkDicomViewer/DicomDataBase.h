@@ -13,13 +13,18 @@
  *	   
  *2017年10月28日21:37:38
  *	  目前只考虑从DICOMDIR文件构造的情况
- *
+ *2018年1月2日16:39:00
+ *	  考虑增加从单张图片初始化和从series文件夹初始化的功能
+ *	  加载性能需要优化
  */
+
 class DicomDataBase
 {
 public:
 	static DicomDataBase* getInstance();
-	void Init(std::string dir);
+	void Init(std::string dir);//从DICOMDIR文件初始化
+	void InitFromSingleImage(std::string ImageFileName);//从单张图片初始化
+	void InitFromSeriesFolder(std::string SeriesFolder);//从seriesfolder初始化
 private:
 	//static DicomDataBase* m_pSingleton;
 	DicomDataBase();

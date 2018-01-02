@@ -17,14 +17,27 @@
    </size>
   </property>
   <property name="windowTitle">
-   <string>QvtkDicomViewer</string>
+   <string>Avalon</string>
+  </property>
+  <property name="windowIcon">
+   <iconset resource="QvtkDicomViewer.qrc">
+    <normaloff>:/QvtkDicomViewer/Resources/Mainlogo.png</normaloff>:/QvtkDicomViewer/Resources/Mainlogo.png</iconset>
+  </property>
+  <property name="styleSheet">
+   <string notr="true"/>
   </property>
   <widget class="QWidget" name="centralWidget">
+   <property name="sizePolicy">
+    <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
+     <horstretch>0</horstretch>
+     <verstretch>0</verstretch>
+    </sizepolicy>
+   </property>
    <layout class="QGridLayout" name="gridLayout">
     <item row="0" column="0">
      <widget class="QVTKWidget" name="qvtkWidget">
       <property name="sizePolicy">
-       <sizepolicy hsizetype="Preferred" vsizetype="Preferred">
+       <sizepolicy hsizetype="Expanding" vsizetype="Expanding">
         <horstretch>0</horstretch>
         <verstretch>0</verstretch>
        </sizepolicy>

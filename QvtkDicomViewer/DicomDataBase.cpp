@@ -169,6 +169,137 @@ DicomDataBase * DicomDataBase::getInstance()
 		 this->PatientList.push_back(m_patient);
 	 }
  }
+ /*
+  * 从单张图片初始化
+  */
+ void DicomDataBase::InitFromSingleImage(std::string ImageFileName)
+ {
+	//构造Patient/Study/Series,然后添加这张图
+	/*
+	 * patient的ID和Name
+	 * Study的ID
+	 * 所在的SeriesID
+	 * 从图片文件中获取这些信息并做完整性验证,如果验证失败要用缺省信息补全
+	 */
+	 DcmFileFormat fileformat;
+	 OFCondition status = fileformat.loadFile(ImageFileName.c_str());
+	 if (status.bad())
+	 {
+		 //异常
+		 return;
+	 }
+	 OFString temp_OFString;
+	 //构造开始
+	 //image
+	 DicomImage * m_image = new DicomImage();
+	 if (fileformat.getDataset()->findAndGetOFStringArray(DCM_ReferencedFileID, temp_OFString, true).good())
+	 {
+		 m_image->ReferencedFileID = temp_OFString.c_str();
+		 m_image->AbsFilePath = ImageFileName;
+	 }
+	 //series
+	 DicomSeries *m_series = new DicomSeries();
+	 if (fileformat.getDataset()->findAndGetOFStringArray(DCM_SeriesNumber, temp_OFString, OFTrue).good())
+	 {
+		 m_series->SeriseNumber = temp_OFString.c_str();
+	 }
+	 m_series->ImageList.push_back(m_image);
+	 //study
+	 DicomStudy *m_study = new DicomStudy();
+	 if (fileformat.getDataset()->findAndGetOFStringArray(DCM_StudyID, temp_OFString, OFTrue).good())
+	 {
+		 m_study->StudyId = temp_OFString.c_str();
+	 }
+	 m_study->SeriesList.push_back(m_series);
+	 //patient
+	 DicomPatient *m_patient = new DicomPatient();
+	 if (fileformat.getDataset()->findAndGetOFStringArray(DCM_PatientName, temp_OFString, OFTrue).good())
+	 {
+		 m_patient->PatientName = temp_OFString.c_str();
+	 }
+	 if (fileformat.getDataset()->findAndGetOFStringArray(DCM_PatientID, temp_OFString, OFTrue).good())
+	 {
+		 m_patient->PatientID = temp_OFString.c_str();
+	 }
+	 this->PatientList.push_back(m_patient);
+ }
+ /*
+  *	从seriesfolder初始化
+  */
+void DicomDataBase::InitFromSeriesFolder(std::string SeriesFolder)
+{
+	//构造Patient/Study,然后添加这个Series中的全部图
+	QDir * folder = new QDir(QString::fromStdString(SeriesFolder));
+	QStringList files = folder->entryList(QDir::Files | QDir::Readable, QDir::Name);//获取文件夹中的全部文件的名字
+	QString Prefix = folder->absolutePath();//构造文件名前缀
+	Prefix.append("\\");
+	Prefix.replace(QChar('\\'), QChar('/'));
+	
+	//对文件进行排序,依次视为DICOM文件打开,按照instance number (0020,0013)从小到大排序
+	//排序结果放在另一个容器中,
+	//如果打开失败,认为该文件不是正确的DICOM文件.不添加到新的容器中
+
+	/*
+	 * 根据要排序的文件的特点,采用散列查找的方式排序是最高效的方法
+	 */
+	std::map<int,std::string > * AllTheFiles = new std::map<int, std::string>();
+	OFString temp_OFString;
+	//1.入库
+	for(int i=0;i<files.size();i++)
+	{
+		QString _currentfilename = Prefix;
+		_currentfilename.append(files.at(i));
+		DcmFileFormat fileformat;
+		OFCondition status = fileformat.loadFile(_currentfilename.toStdString().c_str());
+		if (status.good())
+		{
+			if (fileformat.getDataset()->findAndGetOFStringArray(DCM_InstanceNumber, temp_OFString, true).good())
+			{
+				AllTheFiles->insert(std::map<int, std::string>::value_type(std::atoi(temp_OFString.c_str()), files.at(i).toStdString()));
+			}
+		}
+		else
+		{
+			continue;
+		}
+	}
+	//2.按顺序检出
+	std::vector<std::string> * RfidInSeriesFolder=new std::vector<std::string>();
+	std::map<int, std::string>::iterator iter;
+	for(int i=1;i<AllTheFiles->size()+1;i++)
+	{
+		iter = AllTheFiles->find(i);
+		if (iter != AllTheFiles->end())//这个标号查找成功,出库
+		{
+			RfidInSeriesFolder->push_back(iter->second);
+		}
+		else
+		{
+			continue;
+		}
+	}
+
+	//开始构造
+	/*
+	 * 				 DicomSeries *m_series = new DicomSeries();
+				 if (SeriesRecord->findAndGetOFString(DCM_SeriesNumber, tmpString).good())
+				 {
+					 m_series->SeriseNumber = tmpString.c_str();
+				 }
+	 */
+	for(int i=0;i<RfidInSeriesFolder->size();i++)
+	{
+		DicomImage * m_image = new DicomImage();
+		if (ImageRecord->findAndGetOFStringArray(DCM_ReferencedFileID, tmpString, true).good())
+		{
+			m_image->ReferencedFileID = tmpString.c_str();
+			QString temp = QString::fromStdString(FolderPrefix.toStdString() + "\\" + m_image->ReferencedFileID);
+			temp.replace(QChar('\\'), QChar('/'));
+			m_image->AbsFilePath = temp.toStdString();
+		}
+	}
+
+}
 
 /*
  * 构造(私有)

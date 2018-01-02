@@ -19,31 +19,53 @@ DicomDir::DicomDir(QWidget *parent)
 {
 	ui.setupUi(this);
 }
-/*
- *含参构造方法,传入DicomDIR文件的绝对路径
- */
-DicomDir::DicomDir(QString DicomDirFilePath, QWidget* parent)
+//从dirfile绝对路径初始化
+void DicomDir::InitDirExplorerFromDirPath(QString DicomDirFidlePath)
 {
-	ui.setupUi(this);
-	dir = DicomDirFilePath;
-	//TODO:用户初始化代码区域 
-	DicomDataBase* m_database =DicomDataBase::getInstance();
-	m_database->Init(DicomDirFilePath.toStdString());
+	m_database = DicomDataBase::getInstance();
+	m_database->Init(DicomDirFidlePath.toStdString());
+	ConstructsTable();
+}
+//从单图片文件的绝对路径初始化
+void DicomDir::InitDirExplorerFromSingleFilePath(QString ImageFilePath)
+{
+	m_database = DicomDataBase::getInstance();
+	m_database->InitFromSingleImage(ImageFilePath.toStdString());
+	ConstructsTable();
+}
+//从series的文件夹路径初始化
+void DicomDir::InitDirExplorerFromSeriesPath(QString SeriesPath)
+{
+	m_database = DicomDataBase::getInstance();
+	m_database->InitFromSeriesFolder(SeriesPath.toStdString());
+	ConstructsTable();
+}
+/*
+ * 析构函数
+ */
+DicomDir::~DicomDir()
+{
+
+}
+//构造表格
+void DicomDir::ConstructsTable()
+{
 	/*
-	 *构造表格
-	 */
-	if (m_database->PatientList.size()==0)
+	*构造表格
+	*/
+	if (m_database->PatientList.size() == 0)
 	{
 		return;
-	}else
+	}
+	else
 	{
 		//正常,构造表格
 		ui.tableWidget->setColumnCount(4);
 		ui.tableWidget->setRowCount(m_database->PatientList.size());//行数
 		ui.tableWidget->setHorizontalHeaderLabels(
-			QStringList() <<  "Patient ID" << "Patient Name" << "Birth Date" << "Gender");
+			QStringList() << "Patient ID" << "Patient Name" << "Birth Date" << "Gender");
 		ui.tableWidget->verticalHeader()->setVisible(false); // 隐藏水平header
-		//ui.tableWidget->setSelectionBehavior(QAbstractItemView::SelectItems);   // 单个选中
+															 //ui.tableWidget->setSelectionBehavior(QAbstractItemView::SelectItems);   // 单个选中
 		ui.tableWidget->setSelectionBehavior(QAbstractItemView::SelectRows);
 		//ui.tableWidget->setSelectionMode(QAbstractItemView::ExtendedSelection);  // 可以选中多个 
 		ui.tableWidget->setSelectionMode(QAbstractItemView::SingleSelection);
@@ -90,13 +112,6 @@ DicomDir::DicomDir(QString DicomDirFilePath, QWidget* parent)
 	}
 }
 /*
- * 析构函数
- */
-DicomDir::~DicomDir()
-{
-
-}
-/*
  * 点击确定按键
  */
 void DicomDir::OnPushOk()
@@ -105,7 +120,7 @@ void DicomDir::OnPushOk()
 	 * 将当前选中行对应的病人的PatientID和DICOMDIR的绝对路径以字符串返回到接收点
 	 */
 	this->close();
-	emit sendData(ui.tableWidget->item(ui.tableWidget->currentItem()->row(), 0)->text(), dir);
+	emit sendData(ui.tableWidget->item(ui.tableWidget->currentItem()->row(), 0)->text());
 	
 }
 /*
