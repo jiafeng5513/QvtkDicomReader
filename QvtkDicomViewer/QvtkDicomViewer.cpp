@@ -340,6 +340,7 @@ void QvtkDicomViewer::OnOpenDicomDirFile()
 	m_dicomdir->InitDirExplorerFromDirPath(path);
 	connect(m_dicomdir, SIGNAL(sendData(QString)), this, SLOT(receiveData(QString)));
 	m_dicomdir->show();
+	setAppState(Dir);//程序进入dir状态
 }
 
 //添加测距尺
@@ -1089,9 +1090,19 @@ void QvtkDicomViewer::OnStop()
  void QvtkDicomViewer::OnTestEntrance_01()
  {
 	/*
-	 * 现在测试的是显示一张图片并显示叠加文字
+	 * 现在测试的是显示一张图片
 	 */
-	 RenderInitializer("F:/100098.dcm");
+	 //打开文件选择页面
+	 QString path = QFileDialog::getOpenFileName(this, QStringLiteral("打开DICOM文件"), ".", QStringLiteral("全部类型(*.*)"));
+	 if (path.isEmpty() == true)
+		 return;
+
+	 DicomDir *m_dicomdir = new DicomDir();
+	 connect(m_dicomdir, SIGNAL(sendData(QString)), this, SLOT(receiveData(QString)));
+	 m_dicomdir->InitDirExplorerFromSingleFilePath(path);
+	
+	 //m_dicomdir->show();
+	 setAppState(SingleImage);//程序进入SingleImage状态
  }
 
 //测试入口2
@@ -1160,7 +1171,7 @@ void QvtkDicomViewer::OnSegmentImage()
 	//当前病人对象绑定,注意这应该是全局唯一的绑定点
 	CurrentPatient = new DicomPatient(temp_database->getPatientById(Current_patientId));
 	DirTreeRefresh(CurrentPatient);//刷新树视图
-	RenderInitializer(CurrentPatient->getCurrentDicomImage()->AbsFilePath, CurrentPatient->getCurrentDicomSeries()->ImageList.size());
+	RenderInitializer(CurrentPatient->getCurrentDicomImage()->AbsFilePath, CurrentPatient->getCurrentDicomSeries()->ImageList.size());//failed
  }
  
  //下一个病人

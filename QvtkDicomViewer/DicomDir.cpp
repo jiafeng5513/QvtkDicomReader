@@ -20,6 +20,9 @@ DicomDir::DicomDir(QWidget *parent)
 	ui.setupUi(this);
 }
 //从dirfile绝对路径初始化
+/*
+ * 注意,只有在这种情况下才需要显示界面并构造表格
+ */
 void DicomDir::InitDirExplorerFromDirPath(QString DicomDirFidlePath)
 {
 	m_database = DicomDataBase::getInstance();
@@ -31,14 +34,18 @@ void DicomDir::InitDirExplorerFromSingleFilePath(QString ImageFilePath)
 {
 	m_database = DicomDataBase::getInstance();
 	m_database->InitFromSingleImage(ImageFilePath.toStdString());
-	ConstructsTable();
+	emit sendData(QString::fromStdString(m_database->PatientList.at(0)->PatientID));
+	//获取PatientID并手动发信号
+	//ConstructsTable();
 }
 //从series的文件夹路径初始化
 void DicomDir::InitDirExplorerFromSeriesPath(QString SeriesPath)
 {
 	m_database = DicomDataBase::getInstance();
 	m_database->InitFromSeriesFolder(SeriesPath.toStdString());
-	ConstructsTable();
+	emit sendData(QString::fromStdString(m_database->PatientList.at(0)->PatientID));
+	//获取PatientID并手动发信号
+	//ConstructsTable();
 }
 /*
  * 析构函数

@@ -4,6 +4,12 @@
 
 DicomStudy::DicomStudy()
 {
+	ModulationType = "NULL";    
+	InstitutionName="NULL";
+	PatientBirthDate = "NULL";
+	PatientSex = "NULL";
+	PatientAge = "NULL";
+	StudyId = "NULL";
 }
 
 

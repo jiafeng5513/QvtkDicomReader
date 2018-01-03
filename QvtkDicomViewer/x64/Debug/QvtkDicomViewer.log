@@ -1,18 +1,6 @@
-﻿  Moc'ing QvtkDicomViewer.h...
-  moc_QvtkDicomViewer.cpp
-C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.12.25827\include\xutility(2430): warning C4996: 'std::copy::_Unchecked_iterators::_Deprecate': Call to 'std::copy' with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators'
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.12.25827\include\xutility(2430): note: 参见“std::copy::_Unchecked_iterators::_Deprecate”的声明
-  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImageFileReader.hxx(453): note: 参见对正在编译的函数 模板 实例化“_OutIt *std::copy<const float*,float*>(_InIt,_InIt,_OutIt)”的引用
-          with
-          [
-              _OutIt=float *,
-              _InIt=const float *
-          ]
-  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImageFileReader.hxx(365): note: 编译 类 模板 成员函数 "void itk::ImageFileReader<Register::FixedImageType,itk::DefaultConvertPixelTraits<float>>::GenerateData(void)" 时
-  e:\visualstudio\qvtkdicomreader\qvtkdicomviewer\Register.h(45): note: 参见对正在编译的 类 模板 实例化 "itk::ImageFileReader<Register::FixedImageType,itk::DefaultConvertPixelTraits<float>>" 的引用
-  QvtkDicomViewer.cpp
-C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.12.25827\include\xutility(2430): warning C4996: 'std::copy::_Unchecked_iterators::_Deprecate': Call to 'std::copy' with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators'
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.12.25827\include\xutility(2430): note: 参见“std::copy::_Unchecked_iterators::_Deprecate”的声明
+﻿  QvtkDicomViewer.cpp
+C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Tools\MSVC\14.11.25503\include\xutility(2294): warning C4996: 'std::copy::_Unchecked_iterators::_Deprecate': Call to 'std::copy' with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators'
+  C:\Program Files (x86)\Microsoft Visual Studio\2017\Professional\VC\Tools\MSVC\14.11.25503\include\xutility(2294): note: 参见“std::copy::_Unchecked_iterators::_Deprecate”的声明
   e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImageFileReader.hxx(453): note: 参见对正在编译的函数 模板 实例化“_OutIt *std::copy<const float*,float*>(_InIt,_InIt,_OutIt)”的引用
           with
           [
@@ -21,27 +9,4 @@ C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.
           ]
   e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImageFileReader.hxx(365): note: 编译 类 模板 成员函数 "void itk::ImageFileReader<vtkImageSegmentCallback::InternalImageType,itk::DefaultConvertPixelTraits<float>>::GenerateData(void)" 时
   e:\visualstudio\qvtkdicomreader\qvtkdicomviewer\Register.h(45): note: 参见对正在编译的 类 模板 实例化 "itk::ImageFileReader<vtkImageSegmentCallback::InternalImageType,itk::DefaultConvertPixelTraits<float>>" 的引用
-  main.cpp
-C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.12.25827\include\xutility(2430): warning C4996: 'std::copy::_Unchecked_iterators::_Deprecate': Call to 'std::copy' with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators'
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.12.25827\include\xutility(2430): note: 参见“std::copy::_Unchecked_iterators::_Deprecate”的声明
-  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImageFileReader.hxx(453): note: 参见对正在编译的函数 模板 实例化“_OutIt *std::copy<const float*,float*>(_InIt,_InIt,_OutIt)”的引用
-          with
-          [
-              _OutIt=float *,
-              _InIt=const float *
-          ]
-  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImageFileReader.hxx(365): note: 编译 类 模板 成员函数 "void itk::ImageFileReader<Register::FixedImageType,itk::DefaultConvertPixelTraits<float>>::GenerateData(void)" 时
-  e:\visualstudio\qvtkdicomreader\qvtkdicomviewer\Register.h(45): note: 参见对正在编译的 类 模板 实例化 "itk::ImageFileReader<Register::FixedImageType,itk::DefaultConvertPixelTraits<float>>" 的引用
-  myVtkInteractorStyleImage.cpp
-C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.12.25827\include\xutility(2430): warning C4996: 'std::copy::_Unchecked_iterators::_Deprecate': Call to 'std::copy' with parameters that may be unsafe - this call relies on the caller to check that the passed values are correct. To disable this warning, use -D_SCL_SECURE_NO_WARNINGS. See documentation on how to use Visual C++ 'Checked Iterators'
-  C:\Program Files (x86)\Microsoft Visual Studio\2017\Enterprise\VC\Tools\MSVC\14.12.25827\include\xutility(2430): note: 参见“std::copy::_Unchecked_iterators::_Deprecate”的声明
-  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImageFileReader.hxx(453): note: 参见对正在编译的函数 模板 实例化“_OutIt *std::copy<const float*,float*>(_InIt,_InIt,_OutIt)”的引用
-          with
-          [
-              _OutIt=float *,
-              _InIt=const float *
-          ]
-  e:\visualstudio\qvtkdicomreader\libraries\itk_4.12\include\itk-4.12\itkImageFileReader.hxx(365): note: 编译 类 模板 成员函数 "void itk::ImageFileReader<Register::FixedImageType,itk::DefaultConvertPixelTraits<float>>::GenerateData(void)" 时
-  e:\visualstudio\qvtkdicomreader\qvtkdicomviewer\Register.h(45): note: 参见对正在编译的 类 模板 实例化 "itk::ImageFileReader<Register::FixedImageType,itk::DefaultConvertPixelTraits<float>>" 的引用
-  正在生成代码...
   QvtkDicomViewer.vcxproj -> E:\VisualStudio\QvtkDicomReader\x64\Debug\QvtkDicomViewer.exe

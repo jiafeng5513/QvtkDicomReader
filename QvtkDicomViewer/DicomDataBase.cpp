@@ -4,6 +4,7 @@
 #include <dcmdata/dcdeftag.h>
 #include "DicomDir.h"
 #include <QFileSystemModel>
+#include <QString>
 
 /*
  * 静态:获取实例,实现单件模式
@@ -172,8 +173,8 @@ DicomDataBase * DicomDataBase::getInstance()
  /*
   * 从单张图片初始化
   */
- void DicomDataBase::InitFromSingleImage(std::string ImageFileName)
- {
+void DicomDataBase::InitFromSingleImage(std::string ImageFileName)
+{
 	//构造Patient/Study/Series,然后添加这张图
 	/*
 	 * patient的ID和Name
@@ -196,6 +197,15 @@ DicomDataBase * DicomDataBase::getInstance()
 	 {
 		 m_image->ReferencedFileID = temp_OFString.c_str();
 		 m_image->AbsFilePath = ImageFileName;
+	 }
+	 else//如果读取失败.则从文件系统中读取,保证构造成功
+	 {
+		 m_image->AbsFilePath = ImageFileName;
+		 QFile *image_file = new QFile(QString::fromStdString(ImageFileName));
+		 if (image_file->exists())
+		 {
+			 m_image->ReferencedFileID = image_file->fileName().toStdString();
+		 }
 	 }
 	 //series
 	 DicomSeries *m_series = new DicomSeries();
@@ -222,7 +232,7 @@ DicomDataBase * DicomDataBase::getInstance()
 		 m_patient->PatientID = temp_OFString.c_str();
 	 }
 	 this->PatientList.push_back(m_patient);
- }
+}
  /*
   *	从seriesfolder初始化
   */
@@ -280,25 +290,50 @@ void DicomDataBase::InitFromSeriesFolder(std::string SeriesFolder)
 	}
 
 	//开始构造
-	/*
-	 * 				 DicomSeries *m_series = new DicomSeries();
-				 if (SeriesRecord->findAndGetOFString(DCM_SeriesNumber, tmpString).good())
-				 {
-					 m_series->SeriseNumber = tmpString.c_str();
-				 }
-	 */
-	for(int i=0;i<RfidInSeriesFolder->size();i++)
+	QString _currentfilename = Prefix;
+	_currentfilename.append(QString::fromStdString(RfidInSeriesFolder->at(0)));
+	DcmFileFormat fileformat;
+	OFCondition status = fileformat.loadFile(_currentfilename.toStdString().c_str());
+	if (status.bad())
+	{
+		//err,但是这个错误是不可能出现的,前面已经拦截过了
+	}
+	//series
+	DicomSeries *m_series = new DicomSeries();
+	if (fileformat.getDataset()->findAndGetOFString(DCM_SeriesNumber, temp_OFString).good())
+	{
+		m_series->SeriseNumber = temp_OFString.c_str();
+	}
+	//image 
+	for (int i = 0; i < RfidInSeriesFolder->size(); i++)
 	{
 		DicomImage * m_image = new DicomImage();
-		if (ImageRecord->findAndGetOFStringArray(DCM_ReferencedFileID, tmpString, true).good())
-		{
-			m_image->ReferencedFileID = tmpString.c_str();
-			QString temp = QString::fromStdString(FolderPrefix.toStdString() + "\\" + m_image->ReferencedFileID);
-			temp.replace(QChar('\\'), QChar('/'));
-			m_image->AbsFilePath = temp.toStdString();
-		}
-	}
 
+		m_image->ReferencedFileID = RfidInSeriesFolder->at(i);
+		QString temp = Prefix;
+		temp.append(QString::fromStdString(m_image->ReferencedFileID));
+		m_image->AbsFilePath = temp.toStdString();
+
+		m_series->ImageList.push_back(m_image);
+	}
+	//study
+	DicomStudy *m_study = new DicomStudy();
+	if (fileformat.getDataset()->findAndGetOFStringArray(DCM_StudyID, temp_OFString, OFTrue).good())
+	{
+		m_study->StudyId = temp_OFString.c_str();
+	}
+	m_study->SeriesList.push_back(m_series);
+	//patient
+	DicomPatient *m_patient = new DicomPatient();
+	if (fileformat.getDataset()->findAndGetOFStringArray(DCM_PatientName, temp_OFString, OFTrue).good())
+	{
+		m_patient->PatientName = temp_OFString.c_str();
+	}
+	if (fileformat.getDataset()->findAndGetOFStringArray(DCM_PatientID, temp_OFString, OFTrue).good())
+	{
+		m_patient->PatientID = temp_OFString.c_str();
+	}
+	this->PatientList.push_back(m_patient);
 }
 
 /*

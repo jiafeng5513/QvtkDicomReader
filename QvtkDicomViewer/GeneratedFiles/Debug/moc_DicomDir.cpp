@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_DicomDir_t {
-    QByteArrayData data[7];
-    char stringdata0[48];
+    QByteArrayData data[6];
+    char stringdata0[44];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -35,12 +35,11 @@ QT_MOC_LITERAL(0, 0, 8), // "DicomDir"
 QT_MOC_LITERAL(1, 9, 8), // "sendData"
 QT_MOC_LITERAL(2, 18, 0), // ""
 QT_MOC_LITERAL(3, 19, 2), // "Id"
-QT_MOC_LITERAL(4, 22, 3), // "dir"
-QT_MOC_LITERAL(5, 26, 8), // "OnPushOk"
-QT_MOC_LITERAL(6, 35, 12) // "OnPushCancel"
+QT_MOC_LITERAL(4, 22, 8), // "OnPushOk"
+QT_MOC_LITERAL(5, 31, 12) // "OnPushCancel"
 
     },
-    "DicomDir\0sendData\0\0Id\0dir\0OnPushOk\0"
+    "DicomDir\0sendData\0\0Id\0OnPushOk\0"
     "OnPushCancel"
 };
 #undef QT_MOC_LITERAL
@@ -59,14 +58,14 @@ static const uint qt_meta_data_DicomDir[] = {
        1,       // signalCount
 
  // signals: name, argc, parameters, tag, flags
-       1,    2,   29,    2, 0x06 /* Public */,
+       1,    1,   29,    2, 0x06 /* Public */,
 
  // slots: name, argc, parameters, tag, flags
-       5,    0,   34,    2, 0x0a /* Public */,
-       6,    0,   35,    2, 0x0a /* Public */,
+       4,    0,   32,    2, 0x0a /* Public */,
+       5,    0,   33,    2, 0x0a /* Public */,
 
  // signals: parameters
-    QMetaType::Void, QMetaType::QString, QMetaType::QString,    3,    4,
+    QMetaType::Void, QMetaType::QString,    3,
 
  // slots: parameters
     QMetaType::Void,
@@ -81,7 +80,7 @@ void DicomDir::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         DicomDir *_t = static_cast<DicomDir *>(_o);
         Q_UNUSED(_t)
         switch (_id) {
-        case 0: _t->sendData((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
+        case 0: _t->sendData((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 1: _t->OnPushOk(); break;
         case 2: _t->OnPushCancel(); break;
         default: ;
@@ -90,7 +89,7 @@ void DicomDir::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         int *result = reinterpret_cast<int *>(_a[0]);
         void **func = reinterpret_cast<void **>(_a[1]);
         {
-            typedef void (DicomDir::*_t)(QString , QString );
+            typedef void (DicomDir::*_t)(QString );
             if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&DicomDir::sendData)) {
                 *result = 0;
                 return;
@@ -136,9 +135,9 @@ int DicomDir::qt_metacall(QMetaObject::Call _c, int _id, void **_a)
 }
 
 // SIGNAL 0
-void DicomDir::sendData(QString _t1, QString _t2)
+void DicomDir::sendData(QString _t1)
 {
-    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)), const_cast<void*>(reinterpret_cast<const void*>(&_t2)) };
+    void *_a[] = { nullptr, const_cast<void*>(reinterpret_cast<const void*>(&_t1)) };
     QMetaObject::activate(this, &staticMetaObject, 0, _a);
 }
 QT_WARNING_POP

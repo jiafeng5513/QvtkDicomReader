@@ -21,8 +21,8 @@ QT_BEGIN_MOC_NAMESPACE
 QT_WARNING_PUSH
 QT_WARNING_DISABLE_DEPRECATED
 struct qt_meta_stringdata_QvtkDicomViewer_t {
-    QByteArrayData data[52];
-    char stringdata0[850];
+    QByteArrayData data[51];
+    char stringdata0[846];
 };
 #define QT_MOC_LITERAL(idx, ofs, len) \
     Q_STATIC_BYTE_ARRAY_DATA_HEADER_INITIALIZER_WITH_OFFSET(len, \
@@ -67,22 +67,21 @@ QT_MOC_LITERAL(32, 517, 27), // "OnSliceScrollBarValueChange"
 QT_MOC_LITERAL(33, 545, 1), // "a"
 QT_MOC_LITERAL(34, 547, 11), // "receiveData"
 QT_MOC_LITERAL(35, 559, 4), // "data"
-QT_MOC_LITERAL(36, 564, 3), // "dir"
-QT_MOC_LITERAL(37, 568, 15), // "OnLatterPatient"
-QT_MOC_LITERAL(38, 584, 17), // "OnPreviousPatient"
-QT_MOC_LITERAL(39, 602, 17), // "OnWindowWL_Defaut"
-QT_MOC_LITERAL(40, 620, 14), // "OnWindowWL_All"
-QT_MOC_LITERAL(41, 635, 21), // "OnWindowWL_CT_Abdomen"
-QT_MOC_LITERAL(42, 657, 25), // "OnWindowWL_CT_BloodVessel"
-QT_MOC_LITERAL(43, 683, 19), // "OnWindowWL_CT_Bones"
-QT_MOC_LITERAL(44, 703, 19), // "OnWindowWL_CT_Brain"
-QT_MOC_LITERAL(45, 723, 20), // "OnWindowWL_CT_Medias"
-QT_MOC_LITERAL(46, 744, 19), // "OnWindowWL_CT_Lungs"
-QT_MOC_LITERAL(47, 764, 17), // "OnTestEntrance_01"
-QT_MOC_LITERAL(48, 782, 17), // "OnTestEntrance_02"
-QT_MOC_LITERAL(49, 800, 19), // "On3D_Reconstruction"
-QT_MOC_LITERAL(50, 820, 14), // "OnSegmentImage"
-QT_MOC_LITERAL(51, 835, 14) // "OnRegistration"
+QT_MOC_LITERAL(36, 564, 15), // "OnLatterPatient"
+QT_MOC_LITERAL(37, 580, 17), // "OnPreviousPatient"
+QT_MOC_LITERAL(38, 598, 17), // "OnWindowWL_Defaut"
+QT_MOC_LITERAL(39, 616, 14), // "OnWindowWL_All"
+QT_MOC_LITERAL(40, 631, 21), // "OnWindowWL_CT_Abdomen"
+QT_MOC_LITERAL(41, 653, 25), // "OnWindowWL_CT_BloodVessel"
+QT_MOC_LITERAL(42, 679, 19), // "OnWindowWL_CT_Bones"
+QT_MOC_LITERAL(43, 699, 19), // "OnWindowWL_CT_Brain"
+QT_MOC_LITERAL(44, 719, 20), // "OnWindowWL_CT_Medias"
+QT_MOC_LITERAL(45, 740, 19), // "OnWindowWL_CT_Lungs"
+QT_MOC_LITERAL(46, 760, 17), // "OnTestEntrance_01"
+QT_MOC_LITERAL(47, 778, 17), // "OnTestEntrance_02"
+QT_MOC_LITERAL(48, 796, 19), // "On3D_Reconstruction"
+QT_MOC_LITERAL(49, 816, 14), // "OnSegmentImage"
+QT_MOC_LITERAL(50, 831, 14) // "OnRegistration"
 
     },
     "QvtkDicomViewer\0CursorValueChanged\0\0"
@@ -100,7 +99,7 @@ QT_MOC_LITERAL(51, 835, 14) // "OnRegistration"
     "pos\0OnShowDicomCurrentTags\0"
     "OnShowSelectedSeries\0OnShowSelectedImage\0"
     "OnSliceScrollBarValueChange\0a\0receiveData\0"
-    "data\0dir\0OnLatterPatient\0OnPreviousPatient\0"
+    "data\0OnLatterPatient\0OnPreviousPatient\0"
     "OnWindowWL_Defaut\0OnWindowWL_All\0"
     "OnWindowWL_CT_Abdomen\0OnWindowWL_CT_BloodVessel\0"
     "OnWindowWL_CT_Bones\0OnWindowWL_CT_Brain\0"
@@ -157,22 +156,22 @@ static const uint qt_meta_data_QvtkDicomViewer[] = {
       30,    0,  273,    2, 0x0a /* Public */,
       31,    0,  274,    2, 0x0a /* Public */,
       32,    1,  275,    2, 0x0a /* Public */,
-      34,    2,  278,    2, 0x0a /* Public */,
-      37,    0,  283,    2, 0x0a /* Public */,
-      38,    0,  284,    2, 0x0a /* Public */,
-      39,    0,  285,    2, 0x0a /* Public */,
-      40,    0,  286,    2, 0x0a /* Public */,
-      41,    0,  287,    2, 0x0a /* Public */,
-      42,    0,  288,    2, 0x0a /* Public */,
-      43,    0,  289,    2, 0x0a /* Public */,
-      44,    0,  290,    2, 0x0a /* Public */,
-      45,    0,  291,    2, 0x0a /* Public */,
-      46,    0,  292,    2, 0x0a /* Public */,
-      47,    0,  293,    2, 0x0a /* Public */,
-      48,    0,  294,    2, 0x0a /* Public */,
-      49,    0,  295,    2, 0x0a /* Public */,
-      50,    0,  296,    2, 0x0a /* Public */,
-      51,    0,  297,    2, 0x0a /* Public */,
+      34,    1,  278,    2, 0x0a /* Public */,
+      36,    0,  281,    2, 0x0a /* Public */,
+      37,    0,  282,    2, 0x0a /* Public */,
+      38,    0,  283,    2, 0x0a /* Public */,
+      39,    0,  284,    2, 0x0a /* Public */,
+      40,    0,  285,    2, 0x0a /* Public */,
+      41,    0,  286,    2, 0x0a /* Public */,
+      42,    0,  287,    2, 0x0a /* Public */,
+      43,    0,  288,    2, 0x0a /* Public */,
+      44,    0,  289,    2, 0x0a /* Public */,
+      45,    0,  290,    2, 0x0a /* Public */,
+      46,    0,  291,    2, 0x0a /* Public */,
+      47,    0,  292,    2, 0x0a /* Public */,
+      48,    0,  293,    2, 0x0a /* Public */,
+      49,    0,  294,    2, 0x0a /* Public */,
+      50,    0,  295,    2, 0x0a /* Public */,
 
  // signals: parameters
     QMetaType::Void,
@@ -207,7 +206,7 @@ static const uint qt_meta_data_QvtkDicomViewer[] = {
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void, QMetaType::Int,   33,
-    QMetaType::Void, QMetaType::QString, QMetaType::QString,   35,   36,
+    QMetaType::Void, QMetaType::QString,   35,
     QMetaType::Void,
     QMetaType::Void,
     QMetaType::Void,
@@ -263,7 +262,7 @@ void QvtkDicomViewer::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int 
         case 27: _t->OnShowSelectedSeries(); break;
         case 28: _t->OnShowSelectedImage(); break;
         case 29: _t->OnSliceScrollBarValueChange((*reinterpret_cast< int(*)>(_a[1]))); break;
-        case 30: _t->receiveData((*reinterpret_cast< QString(*)>(_a[1])),(*reinterpret_cast< QString(*)>(_a[2]))); break;
+        case 30: _t->receiveData((*reinterpret_cast< QString(*)>(_a[1]))); break;
         case 31: _t->OnLatterPatient(); break;
         case 32: _t->OnPreviousPatient(); break;
         case 33: _t->OnWindowWL_Defaut(); break;
