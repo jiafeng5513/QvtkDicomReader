@@ -5,6 +5,8 @@
 #include "DicomDir.h"
 #include <QFileSystemModel>
 #include <QString>
+#include <vtkSmartPointer.h>
+#include <vtkDICOMImageReader.h>
 
 /*
  * 静态:获取实例,实现单件模式
@@ -201,10 +203,10 @@ void DicomDataBase::InitFromSingleImage(std::string ImageFileName)
 	 else//如果读取失败.则从文件系统中读取,保证构造成功
 	 {
 		 m_image->AbsFilePath = ImageFileName;
-		 QFile *image_file = new QFile(QString::fromStdString(ImageFileName));
-		 if (image_file->exists())
+		 QFileInfo * fileinfo = new QFileInfo(QString::fromStdString(ImageFileName));
+		 if (fileinfo->exists())
 		 {
-			 m_image->ReferencedFileID = image_file->fileName().toStdString();
+			 m_image->ReferencedFileID = fileinfo->fileName().toStdString();
 		 }
 	 }
 	 //series
@@ -231,6 +233,7 @@ void DicomDataBase::InitFromSingleImage(std::string ImageFileName)
 	 {
 		 m_patient->PatientID = temp_OFString.c_str();
 	 }
+	 m_patient->StudyList.push_back(m_study);
 	 this->PatientList.push_back(m_patient);
 }
  /*
@@ -254,13 +257,25 @@ void DicomDataBase::InitFromSeriesFolder(std::string SeriesFolder)
 	 */
 	std::map<int,std::string > * AllTheFiles = new std::map<int, std::string>();
 	OFString temp_OFString;
+	vtkSmartPointer<vtkDICOMImageReader> DICOMreader = vtkSmartPointer<vtkDICOMImageReader>::New();
 	//1.入库
 	for(int i=0;i<files.size();i++)
 	{
 		QString _currentfilename = Prefix;
 		_currentfilename.append(files.at(i));
+		DICOMreader->SetFileName(_currentfilename.toStdString().c_str());
+		DICOMreader->Update();
+
+		std::filebuf fb;
+		fb.open(_currentfilename.toStdString(), std::ios::out);//输出日志文件
+		std::ostream out(&fb);
+		DICOMreader->Print(out);
+		fb.close();
+
+		
 		DcmFileFormat fileformat;
 		OFCondition status = fileformat.loadFile(_currentfilename.toStdString().c_str());
+		
 		if (status.good())
 		{
 			if (fileformat.getDataset()->findAndGetOFStringArray(DCM_InstanceNumber, temp_OFString, true).good())
@@ -333,6 +348,7 @@ void DicomDataBase::InitFromSeriesFolder(std::string SeriesFolder)
 	{
 		m_patient->PatientID = temp_OFString.c_str();
 	}
+	m_patient->StudyList.push_back(m_study);
 	this->PatientList.push_back(m_patient);
 }
 

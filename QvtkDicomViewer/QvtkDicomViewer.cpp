@@ -124,7 +124,7 @@ void QvtkDicomViewer::OnChangeAppState()
 		ui.action_Reset->setEnabled(true);
 		ui.SliceScrollBar->setEnabled(false);
 		break;
-	case Forlder:	  //打开series文件夹状态
+	case Folder:	  //打开series文件夹状态
 		ui.action_PreviousPatient->setEnabled(false);
 		ui.action_LatterPatient->setEnabled(false);
 		ui.action_back->setEnabled(true);
@@ -316,13 +316,17 @@ void QvtkDicomViewer::OnOpenSeriesFolder()
 //打开单张Dicom文件
 void QvtkDicomViewer::OnOpenDicomFile()
 {
-	//单张模式下只有一个操作
-	//1.打开文件
+	//打开文件选择页面
 	QString path = QFileDialog::getOpenFileName(this, QStringLiteral("打开DICOM文件"), ".", QStringLiteral("全部类型(*.*)"));
 	if (path.isEmpty() == true)
 		return;
-	//2.初始化渲染
-	RenderInitializer(path.toStdString());
+	/*
+	 * 验证是不是正常的DICOM图片文件
+	 */
+	DicomDir *m_dicomdir = new DicomDir();
+	connect(m_dicomdir, SIGNAL(sendData(QString)), this, SLOT(receiveData(QString)));
+	m_dicomdir->InitDirExplorerFromSingleFilePath(path);
+	setAppState(SingleImage);//程序进入SingleImage状态
 }
 
 //打开DICOMDIR文件
@@ -1090,19 +1094,21 @@ void QvtkDicomViewer::OnStop()
  void QvtkDicomViewer::OnTestEntrance_01()
  {
 	/*
-	 * 现在测试的是显示一张图片
+	 * 现在测试的是打开series文件夹
 	 */
 	 //打开文件选择页面
-	 QString path = QFileDialog::getOpenFileName(this, QStringLiteral("打开DICOM文件"), ".", QStringLiteral("全部类型(*.*)"));
-	 if (path.isEmpty() == true)
-		 return;
+	 //QString dir = QFileDialog::getExistingDirectory(this, QStringLiteral("打开Series目录"), "F:/", QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+	 //if (dir.isEmpty() == true)
+		// return;
+
+	 QString dir = "F:\\Dicom\\Test1\\DICOM\\S428090\\S50";
 
 	 DicomDir *m_dicomdir = new DicomDir();
 	 connect(m_dicomdir, SIGNAL(sendData(QString)), this, SLOT(receiveData(QString)));
-	 m_dicomdir->InitDirExplorerFromSingleFilePath(path);
+	 m_dicomdir->InitDirExplorerFromSeriesPath(dir);
 	
 	 //m_dicomdir->show();
-	 setAppState(SingleImage);//程序进入SingleImage状态
+	 setAppState(Folder);//程序进入Folder状态
  }
 
 //测试入口2
@@ -1171,7 +1177,9 @@ void QvtkDicomViewer::OnSegmentImage()
 	//当前病人对象绑定,注意这应该是全局唯一的绑定点
 	CurrentPatient = new DicomPatient(temp_database->getPatientById(Current_patientId));
 	DirTreeRefresh(CurrentPatient);//刷新树视图
-	RenderInitializer(CurrentPatient->getCurrentDicomImage()->AbsFilePath, CurrentPatient->getCurrentDicomSeries()->ImageList.size());//failed
+	std::string str1 = CurrentPatient->getCurrentDicomImage()->AbsFilePath;
+	int i1 = CurrentPatient->getCurrentDicomSeries()->ImageList.size();
+	RenderInitializer(str1,i1);//failed
  }
  
  //下一个病人

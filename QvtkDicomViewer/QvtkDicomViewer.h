@@ -131,7 +131,7 @@ public:
 	{
 		Idel,			//空闲状态
 		SingleImage,	//单张图片状态
-		Forlder,		//打开文件夹状态
+		Folder,		//打开文件夹状态
 		Dir,			//打开DICOMDIR状态
 		Err,			//出现严重错误的状态
 		Debug			//调试状态
