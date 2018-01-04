@@ -35,6 +35,8 @@ Pmsdview是由飞利浦开发的一个程序;RadiAnt是效率极高且功能完�
 9.添加图像分割功能,入口在:文件树->Image节点的右键菜单<br>
 10.添加图像配准功能<br>
 11.测试数据增加<br>
+12.添加打开单张图片和打开一个series目录的功能<br>
+13.update vtkMyDICOMImageViewer,现在能够识别一个文件是不是合法的DICOM图片文件<br>
 
 #### Build:
 1.依赖:DCMTK3.6.2,64位;vtk8.0.0,64位;Qt5.9.1,64位;itk4.12,64位 <br>

@@ -66,6 +66,16 @@ vtkMyDICOMImageReader::~vtkMyDICOMImageReader()
 	delete[] this->StudyID;
 	delete[] this->TransferSyntaxUID;
 }
+//获取图片数据的长度,如果长度为0,说明这不是有效的DICOM图片文件
+unsigned long vtkMyDICOMImageReader::getImageDateLength()
+{
+	void* imgData = NULL;
+	DICOMParser::VRTypes dataType;
+	unsigned long imageDataLength;
+
+	this->AppHelper->GetImageData(imgData, dataType, imageDataLength);
+	return imageDataLength;
+}
 
 //----------------------------------------------------------------------------
 void vtkMyDICOMImageReader::PrintSelf(ostream& os, vtkIndent indent)

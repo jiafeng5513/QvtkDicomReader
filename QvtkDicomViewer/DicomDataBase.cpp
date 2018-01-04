@@ -7,6 +7,7 @@
 #include <QString>
 #include <vtkSmartPointer.h>
 #include <vtkDICOMImageReader.h>
+#include "vtkMyDICOMImageReader.h"
 
 /*
  * 静态:获取实例,实现单件模式
@@ -257,26 +258,21 @@ void DicomDataBase::InitFromSeriesFolder(std::string SeriesFolder)
 	 */
 	std::map<int,std::string > * AllTheFiles = new std::map<int, std::string>();
 	OFString temp_OFString;
-	vtkSmartPointer<vtkDICOMImageReader> DICOMreader = vtkSmartPointer<vtkDICOMImageReader>::New();
+	vtkSmartPointer<vtkMyDICOMImageReader> DICOMreader = vtkSmartPointer<vtkMyDICOMImageReader>::New();
+	DICOMreader->SetGlobalWarningDisplay(false);
 	//1.入库
 	for(int i=0;i<files.size();i++)
 	{
 		QString _currentfilename = Prefix;
 		_currentfilename.append(files.at(i));
+
 		DICOMreader->SetFileName(_currentfilename.toStdString().c_str());
 		DICOMreader->Update();
-
-		std::filebuf fb;
-		fb.open(_currentfilename.toStdString(), std::ios::out);//输出日志文件
-		std::ostream out(&fb);
-		DICOMreader->Print(out);
-		fb.close();
-
-		
+			
 		DcmFileFormat fileformat;
 		OFCondition status = fileformat.loadFile(_currentfilename.toStdString().c_str());
 		
-		if (status.good())
+		if (status.good()&& DICOMreader->getImageDateLength())
 		{
 			if (fileformat.getDataset()->findAndGetOFStringArray(DCM_InstanceNumber, temp_OFString, true).good())
 			{
@@ -285,6 +281,7 @@ void DicomDataBase::InitFromSeriesFolder(std::string SeriesFolder)
 		}
 		else
 		{
+			//说明这是一个非法文件
 			continue;
 		}
 	}

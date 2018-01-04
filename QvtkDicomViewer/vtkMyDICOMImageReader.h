@@ -45,7 +45,7 @@ public:
 	static vtkMyDICOMImageReader *New();
 	vtkTypeMacro(vtkMyDICOMImageReader, vtkImageReader2);
 	//@}
-
+	unsigned long getImageDateLength();//获取图片数据的长度,如果长度为0,说明这不是有效的DICOM图片文件
 	/**
 	* 调试日志输出
 	*/
