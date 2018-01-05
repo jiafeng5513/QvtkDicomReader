@@ -3,6 +3,7 @@
 
 #include <vtkAutoInit.h>
 #include "CommonHelper.h"
+#include "Startup.h"
 VTK_MODULE_INIT(vtkRenderingOpenGL2);
 VTK_MODULE_INIT(vtkInteractionStyle);
 #include<vtkSmartPointer.h>  
@@ -20,7 +21,10 @@ int main(int argc, char *argv[])
 {
 	QApplication a(argc, argv);
 	CommonHelper::setStyle(QStringLiteral(":/QvtkDicomViewer/Resources/theme_black.qss"));
+	//Startup starter;
 	QvtkDicomViewer w;
+	//starter.show();
 	w.show();//在里边show自己给启动画面留出时间
+	//starter.hide();
 	return a.exec();
 }
