@@ -5,6 +5,7 @@
 #include <QtWidgets/QMainWindow>
 #include <QString>
 #include <QFileDialog>
+#include <QTimer>
 //vtk
 #include <vtkRenderWindow.h>
 #include <vtkDICOMImageReader.h>
@@ -31,7 +32,6 @@
 #include <vtkOrientationMarkerWidget.h>
 #include <vtkBiDimensionalWidget.h>
 #include "vtkBiDimensionalCallback.h"
-#include "SlicePlayer.h"
 #include "DicomPatient.h"
 #include "DicomDirTreeModel.h"
 #include <vtkImageCast.h>
@@ -164,7 +164,10 @@ private:
 	QIcon icon_Play;//播放图标
 	QIcon icon_Pause;//暂停图标
 	bool PlayFlag;//false:图标应为播放,处于准备播放状态,true:图标应为暂停,处于播放状态并准备暂停
-	SlicePlayer *m_slice_player;//这是一个线程类
+	QTimer * m_pTimer;//计时器
+	int min;//第一张图是第几张
+	int max;//最后一张图是第几章
+	int current;//目前放到第几张
 
 	QPoint PrePosition;					//前一次的右键点击位置
 	QMenu * TreeViewMenu_OnEmpty;		//树右键菜单->树为空
@@ -176,6 +179,7 @@ private:
 	DicomPatient * CurrentPatient;		//当前病人
 	QModelIndex indexSelect;//树视图中
 	DicomDirTreeModel *m_dicomdirtreemodel;
+
 private:
 	///内部操作
 	void setCursor(CURSOR newValue);		//改变鼠标指针交互模式
@@ -199,6 +203,7 @@ signals :
 	void AppStateChanged();			//程序状态更改信号,用于动态变更程序的状态
 
 public slots:
+	void OnPlayerTimerOut();		//播放器到点了需要更新
 	void OnChangeAppState();		//响应程序状态的更改,执行一些禁用/启用/刷新操作
 	void OnChangeCursorValue();		//响应光标值的修改,执行一些刷新和禁用操作
 	void OnChangeWindowsWL();		//响应窗宽窗位模式值的修改,执行一些禁用和选定动作

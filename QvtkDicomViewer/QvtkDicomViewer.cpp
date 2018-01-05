@@ -42,7 +42,6 @@
 #include <dcmtk\config\osconfig.h>
 #include <dcmtk\dcmdata\dctk.h>
 #include "dcmtk\dcmdata\dcistrmf.h"
-#include "SlicePlayer.h"
 #include "DicomDataBase.h"
 #include <QFileSystemModel>
 #include "DicomDirTreeModel.h"
@@ -79,6 +78,19 @@ QvtkDicomViewer::QvtkDicomViewer(QWidget *parent)
 	ui.centralWidget->setContentsMargins(0, 0, 0, 0);
 	ui.qvtkWidget->setContentsMargins(0, 0, 0, 0);
 	
+	m_pTimer = new QTimer();
+	m_pTimer->setInterval(30);//触发间隔
+	connect(m_pTimer, SIGNAL(timeout()), this, SLOT(OnPlayerTimerOut()));
+}
+//播放器定时触发
+void QvtkDicomViewer::OnPlayerTimerOut()
+{
+	ShowImageByIndex(current);
+	current++;
+	if (current>max)
+	{
+		current = min;
+	}
 }
 
 // 响应程序状态的更改,执行一些禁用/启用/刷新操作
@@ -309,8 +321,12 @@ void QvtkDicomViewer::OnOpenSeriesFolder()
 	QString dir = QFileDialog::getExistingDirectory(this, QStringLiteral("打开Series目录"), "F:/", QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
 	if (dir.isEmpty() == true)
 		return;
-	std::string folder = dir.toStdString();
-	RenderInitializer(folder);
+	DicomDir *m_dicomdir = new DicomDir();
+	connect(m_dicomdir, SIGNAL(sendData(QString)), this, SLOT(receiveData(QString)));
+	m_dicomdir->InitDirExplorerFromSeriesPath(dir);
+
+	//m_dicomdir->show();
+	setAppState(Folder);//程序进入Folder状态
 }
 
 //打开单张Dicom文件
@@ -799,9 +815,7 @@ void QvtkDicomViewer::RenderInitializer(std::string folder,int NumOfImage )
 	/*
 	 * 自动连续播放功能初始化
 	 */
-	m_slice_player = new SlicePlayer(0,NumOfImage-1,ui.SliceScrollBar->sliderPosition(),50);
-	connect(m_slice_player, SIGNAL(isTimeToTurnNextSlice()), this, SLOT(OnForward()), Qt::QueuedConnection);
-	connect(m_slice_player, SIGNAL(isTimeToReset()), this, SLOT(OnResetToFirst()), Qt::QueuedConnection);
+	min = 0; max = NumOfImage - 1; current = ui.SliceScrollBar->sliderPosition();
 	/*
 	 * 渲染
 	 */
@@ -846,13 +860,15 @@ void QvtkDicomViewer::DirTreeRefresh(DicomPatient * patient)
 //工具条->前一张
 void QvtkDicomViewer::OnForward()
 {
-	ui.SliceScrollBar->setSliderPosition(ui.SliceScrollBar->sliderPosition() + 1);
+	current++;
+	ui.SliceScrollBar->setSliderPosition(current);
 }
 
 //工具条->后一张
 void QvtkDicomViewer::OnBackward()
 {
-	ui.SliceScrollBar->setSliderPosition(ui.SliceScrollBar->sliderPosition() - 1);
+	current--;
+	ui.SliceScrollBar->setSliderPosition(current);
 }
 
 //回到第一张
@@ -966,28 +982,22 @@ void QvtkDicomViewer::OnReset()
 //播放
 void QvtkDicomViewer::OnPlay()
 {
-	//myInteractorStyle->MoveSliceBackward();
-	//
 	if (PlayFlag==true)//此时正在播放,按键之后应该进行暂停,并将图标切换为播放
 	{
 		ui.action_Play->setIcon(icon_Play);
-		ui.action_Play->setText(QStringLiteral("播放"));
-		m_slice_player->pause.lock();//锁定线程
+		ui.action_Play->setText(QStringLiteral("播放"));		
+		m_pTimer->stop();//关闭计时器
+		ui.SliceScrollBar->setSliderPosition(current);//同步滑动条
+		ui.SliceScrollBar->setEnabled(true);//解锁滑动条
 		ui.action_Stop->setEnabled(false);
 		
 
-	}else//此时为停止状态,案件之后应该进行播放,并将图标切换为暂停
+	}else//此时为停止状态,按键之后应该进行播放,并将图标切换为暂停
 	{
 		ui.action_Play->setIcon(icon_Pause);
 		ui.action_Play->setText(QStringLiteral("暂停"));
-		//m_slice_player->setCurrentSlice(myInteractorStyle->getSlice());//先同步页码
-		if (m_slice_player->isRunning()==true)//线程被加锁了
-		{
-			m_slice_player->pause.unlock();
-		}else//线程没有启动(第一次运行)
-		{
-			m_slice_player->start();
-		}
+		m_pTimer->start();//启动计时器
+		ui.SliceScrollBar->setEnabled(false);//锁定滑动条
 		ui.action_Stop->setEnabled(true);
 	}
 	PlayFlag = !PlayFlag;
@@ -999,8 +1009,9 @@ void QvtkDicomViewer::OnStop()
 	ui.action_Play->setIcon(icon_Play);
 	ui.action_Play->setText(QStringLiteral("播放"));
 	PlayFlag = false;
-	m_slice_player->pause.lock();
-	//myInteractorStyle->ResetSliceToMin();
+	m_pTimer->stop();//关闭计时器
+	ui.SliceScrollBar->setSliderPosition(current);//同步滑动条
+	ui.SliceScrollBar->setEnabled(true);//解锁滑动条
 	ui.action_Stop->setEnabled(false);
 }
 
@@ -1087,55 +1098,8 @@ void QvtkDicomViewer::OnStop()
 //Slice滚动条值更改事件
  void QvtkDicomViewer::OnSliceScrollBarValueChange(int a)
  {
+	 current = a;
 	 ShowImageByIndex(a);
- }
-
-//测试入口1
- void QvtkDicomViewer::OnTestEntrance_01()
- {
-	/*
-	 * 现在测试的是打开series文件夹
-	 */
-	 //打开文件选择页面
-	 //QString dir = QFileDialog::getExistingDirectory(this, QStringLiteral("打开Series目录"), "F:/", QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
-	 //if (dir.isEmpty() == true)
-		// return;
-
-	 QString dir = "F:\\Dicom\\Test1\\DICOM\\S428090\\S50";
-
-	 DicomDir *m_dicomdir = new DicomDir();
-	 connect(m_dicomdir, SIGNAL(sendData(QString)), this, SLOT(receiveData(QString)));
-	 m_dicomdir->InitDirExplorerFromSeriesPath(dir);
-	
-	 //m_dicomdir->show();
-	 setAppState(Folder);//程序进入Folder状态
- }
-
-//测试入口2
- void QvtkDicomViewer::OnTestEntrance_02()
- {
-	 QStringList headers;
-	 headers.append(QStringLiteral("ID"));
-	 headers.append(QStringLiteral("详细信息"));
-
-	 //QFile file("defaultTreeContext.txt");
-	 //file.open(QIODevice::ReadOnly);
-	 //DicomDirTreeModel *model = new DicomDirTreeModel(headers, file.readAll());
-	 //file.close();
-	 //ui.treeView->setModel(model);
-	 //ui.treeView->expandAll();
-	 //for (int column = 0; column < model->columnCount(); ++column)
-		//ui.treeView->resizeColumnToContents(column);
-
-	 DicomDataBase::getInstance()->Init("F:/Dicom/Test1/DICOMDIR");
-	 Current_patientId = "CT475430";
-	 CurrentPatient = new DicomPatient(DicomDataBase::getInstance()->getPatientById(Current_patientId));
-	 m_dicomdirtreemodel = new DicomDirTreeModel(headers, CurrentPatient);
-
-	 ui.treeView->setModel(m_dicomdirtreemodel);
-	 ui.treeView->expandAll();
-	 for (int column = 0; column < m_dicomdirtreemodel->columnCount(); ++column)
-		 ui.treeView->resizeColumnToContents(column);
  }
 
 //响应三维重建命令
@@ -1287,4 +1251,28 @@ void QvtkDicomViewer::OnSegmentImage()
 	 m_Reg_Window = new Register();//事先初始化配准工具
 	 m_Reg_Window->show();
 	//为了增加响应速度,初始化代码应该统一起来,这是一个尝试,以后会逐渐改成这样
+ }
+
+//测试入口1
+ void QvtkDicomViewer::OnTestEntrance_01()
+ {
+	/*
+	 * 现在测试的是打开series文件夹
+	 */
+
+	 QString dir = "F:\\Dicom\\Test1\\DICOM\\S428090\\S50";
+
+	 DicomDir *m_dicomdir = new DicomDir();
+	 connect(m_dicomdir, SIGNAL(sendData(QString)), this, SLOT(receiveData(QString)));
+	 m_dicomdir->InitDirExplorerFromSeriesPath(dir);
+	
+	 //m_dicomdir->show();
+	 setAppState(Folder);//程序进入Folder状态
+ }
+
+//测试入口2
+ void QvtkDicomViewer::OnTestEntrance_02()
+ {
+	//现在测试的是计时器
+	 m_pTimer->start();
  }

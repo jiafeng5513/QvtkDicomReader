@@ -110,9 +110,6 @@
     <ClCompile Include="GeneratedFiles\Debug\moc_Segmenter.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Debug\moc_SlicePlayer.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="GeneratedFiles\Debug\moc_ThreeD_Reconstruction.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Release|x64'">true</ExcludedFromBuild>
     </ClCompile>
@@ -134,9 +131,6 @@
     <ClCompile Include="GeneratedFiles\Release\moc_Segmenter.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
-    <ClCompile Include="GeneratedFiles\Release\moc_SlicePlayer.cpp">
-      <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
-    </ClCompile>
     <ClCompile Include="GeneratedFiles\Release\moc_ThreeD_Reconstruction.cpp">
       <ExcludedFromBuild Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">true</ExcludedFromBuild>
     </ClCompile>
@@ -144,7 +138,6 @@
     <ClCompile Include="myVtkInteractorStyleImage.cpp" />
     <ClCompile Include="QvtkDicomViewer.cpp" />
     <ClCompile Include="Segmenter.cpp" />
-    <ClCompile Include="SlicePlayer.cpp" />
     <ClCompile Include="DicomTreeItem.cpp" />
     <ClCompile Include="ThreeD_Reconstruction.cpp" />
     <ClCompile Include="vtkBiDimensionalCallback.cpp" />
@@ -240,16 +233,6 @@
     <ClInclude Include="GeneratedFiles\ui_QvtkDicomViewer.h" />
     <ClInclude Include="head_all.h" />
     <ClInclude Include="myVtkInteractorStyleImage.h" />
-    <CustomBuild Include="SlicePlayer.h">
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Moc%27ing SlicePlayer.h...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB  "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets" "-I.\..\Libraries\itk_4.12\include\ITK-4.12"</Command>
-      <AdditionalInputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">$(QTDIR)\bin\moc.exe;%(FullPath)</AdditionalInputs>
-      <Message Condition="'$(Configuration)|$(Platform)'=='Release|x64'">Moc%27ing SlicePlayer.h...</Message>
-      <Outputs Condition="'$(Configuration)|$(Platform)'=='Release|x64'">.\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp</Outputs>
-      <Command Condition="'$(Configuration)|$(Platform)'=='Release|x64'">"$(QTDIR)\bin\moc.exe"  "%(FullPath)" -o ".\GeneratedFiles\$(ConfigurationName)\moc_%(Filename).cpp"  -DUNICODE -DWIN32 -DWIN64 -DQT_DLL -DQT_NO_DEBUG -DNDEBUG -DQT_CORE_LIB -DQT_GUI_LIB -DQT_WIDGETS_LIB "-I.\GeneratedFiles" "-I." "-I$(QTDIR)\include" "-I.\GeneratedFiles\$(ConfigurationName)\." "-I$(QTDIR)\include\QtCore" "-I$(QTDIR)\include\QtGui" "-I$(QTDIR)\include\QtWidgets"</Command>
-    </CustomBuild>
     <ClInclude Include="DicomTreeItem.h" />
     <ClInclude Include="vtkBiDimensionalCallback.h" />
   </ItemGroup>
