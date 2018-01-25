@@ -1,4 +1,4 @@
-![image](https://github.com/AngelaViVi/QvtkDicomReader/QvtkDicomViewer/Resources/Avalon_start.png) 
+![image](https://github.com/AngelaViVi/QvtkDicomReader/blob/master/QvtkDicomViewer/Resources/Avalon_start.png) 
 ===========================
 ##这是一个支持DICOM3.0标准的DICOM阅片软件
 
@@ -21,7 +21,7 @@ Pmsdview是由飞利浦开发的一个程序;RadiAnt是效率极高且功能完�
 这两个程序都是不开源的,本程序的编写中只是使用了这两个软件并借鉴了界面和一些功能.<br>
 
 #### Features:
-1.修复了若干bug.具体请看[BUG文档](https://github.com/AngelaViVi/QvtkDicomReader/Docs/BUGs.md)
+1.修复了若干bug.具体请看[BUG文档](https://github.com/AngelaViVi/QvtkDicomReader/blob/master/Docs/BUGs.md)
 
 #### Build:
 1.依赖:DCMTK3.6.2,64位;vtk8.0.0,64位;Qt5.9.1,64位;itk4.12,64位 <br>
