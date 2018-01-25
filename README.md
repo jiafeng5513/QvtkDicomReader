@@ -1,11 +1,10 @@
-# QvtkDicomReader
-
-使用Qt和VTK编写的Dicom阅读器
+![image](https://github.com/AngelaViVi/QvtkDicomReader/QvtkDicomViewer/Resources/Avalon_start.png) 
 ===========================
+##这是一个支持DICOM3.0标准的DICOM阅片软件
 
 #### Coming Soon
 1.显示VTK缩略图,并能从缩略图中直接引导渲染器渲染对应的Series或者Image<br>
-2.在renderwindow中显示4份图像<br>
+2.调整在renderwindow的分格方法,例如二分,四分等<br>
 3.在绘图区域中显示影像扫描时的人体方位<br>
 4.添加面积测量工具<br>
 5.程序外观的调整<br>
@@ -22,7 +21,7 @@ Pmsdview是由飞利浦开发的一个程序;RadiAnt是效率极高且功能完�
 这两个程序都是不开源的,本程序的编写中只是使用了这两个软件并借鉴了界面和一些功能.<br>
 
 #### Features:
-1.修复了若干bug.具体请看Docs/BUGs.md
+1.修复了若干bug.具体请看[BUG文档](https://github.com/AngelaViVi/QvtkDicomReader/Docs/BUGs.md)
 
 #### Build:
 1.依赖:DCMTK3.6.2,64位;vtk8.0.0,64位;Qt5.9.1,64位;itk4.12,64位 <br>
