@@ -1,0 +1,366 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<ClassDiagram MajorVersion="1" MinorVersion="1">
+  <Class Name="vtkDICOMImageReaderVector" Collapsed="true">
+    <Position X="9" Y="1.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>vtkMyDICOMImageReader.cpp</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="CommonHelper" Collapsed="true">
+    <Position X="9" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>BAAAAAAAAAAAABAAAAAACAAAAAAAAAAABAAAAAAAAAA=</HashCode>
+      <FileName>CommonHelper.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vtkMyDICOMImageReader" Collapsed="true">
+    <Position X="10.75" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAI=</HashCode>
+      <FileName>vtkMyDICOMImageReader.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DicomDataBase" Collapsed="true">
+    <Position X="15.5" Y="4.25" Width="2" />
+    <TypeIdentifier>
+      <HashCode>AEQAAAABEAAAAAEBABAAAAAAAAAAAAQAAAACAAABAQA=</HashCode>
+      <FileName>DicomDataBase.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DicomImage" Collapsed="true">
+    <Position X="15.5" Y="5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAQCAAEAAgAIAACAACRAQQASAAQhFBAAAACQCgAAAEA=</HashCode>
+      <FileName>DicomImage.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DicomPatient" Collapsed="true">
+    <Position X="15.5" Y="3.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AgACAgAmAQAAAABIAAAAVAAAAAAAIgAAAAAEAgAAAAA=</HashCode>
+      <FileName>DicomPatient.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="MyStyle" Collapsed="true">
+    <Position X="10.75" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>vtkImageSegmentCallback.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vtkImageSegmentCallback" Collapsed="true">
+    <Position X="9" Y="4.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAABAAAAAACACSABgQIgEQQMAAAggAAAAKgAAAAAEA=</HashCode>
+      <FileName>vtkImageSegmentCallback.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DicomSeries" Collapsed="true">
+    <Position X="15.5" Y="6.5" Width="2.75" />
+    <TypeIdentifier>
+      <HashCode>AAgAAAAAAAAAAQBAAQAAAQAAAAAAAAAAAAAEAAQAAAA=</HashCode>
+      <FileName>DicomSeries.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DicomStudy" Collapsed="true">
+    <Position X="15.5" Y="5.75" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAIAQAAAAAAAAAAAhAAIAAgECAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>DicomStudy.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="StatusMessage" Collapsed="true">
+    <Position X="10.75" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAgAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>myVtkInteractorStyleImage.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="myVtkInteractorStyleImage" Collapsed="true">
+    <Position X="9" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAQABAAAAAAACIgAAQgAAAAAAIAEAAAAAAAAUAAAAA=</HashCode>
+      <FileName>myVtkInteractorStyleImage.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DicomTreeItem" Collapsed="true">
+    <Position X="15.5" Y="1.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAFAABgASAAAAABAAADAAAAAgIEABAACAAAQAQAAAAA=</HashCode>
+      <FileName>DicomTreeItem.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="vtkBiDimensionalCallback" Collapsed="true">
+    <Position X="12.5" Y="1.5" Width="2.25" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAACQAAAAAAAAAAAAAABAAAAAAAAAAAAA=</HashCode>
+      <FileName>vtkBiDimensionalCallback.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="QvtkDicomViewer" Collapsed="true">
+    <Position X="22.25" Y="0.5" Width="3.5" />
+    <NestedTypes>
+      <Enum Name="QvtkDicomViewer::CURSOR" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>QvtkDicomViewer.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="QvtkDicomViewer::WINDOWWL" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>QvtkDicomViewer.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+      <Enum Name="QvtkDicomViewer::STATE" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>QvtkDicomViewer.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Enum>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>cBoO1ABA0AqwHghAZBlAYZaBshyBUABQ6EFwqma/gDQ=</HashCode>
+      <FileName>QvtkDicomViewer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="ThreeD_Reconstruction" Collapsed="true">
+    <Position X="19" Y="0.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAAQAAEAAAQEkIAEAQAAQDAEAAAQAAQAAAABABAEAE=</HashCode>
+      <FileName>ThreeD_Reconstruction.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Segmenter" Collapsed="true">
+    <Position X="19" Y="1.5" Width="3" />
+    <TypeIdentifier>
+      <HashCode>AAAEAAAAAAAAMAASAAAAAIAACAAACAAAAAAAIACAAEA=</HashCode>
+      <FileName>Segmenter.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Register" Collapsed="true">
+    <Position X="19" Y="2.5" Width="3" />
+    <NestedTypes>
+      <Typedef Name="Register::PixelType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Register.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Typedef>
+      <Typedef Name="Register::OutputImageType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Register.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Typedef>
+      <Typedef Name="Register::ConnectorType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Register.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Typedef>
+      <Typedef Name="Register::FixedImageType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Register.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Typedef>
+      <Typedef Name="Register::MovingImageType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Register.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Typedef>
+      <Typedef Name="Register::FixedImageReaderType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Register.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Typedef>
+      <Typedef Name="Register::MovingImageReaderType" Collapsed="true">
+        <TypeIdentifier>
+          <NewMemberFileName>Register.h</NewMemberFileName>
+        </TypeIdentifier>
+      </Typedef>
+    </NestedTypes>
+    <TypeIdentifier>
+      <HashCode>AABAAEAQSSEAkAAAAIAEAAAAEgAFIQAAEAASAIAAgAI=</HashCode>
+      <FileName>Register.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Startup" Collapsed="true">
+    <Position X="9" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAEAAAAAAAAAAgAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>Startup.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="PatientMsg" Collapsed="true">
+    <Position X="10.75" Y="2.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAKAQAAAACAAAAAAAQAAAAAAAAAAAAAAAIAAAA=</HashCode>
+      <FileName>DicomDir.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DicomDir" Collapsed="true">
+    <Position X="15.5" Y="2.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>AAAAgAAAQAIAGAAAAAgAAAAAAAAAAAAAAAAAAEAAAAA=</HashCode>
+      <FileName>DicomDir.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="DicomDirTreeModel" Collapsed="true">
+    <Position X="15.5" Y="0.5" Width="1.75" />
+    <TypeIdentifier>
+      <HashCode>EAEAAAAASAAAAgJEAAUAAAAQAIABAEAAAAAQAAABAAQ=</HashCode>
+      <FileName>DicomDirTreeModel.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ui_Register" Collapsed="true">
+    <Position X="0.5" Y="6.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>wQQBKITHQEAAABBAIBAQAIADAAQAIAIAAAAAAGAACMA=</HashCode>
+      <FileName>GeneratedFiles\ui_Register.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ui_Segmenter" Collapsed="true">
+    <Position X="6.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAQAAABAACABCAAAAEAAAAQgIAAAAJAAQAAABgA=</HashCode>
+      <FileName>GeneratedFiles\ui_Segmenter.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ui_Startup" Collapsed="true">
+    <Position X="3.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAQAIAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GeneratedFiles\ui_Startup.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ui_ThreeD_Reconstruction" Collapsed="true">
+    <Position X="0.5" Y="3.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAQAAAAAAAAAAAQAIAAAAIAAAAAAAAA=</HashCode>
+      <FileName>GeneratedFiles\ui_ThreeD_Reconstruction.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ui_DicomDir" Collapsed="true">
+    <Position X="3.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AQAAAIAAAAAAAAAAAAAAAEAAAAQAIAAAAIAAAAAAAAA=</HashCode>
+      <FileName>GeneratedFiles\ui_DicomDir.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ui_QvtkDicomViewerClass" Collapsed="true">
+    <Position X="0.5" Y="0.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AoAAAACCgIkAYUiCQBBlAcgAEAQEMKFAwIIAAABAhQg=</HashCode>
+      <FileName>GeneratedFiles\ui_QvtkDicomViewer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ui::Register" Collapsed="true">
+    <Position X="0.5" Y="7.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GeneratedFiles\ui_Register.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ui::Segmenter" Collapsed="true">
+    <Position X="6.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GeneratedFiles\ui_Segmenter.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ui::Startup" Collapsed="true">
+    <Position X="3.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GeneratedFiles\ui_Startup.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ui::ThreeD_Reconstruction" Collapsed="true">
+    <Position X="0.5" Y="4.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GeneratedFiles\ui_ThreeD_Reconstruction.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ui::DicomDir" Collapsed="true">
+    <Position X="3.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GeneratedFiles\ui_DicomDir.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Class Name="Ui::QvtkDicomViewerClass" Collapsed="true">
+    <Position X="0.5" Y="1.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=</HashCode>
+      <FileName>GeneratedFiles\ui_QvtkDicomViewer.h</FileName>
+    </TypeIdentifier>
+  </Class>
+  <Struct Name="qt_meta_stringdata_Register_t" Collapsed="true">
+    <Position X="10.75" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>GeneratedFiles\Debug\moc_Register.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="qt_meta_stringdata_Startup_t" Collapsed="true">
+    <Position X="10.75" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>GeneratedFiles\Debug\moc_Startup.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="qt_meta_stringdata_DicomDir_t" Collapsed="true">
+    <Position X="10.75" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>GeneratedFiles\Debug\moc_DicomDir.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="qt_meta_stringdata_DicomDirTreeModel_t" Collapsed="true">
+    <Position X="12.5" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>GeneratedFiles\Debug\moc_DicomDirTreeModel.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="qt_meta_stringdata_QvtkDicomViewer_t" Collapsed="true">
+    <Position X="9" Y="7.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>GeneratedFiles\Debug\moc_QvtkDicomViewer.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="qt_meta_stringdata_Segmenter_t" Collapsed="true">
+    <Position X="9" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>GeneratedFiles\Debug\moc_Segmenter.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="qt_meta_stringdata_ThreeD_Reconstruction_t" Collapsed="true">
+    <Position X="12.5" Y="6.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAQAAAAAAAAAAAAAAAAAQAAAAAAA=</HashCode>
+      <FileName>GeneratedFiles\Debug\moc_ThreeD_Reconstruction.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Struct Name="`anonymous-namespace'::initializer" Collapsed="true">
+    <Position X="9" Y="5.75" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAEAAAAAEA=</HashCode>
+      <FileName>GeneratedFiles\qrc_QvtkDicomViewer.cpp</FileName>
+    </TypeIdentifier>
+  </Struct>
+  <Enum Name="SegmentFunc" Collapsed="true">
+    <Position X="10.75" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAQAAAAAAIAAAJAAAABAAAAgAAACAAAAQAAAAAAAAAA=</HashCode>
+      <FileName>vtkImageSegmentCallback.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Enum Name="RegistrationFunc" Collapsed="true">
+    <Position X="9" Y="8.5" Width="1.5" />
+    <TypeIdentifier>
+      <HashCode>AAAAAACQAAAAAAAAAAAAAAAAAAAAgAAAAAAAAIAAAAA=</HashCode>
+      <FileName>Register.h</FileName>
+    </TypeIdentifier>
+  </Enum>
+  <Font Name="Microsoft YaHei UI" Size="9" />
+</ClassDiagram>

@@ -1,11 +1,1 @@
-﻿  DicomDataBase.cpp
-  moc_QvtkDicomViewer.cpp
-  moc_ThreeD_Reconstruction.cpp
-  main.cpp
-  myVtkInteractorStyleImage.cpp
-  QvtkDicomViewer.cpp
-  ThreeD_Reconstruction.cpp
-  vtkMyDICOMImageReader.cpp
-  正在生成代码...
-  qrc_QvtkDicomViewer.cpp
-  QvtkDicomViewer.vcxproj -> E:\VisualStudio\QvtkDicomReader\x64\Release\QvtkDicomViewer.exe
+﻿  QvtkDicomViewer.vcxproj -> E:\VisualStudio\QvtkDicomReader\x64\Release\QvtkDicomViewer.exe
