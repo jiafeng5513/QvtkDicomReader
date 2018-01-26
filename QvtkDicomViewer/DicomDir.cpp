@@ -60,6 +60,7 @@ void DicomDir::ConstructsTable()
 	/*
 	*构造表格
 	*/
+	ui.tableWidget->clear();
 	if (m_database->PatientList.size() == 0)
 	{
 		return;
@@ -69,6 +70,7 @@ void DicomDir::ConstructsTable()
 		//正常,构造表格
 		ui.tableWidget->setColumnCount(4);
 		ui.tableWidget->setRowCount(m_database->PatientList.size());//行数
+		int size = m_database->PatientList.size();
 		ui.tableWidget->setHorizontalHeaderLabels(
 			QStringList() << "Patient ID" << "Patient Name" << "Birth Date" << "Gender");
 		ui.tableWidget->verticalHeader()->setVisible(false); // 隐藏水平header

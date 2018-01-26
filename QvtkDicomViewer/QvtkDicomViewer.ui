@@ -123,7 +123,7 @@
     <addaction name="action_TestEntrance_01"/>
     <addaction name="action_TestEntrance_02"/>
    </widget>
-   <widget class="QMenu" name="menu_6">
+   <widget class="QMenu" name="menu_WindowSizeLevel">
     <property name="title">
      <string>窗宽窗位</string>
     </property>
@@ -142,7 +142,7 @@
    <addaction name="menu"/>
    <addaction name="menu_2"/>
    <addaction name="menu_3"/>
-   <addaction name="menu_6"/>
+   <addaction name="menu_WindowSizeLevel"/>
    <addaction name="menu_4"/>
    <addaction name="menu_5"/>
   </widget>

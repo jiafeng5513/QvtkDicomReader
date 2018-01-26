@@ -60,7 +60,7 @@ DicomDataBase * DicomDataBase::getInstance()
 	 DcmDirectoryRecord *   ImageRecord = NULL;	//第四层,Image	(N)
 	 OFString tmpString;
 
-
+	 this->PatientList.clear();
 	 int i = 0, j = 0, k = 0, l = 0;//四层循环变量
 	 while (((PatientRecord = DicomDirRootRecord->getSub(i)) != NULL))
 	 {
@@ -195,6 +195,7 @@ void DicomDataBase::InitFromSingleImage(std::string ImageFileName)
 	 OFString temp_OFString;
 	 //构造开始
 	 //image
+	 this->PatientList.clear();
 	 DicomImage * m_image = new DicomImage();
 	 if (fileformat.getDataset()->findAndGetOFStringArray(DCM_ReferencedFileID, temp_OFString, true).good())
 	 {
@@ -302,6 +303,7 @@ void DicomDataBase::InitFromSeriesFolder(std::string SeriesFolder)
 	}
 
 	//开始构造
+	this->PatientList.clear();
 	QString _currentfilename = Prefix;
 	_currentfilename.append(QString::fromStdString(RfidInSeriesFolder->at(0)));
 	DcmFileFormat fileformat;

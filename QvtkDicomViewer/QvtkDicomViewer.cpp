@@ -116,6 +116,7 @@ void QvtkDicomViewer::OnChangeAppState()
 		ui.action_Negative->setEnabled(false);
 		ui.action_Reset->setEnabled(false);
 		ui.SliceScrollBar->setEnabled(false);
+		ui.menu_WindowSizeLevel->setEnabled(false);
 		break;
 	case SingleImage: //单张图片状态
 		ui.action_PreviousPatient->setEnabled(false);
@@ -135,6 +136,7 @@ void QvtkDicomViewer::OnChangeAppState()
 		ui.action_Negative->setEnabled(true);
 		ui.action_Reset->setEnabled(true);
 		ui.SliceScrollBar->setEnabled(false);
+		ui.menu_WindowSizeLevel->setEnabled(true);
 		break;
 	case Folder:	  //打开series文件夹状态
 		ui.action_PreviousPatient->setEnabled(false);
@@ -154,6 +156,7 @@ void QvtkDicomViewer::OnChangeAppState()
 		ui.action_Negative->setEnabled(true);
 		ui.action_Reset->setEnabled(true);
 		ui.SliceScrollBar->setEnabled(true);
+		ui.menu_WindowSizeLevel->setEnabled(true);
 		break;	
 	case Dir:		  //打开DICOMDIR状态
 		ui.action_PreviousPatient->setEnabled(true);
@@ -173,6 +176,7 @@ void QvtkDicomViewer::OnChangeAppState()
 		ui.action_Negative->setEnabled(true);
 		ui.action_Reset->setEnabled(true);
 		ui.SliceScrollBar->setEnabled(true);
+		ui.menu_WindowSizeLevel->setEnabled(true);
 		break;	
 	case Err:		  //出现严重错误的状态
 		ui.action_PreviousPatient->setEnabled(false);
@@ -192,6 +196,7 @@ void QvtkDicomViewer::OnChangeAppState()
 		ui.action_Negative->setEnabled(false);
 		ui.action_Reset->setEnabled(false);
 		ui.SliceScrollBar->setEnabled(false);
+		ui.menu_WindowSizeLevel->setEnabled(false);
 		break;		
 	case Debug:		  //调试状态(全部启用)
 		ui.action_PreviousPatient->setEnabled(true);
@@ -211,6 +216,7 @@ void QvtkDicomViewer::OnChangeAppState()
 		ui.action_Negative->setEnabled(true);
 		ui.action_Reset->setEnabled(true);
 		ui.SliceScrollBar->setEnabled(true);
+		ui.menu_WindowSizeLevel->setEnabled(true);
 		break;	
 	default:
 		break;
@@ -1105,12 +1111,20 @@ void QvtkDicomViewer::OnStop()
 //响应三维重建命令
 void QvtkDicomViewer::On3D_Reconstruction()
 {
+	/*
+	 * 先对当前的Series的文件数量进行校验,少于某个阈值禁止执行.
+	 */
 	CurrentPatient->setCurrentDicomSeriesById(m_dicomdirtreemodel->getItem(indexSelect)->itemData[0].toString().toStdString());
 	//构造
 	std::vector<std::string> * filenames_v = new std::vector<std::string>;
 	for (int i=0;i<CurrentPatient->getCurrentDicomSeries()->ImageList.size();i++)
 	{
 		filenames_v->push_back(CurrentPatient->getCurrentDicomSeries()->ImageList.at(i)->AbsFilePath);
+	}
+	if(filenames_v->size()<=25)
+	{
+		QMessageBox::information(this, QStringLiteral("警告!"), QStringLiteral("当前序列中的图片数量没有达到启动三维重建所需的图片数量的最小值(25张)!"));
+		return;
 	}
 	ThreeD_Reconstruction * _3d_reconstructer = new ThreeD_Reconstruction(filenames_v);
 	_3d_reconstructer->show();

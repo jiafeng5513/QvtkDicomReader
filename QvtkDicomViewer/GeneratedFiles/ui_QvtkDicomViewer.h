@@ -73,7 +73,7 @@ public:
     QMenu *menu_3;
     QMenu *menu_4;
     QMenu *menu_5;
-    QMenu *menu_6;
+    QMenu *menu_WindowSizeLevel;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
     QDockWidget *dockWidget_Dir;
@@ -270,8 +270,8 @@ public:
         menu_4->setObjectName(QStringLiteral("menu_4"));
         menu_5 = new QMenu(menuBar);
         menu_5->setObjectName(QStringLiteral("menu_5"));
-        menu_6 = new QMenu(menuBar);
-        menu_6->setObjectName(QStringLiteral("menu_6"));
+        menu_WindowSizeLevel = new QMenu(menuBar);
+        menu_WindowSizeLevel->setObjectName(QStringLiteral("menu_WindowSizeLevel"));
         QvtkDicomViewerClass->setMenuBar(menuBar);
         mainToolBar = new QToolBar(QvtkDicomViewerClass);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -299,7 +299,7 @@ public:
         menuBar->addAction(menu->menuAction());
         menuBar->addAction(menu_2->menuAction());
         menuBar->addAction(menu_3->menuAction());
-        menuBar->addAction(menu_6->menuAction());
+        menuBar->addAction(menu_WindowSizeLevel->menuAction());
         menuBar->addAction(menu_4->menuAction());
         menuBar->addAction(menu_5->menuAction());
         menu->addAction(action_OpenSeriesFolder);
@@ -326,17 +326,17 @@ public:
         menu_4->addAction(action_SwitchOfProperty);
         menu_5->addAction(action_TestEntrance_01);
         menu_5->addAction(action_TestEntrance_02);
-        menu_6->addAction(action_WindowWL_Default);
-        menu_6->addAction(action_WindowWL_All);
-        menu_6->addSeparator();
-        menu_6->addAction(action_WindowWL_CT_Abdomen);
-        menu_6->addAction(action_WindowWL_CT_BloodVessel);
-        menu_6->addAction(action_WindowWL_CT_Bones);
-        menu_6->addAction(action_WindowWL_CT_Brain);
-        menu_6->addAction(action_WindowWL_CT_Medias);
-        menu_6->addAction(action_WindowWL_CT_Lungs);
-        menu_6->addSeparator();
-        menu_6->addAction(action_Negative);
+        menu_WindowSizeLevel->addAction(action_WindowWL_Default);
+        menu_WindowSizeLevel->addAction(action_WindowWL_All);
+        menu_WindowSizeLevel->addSeparator();
+        menu_WindowSizeLevel->addAction(action_WindowWL_CT_Abdomen);
+        menu_WindowSizeLevel->addAction(action_WindowWL_CT_BloodVessel);
+        menu_WindowSizeLevel->addAction(action_WindowWL_CT_Bones);
+        menu_WindowSizeLevel->addAction(action_WindowWL_CT_Brain);
+        menu_WindowSizeLevel->addAction(action_WindowWL_CT_Medias);
+        menu_WindowSizeLevel->addAction(action_WindowWL_CT_Lungs);
+        menu_WindowSizeLevel->addSeparator();
+        menu_WindowSizeLevel->addAction(action_Negative);
         mainToolBar->addAction(action_OpenDicomDirFile);
         mainToolBar->addAction(action_OpenDicomFile);
         mainToolBar->addAction(action_OpenSeriesFolder);
@@ -446,7 +446,7 @@ public:
         menu_3->setTitle(QApplication::translate("QvtkDicomViewerClass", "\345\267\245\345\205\267", Q_NULLPTR));
         menu_4->setTitle(QApplication::translate("QvtkDicomViewerClass", "\347\252\227\345\217\243", Q_NULLPTR));
         menu_5->setTitle(QApplication::translate("QvtkDicomViewerClass", "\346\265\213\350\257\225", Q_NULLPTR));
-        menu_6->setTitle(QApplication::translate("QvtkDicomViewerClass", "\347\252\227\345\256\275\347\252\227\344\275\215", Q_NULLPTR));
+        menu_WindowSizeLevel->setTitle(QApplication::translate("QvtkDicomViewerClass", "\347\252\227\345\256\275\347\252\227\344\275\215", Q_NULLPTR));
 #ifndef QT_NO_TOOLTIP
         dockWidget_Dir->setToolTip(QString());
 #endif // QT_NO_TOOLTIP
