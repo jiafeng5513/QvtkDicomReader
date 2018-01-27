@@ -1,6 +1,6 @@
 ![image](https://github.com/AngelaViVi/QvtkDicomReader/blob/master/QvtkDicomViewer/Resources/Avalon_start.png) 
 ===========================
-##这是一个支持DICOM3.0标准的DICOM阅片软件
+### 这是一个支持DICOM3.0标准的DICOM阅片软件
 
 #### Coming Soon
 1.显示VTK缩略图,并能从缩略图中直接引导渲染器渲染对应的Series或者Image<br>

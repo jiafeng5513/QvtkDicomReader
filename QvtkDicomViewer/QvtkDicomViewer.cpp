@@ -262,7 +262,8 @@ void QvtkDicomViewer::OnChangeCursorValue()
 		ui.action_Ruler->setChecked(true);
 		break;
 	case CONTOUR://轮廓
-		contourWidget->EnabledOff();
+		contourWidget->EnabledOn();
+		//splineDistanceWidget->EnabledOn();
 		ui.action_Contour->setChecked(true);
 		break;
 	case BIDI://二维尺
@@ -756,6 +757,7 @@ void QvtkDicomViewer::setWindowWL(WINDOWWL newWL)
 	}
 	emit WindowWLChanged();//值更改,发出信号
 }
+
 // 改变程序的状态
 void QvtkDicomViewer::setAppState(STATE new_state)
 {
