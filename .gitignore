@@ -8,10 +8,6 @@
 *.sln.docstates
 *.ipch
 
-# Libraries
-dcmtk_3.6.2/
-vtk_8.0.0/
-itk_4.12/
 
 # Build results
 [Dd]ebug/
@@ -228,3 +224,5 @@ FakesAssemblies/
 GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
+.vs
+x64

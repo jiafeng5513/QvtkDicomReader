@@ -1,0 +1,12 @@
+set(ITKFEM_LOADED 1)
+set(ITKFEM_ENABLE_SHARED "1")
+set(ITKFEM_DEPENDS "ITKIOSpatialObjects;ITKImageFunction;ITKRegistrationCommon;ITKSpatialObjects")
+set(ITKFEM_PUBLIC_DEPENDS "ITKImageFunction;ITKRegistrationCommon")
+set(ITKFEM_TRANSITIVE_DEPENDS "ITKIOSpatialObjects;ITKImageFunction;ITKRegistrationCommon;ITKSpatialObjects")
+set(ITKFEM_PRIVATE_DEPENDS "")
+set(ITKFEM_LIBRARIES "ITKFEM")
+set(ITKFEM_INCLUDE_DIRS "${ITK_INSTALL_PREFIX}/include/ITK-4.12")
+set(ITKFEM_LIBRARY_DIRS "")
+set(ITKFEM_RUNTIME_LIBRARY_DIRS "${ITK_INSTALL_PREFIX}/bin")
+set(ITKFEM_TARGETS_FILE "")
+

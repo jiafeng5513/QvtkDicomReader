@@ -12,7 +12,7 @@
 
 #### 已知BUG
 请看Docs/BUGs.md<br>
-
+值得注意的是,重载的vtkMyDICOMImageReader类已经实现了从一系列的文件名初始化,但是这个功能目前只在3D重建中使用了,实际上,可以利用这个特性简化看图功能<br>
 #### 编程参考
 编程中参考的软件:<br>
 1.[Pmsdview](http://pmsdview-12.updatestar.com/)<br/>

@@ -1,0 +1,12 @@
+set(ITKSpatialObjects_LOADED 1)
+set(ITKSpatialObjects_ENABLE_SHARED "0")
+set(ITKSpatialObjects_DEPENDS "ITKCommon;ITKImageFunction;ITKMesh;ITKMetaIO;ITKTransform")
+set(ITKSpatialObjects_PUBLIC_DEPENDS "ITKTransform")
+set(ITKSpatialObjects_TRANSITIVE_DEPENDS "ITKImageFunction;ITKMetaIO;ITKTransform")
+set(ITKSpatialObjects_PRIVATE_DEPENDS "ITKCommon;ITKMesh")
+set(ITKSpatialObjects_LIBRARIES "ITKSpatialObjects")
+set(ITKSpatialObjects_INCLUDE_DIRS "${ITK_INSTALL_PREFIX}/include/ITK-4.12")
+set(ITKSpatialObjects_LIBRARY_DIRS "")
+set(ITKSpatialObjects_RUNTIME_LIBRARY_DIRS "${ITK_INSTALL_PREFIX}/bin")
+set(ITKSpatialObjects_TARGETS_FILE "")
+

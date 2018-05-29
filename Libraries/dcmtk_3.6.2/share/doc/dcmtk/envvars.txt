@@ -1,0 +1,52 @@
+
+===========================
+DCMTK ENVIRONMENT VARIABLES
+===========================
+
+The behavior of the DCMTK tools and libraries can be modified by a
+number of runtime environment variables which are explained below.
+
+
+DCMDICTPATH
+  Affected: dcmdata
+  Explanation: On Unix platforms, all DCMTK applications load a DICOM
+    data dictionary from file upon startup. By default, the file
+    /usr/local/share/dcmtk/dicom.dic will be loaded. If the DCMDICTPATH
+    environment variable is set, the applications will attempt to load
+    DICOM data dictionaries specified in the DCMDICTPATH environment
+    variable instead. The DCMDICTPATH environment variable has the same
+    format as the shell PATH variable in that a colon (":") separates
+    entries. The data dictionary code will attempt to load each file
+    specified in the DCMDICTPATH environment variable. It is an error
+    if no data dictionary can be loaded.
+      On Win32 platforms, a built-in dictionary is used by default. If
+    the DCMDICTPATH environment variable is set, the applications will
+    attempt to load _additional_ DICOM data dictionaries specified in
+    the DCMDICTPATH environment variable instead. The DCMDICTPATH
+    environment variable has the same format as the shell PATH variable
+    in that a semicolon (";") separates entries. The data dictionary
+    code will attempt to load each file specified in the DCMDICTPATH
+    environment variable.
+
+    See also: documentation in dcmdata/docs/datadict.txt or
+    /usr/local/share/doc/dcmtk/datadict.txt.
+
+TCP_BUFFER_LENGTH
+  Affected: dcmnet
+  Explanation: By default, DCMTK does not modify the TCP send and receive
+    buffer length, i.e. the operating system is responsible for selecting
+    appropriate values. If the environment variable TCP_BUFFER_LENGTH is
+    set, it specifies an override for the TCP buffer length. The value is
+    specified in bytes, not in Kbytes. If set to 0, a buffer length of 64K,
+    which was the default value for previous versions of the DCMTK, is used.
+
+TCP_NODELAY
+  Affected: dcmnet
+  Explanation: If this environment variable is set and contains a non-zero
+    number (e.g. "1"), the Nagle algorithm will be disabled for TCP transport
+    connections, which might result in better network performance on some
+    systems/environments, especially when many small network packets are to
+    be sent. If it is set and contains the number "0", the Nagle algorithm
+    will not be disabled. If the environment variable TCP_NODELAY is not set,
+    the default behavior applies (see compiler macro DISABLE_NAGLE_ALGORITHM
+    in config/docs/macros.txt or /usr/local/share/doc/dcmtk/macros.txt).
