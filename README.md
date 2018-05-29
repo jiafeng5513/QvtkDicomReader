@@ -24,10 +24,9 @@ Pmsdview是由飞利浦开发的一个程序;RadiAnt是效率极高且功能完�
 1.修复了若干bug.具体请看[BUG文档](https://github.com/AngelaViVi/QvtkDicomReader/blob/master/Docs/BUGs.md)
 
 #### Build:
-1.依赖:DCMTK3.6.2,64位;vtk8.0.0,64位;Qt5.9.1,64位;itk4.12,64位 <br>
-2.依赖包放在解决方案文件夹的Libraries中<br>
-3.最新依赖的更新日期:2018年1月6日10:28:57,该日期记录在依赖包中的文档下,编译之前请核对<br>
-3.[依赖下载地址](https://pan.baidu.com/s/1c1ADO3I) 密码：8e2h<br>
-4.环境:Visual Studio 2017,v141工具集<br>
-5.若运行时缺少DLL,请检查相关的环境变量是否正确,或者找到这个dll并放在解决方案文件夹的x64/debug或x64/release文件夹中<br>
-6.[测试数据](https://pan.baidu.com/s/1kURu74b) 密码：zjlg<br>
+1. 依赖:DCMTK3.6.2,64位;vtk8.0.0,64位;Qt5.9.1,64位;itk4.12,64位 <br>
+2. DCMTK,vtk,itk依赖自带,请不要修改<br>
+3. Qt是重量级库,需要自行安装到本地<br>
+4. 环境:Visual Studio 2017,v141工具集<br>
+5. 若运行时缺少DLL,请检查相关的环境变量是否正确,或者找到这个dll并放在解决方案文件夹的x64/debug或x64/release文件夹中<br>
+6. [测试数据](https://pan.baidu.com/s/1kURu74b) 密码：zjlg<br>
