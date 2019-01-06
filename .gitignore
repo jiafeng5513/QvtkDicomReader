@@ -16,7 +16,6 @@
 x64/
 build/
 bld/
-[Bb]in/
 [Oo]bj/
 
 
@@ -58,6 +57,7 @@ dlldata.c
 *.tmp
 *.tmp_proj
 *.log
+*.tlog
 *.vspscc
 *.vssscc
 .builds
@@ -226,3 +226,4 @@ _Pvt_Extensions/
 ModelManifest.xml
 .vs
 x64
+QvtkDicomViewer/x64/
