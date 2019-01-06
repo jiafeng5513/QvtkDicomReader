@@ -1,10 +1,7 @@
  <div align=center><img width="300" height="150" src="https://s2.ax1x.com/2019/01/06/FbimEd.png"/></div>
-===========================
-
 
 #### 已知BUG
 请看Docs/BUGs.md<br>
-值得注意的是,重载的vtkMyDICOMImageReader类已经实现了从一系列的文件名初始化,但是这个功能目前只在3D重建中使用了,实际上,可以利用这个特性简化看图功能<br>
 
 #### 编程参考
 编程中参考的软件:<br>
