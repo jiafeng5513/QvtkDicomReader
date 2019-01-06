@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'Register.ui'
 **
-** Created by: Qt User Interface Compiler version 5.9.1
+** Created by: Qt User Interface Compiler version 5.11.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,11 +10,8 @@
 #define UI_REGISTER_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QGridLayout>
-#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QLabel>
 #include <QtWidgets/QLineEdit>
 #include <QtWidgets/QPushButton>
@@ -267,19 +264,19 @@ public:
 
     void retranslateUi(QWidget *Register)
     {
-        Register->setWindowTitle(QApplication::translate("Register", "\351\205\215\345\207\206\345\267\245\345\205\267", Q_NULLPTR));
-        pushButton_Ok->setText(QApplication::translate("Register", "\345\274\200\345\247\213\350\256\241\347\256\227", Q_NULLPTR));
-        radioButton_Multi->setText(QApplication::translate("Register", "\351\255\224\346\263\225\345\217\230\346\215\242", Q_NULLPTR));
-        radioButton_CenteredSimilarity->setText(QApplication::translate("Register", "\344\270\255\345\277\203\347\233\270\344\274\274\344\272\214\347\273\264\345\217\230\346\215\242", Q_NULLPTR));
-        pushButton_SelectImageFix->setText(QApplication::translate("Register", "\345\237\272\345\207\206\345\233\276\345\203\217", Q_NULLPTR));
-        radioButton_Translation->setText(QApplication::translate("Register", "\345\271\263\347\247\273\345\217\230\346\215\242", Q_NULLPTR));
-        pushButton_SelectImageMove->setText(QApplication::translate("Register", "\345\276\205\351\205\215\345\207\206\345\233\276\345\203\217", Q_NULLPTR));
-        radioButton_Affine->setText(QApplication::translate("Register", "\344\273\277\345\260\204\345\217\230\346\215\242", Q_NULLPTR));
-        pushButton_Cancel->setText(QApplication::translate("Register", "\351\200\200\345\207\272", Q_NULLPTR));
-        label_2->setText(QApplication::translate("Register", "\345\237\272\345\207\206\345\233\276\345\203\217", Q_NULLPTR));
-        label->setText(QApplication::translate("Register", "\344\270\255\351\227\264\347\273\223\346\236\234", Q_NULLPTR));
-        label_3->setText(QApplication::translate("Register", "\345\276\205\351\205\215\345\207\206\345\233\276\345\203\217", Q_NULLPTR));
-        label_4->setText(QApplication::translate("Register", "\346\234\200\347\273\210\347\273\223\346\236\234", Q_NULLPTR));
+        Register->setWindowTitle(QApplication::translate("Register", "\351\205\215\345\207\206\345\267\245\345\205\267", nullptr));
+        pushButton_Ok->setText(QApplication::translate("Register", "\345\274\200\345\247\213\350\256\241\347\256\227", nullptr));
+        radioButton_Multi->setText(QApplication::translate("Register", "\351\255\224\346\263\225\345\217\230\346\215\242", nullptr));
+        radioButton_CenteredSimilarity->setText(QApplication::translate("Register", "\344\270\255\345\277\203\347\233\270\344\274\274\344\272\214\347\273\264\345\217\230\346\215\242", nullptr));
+        pushButton_SelectImageFix->setText(QApplication::translate("Register", "\345\237\272\345\207\206\345\233\276\345\203\217", nullptr));
+        radioButton_Translation->setText(QApplication::translate("Register", "\345\271\263\347\247\273\345\217\230\346\215\242", nullptr));
+        pushButton_SelectImageMove->setText(QApplication::translate("Register", "\345\276\205\351\205\215\345\207\206\345\233\276\345\203\217", nullptr));
+        radioButton_Affine->setText(QApplication::translate("Register", "\344\273\277\345\260\204\345\217\230\346\215\242", nullptr));
+        pushButton_Cancel->setText(QApplication::translate("Register", "\351\200\200\345\207\272", nullptr));
+        label_2->setText(QApplication::translate("Register", "\345\237\272\345\207\206\345\233\276\345\203\217", nullptr));
+        label->setText(QApplication::translate("Register", "\344\270\255\351\227\264\347\273\223\346\236\234", nullptr));
+        label_3->setText(QApplication::translate("Register", "\345\276\205\351\205\215\345\207\206\345\233\276\345\203\217", nullptr));
+        label_4->setText(QApplication::translate("Register", "\346\234\200\347\273\210\347\273\223\346\236\234", nullptr));
     } // retranslateUi
 
 };

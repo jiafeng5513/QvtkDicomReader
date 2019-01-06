@@ -16,12 +16,12 @@ public:
 	DicomStudy();
 	~DicomStudy();
 public:
-	std::string ModulationType;    //检查类型
-	std::string InstitutionName;
-	std::string PatientBirthDate;
-	std::string PatientSex;
-	std::string PatientAge;
-	std::string StudyId;
+	std::string ModulationType="";    //检查类型
+	std::string InstitutionName="";
+	std::string PatientBirthDate="";
+	std::string PatientSex = "";
+	std::string PatientAge = "";
+	std::string StudyId = "";
 	std::vector<DicomSeries*> SeriesList;//该Study中的Series列表
 };
 

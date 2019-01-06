@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'ThreeD_Reconstruction.ui'
 **
-** Created by: Qt User Interface Compiler version 5.9.1
+** Created by: Qt User Interface Compiler version 5.11.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,11 +10,8 @@
 #define UI_THREED_RECONSTRUCTION_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QGridLayout>
-#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QWidget>
 #include "QVTKWidget.h"
 
@@ -48,7 +45,7 @@ public:
 
     void retranslateUi(QWidget *ThreeD_Reconstruction)
     {
-        ThreeD_Reconstruction->setWindowTitle(QApplication::translate("ThreeD_Reconstruction", "\344\270\211\347\273\264\351\207\215\345\273\272", Q_NULLPTR));
+        ThreeD_Reconstruction->setWindowTitle(QApplication::translate("ThreeD_Reconstruction", "\344\270\211\347\273\264\351\207\215\345\273\272", nullptr));
     } // retranslateUi
 
 };

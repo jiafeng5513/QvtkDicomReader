@@ -8,6 +8,7 @@
 #include <vtkSmartPointer.h>
 #include <vtkDICOMImageReader.h>
 #include "vtkMyDICOMImageReader.h"
+#include "QDebug"
 
 /*
  * 静态:获取实例,实现单件模式
@@ -349,6 +350,98 @@ void DicomDataBase::InitFromSeriesFolder(std::string SeriesFolder)
 	}
 	m_patient->StudyList.push_back(m_study);
 	this->PatientList.push_back(m_patient);
+}
+
+//从LIDC-IDRI初始化
+void DicomDataBase::InitFromLIDC(std::string LIDCFolder)
+{
+	//1.参数应该是LIDC-IDRI的父目录,先找到他全部的直接子目录,这是patient文件夹
+	qDebug()<<QStringLiteral("根目录:")<< QString::fromStdString(LIDCFolder);
+	QDir rootDir(QString::fromStdString(LIDCFolder));
+	rootDir.setFilter(QDir::Dirs | QDir::NoDotAndDotDot);
+	qDebug() << QStringLiteral("根目录的子目录数量:") << rootDir.entryInfoList().size();
+	for (int i = 0; i < rootDir.entryInfoList().size();i++)
+	{
+		//qDebug("This is a debug message");
+		DicomPatient *m_patient = new DicomPatient();
+		m_patient->PatientID = rootDir.entryInfoList()[i].fileName().toStdString();
+		qDebug() << QStringLiteral("第") << i << QStringLiteral("个patient目录:") << rootDir.entryInfoList()[i].fileName();
+		//2.patient文件夹下面一层是study文件夹
+		QDir patientDir(rootDir.entryInfoList()[i].absoluteFilePath());
+		patientDir.setFilter(QDir::Dirs | QDir::NoDotAndDotDot);
+		for (int j = 0; j < patientDir.entryInfoList().size();j++)
+		{
+			qDebug() << QStringLiteral("第") << j << QStringLiteral("个study目录:") << patientDir.entryInfoList()[j].fileName();
+			DicomStudy *m_study = new DicomStudy();
+			m_study->StudyId= patientDir.entryInfoList()[j].fileName().toStdString();
+			//3.study文件夹下面一层是series文件夹
+			QDir seriesDir(patientDir.entryInfoList()[j].absoluteFilePath());
+			seriesDir.setFilter(QDir::Dirs | QDir::NoDotAndDotDot);
+			for (int k = 0; k < seriesDir.entryInfoList().size(); k++)
+			{
+				qDebug() << QStringLiteral("第") << k << QStringLiteral("个series目录:") << seriesDir.entryInfoList()[k].fileName();
+				DicomSeries *m_series = new DicomSeries();
+				m_series->SeriseNumber= seriesDir.entryInfoList()[k].fileName().toStdString();
+				//4.series文件夹下面是dcm文件和xml文件.
+				QDir FileDir(seriesDir.entryInfoList()[k].absoluteFilePath());
+				FileDir.setFilter(QDir::Files | QDir::Hidden | QDir::NoSymLinks);
+				//先检出全部dcm文件放入map中,进行散列排序
+				std::map<int, std::string > * AllTheFiles = new std::map<int, std::string>();
+				for (int m = 0; m < FileDir.entryInfoList().size(); m++)
+				{
+					OFString temp_OFString;
+					vtkSmartPointer<vtkMyDICOMImageReader> DICOMreader = vtkSmartPointer<vtkMyDICOMImageReader>::New();
+					DICOMreader->SetGlobalWarningDisplay(false);
+					
+					DICOMreader->SetFileName(FileDir.entryInfoList()[m].absoluteFilePath().toStdString().c_str());
+					DICOMreader->Update();
+					DcmFileFormat fileformat;
+					OFCondition status = fileformat.loadFile(FileDir.entryInfoList()[m].absoluteFilePath().toStdString().c_str());
+					if (status.good() && DICOMreader->getImageDateLength())
+					{
+						if (fileformat.getDataset()->findAndGetOFStringArray(DCM_InstanceNumber, temp_OFString, true).good())
+						{//入库
+							AllTheFiles->insert(std::map<int, std::string>::value_type(std::atoi(temp_OFString.c_str()), 
+												FileDir.entryInfoList()[m].absoluteFilePath().toStdString()));
+						}
+					}
+					else if (FileDir.entryInfoList()[m].absoluteFilePath().contains("xml"))
+					{
+						//说明这不是DCM文件
+						m_series->XmlFilePath = FileDir.entryInfoList()[m].absoluteFilePath().toStdString();
+					}
+				}
+				//逐个检出
+				std::map<int, std::string>::iterator iter;
+				for (int n = 1; n<AllTheFiles->size() + 1; n++)
+				{
+					iter = AllTheFiles->find(n);
+					if (iter != AllTheFiles->end())//这个标号查找成功,出库
+					{
+						DicomImage * m_image = new DicomImage();
+						m_image->AbsFilePath = iter->second;
+						m_series->ImageList.push_back(m_image);
+					}
+				}
+
+				m_study->SeriesList.push_back(m_series);
+			}
+			m_patient->StudyList.push_back(m_study);
+		}
+		this->PatientList.push_back(m_patient);
+	}
+	for (int i = 0; i < this->PatientList.size(); i++)
+	{
+		qDebug() << QStringLiteral("第") << i << QStringLiteral("patient:") << QString::fromStdString(PatientList[i]->PatientID);
+		for (int j = 0; j < this->PatientList[i]->StudyList.size(); j++)
+		{
+			qDebug() <<"  "<< QStringLiteral("第") << j << QStringLiteral("Study:") << QString::fromStdString(this->PatientList[i]->StudyList[j]->StudyId);
+			for (int k = 0; k < this->PatientList[i]->StudyList[j]->SeriesList.size(); k++)
+			{
+				qDebug() << "    " << QStringLiteral("第") << k << QStringLiteral("Series:") << QString::fromStdString(this->PatientList[i]->StudyList[j]->SeriesList[k]->SeriseNumber);
+			}
+		}
+	}
 }
 
 /*

@@ -22,8 +22,8 @@ public:
 	DicomPatient(DicomPatient*old);//拷贝构造函数
 	~DicomPatient();
 public:
-	std::string PatientName;
-	std::string PatientID;
+	std::string PatientName="";
+	std::string PatientID="";
 	std::vector<DicomStudy*> StudyList; //这个病人的Study列表
 	int indexOfCurrentStudy; //当前正在读取的Study的索引号.从0开始,默认为0
 	int indexOfCurrentSeries;//当前正在读取的Series的索引号,从0开始,默认为0

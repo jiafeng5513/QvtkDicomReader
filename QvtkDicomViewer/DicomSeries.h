@@ -15,10 +15,11 @@ public:
 	DicomSeries();
 	~DicomSeries();
 public:
-	std::string Manufacturer;					//制造商
-	std::string StationName;					//仪器名称
-	std::string SeriseNumber;					//
-	std::string NumberOfSeriesRelatedInstances;	//
+	std::string Manufacturer = "";					//制造商
+	std::string StationName = "";					//仪器名称
+	std::string SeriseNumber = "";					//
+	std::string NumberOfSeriesRelatedInstances = "";	//
+	std::string XmlFilePath = "";					//这个series中的xml文件的绝对文件路径
 	std::vector<DicomImage*> ImageList;			//该Series中的图片存储在这个表里
 };
 

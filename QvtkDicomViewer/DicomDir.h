@@ -38,6 +38,7 @@ public:
 	void InitDirExplorerFromDirPath(QString DicomDirFidlePath);//从dirfile绝对路径初始化
 	void InitDirExplorerFromSingleFilePath(QString ImageFilePath);//从单图片文件的绝对路径初始化
 	void InitDirExplorerFromSeriesPath(QString SeriesPath);//从series的文件夹路径初始化
+	void InitDirExplorerFromLIDCFolder(QString LIDCPath);//从LIDC-IDRI文件夹路径初始化
 	~DicomDir();
 private:
 	Ui::DicomDir ui;

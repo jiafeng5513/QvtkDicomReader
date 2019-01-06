@@ -27,6 +27,7 @@
         <file>Resources/aim_128px_1207156_easyicon.net.ico</file>
         <file>Resources/Mainlogo.png</file>
         <file>Resources/Avalon_start.png</file>
+        <file>Resources/LIDC.png</file>
     </qresource>
     <qresource prefix="/Black">
         <file>Resources/Black/arrowBottom.png</file>

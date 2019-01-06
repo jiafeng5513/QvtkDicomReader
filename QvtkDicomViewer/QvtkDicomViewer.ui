@@ -6,7 +6,7 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>1200</width>
+    <width>1215</width>
     <height>738</height>
    </rect>
   </property>
@@ -70,7 +70,7 @@
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>1200</width>
+     <width>1215</width>
      <height>23</height>
     </rect>
    </property>
@@ -139,12 +139,22 @@
     <addaction name="separator"/>
     <addaction name="action_Negative"/>
    </widget>
+   <widget class="QMenu" name="menu_6">
+    <property name="title">
+     <string>肺结节数据集</string>
+    </property>
+    <addaction name="action_Open_LIDC_IDRI"/>
+    <addaction name="action_Luna16"/>
+    <addaction name="action_DSB2017"/>
+    <addaction name="separator"/>
+   </widget>
    <addaction name="menu"/>
    <addaction name="menu_2"/>
    <addaction name="menu_3"/>
    <addaction name="menu_WindowSizeLevel"/>
    <addaction name="menu_4"/>
    <addaction name="menu_5"/>
+   <addaction name="menu_6"/>
   </widget>
   <widget class="QToolBar" name="mainToolBar">
    <attribute name="toolBarArea">
@@ -178,6 +188,8 @@
    <addaction name="action_Reset"/>
    <addaction name="separator"/>
    <addaction name="action_Registration"/>
+   <addaction name="separator"/>
+   <addaction name="action_Open_LIDC_IDRI"/>
   </widget>
   <widget class="QStatusBar" name="statusBar"/>
   <widget class="QDockWidget" name="dockWidget_Dir">
@@ -492,6 +504,25 @@
    </property>
    <property name="text">
     <string>配准工具</string>
+   </property>
+  </action>
+  <action name="action_Open_LIDC_IDRI">
+   <property name="icon">
+    <iconset resource="QvtkDicomViewer.qrc">
+     <normaloff>:/QvtkDicomViewer/Resources/LIDC.png</normaloff>:/QvtkDicomViewer/Resources/LIDC.png</iconset>
+   </property>
+   <property name="text">
+    <string>打开LIDC-IDRI</string>
+   </property>
+  </action>
+  <action name="action_Luna16">
+   <property name="text">
+    <string>打开Luna16</string>
+   </property>
+  </action>
+  <action name="action_DSB2017">
+   <property name="text">
+    <string>打开DSB2017</string>
    </property>
   </action>
  </widget>
@@ -850,8 +881,8 @@
    <slot>OnSliceScrollBarValueChange(int)</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>1188</x>
-     <y>463</y>
+     <x>1205</x>
+     <y>529</y>
     </hint>
     <hint type="destinationlabel">
      <x>282</x>
@@ -1035,6 +1066,22 @@
     </hint>
    </hints>
   </connection>
+  <connection>
+   <sender>action_Open_LIDC_IDRI</sender>
+   <signal>triggered()</signal>
+   <receiver>QvtkDicomViewerClass</receiver>
+   <slot>OnOpenLIDC()</slot>
+   <hints>
+    <hint type="sourcelabel">
+     <x>-1</x>
+     <y>-1</y>
+    </hint>
+    <hint type="destinationlabel">
+     <x>607</x>
+     <y>368</y>
+    </hint>
+   </hints>
+  </connection>
  </connections>
  <slots>
   <slot>OnOpenFile()</slot>
@@ -1075,5 +1122,6 @@
   <slot>OnWindowWL_CT_Medias()</slot>
   <slot>OnWindowWL_CT_Lungs()</slot>
   <slot>OnRegistration()</slot>
+  <slot>OnOpenLIDC()</slot>
  </slots>
 </ui>

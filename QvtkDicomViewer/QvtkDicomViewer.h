@@ -251,4 +251,6 @@ public slots:
 	void On3D_Reconstruction();			//响应3维重建
 	void OnSegmentImage();				//响应图像分割
 	void OnRegistration();				//启动配准工具
+
+	void OnOpenLIDC();					//打开LIDC-IDRI数据集
 };

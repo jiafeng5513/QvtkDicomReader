@@ -1,7 +1,7 @@
 /****************************************************************************
 ** Meta object code from reading C++ file 'DicomDir.h'
 **
-** Created by: The Qt Meta Object Compiler version 67 (Qt 5.9.1)
+** Created by: The Qt Meta Object Compiler version 67 (Qt 5.11.1)
 **
 ** WARNING! All changes made in this file will be lost!
 *****************************************************************************/
@@ -12,7 +12,7 @@
 #if !defined(Q_MOC_OUTPUT_REVISION)
 #error "The header file 'DicomDir.h' doesn't include <QObject>."
 #elif Q_MOC_OUTPUT_REVISION != 67
-#error "This file was generated using the moc from 5.9.1. It"
+#error "This file was generated using the moc from 5.11.1. It"
 #error "cannot be used with the include files from this version of Qt."
 #error "(The moc has changed too much.)"
 #endif
@@ -87,10 +87,9 @@ void DicomDir::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
         }
     } else if (_c == QMetaObject::IndexOfMethod) {
         int *result = reinterpret_cast<int *>(_a[0]);
-        void **func = reinterpret_cast<void **>(_a[1]);
         {
-            typedef void (DicomDir::*_t)(QString );
-            if (*reinterpret_cast<_t *>(func) == static_cast<_t>(&DicomDir::sendData)) {
+            using _t = void (DicomDir::*)(QString );
+            if (*reinterpret_cast<_t *>(_a[1]) == static_cast<_t>(&DicomDir::sendData)) {
                 *result = 0;
                 return;
             }
@@ -98,7 +97,7 @@ void DicomDir::qt_static_metacall(QObject *_o, QMetaObject::Call _c, int _id, vo
     }
 }
 
-const QMetaObject DicomDir::staticMetaObject = {
+QT_INIT_METAOBJECT const QMetaObject DicomDir::staticMetaObject = {
     { &QWidget::staticMetaObject, qt_meta_stringdata_DicomDir.data,
       qt_meta_data_DicomDir,  qt_static_metacall, nullptr, nullptr}
 };
@@ -113,7 +112,7 @@ void *DicomDir::qt_metacast(const char *_clname)
 {
     if (!_clname) return nullptr;
     if (!strcmp(_clname, qt_meta_stringdata_DicomDir.stringdata0))
-        return static_cast<void*>(const_cast< DicomDir*>(this));
+        return static_cast<void*>(this);
     return QWidget::qt_metacast(_clname);
 }
 

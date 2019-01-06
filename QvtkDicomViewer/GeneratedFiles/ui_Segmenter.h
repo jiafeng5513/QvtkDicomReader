@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'Segmenter.ui'
 **
-** Created by: Qt User Interface Compiler version 5.9.1
+** Created by: Qt User Interface Compiler version 5.11.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,13 +10,10 @@
 #define UI_SEGMENTER_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QGroupBox>
 #include <QtWidgets/QHBoxLayout>
-#include <QtWidgets/QHeaderView>
 #include <QtWidgets/QPushButton>
 #include <QtWidgets/QWidget>
 #include "QVTKWidget.h"
@@ -123,15 +120,15 @@ public:
 
     void retranslateUi(QWidget *Segmenter)
     {
-        Segmenter->setWindowTitle(QApplication::translate("Segmenter", "\345\210\206\345\211\262", Q_NULLPTR));
-        groupBox_LevelSet->setTitle(QApplication::translate("Segmenter", "\346\260\264\345\271\263\351\233\206\346\263\225", Q_NULLPTR));
-        pushButton_ShapeDetection->setText(QApplication::translate("Segmenter", "\345\275\242\347\212\266\346\243\200\346\265\213\346\263\225", Q_NULLPTR));
-        pushButton_FastMarching->setText(QApplication::translate("Segmenter", "\345\277\253\351\200\237\345\214\271\351\205\215\346\263\225", Q_NULLPTR));
-        groupBox_RegionGrowing->setTitle(QApplication::translate("Segmenter", "\345\214\272\345\237\237\347\224\237\351\225\277\346\263\225", Q_NULLPTR));
-        pushButton_ConnectedThreshold->setText(QApplication::translate("Segmenter", "\350\201\224\351\200\232\351\230\210\345\200\274\346\263\225", Q_NULLPTR));
-        pushButton_OtsuThreshold->setText(QApplication::translate("Segmenter", "\345\210\206\346\260\264\345\262\255\346\263\225", Q_NULLPTR));
-        pushButton_ConfidenceConnected->setText(QApplication::translate("Segmenter", "\347\275\256\344\277\241\350\277\236\346\216\245\346\263\225", Q_NULLPTR));
-        pushButton_NeighborhoodConnected->setText(QApplication::translate("Segmenter", "\351\202\273\345\237\237\350\277\236\346\216\245\346\263\225", Q_NULLPTR));
+        Segmenter->setWindowTitle(QApplication::translate("Segmenter", "\345\210\206\345\211\262", nullptr));
+        groupBox_LevelSet->setTitle(QApplication::translate("Segmenter", "\346\260\264\345\271\263\351\233\206\346\263\225", nullptr));
+        pushButton_ShapeDetection->setText(QApplication::translate("Segmenter", "\345\275\242\347\212\266\346\243\200\346\265\213\346\263\225", nullptr));
+        pushButton_FastMarching->setText(QApplication::translate("Segmenter", "\345\277\253\351\200\237\345\214\271\351\205\215\346\263\225", nullptr));
+        groupBox_RegionGrowing->setTitle(QApplication::translate("Segmenter", "\345\214\272\345\237\237\347\224\237\351\225\277\346\263\225", nullptr));
+        pushButton_ConnectedThreshold->setText(QApplication::translate("Segmenter", "\350\201\224\351\200\232\351\230\210\345\200\274\346\263\225", nullptr));
+        pushButton_OtsuThreshold->setText(QApplication::translate("Segmenter", "\345\210\206\346\260\264\345\262\255\346\263\225", nullptr));
+        pushButton_ConfidenceConnected->setText(QApplication::translate("Segmenter", "\347\275\256\344\277\241\350\277\236\346\216\245\346\263\225", nullptr));
+        pushButton_NeighborhoodConnected->setText(QApplication::translate("Segmenter", "\351\202\273\345\237\237\350\277\236\346\216\245\346\263\225", nullptr));
     } // retranslateUi
 
 };

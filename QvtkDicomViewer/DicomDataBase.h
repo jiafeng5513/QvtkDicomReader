@@ -25,6 +25,7 @@ public:
 	void Init(std::string dir);//从DICOMDIR文件初始化
 	void InitFromSingleImage(std::string ImageFileName);//从单张图片初始化
 	void InitFromSeriesFolder(std::string SeriesFolder);//从seriesfolder初始化
+	void InitFromLIDC(std::string LIDCFolder);			//从LIDC-IDRI初始化
 private:
 	//static DicomDataBase* m_pSingleton;
 	DicomDataBase();

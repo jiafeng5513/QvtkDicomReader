@@ -47,13 +47,20 @@ void DicomDir::InitDirExplorerFromSeriesPath(QString SeriesPath)
 	//获取PatientID并手动发信号
 	//ConstructsTable();
 }
-/*
- * 析构函数
- */
+//从LIDC-IDRI文件夹路径初始化
+void DicomDir::InitDirExplorerFromLIDCFolder(QString LIDCPath)
+{
+	m_database = DicomDataBase::getInstance();
+	m_database->InitFromLIDC(LIDCPath.toStdString());
+	ConstructsTable();
+}
+
+//析构函数
 DicomDir::~DicomDir()
 {
 
 }
+
 //构造表格
 void DicomDir::ConstructsTable()
 {
@@ -120,9 +127,8 @@ void DicomDir::ConstructsTable()
 		}
 	}
 }
-/*
- * 点击确定按键
- */
+
+//点击确定按键
 void DicomDir::OnPushOk()
 {
 	/*
@@ -132,9 +138,8 @@ void DicomDir::OnPushOk()
 	emit sendData(ui.tableWidget->item(ui.tableWidget->currentItem()->row(), 0)->text());
 	
 }
-/*
- * 点击取消按键
- */
+
+//点击取消按键
 void DicomDir::OnPushCancel()
 {
 	this->close();

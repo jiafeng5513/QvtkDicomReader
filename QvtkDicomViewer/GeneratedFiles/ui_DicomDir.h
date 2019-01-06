@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'DicomDir.ui'
 **
-** Created by: Qt User Interface Compiler version 5.9.1
+** Created by: Qt User Interface Compiler version 5.11.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,9 +10,7 @@
 #define UI_DICOMDIR_H
 
 #include <QtCore/QVariant>
-#include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHeaderView>
 #include <QtWidgets/QPushButton>
@@ -69,9 +67,9 @@ public:
 
     void retranslateUi(QWidget *DicomDir)
     {
-        DicomDir->setWindowTitle(QApplication::translate("DicomDir", "\347\227\205\344\272\272\345\210\227\350\241\250", Q_NULLPTR));
-        ButtonOK->setText(QApplication::translate("DicomDir", "\347\241\256\345\256\232", Q_NULLPTR));
-        ButtonCancel->setText(QApplication::translate("DicomDir", "\345\217\226\346\266\210", Q_NULLPTR));
+        DicomDir->setWindowTitle(QApplication::translate("DicomDir", "\347\227\205\344\272\272\345\210\227\350\241\250", nullptr));
+        ButtonOK->setText(QApplication::translate("DicomDir", "\347\241\256\345\256\232", nullptr));
+        ButtonCancel->setText(QApplication::translate("DicomDir", "\345\217\226\346\266\210", nullptr));
     } // retranslateUi
 
 };

@@ -1,7 +1,7 @@
 /********************************************************************************
 ** Form generated from reading UI file 'QvtkDicomViewer.ui'
 **
-** Created by: Qt User Interface Compiler version 5.9.1
+** Created by: Qt User Interface Compiler version 5.11.1
 **
 ** WARNING! All changes made in this file will be lost when recompiling UI file!
 ********************************************************************************/
@@ -10,9 +10,9 @@
 #define UI_QVTKDICOMVIEWER_H
 
 #include <QtCore/QVariant>
+#include <QtGui/QIcon>
 #include <QtWidgets/QAction>
 #include <QtWidgets/QApplication>
-#include <QtWidgets/QButtonGroup>
 #include <QtWidgets/QDockWidget>
 #include <QtWidgets/QGridLayout>
 #include <QtWidgets/QHBoxLayout>
@@ -63,6 +63,9 @@ public:
     QAction *action_WindowWL_CT_Medias;
     QAction *action_WindowWL_CT_Lungs;
     QAction *action_Registration;
+    QAction *action_Open_LIDC_IDRI;
+    QAction *action_Luna16;
+    QAction *action_DSB2017;
     QWidget *centralWidget;
     QGridLayout *gridLayout;
     QVTKWidget *qvtkWidget;
@@ -74,6 +77,7 @@ public:
     QMenu *menu_4;
     QMenu *menu_5;
     QMenu *menu_WindowSizeLevel;
+    QMenu *menu_6;
     QToolBar *mainToolBar;
     QStatusBar *statusBar;
     QDockWidget *dockWidget_Dir;
@@ -85,7 +89,7 @@ public:
     {
         if (QvtkDicomViewerClass->objectName().isEmpty())
             QvtkDicomViewerClass->setObjectName(QStringLiteral("QvtkDicomViewerClass"));
-        QvtkDicomViewerClass->resize(1200, 738);
+        QvtkDicomViewerClass->resize(1215, 738);
         QvtkDicomViewerClass->setMinimumSize(QSize(1200, 700));
         QIcon icon;
         icon.addFile(QStringLiteral(":/QvtkDicomViewer/Resources/Mainlogo.png"), QSize(), QIcon::Normal, QIcon::Off);
@@ -230,6 +234,15 @@ public:
         QIcon icon20;
         icon20.addFile(QStringLiteral(":/QvtkDicomViewer/Resources/aim_128px_1207156_easyicon.net.ico"), QSize(), QIcon::Normal, QIcon::Off);
         action_Registration->setIcon(icon20);
+        action_Open_LIDC_IDRI = new QAction(QvtkDicomViewerClass);
+        action_Open_LIDC_IDRI->setObjectName(QStringLiteral("action_Open_LIDC_IDRI"));
+        QIcon icon21;
+        icon21.addFile(QStringLiteral(":/QvtkDicomViewer/Resources/LIDC.png"), QSize(), QIcon::Normal, QIcon::Off);
+        action_Open_LIDC_IDRI->setIcon(icon21);
+        action_Luna16 = new QAction(QvtkDicomViewerClass);
+        action_Luna16->setObjectName(QStringLiteral("action_Luna16"));
+        action_DSB2017 = new QAction(QvtkDicomViewerClass);
+        action_DSB2017->setObjectName(QStringLiteral("action_DSB2017"));
         centralWidget = new QWidget(QvtkDicomViewerClass);
         centralWidget->setObjectName(QStringLiteral("centralWidget"));
         QSizePolicy sizePolicy(QSizePolicy::Expanding, QSizePolicy::Expanding);
@@ -259,7 +272,7 @@ public:
         QvtkDicomViewerClass->setCentralWidget(centralWidget);
         menuBar = new QMenuBar(QvtkDicomViewerClass);
         menuBar->setObjectName(QStringLiteral("menuBar"));
-        menuBar->setGeometry(QRect(0, 0, 1200, 23));
+        menuBar->setGeometry(QRect(0, 0, 1215, 23));
         menu = new QMenu(menuBar);
         menu->setObjectName(QStringLiteral("menu"));
         menu_2 = new QMenu(menuBar);
@@ -272,6 +285,8 @@ public:
         menu_5->setObjectName(QStringLiteral("menu_5"));
         menu_WindowSizeLevel = new QMenu(menuBar);
         menu_WindowSizeLevel->setObjectName(QStringLiteral("menu_WindowSizeLevel"));
+        menu_6 = new QMenu(menuBar);
+        menu_6->setObjectName(QStringLiteral("menu_6"));
         QvtkDicomViewerClass->setMenuBar(menuBar);
         mainToolBar = new QToolBar(QvtkDicomViewerClass);
         mainToolBar->setObjectName(QStringLiteral("mainToolBar"));
@@ -302,6 +317,7 @@ public:
         menuBar->addAction(menu_WindowSizeLevel->menuAction());
         menuBar->addAction(menu_4->menuAction());
         menuBar->addAction(menu_5->menuAction());
+        menuBar->addAction(menu_6->menuAction());
         menu->addAction(action_OpenSeriesFolder);
         menu->addAction(action_OpenDicomDirFile);
         menu->addAction(action_OpenDicomFile);
@@ -337,6 +353,10 @@ public:
         menu_WindowSizeLevel->addAction(action_WindowWL_CT_Lungs);
         menu_WindowSizeLevel->addSeparator();
         menu_WindowSizeLevel->addAction(action_Negative);
+        menu_6->addAction(action_Open_LIDC_IDRI);
+        menu_6->addAction(action_Luna16);
+        menu_6->addAction(action_DSB2017);
+        menu_6->addSeparator();
         mainToolBar->addAction(action_OpenDicomDirFile);
         mainToolBar->addAction(action_OpenDicomFile);
         mainToolBar->addAction(action_OpenSeriesFolder);
@@ -362,6 +382,8 @@ public:
         mainToolBar->addAction(action_Reset);
         mainToolBar->addSeparator();
         mainToolBar->addAction(action_Registration);
+        mainToolBar->addSeparator();
+        mainToolBar->addAction(action_Open_LIDC_IDRI);
 
         retranslateUi(QvtkDicomViewerClass);
         QObject::connect(action_back, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnBackward()));
@@ -397,60 +419,65 @@ public:
         QObject::connect(action_WindowWL_CT_Lungs, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnWindowWL_CT_Lungs()));
         QObject::connect(action_WindowWL_Default, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnWindowWL_Defaut()));
         QObject::connect(action_Registration, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnRegistration()));
+        QObject::connect(action_Open_LIDC_IDRI, SIGNAL(triggered()), QvtkDicomViewerClass, SLOT(OnOpenLIDC()));
 
         QMetaObject::connectSlotsByName(QvtkDicomViewerClass);
     } // setupUi
 
     void retranslateUi(QMainWindow *QvtkDicomViewerClass)
     {
-        QvtkDicomViewerClass->setWindowTitle(QApplication::translate("QvtkDicomViewerClass", "Avalon", Q_NULLPTR));
-        action_OpenSeriesFolder->setText(QApplication::translate("QvtkDicomViewerClass", "\346\211\223\345\274\200Series\347\233\256\345\275\225", Q_NULLPTR));
-        action_back->setText(QApplication::translate("QvtkDicomViewerClass", "\344\270\212\344\270\200\345\274\240", Q_NULLPTR));
-        action_next->setText(QApplication::translate("QvtkDicomViewerClass", "\344\270\213\344\270\200\345\274\240", Q_NULLPTR));
-        action_Pointer->setText(QApplication::translate("QvtkDicomViewerClass", "\346\227\240", Q_NULLPTR));
-        action_Protractor->setText(QApplication::translate("QvtkDicomViewerClass", "\351\207\217\350\247\222\345\231\250", Q_NULLPTR));
-        action_Ruler->setText(QApplication::translate("QvtkDicomViewerClass", "\346\265\213\350\267\235\345\260\272", Q_NULLPTR));
-        action_Contour->setText(QApplication::translate("QvtkDicomViewerClass", "\350\275\256\345\273\223", Q_NULLPTR));
+        QvtkDicomViewerClass->setWindowTitle(QApplication::translate("QvtkDicomViewerClass", "Avalon", nullptr));
+        action_OpenSeriesFolder->setText(QApplication::translate("QvtkDicomViewerClass", "\346\211\223\345\274\200Series\347\233\256\345\275\225", nullptr));
+        action_back->setText(QApplication::translate("QvtkDicomViewerClass", "\344\270\212\344\270\200\345\274\240", nullptr));
+        action_next->setText(QApplication::translate("QvtkDicomViewerClass", "\344\270\213\344\270\200\345\274\240", nullptr));
+        action_Pointer->setText(QApplication::translate("QvtkDicomViewerClass", "\346\227\240", nullptr));
+        action_Protractor->setText(QApplication::translate("QvtkDicomViewerClass", "\351\207\217\350\247\222\345\231\250", nullptr));
+        action_Ruler->setText(QApplication::translate("QvtkDicomViewerClass", "\346\265\213\350\267\235\345\260\272", nullptr));
+        action_Contour->setText(QApplication::translate("QvtkDicomViewerClass", "\350\275\256\345\273\223", nullptr));
 #ifndef QT_NO_TOOLTIP
-        action_Contour->setToolTip(QApplication::translate("QvtkDicomViewerClass", "\350\275\256\345\273\223", Q_NULLPTR));
+        action_Contour->setToolTip(QApplication::translate("QvtkDicomViewerClass", "\350\275\256\345\273\223", nullptr));
 #endif // QT_NO_TOOLTIP
-        action_BiDimensional->setText(QApplication::translate("QvtkDicomViewerClass", "\344\272\214\347\273\264\346\240\207\345\260\272", Q_NULLPTR));
-        action_Negative->setText(QApplication::translate("QvtkDicomViewerClass", "\350\264\237\347\211\207", Q_NULLPTR));
-        action_Reset->setText(QApplication::translate("QvtkDicomViewerClass", "\345\244\215\344\275\215", Q_NULLPTR));
-        action_Zoom->setText(QApplication::translate("QvtkDicomViewerClass", "\347\274\251\346\224\276", Q_NULLPTR));
-        action_GrayLevel->setText(QApplication::translate("QvtkDicomViewerClass", "\347\201\260\351\230\266", Q_NULLPTR));
+        action_BiDimensional->setText(QApplication::translate("QvtkDicomViewerClass", "\344\272\214\347\273\264\346\240\207\345\260\272", nullptr));
+        action_Negative->setText(QApplication::translate("QvtkDicomViewerClass", "\350\264\237\347\211\207", nullptr));
+        action_Reset->setText(QApplication::translate("QvtkDicomViewerClass", "\345\244\215\344\275\215", nullptr));
+        action_Zoom->setText(QApplication::translate("QvtkDicomViewerClass", "\347\274\251\346\224\276", nullptr));
+        action_GrayLevel->setText(QApplication::translate("QvtkDicomViewerClass", "\347\201\260\351\230\266", nullptr));
 #ifndef QT_NO_TOOLTIP
-        action_GrayLevel->setToolTip(QApplication::translate("QvtkDicomViewerClass", "\347\201\260\351\230\266", Q_NULLPTR));
+        action_GrayLevel->setToolTip(QApplication::translate("QvtkDicomViewerClass", "\347\201\260\351\230\266", nullptr));
 #endif // QT_NO_TOOLTIP
-        action_Move->setText(QApplication::translate("QvtkDicomViewerClass", "\347\247\273\345\212\250", Q_NULLPTR));
-        action_SwitchOfProperty->setText(QApplication::translate("QvtkDicomViewerClass", "\345\261\236\346\200\247", Q_NULLPTR));
-        action_Play->setText(QApplication::translate("QvtkDicomViewerClass", "\346\222\255\346\224\276", Q_NULLPTR));
-        action_Stop->setText(QApplication::translate("QvtkDicomViewerClass", "\345\201\234\346\255\242", Q_NULLPTR));
-        action_TestEntrance_01->setText(QApplication::translate("QvtkDicomViewerClass", "\346\265\213\350\257\225\345\205\245\345\217\2431", Q_NULLPTR));
-        action_TestEntrance_02->setText(QApplication::translate("QvtkDicomViewerClass", "\346\265\213\350\257\225\345\205\245\345\217\2432", Q_NULLPTR));
-        action_OpenDicomDirFile->setText(QApplication::translate("QvtkDicomViewerClass", "\346\211\223\345\274\200DICOMDIR\346\226\207\344\273\266", Q_NULLPTR));
-        action_OpenDicomFile->setText(QApplication::translate("QvtkDicomViewerClass", "\346\211\223\345\274\200Dicom\346\226\207\344\273\266", Q_NULLPTR));
-        action_PreviousPatient->setText(QApplication::translate("QvtkDicomViewerClass", "\344\270\212\344\270\200\344\270\252\347\227\205\344\272\272", Q_NULLPTR));
-        action_LatterPatient->setText(QApplication::translate("QvtkDicomViewerClass", "\344\270\213\344\270\200\344\270\252\347\227\205\344\272\272", Q_NULLPTR));
-        action_WindowWL_Default->setText(QApplication::translate("QvtkDicomViewerClass", "\351\273\230\350\256\244", Q_NULLPTR));
-        action_WindowWL_All->setText(QApplication::translate("QvtkDicomViewerClass", "\345\205\250\351\203\250\345\212\250\346\200\201\350\214\203\345\233\264", Q_NULLPTR));
-        action_WindowWL_CT_Abdomen->setText(QApplication::translate("QvtkDicomViewerClass", "CT-\350\205\271", Q_NULLPTR));
-        action_WindowWL_CT_BloodVessel->setText(QApplication::translate("QvtkDicomViewerClass", "CT-\350\241\200\347\256\241", Q_NULLPTR));
-        action_WindowWL_CT_Bones->setText(QApplication::translate("QvtkDicomViewerClass", "CT-\351\252\250\351\252\274", Q_NULLPTR));
-        action_WindowWL_CT_Brain->setText(QApplication::translate("QvtkDicomViewerClass", "CT-\350\204\221", Q_NULLPTR));
-        action_WindowWL_CT_Medias->setText(QApplication::translate("QvtkDicomViewerClass", "CT-\347\272\265\350\206\210", Q_NULLPTR));
-        action_WindowWL_CT_Lungs->setText(QApplication::translate("QvtkDicomViewerClass", "CT-\350\202\272", Q_NULLPTR));
-        action_Registration->setText(QApplication::translate("QvtkDicomViewerClass", "\351\205\215\345\207\206\345\267\245\345\205\267", Q_NULLPTR));
-        menu->setTitle(QApplication::translate("QvtkDicomViewerClass", "\346\226\207\344\273\266", Q_NULLPTR));
-        menu_2->setTitle(QApplication::translate("QvtkDicomViewerClass", "\344\277\241\346\201\257", Q_NULLPTR));
-        menu_3->setTitle(QApplication::translate("QvtkDicomViewerClass", "\345\267\245\345\205\267", Q_NULLPTR));
-        menu_4->setTitle(QApplication::translate("QvtkDicomViewerClass", "\347\252\227\345\217\243", Q_NULLPTR));
-        menu_5->setTitle(QApplication::translate("QvtkDicomViewerClass", "\346\265\213\350\257\225", Q_NULLPTR));
-        menu_WindowSizeLevel->setTitle(QApplication::translate("QvtkDicomViewerClass", "\347\252\227\345\256\275\347\252\227\344\275\215", Q_NULLPTR));
+        action_Move->setText(QApplication::translate("QvtkDicomViewerClass", "\347\247\273\345\212\250", nullptr));
+        action_SwitchOfProperty->setText(QApplication::translate("QvtkDicomViewerClass", "\345\261\236\346\200\247", nullptr));
+        action_Play->setText(QApplication::translate("QvtkDicomViewerClass", "\346\222\255\346\224\276", nullptr));
+        action_Stop->setText(QApplication::translate("QvtkDicomViewerClass", "\345\201\234\346\255\242", nullptr));
+        action_TestEntrance_01->setText(QApplication::translate("QvtkDicomViewerClass", "\346\265\213\350\257\225\345\205\245\345\217\2431", nullptr));
+        action_TestEntrance_02->setText(QApplication::translate("QvtkDicomViewerClass", "\346\265\213\350\257\225\345\205\245\345\217\2432", nullptr));
+        action_OpenDicomDirFile->setText(QApplication::translate("QvtkDicomViewerClass", "\346\211\223\345\274\200DICOMDIR\346\226\207\344\273\266", nullptr));
+        action_OpenDicomFile->setText(QApplication::translate("QvtkDicomViewerClass", "\346\211\223\345\274\200Dicom\346\226\207\344\273\266", nullptr));
+        action_PreviousPatient->setText(QApplication::translate("QvtkDicomViewerClass", "\344\270\212\344\270\200\344\270\252\347\227\205\344\272\272", nullptr));
+        action_LatterPatient->setText(QApplication::translate("QvtkDicomViewerClass", "\344\270\213\344\270\200\344\270\252\347\227\205\344\272\272", nullptr));
+        action_WindowWL_Default->setText(QApplication::translate("QvtkDicomViewerClass", "\351\273\230\350\256\244", nullptr));
+        action_WindowWL_All->setText(QApplication::translate("QvtkDicomViewerClass", "\345\205\250\351\203\250\345\212\250\346\200\201\350\214\203\345\233\264", nullptr));
+        action_WindowWL_CT_Abdomen->setText(QApplication::translate("QvtkDicomViewerClass", "CT-\350\205\271", nullptr));
+        action_WindowWL_CT_BloodVessel->setText(QApplication::translate("QvtkDicomViewerClass", "CT-\350\241\200\347\256\241", nullptr));
+        action_WindowWL_CT_Bones->setText(QApplication::translate("QvtkDicomViewerClass", "CT-\351\252\250\351\252\274", nullptr));
+        action_WindowWL_CT_Brain->setText(QApplication::translate("QvtkDicomViewerClass", "CT-\350\204\221", nullptr));
+        action_WindowWL_CT_Medias->setText(QApplication::translate("QvtkDicomViewerClass", "CT-\347\272\265\350\206\210", nullptr));
+        action_WindowWL_CT_Lungs->setText(QApplication::translate("QvtkDicomViewerClass", "CT-\350\202\272", nullptr));
+        action_Registration->setText(QApplication::translate("QvtkDicomViewerClass", "\351\205\215\345\207\206\345\267\245\345\205\267", nullptr));
+        action_Open_LIDC_IDRI->setText(QApplication::translate("QvtkDicomViewerClass", "\346\211\223\345\274\200LIDC-IDRI", nullptr));
+        action_Luna16->setText(QApplication::translate("QvtkDicomViewerClass", "\346\211\223\345\274\200Luna16", nullptr));
+        action_DSB2017->setText(QApplication::translate("QvtkDicomViewerClass", "\346\211\223\345\274\200DSB2017", nullptr));
+        menu->setTitle(QApplication::translate("QvtkDicomViewerClass", "\346\226\207\344\273\266", nullptr));
+        menu_2->setTitle(QApplication::translate("QvtkDicomViewerClass", "\344\277\241\346\201\257", nullptr));
+        menu_3->setTitle(QApplication::translate("QvtkDicomViewerClass", "\345\267\245\345\205\267", nullptr));
+        menu_4->setTitle(QApplication::translate("QvtkDicomViewerClass", "\347\252\227\345\217\243", nullptr));
+        menu_5->setTitle(QApplication::translate("QvtkDicomViewerClass", "\346\265\213\350\257\225", nullptr));
+        menu_WindowSizeLevel->setTitle(QApplication::translate("QvtkDicomViewerClass", "\347\252\227\345\256\275\347\252\227\344\275\215", nullptr));
+        menu_6->setTitle(QApplication::translate("QvtkDicomViewerClass", "\350\202\272\347\273\223\350\212\202\346\225\260\346\215\256\351\233\206", nullptr));
 #ifndef QT_NO_TOOLTIP
         dockWidget_Dir->setToolTip(QString());
 #endif // QT_NO_TOOLTIP
-        dockWidget_Dir->setWindowTitle(QApplication::translate("QvtkDicomViewerClass", "DICOMDIR", Q_NULLPTR));
+        dockWidget_Dir->setWindowTitle(QApplication::translate("QvtkDicomViewerClass", "DICOMDIR", nullptr));
     } // retranslateUi
 
 };

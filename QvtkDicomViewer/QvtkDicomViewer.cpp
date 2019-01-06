@@ -1268,6 +1268,20 @@ void QvtkDicomViewer::OnSegmentImage()
 	 m_Reg_Window->show();
 	//为了增加响应速度,初始化代码应该统一起来,这是一个尝试,以后会逐渐改成这样
  }
+ //打开LIDC-IDRI数据集
+ void QvtkDicomViewer::OnOpenLIDC()
+ {
+	 //打开文件选择页面
+	 QString dir = QFileDialog::getExistingDirectory(this, QStringLiteral("打开LIDC-IDRI父目录"), "G:/", QFileDialog::ShowDirsOnly | QFileDialog::DontResolveSymlinks);
+	 if (dir.isEmpty() == true)
+		 return;
+
+	 DicomDir *m_dicomdir = new DicomDir();
+	 m_dicomdir->InitDirExplorerFromLIDCFolder(dir);
+	 connect(m_dicomdir, SIGNAL(sendData(QString)), this, SLOT(receiveData(QString)));
+	 m_dicomdir->show();
+	 setAppState(Dir);//程序进入dir状态
+ }
 
 //测试入口1
  void QvtkDicomViewer::OnTestEntrance_01()

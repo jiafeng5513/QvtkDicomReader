@@ -16,7 +16,6 @@
 x64/
 build/
 bld/
-[Bb]in/
 [Oo]bj/
 
 
@@ -226,3 +225,4 @@ _Pvt_Extensions/
 ModelManifest.xml
 .vs
 x64
+/x64
