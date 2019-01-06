@@ -13,7 +13,6 @@
 [Dd]ebug/
 [Dd]ebugPublic/
 [Rr]elease/
-x64/
 build/
 bld/
 [Oo]bj/
@@ -225,5 +224,5 @@ GeneratedArtifacts/
 _Pvt_Extensions/
 ModelManifest.xml
 .vs
-x64
-QvtkDicomViewer/x64/
+/QvtkDicomViewer/GeneratedFiles
+/QvtkDicomViewer/x64
